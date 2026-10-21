@@ -1,9 +1,10 @@
 """Analisa Patch Note dari screenshot "Update Patch" in-game -> data/<versi>/PATCH_<nama>.html/.md.
 
-Pemakaian (Python sistem; OCR memakai ocr_screens.ps1 = OCR bawaan Windows, hasilnya di-cache per folder):
+Pemakaian (Python sistem; OCR lewat mc_ocr.py = OCR bawaan Windows atau RapidOCR, hasilnya di-cache per folder):
   python mc_patch.py "screenshot\\season 7\\update patch" --files 1881-1885 --name "Penyesuaian 20-10"
   python mc_patch.py shot1.png shot2.png --season 7
-Opsi: --files 1881-1885,1890 (nomor di nama file "Screenshot (N)"), --name, --season, --version, --no-ocr (pakai ocr.json yang ada).
+Opsi: --files 1881-1885,1890 (nomor di nama file "Screenshot (N)"), --name, --season, --version, --no-ocr (pakai ocr.json yang ada),
+--ocr auto|windows|rapid (auto: OCR Windows; di luar Windows ocr.json yang ada bila lengkap, lalu RapidOCR).
 
 Isi laporan: setiap perubahan per bagian (Commander, Sinergi, Hero, Go Go Card, Equipment, ...) dengan panah in-game
 (↑ buff, ↓ nerf, ~ penyesuaian), angka lama → baru (+ persen), status di data (sudah di file game / diterapkan server /
@@ -12,26 +13,28 @@ tercatat di server_patch.json), dampak ke sinergi, dan DRAF entri server_patch.j
 Screenshot yang tumpang tindih (panel di-scroll) digabung: baris yang sama hanya dihitung sekali.
 """
 import argparse
+import difflib
 import json
-import os
 import re
-import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
 
+import mc_ocr
 import mc_validate as V
-from mc_common import HERE, Names, chip, esc, load_season, md_table, page, slug, stamp, table, write_report
+from mc_common import Names, chip, esc, load_season, md_table, page, rel_src, shown_path, slug, stamp, table, write_report
 
 SECTION = re.compile(r"Penyesuaian\s+(Commander|Sinergi|Hero|Go Go Card|Equipment|Kartu|Lainnya|Umum|Sistem|Mekanisme)", re.I)
 HEADER = re.compile(r"^(?:[-•·]\S{0,2}\s+)?(.+?)\s*\(\s*([^()]{0,6})\s*\)\s*$")  # "-A Turret of Guardians (l)": OCR noise
 # in-game arrows as Windows OCR reads them: ↑ -> "t", ↓ -> "I"/"l"/"J", ~ stays
 ARROWS = {"t": "buff", "↑": "buff", "f": "buff", "i": "nerf", "l": "nerf", "j": "nerf", "↓": "nerf", "1": "nerf", "|": "nerf",
-          "~": "adjust", "-": "adjust", "baru": "baru"}
+          "~": "adjust", "-": "adjust", "—": "adjust", "–": "adjust", "baru": "baru"}
 ARROW_LABEL = {"buff": "↑ buff", "nerf": "↓ nerf", "adjust": "~ penyesuaian", "baru": "baru", None: "-"}
 ARROW_CLASS = {"buff": "buff", "nerf": "nerf"}
 PAIR = re.compile(r"(\d[\d.,]*(?:\s*/\s*\d[\d.,]*)*\s*%?)\s*(?:>>|»|>)\s*(\d[\d.,]*(?:\s*/\s*\d[\d.,]*)*\s*%?)")
 GROUP = re.compile(r"\d[\d.,]*(?:/\d[\d.,]*)*%?")
+OCR_ROMAN = r"[IVXl1|]{1,4}"  # I read as 1 / l / |
+ROUND_PAIR = re.compile(rf"(Babak\s+)({OCR_ROMAN})\s*-\s*([1-6])\s*(?:>>|»|>)\s*({OCR_ROMAN})\s*-\s*([1-6])(?!\d)")
 STATS = ["Batas Mana Awal", "Batas Mana", "Hybrid ATK", "Physical ATK", "Magic ATK", "ATK Speed", "HP"]
 UNIT_WORDS = {"Gold", "Physical", "Magic", "Hybrid", "True", "Total", "Mana", "Shield", "Echo", "Energy", "Hero", "Equipment",
               "Detik", "Babak", "Stack", "Basic"}  # capitalised words that follow a number inside one statement
@@ -59,42 +62,56 @@ def pick_files(paths, files):
     return out
 
 
-def ocr_lines(files, run_ocr):
-    """{file: lines} (coordinates normalised to 1366x768 by mc_validate.load_ocr), OCR-ing each folder when needed."""
+def ocr_lines(files, engine):
+    """{file: lines} (coordinates normalised to 1366x768 by mc_validate.scale_lines), OCR-ing each folder when needed;
+    engine "cache" = only the existing ocr.json."""
     shots = {}
     for folder in sorted({f.parent for f in files}):
-        if run_ocr or not (folder / "ocr.json").exists():
-            subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", str(HERE / "ocr_screens.ps1"), "-Folder", str(folder)],
-                           check=True)
-        loaded = V.load_ocr(folder)
-        for f in files:
-            if f.parent == folder and f.name in loaded:
-                shots[f] = loaded[f.name]
+        mine = {mc_ocr.key_of(folder, f): f for f in files if f.parent == folder}
+        images = mc_ocr.load_json(folder / "ocr.json") if engine == "cache" else mc_ocr.ocr_folder(folder, engine, list(mine.values()))
+        for k, lines in V.scale_lines({k: v for k, v in images.items() if k in mine}).items():
+            shots[mine[k]] = lines
     return shots
 
 
 # ------------------------------------------------------------------ parsing
 
+def line_key(text):
+    return re.sub(r"\W", "", text.lower())
+
+
+def same_line(a, b):
+    """Two readings of one line (scrolled screenshots): one contains the other, or they differ by a few OCR slips but have
+    the same digits ("Setelah 4 5 babak, Go Go Ca?d" vs "Setelan4>>5babak,Go GoCara"); lines that differ in a number
+    are different lines (X.Borg 240/365 vs Gatotkaca 230/345)."""
+    ka, kb = line_key(a), line_key(b)
+    if ka in kb or kb in ka:
+        return True
+    return (min(len(ka), len(kb)) >= 20 and re.findall(r"\d", ka) == re.findall(r"\d", kb)
+            and difflib.SequenceMatcher(None, ka, kb).ratio() >= 0.85)
+
+
 def add_line(lines, text):
-    """Append an OCR line unless it repeats one already kept (scrolled screenshots); a longer reading replaces a cut one."""
-    key = lambda s: re.sub(r"\W", "", s.lower())
-    k = key(text)
+    """Append an OCR line unless it repeats one already kept; a longer reading, or one that kept its ">>", replaces the
+    old one."""
     for i, old in enumerate(lines):
-        if k in key(old):
-            return
-        if key(old) in k:
-            lines[i] = text
+        if same_line(old, text):
+            better = (">>" in text) > (">>" in old) or ((">>" in text) == (">>" in old) and len(line_key(text)) > len(line_key(old)))
+            if better and line_key(text) not in line_key(old):
+                lines[i] = text
             return
     lines.append(text)
 
 
 def parse_entries(shots, known):
     """[{section, entity, arrow, lines}] in reading order; overlapping screenshots merged. A screenshot that starts in the
-    middle of a section (scrolled) has no section title above its first items: those join the entry already seen."""
+    middle of a section (scrolled) has no section title above its first items: those join the entry already seen. Lines
+    above the first item title of a screenshot belong to the item before that title (the previous screenshot's last item
+    when the title is new), so the overlap is matched against the right item."""
     entries, order = {}, []
     section, current = "Lainnya", None
     for f in sorted(shots, key=lambda p: (len(p.name), p.name)):
-        titled = False
+        titled, pending = False, ([] if current else None)  # None: no item yet, text above the first title is an intro
         for l in V.region(shots[f], 150, 768, 300, 1366):
             t = fix_ocr(l["t"].strip())
             m = SECTION.search(t)
@@ -103,14 +120,22 @@ def parse_entries(shots, known):
                 continue
             h = HEADER.match(t)
             raw = h.group(1).strip() if h and len(h.group(1)) <= 40 else (t if len(t) <= 40 and known.find(t, 0.9) else None)
+            if not raw and " " not in t and not re.search(r"[\d.]", t) and len(t) >= 6 and known.find(t, 0.78):
+                raw = t  # title cut at the bottom edge: "SolidAliancoll~i" = "Solid Alliance II (~)"
             if raw:
-                name = known.find(raw, 0.85) or raw
+                raw = re.sub(r"(?<=\s)[Il1|]{1,3}$", lambda m: "I" * len(m.group(0)), raw)  # "Dimensional Shot Il" = Ⅱ
+                name = known.find(raw, 0.85) or (known.find(raw, 0.78) if not h else None) or raw
                 marker = h.group(2).strip().lower() if h else ""
                 arrow = ARROWS.get(marker) or ("baru" if "baru" in marker else None)
                 key = (section, name)
                 if not titled:  # continuation of the previous screenshot: reuse the latest entry with this name
                     key = next((k for k in reversed(order) if k[1] == name), key)
                     section = key[0]
+                if pending:
+                    owner = order[order.index(key) - 1] if key in entries and order.index(key) > 0 else current
+                    for line in pending:
+                        add_line(entries[owner]["lines"], line)
+                pending = None
                 if key not in entries:
                     entries[key] = {"section": key[0], "entity": name, "arrow": arrow, "lines": []}
                     order.append(key)
@@ -119,7 +144,12 @@ def parse_entries(shots, known):
                 current = key
                 continue
             if current and l["x"] > 400 and not t.startswith(("Penyesuaian", "Patch")):
-                add_line(entries[current]["lines"], t)
+                if pending is not None:
+                    pending.append(t)
+                else:
+                    add_line(entries[current]["lines"], t)
+        for line in pending or []:  # no item title in this screenshot
+            add_line(entries[current]["lines"], line)
     return [entries[k] for k in order]
 
 
@@ -156,6 +186,11 @@ def fix_ocr(text):
     text = re.sub(r"%1(?=\d)", "%/", text)
     text = re.sub(r"(Bintang\s+)([123])1([123])\b", r"\1\2/\3", text)
 
+    def lost_slash(m):  # "120/230/390 1640 >> 100/190/300/500": the new value has one part more
+        old, rest, arrow, new = m.groups()
+        return f"{old}/{rest}{arrow}{new}" if new.count("/") == old.count("/") + 1 else m.group(0)
+    text = re.sub(r"(\d+(?:/\d+)+)\s+1(\d+)(\s*(?:>>|»)\s*)(\d+(?:/\d+)+)", lost_slash, text)
+
     def slash(m):
         old, new = m.group(1), m.group(3)
         parts = [len(p) for p in old.split("/")]
@@ -168,7 +203,11 @@ def fix_ocr(text):
 def changes_of(statement):
     """[(label, old, new)] for a statement; ">>" dropped by OCR ("285 255") is accepted for two same-shape groups."""
     s = fix_ocr(statement)
-    out = [(s[:m.start()].strip(" :"), m.group(1).replace(" ", ""), m.group(2).replace(" ", "")) for m in PAIR.finditer(s)]
+    roman = lambda r: re.sub(r"[1l|]", "I", r)
+    out = [(s[:m.start()].strip(" :") + " " + m.group(1).strip(), f"{roman(m.group(2))}-{m.group(3)}", f"{roman(m.group(4))}-{m.group(5)}")
+           for m in ROUND_PAIR.finditer(s)]
+    s = ROUND_PAIR.sub(" ", s)  # "Babak 1-4 >> 1-3" is not the number pair 4 >> 1
+    out += [(s[:m.start()].strip(" :"), m.group(1).replace(" ", ""), m.group(2).replace(" ", "")) for m in PAIR.finditer(s)]
     if not out:  # only "label: 285 255" (two values right after the colon, maybe a unit word) counts as a change
         m = re.search(r":\s*(" + GROUP.pattern + r")\s+(" + GROUP.pattern + r")(?:\s+[A-Za-z]+){0,2}\s*$", s)
         if m and m.group(1).count("/") == m.group(2).count("/") and m.group(1).endswith("%") == m.group(2).endswith("%"):
@@ -197,10 +236,14 @@ def hero_status(hero, label, old, new):
     return "diterapkan server (file game: " + "/".join(f"{x:g}" if x is not None else "?" for x in cur) + ")"
 
 
-def status(texts, key, entity, old, new):
+def status(texts, key, entity, old, new, statement=""):
     data = texts.get(key(entity), "")
     if not data:
         return "tidak ada di data"
+    if re.fullmatch(r"[IVX]+-\d", new):  # round label ("Mulai Babak I-4 >> I-3")
+        has_label = lambda v: re.search(rf"(?<![IVX]){re.escape(v)}(?!\d)", data)
+        return "sudah di file game" if has_label(new) and not has_label(old) else \
+            "diterapkan server" if has_label(old) and not has_label(new) else "tidak bisa dipastikan"
     ref = set(V.numbers(data, keep_single=True))
     ref |= {n.rstrip("%") for n in ref}
 
@@ -211,6 +254,11 @@ def status(texts, key, entity, old, new):
         return "sudah di file game"
     if not has(new):
         return "diterapkan server"
+    found = context_values(data, statement, old, new)  # both numbers occur somewhere: look where the line points
+    if new in found and old not in found:
+        return "sudah di file game"
+    if found and new not in found:
+        return "diterapkan server" + ("" if old in found else f" (file game: {', '.join(sorted(found))})")
     return "tidak bisa dipastikan"
 
 
@@ -232,22 +280,60 @@ def hero_stat_draft(entity, label, old, new):
     return {"name": entity, "stat": stat, "stars": stars, "old": fmt(olds), "new": fmt(news)}
 
 
-def replace_draft(desc, statement, old, new):
-    """[[old phrase, new phrase]] for the occurrence of the old value in the game text whose surrounding words match the
-    patch line best (Badang: "memiliki 50% peluang", not the earlier "50% ATK"), with a word on each side to keep it unique."""
+VALUE = r"(\d[\d.,]*(?:\s*/\s*\d[\d.,]*)*%?)"  # a value in the game text; "100 / 190 / 320/540" has spaces
+
+
+def anchors(statement, old, new):
+    """(word before, word after) the change in the patch line: "mendapatkan 30 >> 35 Shield" -> ("mendapatkan", "Shield")."""
+    loose = lambda v: r"\s*/\s*".join(map(re.escape, v.split("/")))  # "120/230/390 /640"
+    m = re.search(rf"(\w+)?\s*{loose(old)}\s*(?:>>|»|>)?\s*{loose(new)}\s*([A-Za-z]+)?", fix_ocr(statement))
+    return (m.group(1), m.group(2)) if m else (None, None)
+
+
+def anchor_matches(desc, statement, old, new):
+    """Matches (group 1 = value) in the game text at the patch line's words around the change: before + after, else after."""
+    before, after = anchors(statement, old, new)
+    for pattern in ([rf"\b{before}\s+{VALUE}\s+{after}\b"] if before and after else []) + \
+                   ([rf"(?<![\d.,/]){VALUE}\s+{after}\b"] if after else []):
+        found = list(re.finditer(pattern, desc, re.I))
+        if found:
+            return found
+    return []
+
+
+def context_values(data, statement, old, new):
+    """Values the game text holds where the patch line points ("mendapatkan <n> Shield"), without spaces."""
+    return {m.group(1).replace(" ", "") for m in anchor_matches(data, statement, old, new)}
+
+
+def replace_best(desc, statement, old, new):
+    """(score, exact, [[old phrase, new phrase]]) for the spot in the game text that the patch line changes, or None.
+    Candidates: each occurrence of an old value (Badang: "memiliki 50% peluang", not the earlier "50% ATK"), and the value at
+    the line's words around the change, for patch notes that quote another old number (Dyrroth "1 >> 3 EXP", file
+    "mendapatkan 2 EXP"). Best = most words shared with the patch line nearby, then an exact old value. A word on each side
+    keeps the phrase unique."""
     words = set(re.findall(r"[a-z]{3,}", statement.lower()))
-    best = None
+    score = lambda a, b: len(words & set(re.findall(r"[a-z]{3,}", desc[max(0, a - 60):b + 60].lower())))
+    cands = []
     for o, n in zip(old.split("/"), new.split("/")):
         for m in re.finditer(rf"(?<![\d.]){re.escape(o)}(?!\d)", desc):
-            window = set(re.findall(r"[a-z]{3,}", desc[max(0, m.start() - 60):m.end() + 60].lower()))
-            if best is None or len(words & window) > best[0]:
-                best = (len(words & window), m, o, n)
-    if not best:
+            cands.append((score(m.start(), m.end()), 1, m.start(), m.end(), n))
+    for m in anchor_matches(desc, statement, old, new):
+        value = m.group(1)
+        sep = " / " if " / " in value else "/"
+        if len(value.split("/")) == len(new.split("/")) and value.replace(" ", "") != new:
+            cands.append((score(m.start(1), m.end(1)), 0, m.start(1), m.end(1), sep.join(new.split("/"))))
+    if not cands:
         return None
-    _, m, o, n = best
-    left = re.search(r"(\S+[ \t]+)?\S*$", desc[:m.start()]).group(0)
-    right = re.match(r"\S*([ \t]+\S+)?", desc[m.end():]).group(0)
-    return [[left + o + right, left + n + right]]
+    sc, exact, a, b, n = max(cands, key=lambda c: (c[0], c[1]))
+    left = re.search(r"(\S+[ \t]+)?\S*$", desc[:a]).group(0)
+    right = re.match(r"\S*([ \t]+\S+)?", desc[b:]).group(0)
+    return sc, exact, [[left + desc[a:b] + right, left + n + right]]
+
+
+def replace_draft(desc, statement, old, new):
+    best = replace_best(desc, statement, old, new)
+    return best[2] if best else None
 
 
 def server_side(r):
@@ -258,37 +344,53 @@ def status_text(r):
     return r["status"] + (" · tercatat di server_patch.json" if r["recorded"] and server_side(r) else "")
 
 
+def best_target(items, statement, old, new, text_of, name_of=None):
+    """(item, replace or None) among same-named cards or a commander's skills: the item named in the line (skill name
+    "Abyssal Favor: ..."), then the best replace_best() score."""
+    named = [x for x in items if name_of and name_of(x).lower() in statement.lower()]
+    best = None
+    for x in named or items:
+        r = replace_best(text_of(x), statement, old, new) if old else None
+        key = (r[0], r[1]) if r else (-1, 0)
+        if best is None or key > best[0]:
+            best = (key, x, r[2] if r else None)
+    return best[1], best[2]
+
+
 def drafts(d, rows):
     """server_patch.json-shaped draft for server-side changes not recorded yet; unplaced text becomes a note ("text")."""
     H = {h["name"]: h for h in d["heroes"]}
     C = {c["name"]: c for c in d["commanders"]}
-    K = {c["name"]: c for c in d["cards"]}
+    K = defaultdict(list)  # two cards can share a name (Lunox's Power 3017 and 3045)
+    for c in d["cards"]:
+        K[c["name"]].append(c)
     S = {s["name"]: s for s in d["synergies"]}
     out = {"heroes": [], "hero_skills": [], "commanders": [], "synergies": [], "cards": []}
     for r in rows:
+        e, kind = r["data_name"], r["kind"]
+        if r["status"] == "dihapus (server)" and kind == "Go Go Card" and e in K and not r["recorded"]:
+            out["cards"].append({"id": K[e][0]["id"], "name": e, "removed": True})
         if not server_side(r) or r["recorded"]:
             continue
-        e, kind = r["data_name"], r["kind"]
         text = f"{r['label']}: {r['old']} → {r['new']}" if r["old"] else r["statement"]
         if kind == "Hero" and e in H:
             stat = hero_stat_draft(e, r["label"], r["old"], r["new"]) if r["old"] else None
             if stat:
                 out["heroes"].append(stat)
                 continue
-            skill = H[e]["skills"][0] if H[e]["skills"] else None
-            rep = replace_draft(skill["description"], r["statement"], r["old"], r["new"]) if skill and r["old"] else None
-            out["hero_skills"].append({"name": e, "skill": skill["name"] if skill else "?", **({"replace": rep} if rep else {}), "text": text})
+            if not H[e]["skills"]:
+                out["hero_skills"].append({"name": e, "skill": "?", "text": text})
+                continue
+            skill, rep = best_target(H[e]["skills"], r["statement"], r["old"], r["new"], lambda x: x["description"], lambda x: x["name"])
+            out["hero_skills"].append({"name": e, "skill": skill["name"], **({"replace": rep} if rep else {}), "text": text})
         elif kind == "Commander" and e in C:
-            best = None
-            for s in C[e]["skills"]:
-                rep = replace_draft(s["skill"]["description"], r["statement"], r["old"], r["new"]) if r["old"] else None
-                if rep:
-                    best = {"name": e, "skill": s["skill"]["name"], "replace": rep, "text": text}
-                    break
-            out["commanders"].append(best or {"name": e, "skill": C[e]["skills"][0]["skill"]["name"], "text": text})
+            s, rep = best_target(C[e]["skills"], r["statement"], r["old"], r["new"], lambda x: x["skill"]["description"],
+                                 lambda x: x["skill"]["name"])
+            out["commanders"].append({"name": e, "skill": s["skill"]["name"], **({"replace": rep} if rep else {}), "text": text})
         elif kind == "Go Go Card" and e in K:
-            rep = replace_draft(K[e]["description"], r["statement"], r["old"], r["new"]) if r["old"] else None
-            out["cards"].append({"id": K[e]["id"], "name": e, **({"replace": rep} if rep else {}), "text": text})
+            card, rep = best_target([c for c in K[e] if c.get("active", True)] or K[e], r["statement"], r["old"], r["new"],
+                                    lambda x: x["description"])
+            out["cards"].append({"id": card["id"], "name": e, **({"replace": rep} if rep else {}), "text": text})
         elif kind == "Sinergi" and e in S:
             out["synergies"].append({"name": e, "text": text})
     return {k: v for k, v in out.items() if v}
@@ -312,6 +414,8 @@ def build_rows(d, entries):
                 if (name := look.find(e["entity"])):
                     kind = kind or k
                     break
+        if not name and not e["lines"]:
+            continue  # unreadable title without text ("Dimen•innn' Qhnt" at the bottom edge of a screenshot)
         for st in statements(e["lines"]) or ["(tanpa keterangan)"]:
             base = {"section": e["section"], "entity": e["entity"], "data_name": name or e["entity"], "kind": kind or e["section"],
                     "arrow": e["arrow"], "statement": st, "recorded": key(name or e["entity"]) in recorded}
@@ -321,7 +425,7 @@ def build_rows(d, entries):
                              "status": "dihapus (server)" if "dihapus" in st.lower() else ("baru" if e["arrow"] == "baru" else "teks")})
             hero = heroes.get(name) if kind == "Hero" else None
             rows += [{**base, "label": label, "old": old, "new": new, "pct": percent(old, new),
-                      "status": (hero and hero_status(hero, label, old, new)) or status(texts, key, name or e["entity"], old, new)}
+                      "status": (hero and hero_status(hero, label, old, new)) or status(texts, key, name or e["entity"], old, new, st)}
                      for label, old, new in pairs]
     return rows
 
@@ -362,12 +466,13 @@ def main():
     ap.add_argument("--season", type=int)
     ap.add_argument("--version")
     ap.add_argument("--no-ocr", action="store_true", help="jangan jalankan OCR; pakai ocr.json yang ada")
+    ap.add_argument("--ocr", default="auto", choices=mc_ocr.ENGINES, help="mesin OCR (lihat mc_ocr.py)")
     args = ap.parse_args()
     d, folder = load_season(args.season, args.version)
     files = pick_files(args.paths, args.files)
     if not files:
         raise SystemExit("Tidak ada screenshot yang cocok.")
-    shots = ocr_lines(files, not args.no_ocr)
+    shots = ocr_lines(files, "cache" if args.no_ocr else args.ocr)
     patch_shots = {f: l for f, l in shots.items() if V.classify(l) == "patch"}
     if not patch_shots:
         raise SystemExit(f"{len(shots)} screenshot dibaca, tidak ada yang dikenali sebagai layar Patch Note.")
@@ -415,11 +520,11 @@ def main():
                     f'(nama skill, teks pengganti), lalu tambahkan ke daftar season "{d["season"]}" di server_patch.json dan '
                     f'jalankan mc_data.py.</p><pre>{esc(snippet)}</pre></section>')
         md += ["## Draf server_patch.json", "", "_Periksa dulu sebelum disalin ke server_patch.json._", "", "```json", snippet, "```", ""]
-    rel = lambda f: Path(os.path.relpath(f, folder)).as_posix()
+    rel = lambda f: rel_src(f, folder)
     figs = "".join(f'<figure><a href="{esc(rel(f))}"><img class="shot" src="{esc(rel(f))}" alt="" loading="lazy"></a>'
                    f'<figcaption>{esc(f.name)}</figcaption></figure>' for f in patch_shots)
     body.append(f'<section><h2>Screenshot</h2><div class="shots">{figs}</div></section>')
-    md += ["## Screenshot", ""] + [f"- `{f}`" for f in patch_shots]
+    md += ["## Screenshot", ""] + [f"- `{shown_path(f)}`" for f in patch_shots]
     out_html, out_md = write_report(folder, f"PATCH_{slug(name)}", page(f"Analisa Patch — {name}", "".join(body), stamp(d)), md)
     print(summary)
     print("Status:", status_summary)

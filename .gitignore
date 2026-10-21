@@ -5,6 +5,8 @@ __pycache__/
 
 # Regenerable extraction and frame cache
 /cache/
+# RapidOCR cache (mc_ocr.py); keyed by file time, so it is rebuilt after a clone anyway
+ocr_rapid.json
 
 # Large raw recordings remain local
 /screenshot/**/*.mp4

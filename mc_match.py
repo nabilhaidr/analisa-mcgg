@@ -1,10 +1,12 @@
 """Analisa pertandingan dari rekaman layar (MP4) dan/atau screenshot layar hasil -> data/<versi>/MATCH_<nama>.html/.md.
 
-Pemakaian (Python sistem: av, opencv-python, numpy, pillow; OCR = ocr_screens.ps1, OCR bawaan Windows):
+Pemakaian (Python sistem: av, opencv-python, numpy, pillow; OCR lewat mc_ocr.py = OCR bawaan Windows atau RapidOCR):
   python mc_match.py --video "screenshot\\season 7\\match\\rekaman.mp4" --result hasil1.jpg hasil2.jpg --player CinCoeg --name "21 Okt 15-38"
   python mc_match.py --result hasil.jpg --player CinCoeg            hanya layar hasil
 Opsi: --step 5 (detik per frame), --frames <folder> (pakai frame yang sudah diambil), --no-events (lewati OCR frame penuh =
-tanpa daftar kejadian), --season, --version.
+tanpa daftar kejadian), --ocr auto|windows|rapid, --season, --version.
+OCR: --ocr auto = OCR Windows untuk frame rekaman (di luar Windows: RapidOCR), dan RapidOCR untuk layar hasil bila terpasang
+(di screenshot hasil 21 Okt RapidOCR membaca 8/8 nama pemain, OCR Windows 3/8).
 
 Cara kerja:
 - Frame diambil tiap --step detik (video_frames.extract, bisa HEVC ponsel). Cache kerja: cache/match/<nama>/.
@@ -21,10 +23,8 @@ dari gambar; lihat bagian "Catatan metode" di laporan.
 import argparse
 import difflib
 import json
-import os
 import re
 import statistics
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -32,10 +32,11 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+import mc_ocr
 import mc_vision
 import video_frames
-from mc_common import HERE, ROMAN, chip, esc, load_season, md_table, norm, page, round_label, slug, stamp, svg_chart, table, \
-    write_report
+from mc_common import HERE, ROMAN, chip, esc, load_season, md_table, norm, page, rel_src, round_label, slug, stamp, svg_chart, \
+    table, write_report
 from mc_lineup import Game
 
 # HUD boxes as fractions of the frame (x0, y0, x1, y1), measured on 2400x1080 phone and 1376x776 PC recordings
@@ -70,10 +71,11 @@ def log(*a):
 
 # ------------------------------------------------------------------ OCR helpers
 
-def run_ocr(folder):
-    subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", str(HERE / "ocr_screens.ps1"), "-Folder", str(folder)],
-                   check=True, stdout=subprocess.DEVNULL)
-    return json.loads((Path(folder) / "ocr.json").read_text(encoding="utf-8-sig"))["images"]
+OCR_ENGINE = "auto"  # set from --ocr
+
+
+def run_ocr(folder, engine=None, files=None):
+    return mc_ocr.ocr_folder(folder, engine or OCR_ENGINE, files, log=log)
 
 
 def crop(im, box):
@@ -192,7 +194,7 @@ def read_frames(frames, work, layout):
             box = sheet[int(l["y"]):int(l["b"]) + 1, int(l["x"]):int(l["r"]) + 1]
             r, g, b = box[..., 0], box[..., 1], box[..., 2]
             bright = (r > 170) & (g > 150)
-            return bright.sum() > 10 and ((b < 120) & bright).sum() > 0.5 * bright.sum()
+            return bool(bright.sum() > 10 and ((b < 120) & bright).sum() > 0.5 * bright.sum())
         names = [(clean_name(l["t"]), to_frame(l, "panel"), yellow(l)) for l in part("panel")
                  if len(re.findall(r"[A-Za-z]", l["t"])) >= 3 and "Mirror" not in l["t"] and "Level" not in l["t"]]
         nums = []  # (y, hp, shield shown): "•10 •86" = shield 10 + HP 86
@@ -268,12 +270,30 @@ def calibrate(recs):
     return longest / 100, 0.0, 0
 
 
+def accept_rounds(times, numbers):
+    """Round numbers kept from the OCR'd labels (None = not read): the longest chain that never goes back and moves at most
+    2 rounds + 1 per 40 s ahead. Unlike taking labels one by one, a misread label that jumps ahead (II-3 read during II-2,
+    or a wrong first label) cannot make the correct labels after it look like steps back."""
+    idx = [i for i, n in enumerate(numbers) if n]
+    length, prev = {}, {}
+    for j, i in enumerate(idx):
+        length[i], prev[i] = 1, None
+        for k in idx[:j]:
+            if 0 <= numbers[i] - numbers[k] <= 2 + (times[i] - times[k]) // 40 and length[k] + 1 > length[i]:
+                length[i], prev[i] = length[k] + 1, k
+    keep, i = set(), max(idx, key=lambda i: length[i]) if idx else None
+    while i is not None:
+        keep.add(i)
+        i = prev[i]
+    return [n if i in keep else None for i, n in enumerate(numbers)]
+
+
 def timeline(recs, clusters, cal, me=None):
     """Per frame: round number, gold, level, {player: HP}. HP = OCR number when it agrees with the bar (or the bar shows a
-    shield), else the bar estimate. Rounds: labels that jump back or more than 2 ahead are OCR slips; frames between two
-    read labels are split evenly (half/half, or thirds when one label in between was never read)."""
+    shield), else the bar estimate. Rounds: labels outside the longest consistent chain are OCR slips (accept_rounds);
+    frames between two kept labels are split evenly (half/half, or thirds when one label in between was never read)."""
     a, b, _ = cal
-    out, accepted, last = [], [], None
+    out, numbers = [], []
     for rec in recs:
         hp = {}
         for r in rec["rows"]:
@@ -285,11 +305,9 @@ def timeline(recs, clusters, cal, me=None):
                 hp[p] = r["ocr"]
             elif not r["shield"]:
                 hp[p] = round(est)
-        n = round_number(rec["round"]) if rec["round"] else None
-        ok = n if n and (last is None or last < n <= last + 2 or n == last) else None
-        last = ok or last
-        accepted.append(ok)
+        numbers.append(round_number(rec["round"]) if rec["round"] else None)
         out.append({"t": rec["t"], "round": None, "gold": rec["gold"], "level": rec["level"], "hp": hp})
+    accepted = accept_rounds([x["t"] for x in out], numbers)
     idx = [i for i, n in enumerate(accepted) if n]
     for i in idx:
         out[i]["round"] = accepted[i]
@@ -303,14 +321,28 @@ def timeline(recs, clusters, cal, me=None):
     return out
 
 
+def non_increasing(values):
+    """Closest non-increasing sequence (HP never goes up), by pooling neighbours that break the order into one value, their
+    lower median (isotonic regression, L1). One misread value is outvoted by its neighbours: 60 41 60 60 47 -> 60 60 60 60
+    47, where replacing every rise by the previous value would give 60 41 41 41 41."""
+    med = lambda b: sorted(b)[(len(b) - 1) // 2]
+    blocks = []
+    for v in values:
+        blocks.append([v])
+        while len(blocks) > 1 and med(blocks[-2]) < med(blocks[-1]):
+            last = blocks.pop()
+            blocks[-1] += last
+    return [med(b) for b in blocks for _ in b]
+
+
 def rounds_table(tl, players):
-    """Per round: HP at the start (most common reading in the round's first 60%), gold, level; delta = next start - start.
-    HP never goes up, so a reading above the previous round's is treated as a slip."""
+    """Per round: HP at the start (most common reading in the round's first 60%, made non-increasing per player), gold,
+    level; delta = next start - start."""
     by_round = defaultdict(list)
     for x in tl:
         if x["round"]:
             by_round[x["round"]].append(x)
-    rows, prev = [], {}
+    rows = []
     for n in sorted(by_round):
         xs = by_round[n]
         head = xs[:max(1, int(len(xs) * 0.6))]
@@ -318,13 +350,15 @@ def rounds_table(tl, players):
         for p in players:
             vals = [x["hp"][p] for x in head if p in x["hp"]]
             if vals:
-                v = Counter(vals).most_common(1)[0][0]
-                start[p] = prev[p] if p in prev and v > prev[p] + 2 else v
-                prev[p] = start[p]
+                start[p] = Counter(vals).most_common(1)[0][0]
         golds = [x["gold"] for x in xs if x["gold"] is not None]
         levels = [x["level"] for x in xs if x["level"]]
         rows.append({"round": n, "label": round_label(n), "start": start, "gold": golds[0] if golds else None,
                      "level": max(levels) if levels else None, "delta": {}})
+    for p in players:
+        have = [r for r in rows if p in r["start"]]
+        for r, v in zip(have, non_increasing([r["start"][p] for r in have])):
+            r["start"][p] = v
     for cur, nxt in zip(rows, rows[1:]):
         cur["delta"] = {p: nxt["start"][p] - v for p, v in cur["start"].items() if p in nxt["start"]}
     return rows
@@ -340,8 +374,9 @@ def read_events(frames, d, by_time):
         lines = ocr.get(f.name, {}).get("lines", [])
         text = " | ".join(l["t"] for l in lines)
         t = int(f.stem[2:])
+        flat = norm(text)
         for pattern, kind in EVENTS:
-            if not re.search(pattern, text, re.I):
+            if not re.search(pattern.replace(" ", r"\s*"), text, re.I):  # RapidOCR may drop spaces ("GoGo Card")
                 continue
             repeat = kind in seen and t - seen[kind] <= 15  # the same event on consecutive frames
             seen[kind] = t
@@ -349,11 +384,12 @@ def read_events(frames, d, by_time):
                 continue
             detail = ""
             if kind in ("Pilih Kartu Power", "Pilih Go Go Card"):
-                found = list(dict.fromkeys(c for c in cards if c.lower() in text.lower()))
+                found = list(dict.fromkeys(c for c in cards if norm(c) in flat))
+                found = [c for c in found if not any(norm(c) in norm(o) and c != o for o in found)]  # Rising Fury Ⅰ in Ⅱ
                 detail = "pilihan: " + ", ".join(found) if found else ""
             elif kind == "Crystal Pilihan":
                 m = re.search(r"Sinergi:\s*([A-Za-z ]+)", text)
-                detail = next((s for s in syns if m and s.lower() in m.group(1).lower()), m.group(1).strip() if m else "")
+                detail = next((s for s in syns if m and norm(s) in norm(m.group(1))), m.group(1).strip() if m else "")
             elif kind in ("VICTORY", "DEFEAT"):
                 m = re.search(r"Gold:\s*\+?\s*(\d+)", text)
                 detail = f"Gold +{m.group(1)}" if m else ""
@@ -363,7 +399,7 @@ def read_events(frames, d, by_time):
             elif kind == "Panel DMG":
                 pairs = []
                 for i, l in enumerate(lines):
-                    h = next((h for h in heroes if l["t"].startswith(h)), None)
+                    h = next((h for h in heroes if norm(l["t"]).startswith(norm(h))), None)
                     num = next((int(n) for n in re.findall(r"\b\d{3,6}\b", " ".join(x["t"] for x in lines[i:i + 3]))), None)
                     if h and num and h not in [p[0] for p in pairs]:
                         pairs.append((h, num))
@@ -374,16 +410,17 @@ def read_events(frames, d, by_time):
 
 # ------------------------------------------------------------------ result screen
 
-def read_result(paths, d, folder):
+def read_result(paths, d, folder, engine=None):
     """Rows of the result screen(s): rank order, name, level, heroes, cards. Several screenshots of the same screen
     (scrolled hero list) are merged per row; the icon size found on the first one is reused."""
     hero_icons, card_icons = mc_vision.load_icons(d, folder, "hero"), mc_vision.load_icons(d, folder, "card")
     tmp = HERE / "cache" / "match" / "_result"  # OCR copies here so no ocr.json lands in the screenshot folder
     tmp.mkdir(parents=True, exist_ok=True)
     for p in paths:
-        if not (tmp / p.name).exists():
-            (tmp / p.name).write_bytes(p.read_bytes())
-    ocr = run_ocr(tmp)
+        copy = tmp / p.name
+        if not copy.exists() or copy.stat().st_size != p.stat().st_size:
+            copy.write_bytes(p.read_bytes())
+    ocr = run_ocr(tmp, engine, [tmp / p.name for p in paths])
     rows, meta, sizes = {}, {}, {}
     for p in paths:
         found_h = mc_vision.detect(p, hero_icons, "hero", size=sizes.get("hero"))
@@ -399,15 +436,21 @@ def read_result(paths, d, folder):
         pts = re.search(r"(\d{3,5})\s*([+-]\d{1,3})\b", text)
         if pts:
             meta.setdefault("points", f"{pts.group(1)} ({pts.group(2)})")
+        x_left = min((f["x"] for r in heroes for f in r), default=0)
+        level_ys = sorted((l["y"] + l["b"]) / 2 for l in lines if LEVEL_RE.search(l["t"]) and l["r"] < x_left)
         for i, r in enumerate(heroes, 1):
             y, size = sum(f["y"] for f in r) / len(r), r[0]["size"]
+            if len(heroes) <= len(level_ys) <= 8:  # rank = order of the "Level N" lines, so a row without heroes shifts nothing
+                i = 1 + min(range(len(level_ys)), key=lambda k: abs(level_ys[k] - y))
             x_first = min(f["x"] for f in r)
             near = [l for l in lines if abs((l["y"] + l["b"]) / 2 - y) < size * 0.9 and l["r"] < x_first - size]
-            name = next((clean_name(l["t"]) for l in sorted(near, key=lambda l: l["y"])
-                         if len(re.findall(r"[A-Za-z]", l["t"])) >= 3 and not LEVEL_RE.search(l["t"])), f"baris {i}")
+            name = next((clean_name(l["t"]) for l in sorted(near, key=lambda l: l["y"])  # "AJ11" has 2 letters, badge "39" none
+                         if len(re.findall(r"[A-Za-z]", l["t"])) >= 2 and not LEVEL_RE.search(l["t"])), f"baris {i}")
             lv = next((int(m.group(1)) for l in near if (m := LEVEL_RE.search(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
             cur = rows.setdefault(i, {"rank": i, "name": name, "level": lv, "heroes": [], "cards": []})
+            if cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"])):
+                cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
             cur["heroes"] = list(dict.fromkeys(cur["heroes"] + [f["name"] for f in r]))
             cur["cards"] = list(dict.fromkeys(cur["cards"] + [f["name"] for f in row_cards]))
             cur["level"] = cur["level"] or lv
@@ -484,11 +527,15 @@ def main():
     ap.add_argument("--step", type=float, default=5)
     ap.add_argument("--frames", type=Path, help="folder frame f_<detik>.jpg yang sudah ada")
     ap.add_argument("--no-events", action="store_true")
+    ap.add_argument("--ocr", default="auto", choices=mc_ocr.ENGINES, help="mesin OCR (lihat mc_ocr.py)")
     ap.add_argument("--season", type=int)
     ap.add_argument("--version")
     args = ap.parse_args()
     if not (args.video or args.frames or args.result):
         ap.error("isi --video/--frames dan/atau --result")
+    global OCR_ENGINE
+    OCR_ENGINE = args.ocr
+    result_engine = "rapid" if args.ocr == "auto" and mc_ocr.rapid_available() else args.ocr
     d, folder = load_season(args.season, args.version)
     game = Game(d)
     name = args.name or (args.video or args.frames or args.result[0]).stem
@@ -496,7 +543,7 @@ def main():
     work.mkdir(parents=True, exist_ok=True)
     assets = folder / f"match_{slug(name)}"
 
-    final, meta = read_result([p.resolve() for p in args.result], d, folder) if args.result else ([], {})
+    final, meta = read_result([p.resolve() for p in args.result], d, folder, result_engine) if args.result else ([], {})
     if final:
         log(f"Layar hasil: {len(final)} pemain dikenali")
     names = [r["name"] for r in final]
@@ -537,9 +584,11 @@ def main():
              ("Babak terbaca", f"{rounds[0]['label']} – {rounds[-1]['label']} ({len(rounds)} babak), kehilangan HP di {losses} babak"
               if rounds else "-"),
              ("Pertandingan", f"ID {meta.get('id') or '-'} · poin {meta.get('points') or '-'}")]
+    if not rounds:  # result screen only: no HP timeline
+        boxes = [x for x in boxes if x[0] not in ("HP akhir", "Babak terbaca")]
     body.append('<section><h2>Ringkasan</h2><div class="grid3">' +
                 "".join(f'<div class="box"><h4>{esc(k)}</h4><p>{esc(v)}</p></div>' for k, v in boxes) +
-                f'</div><p class="muted small">Pemain: {esc(me or "-")} · tata letak {esc(layout or "-")}</p></section>')
+                f'</div><p class="muted small">Pemain: {esc(me or "-")}' + (f" · tata letak {esc(layout)}" if layout else "") + "</p></section>")
     md += [f"- **{k}:** {v}" for k, v in boxes] + [f"- Pemain: {me or '-'}", ""]
 
     notes = insights(rounds, me, events, final_rank) if (rounds or final_rank) else []
@@ -553,7 +602,7 @@ def main():
         body.append(f'<section><h2>HP per babak</h2>{svg_chart(series, [r["label"] for r in rounds], highlight=me)}</section>')
         ev_by_round = defaultdict(list)
         for e in events:
-            if e["round"] and e["kind"] != "Panel DMG":
+            if e["round"] and e["kind"] not in ("Panel DMG", "Win streak", "Lose streak"):
                 ev_by_round[e["round"]].append(e["kind"] + (f" ({e['detail']})" if e["detail"] else ""))
         cells, md_rows = [], []
         for r in rounds:
@@ -604,17 +653,27 @@ def main():
             im = Image.open(e["frame"])
             im.resize((640, round(640 * im.height / im.width))).save(out, quality=82)
         cap = f"{e['t'] // 60:02d}:{e['t'] % 60:02d} · {round_label(e['round']) if e['round'] else '-'} · {e['kind']}"
-        figs.append(f'<figure><img class="shot" src="{esc(Path(os.path.relpath(out, folder)).as_posix())}" alt="" loading="lazy">'
+        figs.append(f'<figure><img class="shot" src="{esc(rel_src(out, folder))}" alt="" loading="lazy">'
                     f'<figcaption>{esc(cap)}</figcaption></figure>')
     if figs:
         body.append(f'<section><h2>Frame kunci</h2><div class="shots">{"".join(figs)}</div></section>')
     a, b, n = cal
-    method = [f"Tata letak: {layout or '-'}; frame tiap {args.step:g} detik.",
-              f"HP dari panjang bar: HP = (panjang − {b:.1f}) / {a:.3f}" +
-              (f", dikalibrasi dari {n} angka HP yang terbaca OCR." if n else ", tanpa kalibrasi OCR (bar terpanjang = 100 HP)."),
-              "HP awal babak = nilai terbanyak di 60% awal babak; HP yang naik dianggap salah baca dan diganti nilai sebelumnya.",
-              "Babak tanpa label terbaca memakai babak sebelumnya; lompatan lebih dari 2 babak diabaikan.",
-              "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil."]
+    method = []
+    if layout:
+        method += [f"Tata letak: {layout}; frame tiap {args.step:g} detik; OCR: {mc_ocr.describe(OCR_ENGINE)}.",
+                   f"HP dari panjang bar: HP = (panjang − {b:.1f}) / {a:.3f}" +
+                   (f", dikalibrasi dari {n} angka HP yang terbaca OCR." if n else ", tanpa kalibrasi OCR (bar terpanjang = 100 HP)."),
+                   "HP awal babak = nilai terbanyak di 60% awal babak, lalu dibuat tidak pernah naik (nilai yang melanggar urutan "
+                   "digabung dengan tetangganya, diambil mediannya).",
+                   "Label babak dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke "
+                   "depan); frame di antara dua label dibagi rata.",
+                   "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.",
+                   "Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang "
+                   "tampil, jadi tidak dipakai untuk menentukan hasil babak."]
+    if final:
+        method.append(f"Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "
+                      f"({mc_ocr.describe(result_engine)}); "
+                      "peringkat = urutan baris.")
     body.append(f'<section><h2>Catatan metode</h2><ul>{"".join(f"<li>{esc(m)}</li>" for m in method)}</ul></section>')
     md += ["## Catatan metode", ""] + [f"- {m}" for m in method]
     out_html, out_md = write_report(folder, f"MATCH_{slug(name)}", page(title, "".join(body), stamp(d)), md)

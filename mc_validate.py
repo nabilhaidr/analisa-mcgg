@@ -113,9 +113,13 @@ def cell_state(game, data):
 # ------------------------------------------------------------------ OCR input
 
 def load_ocr(folder):
-    raw = json.loads((folder / "ocr.json").read_text(encoding="utf-8-sig"))
+    return scale_lines(json.loads((folder / "ocr.json").read_text(encoding="utf-8-sig"))["images"])
+
+
+def scale_lines(images):
+    """{name: lines} with coordinates scaled to the 1366x768 layout the checks are written for."""
     shots = {}
-    for name, img in raw["images"].items():
+    for name, img in images.items():
         sx, sy = BASE_W / (img.get("w") or BASE_W), BASE_H / (img.get("h") or BASE_H)
         shots[name] = [{"t": l["t"], "x": l["x"] * sx, "y": l["y"] * sy, "r": l["r"] * sx, "b": l["b"] * sy}
                        for l in img["lines"]]

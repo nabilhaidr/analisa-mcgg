@@ -5,6 +5,7 @@ langsung bisa dipakai.
 import difflib
 import html
 import json
+import os
 import re
 from datetime import datetime
 from pathlib import Path
@@ -199,6 +200,19 @@ def write_report(folder, stem, html_text, md_lines):
     out_html.write_text(html_text, encoding="utf-8")
     out_md.write_text("\n".join(md_lines).rstrip() + "\n", encoding="utf-8")
     return out_html, out_md
+
+
+def shown_path(f):
+    """Path relative to the patch-tracker folder when inside it, so reports read the same on every computer."""
+    try:
+        return Path(f).resolve().relative_to(HERE).as_posix()
+    except ValueError:
+        return str(f)
+
+
+def rel_src(f, folder):
+    """<img src> for a file, relative to the report folder (data/<versi>/)."""
+    return Path(os.path.relpath(Path(f).resolve(), folder)).as_posix()
 
 
 def stamp(d):

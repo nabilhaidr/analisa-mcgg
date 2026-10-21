@@ -1,8 +1,8 @@
 # Analisa Lineup — Hasil 21 Okt 15-38
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 22:49_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 16:57_
 
-Screenshot: `screenshot\season 7\match\Screenshot_2026-10-21-16-06-07-949_com.mobilechess.mi.jpg` · 8 baris hero dikenali; dianalisa: baris 1, 2, 3, 4, 5, 6, 7, 8
+Screenshot: `screenshot/season 7/match/Screenshot_2026-10-21-16-06-07-949_com.mobilechess.mi.jpg` · 8 baris hero dikenali; dianalisa: baris 1, 2, 3, 4, 5, 6, 7, 8
 
 # Baris 1: Astro Power 5, Mage 4, Defender 2
 
@@ -15,13 +15,8 @@ Go Go Card terdeteksi: Minotaur's Power, Purest Power Ⅰ, Divine Execution
 - Sinergi aktif: Astro Power 5, Mage 4, Defender 2, Enchanted Tales 2
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Dauntless 1/2 (Hilda); Marksman 1/2 (Irithel); SPECTRE 1/2 (Gord); Starbelle 1/2 (Zhuxin); Stargazer 1/2 (Karina); Swiftblade 1/2 (Karina).
 - Astro Power tinggal 1 lagi ke tingkat 6 (crystal Astro Power atau hero: Martis).
-- Dauntless 1/2 belum aktif (hero: Hilda).
-- Marksman 1/2 belum aktif (hero: Irithel).
-- SPECTRE 1/2 belum aktif (hero: Gord).
-- Starbelle 1/2 belum aktif (hero: Zhuxin).
-- Stargazer 1/2 belum aktif (hero: Karina).
-- Swiftblade 1/2 belum aktif (hero: Karina).
 - Irithel: Patch 20/10 (server) Batas Mana ★3: 100 → 90
 - Karina: Patch 7.2 (server) Hybrid ATK ★2/★3: 215/285 → 200/260
 
@@ -29,15 +24,17 @@ Go Go Card terdeteksi: Minotaur's Power, Purest Power Ⅰ, Divine Execution
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415 | Swan Song |
-| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580 | Mystic Gush |
-| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580 | Eternal Guard |
-| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025 | Strafe |
-| Atlas | 4 Gold | Enchanted Tales, Defender | ★2: HP 6785 | Annihilate |
-| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635* | Dance of Death |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
-| Zhuxin | 2 Gold | Starbelle, Mage | ★2: HP 3070 | Lantern Flare |
-| Minotaur | 1 Gold | Astro Power, Defender | ★2: HP 3655 | Motivation Roar |
+| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415, ATK 265 | Swan Song |
+| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580, ATK 200 | Mystic Gush |
+| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580, ATK 220 | Eternal Guard |
+| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025, ATK 250 | Strafe |
+| Atlas | 4 Gold | Enchanted Tales, Defender | ★2: HP 6785, ATK 260 | Annihilate |
+| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635, ATK 200* | Dance of Death |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+| Zhuxin | 2 Gold | Starbelle, Mage | ★2: HP 3070, ATK 130 | Lantern Flare |
+| Minotaur | 1 Gold | Astro Power, Defender | ★2: HP 3655, ATK 160 | Motivation Roar |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -127,13 +124,10 @@ Go Go Card terdeteksi: Lunox's Power, Jump the Gun+, Divine Execution
 - Sinergi aktif: Kishin 5, Weapon Master 3, Bruiser 2, Echomancer 2, Phasewarper 2, Chrono Wanderer 1
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Dauntless 1/2 (Franco); Dragoncaller 1/2 (Zilong); Marksman 1/2 (Karrie); Stargazer 1/2 (Lunox).
 - Kishin tinggal 1 lagi ke tingkat 6 (crystal Kishin atau hero: Angela).
 - Weapon Master tinggal 1 lagi ke tingkat 4 (crystal Weapon Master atau hero: Cici, Martis, Suyou).
 - Phasewarper tinggal 1 lagi ke tingkat 3 (crystal Phasewarper atau hero: Clint, Kadita).
-- Dauntless 1/2 belum aktif (hero: Franco).
-- Dragoncaller 1/2 belum aktif (hero: Zilong).
-- Marksman 1/2 belum aktif (hero: Karrie).
-- Stargazer 1/2 belum aktif (hero: Lunox).
 - 3 hero 5 Gold (Gatotkaca, Lancelot, Thamuz): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Gatotkaca: Patch 7.2 (server) Hybrid ATK ★1/★2: 230/345 → 250/375
 - Thamuz: Patch 20/10 (server) Batas Mana ★1/★2: 70/70 → 50/50
@@ -143,15 +137,17 @@ Go Go Card terdeteksi: Lunox's Power, Jump the Gun+, Divine Execution
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Gatotkaca | 5 Gold | Chrono Wanderer, Bruiser | ★2: HP 7805* | Avatar of the Guardian |
-| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335 | Phantom Execution |
-| Thamuz | 5 Gold | Echomancer, Weapon Master | ★2: HP 8435* | Cauterant Inferno |
-| Zilong | 4 Gold | Dragoncaller, Weapon Master | ★2: HP 6890 | Supreme Warrior |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Harley | 2 Gold | Echomancer, Phasewarper | ★2: HP 3070 | Poker Trick |
-| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310 | Spectre Step |
-| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580 | Speedy Lightwheel |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
+| Gatotkaca | 5 Gold | Chrono Wanderer, Bruiser | ★2: HP 7805, ATK 375* | Avatar of the Guardian |
+| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335, ATK 365 | Phantom Execution |
+| Thamuz | 5 Gold | Echomancer, Weapon Master | ★2: HP 8435, ATK 365 | Cauterant Inferno |
+| Zilong | 4 Gold | Dragoncaller, Weapon Master | ★2: HP 6890, ATK 275 | Supreme Warrior |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Harley | 2 Gold | Echomancer, Phasewarper | ★2: HP 3070, ATK 130 | Poker Trick |
+| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310, ATK 165 | Spectre Step |
+| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580, ATK 235 | Speedy Lightwheel |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -253,26 +249,25 @@ Go Go Card terdeteksi: Kagura's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Divine Execu
 - Sinergi aktif: Kishin 5, Dragoncaller 4, Bruiser 2, Stargazer 2, Weapon Master 2
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Dauntless 1/2 (Franco); Marksman 1/2 (Karrie); Phasewarper 1/2 (Clint); Scavenger 1/2 (Angela).
 - Kishin tinggal 1 lagi ke tingkat 6 (crystal Kishin atau hero: Lancelot).
-- Dauntless 1/2 belum aktif (hero: Franco).
-- Marksman 1/2 belum aktif (hero: Karrie).
-- Phasewarper 1/2 belum aktif (hero: Clint).
-- Scavenger 1/2 belum aktif (hero: Angela).
 - Lunox: Patch 20/10 (server) Hybrid ATK ★2: 200 → 185
 
 ## Hero
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Badang | 5 Gold | Dragoncaller, Bruiser | ★2: HP 7335 | Fist Crack |
-| Zilong | 4 Gold | Dragoncaller, Weapon Master | ★2: HP 6890 | Supreme Warrior |
-| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580 | Speedy Lightwheel |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Eudora | 1 Gold | Dragoncaller, Stargazer | ★2: HP 2790 | Forked Lightning |
-| Clint | 3 Gold | Dragoncaller, Phasewarper | ★2: HP 3905 | Quick Draw |
-| Angela | 2 Gold | Kishin, Scavenger | ★2: HP 3070 | Love Waves |
-| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310 | Spectre Step |
+| Badang | 5 Gold | Dragoncaller, Bruiser | ★2: HP 7335, ATK 320 | Fist Crack |
+| Zilong | 4 Gold | Dragoncaller, Weapon Master | ★2: HP 6890, ATK 275 | Supreme Warrior |
+| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580, ATK 235 | Speedy Lightwheel |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Eudora | 1 Gold | Dragoncaller, Stargazer | ★2: HP 2790, ATK 120 | Forked Lightning |
+| Clint | 3 Gold | Dragoncaller, Phasewarper | ★2: HP 3905, ATK 210 | Quick Draw |
+| Angela | 2 Gold | Kishin, Scavenger | ★2: HP 3070, ATK 130 | Love Waves |
+| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310, ATK 165 | Spectre Step |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -370,16 +365,10 @@ Go Go Card terdeteksi: Popol & Kupa's Power, Glittering Jewels Ⅰ, Synergy Cons
 - Sinergi aktif: Dauntless 5, Kishin 3, Stargazer 2, Mistbender 2
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Astro Power 1/2 (Hilda); Marksman 1/2 (Melissa); Phasewarper 1/2 (Lancelot); SPECTRE 1/2 (Alice); Shadeweaver 1/2 (Melissa); Starbelle 1/2 (Lolita); Weapon Master 1/2 (Franco).
 - Dauntless tinggal 1 lagi ke tingkat 6 (crystal Dauntless atau hero: Balmond).
 - Kishin tinggal 1 lagi ke tingkat 4 (crystal Kishin atau hero: Dyrroth, Angela, Karrie).
 - Mistbender tinggal 1 lagi ke tingkat 3 (crystal Mistbender atau hero: Aldous).
-- Astro Power 1/2 belum aktif (hero: Hilda).
-- Marksman 1/2 belum aktif (hero: Melissa).
-- Phasewarper 1/2 belum aktif (hero: Lancelot).
-- SPECTRE 1/2 belum aktif (hero: Alice).
-- Shadeweaver 1/2 belum aktif (hero: Melissa).
-- Starbelle 1/2 belum aktif (hero: Lolita).
-- Weapon Master 1/2 belum aktif (hero: Franco).
 - 4 hero 5 Gold (Alice, Nana, Lancelot, Melissa): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Lunox: Patch 20/10 (server) Hybrid ATK ★2: 200 → 185
 
@@ -387,15 +376,17 @@ Go Go Card terdeteksi: Popol & Kupa's Power, Glittering Jewels Ⅰ, Synergy Cons
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
-| Nana | 5 Gold | Mistbender, Stargazer | ★2: HP 6415 | Magic Boomerang |
-| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335 | Phantom Execution |
-| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415 | Eyes on You! |
-| Lolita | 4 Gold | Starbelle, Dauntless | ★2: HP 7330 | Noumenon Blast |
-| Uranus | 1 Gold | Mistbender, Dauntless | ★2: HP 3655 | Energy Awakening |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+| Nana | 5 Gold | Mistbender, Stargazer | ★2: HP 6415, ATK 285 | Magic Boomerang |
+| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335, ATK 365 | Phantom Execution |
+| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415, ATK 330 | Eyes on You! |
+| Lolita | 4 Gold | Starbelle, Dauntless | ★2: HP 7330, ATK 260 | Noumenon Blast |
+| Uranus | 1 Gold | Mistbender, Dauntless | ★2: HP 3655, ATK 160 | Energy Awakening |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -501,14 +492,9 @@ Go Go Card terdeteksi: Moskov's Power, Uncertain Fortune, Divine Execution
 - Sinergi aktif: Kishin 5, Phasewarper 3, Dauntless 2, Marksman 2, Shadeweaver 2
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Bruiser 1/2 (Dyrroth); Dragoncaller 1/2 (Clint); Mage 1/2 (Kadita); SPECTRE 1/2 (Alice); Stargazer 1/2 (Lunox); Weapon Master 1/2 (Franco).
 - Kishin tinggal 1 lagi ke tingkat 6 (crystal Kishin atau hero: Angela).
 - Shadeweaver tinggal 1 lagi ke tingkat 3 (crystal Shadeweaver atau hero: Hylos).
-- Bruiser 1/2 belum aktif (hero: Dyrroth).
-- Dragoncaller 1/2 belum aktif (hero: Clint).
-- Mage 1/2 belum aktif (hero: Kadita).
-- SPECTRE 1/2 belum aktif (hero: Alice).
-- Stargazer 1/2 belum aktif (hero: Lunox).
-- Weapon Master 1/2 belum aktif (hero: Franco).
 - 3 hero 5 Gold (Lancelot, Alice, Melissa): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Lunox: Patch 20/10 (server) Hybrid ATK ★2: 200 → 185
 
@@ -516,15 +502,17 @@ Go Go Card terdeteksi: Moskov's Power, Uncertain Fortune, Divine Execution
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335 | Phantom Execution |
-| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580 | Speedy Lightwheel |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Clint | 3 Gold | Dragoncaller, Phasewarper | ★2: HP 3905 | Quick Draw |
-| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905 | Ocean Ode |
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
-| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415 | Eyes on You! |
-| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310 | Spectre Step |
+| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335, ATK 365 | Phantom Execution |
+| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580, ATK 235 | Speedy Lightwheel |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Clint | 3 Gold | Dragoncaller, Phasewarper | ★2: HP 3905, ATK 210 | Quick Draw |
+| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905, ATK 155 | Ocean Ode |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415, ATK 330 | Eyes on You! |
+| Dyrroth | 1 Gold | Kishin, Bruiser | ★2: HP 3310, ATK 165 | Spectre Step |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -629,12 +617,7 @@ Go Go Card terdeteksi: Ling's Power, Rock Solid, The More, the Merrier
 - 8/9 hero di Level 9; crystal: -
 
 - Masih ada 1 slot kosong di Level 9.
-- Astro Power 1/2 belum aktif (hero: Irithel).
-- Dragon Altar 1/2 belum aktif (hero: Baxia).
-- Echomancer 1/2 belum aktif (hero: Tigreal).
-- Enchanted Tales 1/2 belum aktif (hero: Atlas).
-- Kishin 1/2 belum aktif (hero: Karrie).
-- Shadeweaver 1/2 belum aktif (hero: Melissa).
+- Belum aktif: Astro Power 1/2 (Irithel); Dragon Altar 1/2 (Baxia); Echomancer 1/2 (Tigreal); Enchanted Tales 1/2 (Atlas); Kishin 1/2 (Karrie); Shadeweaver 1/2 (Melissa).
 - 2 hero 5 Gold (Baxia, Melissa): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Irithel: Patch 20/10 (server) Batas Mana ★3: 100 → 90
 
@@ -642,14 +625,16 @@ Go Go Card terdeteksi: Ling's Power, Rock Solid, The More, the Merrier
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Tigreal | 3 Gold | Echomancer, Defender | ★2: HP 4705 | Implosion |
-| Edith | 3 Gold | Starbelle, Defender | ★2: HP 4705 | Onward |
-| Baxia | 5 Gold | Dragon Altar, Defender | ★2: HP 7650 | Tortoise's Puissance |
-| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415 | Eyes on You! |
-| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580 | Speedy Lightwheel |
-| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025 | Strafe |
-| Atlas | 4 Gold | Enchanted Tales, Defender | ★2: HP 6785 | Annihilate |
-| Miya | 2 Gold | Starbelle, Marksman | ★2: HP 3070 | Moon Blessing |
+| Tigreal | 3 Gold | Echomancer, Defender | ★2: HP 4705, ATK 205 | Implosion |
+| Edith | 3 Gold | Starbelle, Defender | ★2: HP 4705, ATK 205 | Onward |
+| Baxia | 5 Gold | Dragon Altar, Defender | ★2: HP 7650, ATK 345 | Tortoise's Puissance |
+| Melissa | 5 Gold | Shadeweaver, Marksman | ★2: HP 6415, ATK 330 | Eyes on You! |
+| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580, ATK 235 | Speedy Lightwheel |
+| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025, ATK 250 | Strafe |
+| Atlas | 4 Gold | Enchanted Tales, Defender | ★2: HP 6785, ATK 260 | Annihilate |
+| Miya | 2 Gold | Starbelle, Marksman | ★2: HP 3070, ATK 165 | Moon Blessing |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -750,11 +735,9 @@ Go Go Card terdeteksi: Kagura's Power, Rock Solid, Divine Execution
 - Sinergi aktif: Kishin 4, Echomancer 3, Dauntless 2, Marksman 2, Phasewarper 2, Weapon Master 2, Chrono Wanderer 1
 - 9/9 hero di Level 9; crystal: -
 
+- Belum aktif: Defender 1/2 (Tigreal); SPECTRE 1/2 (Alice); Stargazer 1/2 (Lunox).
 - Echomancer tinggal 1 lagi ke tingkat 4 (crystal Echomancer atau hero: Vale, Natalia, Sora).
 - Phasewarper tinggal 1 lagi ke tingkat 3 (crystal Phasewarper atau hero: Clint, Kadita).
-- Defender 1/2 belum aktif (hero: Tigreal).
-- SPECTRE 1/2 belum aktif (hero: Alice).
-- Stargazer 1/2 belum aktif (hero: Lunox).
 - 4 hero 5 Gold (Layla, Alice, Lancelot, Thamuz): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Layla: Patch 20/10 (server) Hybrid ATK ★1/★2: 260/390 → 300/450 (Patch note menulis nilai lama 260/390; file game berisi 220/330.)
 - Lunox: Patch 20/10 (server) Hybrid ATK ★2: 200 → 185
@@ -764,15 +747,17 @@ Go Go Card terdeteksi: Kagura's Power, Rock Solid, Divine Execution
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Layla | 5 Gold | Chrono Wanderer, Marksman | ★2: HP 6417* | Void Projectile |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
-| Tigreal | 3 Gold | Echomancer, Defender | ★2: HP 4705 | Implosion |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Harley | 2 Gold | Echomancer, Phasewarper | ★2: HP 3070 | Poker Trick |
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
-| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335 | Phantom Execution |
-| Thamuz | 5 Gold | Echomancer, Weapon Master | ★2: HP 8435* | Cauterant Inferno |
-| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580 | Speedy Lightwheel |
+| Layla | 5 Gold | Chrono Wanderer, Marksman | ★2: HP 6417, ATK 450* | Void Projectile |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+| Tigreal | 3 Gold | Echomancer, Defender | ★2: HP 4705, ATK 205 | Implosion |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Harley | 2 Gold | Echomancer, Phasewarper | ★2: HP 3070, ATK 130 | Poker Trick |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+| Lancelot | 5 Gold | Kishin, Phasewarper | ★2: HP 7335, ATK 365 | Phantom Execution |
+| Thamuz | 5 Gold | Echomancer, Weapon Master | ★2: HP 8435, ATK 365 | Cauterant Inferno |
+| Karrie | 4 Gold | Kishin, Marksman | ★2: HP 5580, ATK 235 | Speedy Lightwheel |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -875,23 +860,24 @@ Go Go Card terdeteksi: Gusion's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Divine Execu
 - 7/9 hero di Level 9; crystal: -
 
 - Masih ada 2 slot kosong di Level 9.
+- Belum aktif: Astro Power 1/2 (Hilda); Weapon Master 1/2 (Franco).
 - Stargazer tinggal 1 lagi ke tingkat 4 (crystal Stargazer atau hero: Luo Yi, Karina, Mathilda).
 - Mistbender tinggal 1 lagi ke tingkat 3 (crystal Mistbender atau hero: Aldous).
-- Astro Power 1/2 belum aktif (hero: Hilda).
-- Weapon Master 1/2 belum aktif (hero: Franco).
 - Lunox: Patch 20/10 (server) Hybrid ATK ★2: 200 → 185
 
 ## Hero
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Eudora | 1 Gold | Dragoncaller, Stargazer | ★2: HP 2790 | Forked Lightning |
-| Uranus | 1 Gold | Mistbender, Dauntless | ★2: HP 3655 | Energy Awakening |
-| Nana | 5 Gold | Mistbender, Stargazer | ★2: HP 6415 | Magic Boomerang |
-| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580* | Power of Chaos: Darkening |
-| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525 | Hook Shock |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
-| Balmond | 2 Gold | Dragoncaller, Dauntless | ★2: HP 4020 | Cyclone Sweep |
+| Eudora | 1 Gold | Dragoncaller, Stargazer | ★2: HP 2790, ATK 120 | Forked Lightning |
+| Uranus | 1 Gold | Mistbender, Dauntless | ★2: HP 3655, ATK 160 | Energy Awakening |
+| Nana | 5 Gold | Mistbender, Stargazer | ★2: HP 6415, ATK 285 | Magic Boomerang |
+| Lunox | 4 Gold | Kishin, Stargazer | ★2: HP 5580, ATK 185* | Power of Chaos: Darkening |
+| Franco | 3 Gold | Kishin, Dauntless, Weapon Master | ★2: HP 5525, ATK 205 | Hook Shock |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+| Balmond | 2 Gold | Dragoncaller, Dauntless | ★2: HP 4020, ATK 175 | Cyclone Sweep |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 

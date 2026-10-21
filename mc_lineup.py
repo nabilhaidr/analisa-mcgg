@@ -21,8 +21,8 @@ import re
 import sys
 from pathlib import Path
 
-from mc_common import (Names, chip, esc, img, load_season, md_table, page, slug, split_list, stamp, table, ul,
-                       write_report)
+from mc_common import (Names, chip, esc, img, load_season, md_table, page, rel_src, shown_path, slug, split_list, stamp,
+                       table, ul, write_report)
 
 STAR = re.compile(r"\s*(?:[:*★]\s*|\s+★?)([123])\s*$")
 
@@ -425,10 +425,10 @@ def main():
         lineups = [{"title": f"Baris {f['row']}", "heroes": f["heroes"], "stars": {}, "crystals": crystals, "cards": f["cards"]}
                    for f in found]
         picked = ", ".join(str(f["row"]) for f in found)
-        intro = (f'<section><h2>Screenshot</h2><p><img class="shot" src="{esc(args.screenshot.resolve().as_uri())}" alt=""></p>'
+        intro = (f'<section><h2>Screenshot</h2><p><img class="shot" src="{esc(rel_src(args.screenshot, folder))}" alt=""></p>'
                  f'<p class="muted">{total} baris hero dikenali dari ikon; dianalisa: baris {picked}. '
                  "Crystal tidak terlihat dari ikon: isi --crystals bila ada.</p></section>")
-        intro_md = [f"Screenshot: `{args.screenshot}` · {total} baris hero dikenali; dianalisa: baris {picked}", ""]
+        intro_md = [f"Screenshot: `{shown_path(args.screenshot)}` · {total} baris hero dikenali; dianalisa: baris {picked}", ""]
     elif args.heroes:
         heroes, unknown = parse_heroes(split_list(args.heroes), game.hero_names)
         if unknown:

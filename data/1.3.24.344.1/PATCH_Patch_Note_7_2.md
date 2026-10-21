@@ -1,9 +1,9 @@
 # Analisa Patch — Patch Note 7.2
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 17:20_
 
-- 32 item berubah dari 17 screenshot: 3 -, 12 ↑ buff, 10 baru, 7 ↓ nerf
-- Status di data: 10 baru, 2 dihapus (server), 14 diterapkan server · tercatat, 3 sudah di file game, 10 teks, 2 tidak bisa dipastikan
+- 31 item berubah dari 17 screenshot: 1 -, 11 ↑ buff, 10 baru, 7 ↓ nerf, 2 ~ penyesuaian
+- Status di data: 10 baru, 2 dihapus (server), 17 diterapkan server · tercatat, 2 sudah di file game, 8 teks
 
 ## Penyesuaian Commander
 
@@ -16,8 +16,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
 | Lukas | - | Makhluk Suci akan menaikkan Level Bintang-nya setelah mencapai ambang batas EXP tertentu |  | teks |
 | Lukas | - | Skill Bintang 2 "Sacred Gift": Hero yang ditempatkan ke Altar juga akan memberikan Gold secara acak, berdasarkan harga Gold dari Hero tersebut |  | teks |
 | Vexana | ↑ buff | Vexana's Power: Selama 4 babak pertama Go Go Box, pilih 1 hadiah tambahan dari pilihan yang tersisa dan dapatkan 1 Equipment Reforger |  | teks |
-| Dyrroth | ↑ buff | Abyssal Devourer: Mulai Babak 1- | 4 → 1 (-75%) | sudah di file game |
-| Dyrroth | ↑ buff | Abyssal Favor: Dyrroth mendapatkan | 1 → 3 (+200%) | tidak bisa dipastikan |
+| Dyrroth | ↑ buff | Abyssal Devourer: Mulai Babak | I-4 → I-3 | diterapkan server · tercatat di server_patch.json |
+| Dyrroth | ↑ buff | Abyssal Favor: Dyrroth mendapatkan | 1 → 3 (+200%) | diterapkan server (file game: 2) · tercatat di server_patch.json |
 | Aurora | ↑ buff | Frost Treasures: Meningkatkan peluang mendapatkan Magic Crystal |  | teks |
 | Aurora | ↑ buff | Memberikan hadiah acak senilai minimal | 7 → 8 (+14%) | diterapkan server · tercatat di server_patch.json |
 
@@ -51,19 +51,17 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
 | Critical Spellcraft | baru | Skill Hero Mage berpeluang memberikan DMG tambahan |  | baru |
 | Novel Equipment | ↑ buff | Mendapatkan | 2 → 3 (+50%) | sudah di file game |
 | Magic Surge | ↑ buff | Hero baris belakang mendapatkan | 80% → 100% (+25%) | sudah di file game |
-| Dimen•innn' Qhnt | ↑ buff | (tanpa keterangan) |  | teks |
 | Dimensional Shot Ⅰ | ↑ buff | DMG yang diberikan ke target meningkat sebesar | 4% → 5% (+25%) | diterapkan server · tercatat di server_patch.json |
 | Dimensional Shot Ⅱ | ↑ buff | DMG yang diberikan ke target meningkat sebesar | 6% → 8% (+33%) | diterapkan server · tercatat di server_patch.json |
-| Death Oracle | ↑ buff | Commander mendapatkan | 30 → 35 (+17%) | tidak bisa dipastikan |
+| Death Oracle | ↑ buff | Commander mendapatkan | 30 → 35 (+17%) | diterapkan server · tercatat di server_patch.json |
 | Lunox's Power | ↓ nerf | Lunox's Power: Mendapatkan | 10 → 8 (-20%) | diterapkan server · tercatat di server_patch.json |
 | Lunox's Power | ↓ nerf | Saat pertama kali mengaktifkan Sinergi hingga berjumlah 6, mendapatkan | 20 → 18 (-10%) | diterapkan server · tercatat di server_patch.json |
-| Angela's Power | ↓ nerf | Hero yang dilindungi menembakkan Love Energy setiap 3 detik, memberikan 120/230/390 | 1640 → 100/190/300/500 (-70%) | diterapkan server · tercatat di server_patch.json |
+| Angela's Power | ↓ nerf | Hero yang dilindungi menembakkan Love Energy setiap 3 detik, memberikan | 120/230/390/640 → 100/190/300/500 (-22%) | diterapkan server · tercatat di server_patch.json |
 | Divine Execution | ↓ nerf | Langsung mengeliminasi lawan dengan HP di bawah | 16% → 14% (-12%) | diterapkan server · tercatat di server_patch.json |
 | Healing Fountain | ↓ nerf | Mendapatkan | 6 → 4 (-33%) | diterapkan server · tercatat di server_patch.json |
-| Transmutation | ↓ nerf | Setelah 4 5 babak, Go Go Ca?d ini berubah menjadi Go Go Card Kualitas Oranye acak |  | teks |
 | Transmutation | ↓ nerf | Setelah | 4 → 5 (+25%) | diterapkan server · tercatat di server_patch.json |
-| Solid Alliance Ⅰ | - | Dihapus sementara pada season ini |  | dihapus (server) |
-| Solid Alliance Ⅱ | - | Dihapus sementara pada season ini |  | dihapus (server) |
+| Solid Alliance Ⅰ | ~ penyesuaian | Dihapus sementara pada season ini |  | dihapus (server) |
+| Solid Alliance Ⅱ | ~ penyesuaian | Dihapus sementara pada season ini |  | dihapus (server) |
 
 ## Penyesuaian Equipment
 
@@ -84,20 +82,20 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
 
 ## Screenshot
 
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1850).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1851).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1852).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1853).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1854).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1855).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1856).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1857).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1858).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1859).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1860).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1861).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1862).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1863).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1864).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1865).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1866).png`
+- `screenshot/season 7/update patch/Screenshot (1850).png`
+- `screenshot/season 7/update patch/Screenshot (1851).png`
+- `screenshot/season 7/update patch/Screenshot (1852).png`
+- `screenshot/season 7/update patch/Screenshot (1853).png`
+- `screenshot/season 7/update patch/Screenshot (1854).png`
+- `screenshot/season 7/update patch/Screenshot (1855).png`
+- `screenshot/season 7/update patch/Screenshot (1856).png`
+- `screenshot/season 7/update patch/Screenshot (1857).png`
+- `screenshot/season 7/update patch/Screenshot (1858).png`
+- `screenshot/season 7/update patch/Screenshot (1859).png`
+- `screenshot/season 7/update patch/Screenshot (1860).png`
+- `screenshot/season 7/update patch/Screenshot (1861).png`
+- `screenshot/season 7/update patch/Screenshot (1862).png`
+- `screenshot/season 7/update patch/Screenshot (1863).png`
+- `screenshot/season 7/update patch/Screenshot (1864).png`
+- `screenshot/season 7/update patch/Screenshot (1865).png`
+- `screenshot/season 7/update patch/Screenshot (1866).png`

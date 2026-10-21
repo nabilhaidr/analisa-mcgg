@@ -12,7 +12,9 @@ Pemakaian debug (Python sistem: opencv-python, numpy, pillow):
   python mc_vision.py <screenshot> [--kind hero|synergy|card|equipment] [--out annotated.png]
 """
 import argparse
+import os
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import cv2
@@ -28,6 +30,12 @@ THRESHOLD = {"hero": 0.72, "synergy": 0.7, "card": 0.8, "equipment": 0.7}
 # smooth backgrounds; on the 2026-10-21 result screen true heroes had 8-20 and false hits 30-75.
 MAX_DIFF = {"hero": 27, "synergy": 48, "card": 40, "equipment": 32}  # synergy icons get a tier-coloured backdrop
 WORK_WIDTH = 1600  # screenshots are matched at this width (faster; enough detail for 30+ px icons)
+WORKERS = os.cpu_count() or 1  # cv2.matchTemplate releases the GIL: icons are matched in parallel threads
+
+
+def parallel(fn, jobs):
+    with ThreadPoolExecutor(WORKERS) as ex:
+        return list(ex.map(fn, jobs))
 
 
 def to_bgr(image):
@@ -83,13 +91,13 @@ def estimate_size(img, icons, kind):
     small = cv2.resize(img, (img.shape[1] // 2, img.shape[0] // 2), interpolation=cv2.INTER_AREA)
     sizes = [small.shape[0] * f for f in np.geomspace(0.035, 0.11, 16)]
     best = (0, None)
+
+    def score(job):
+        s, icon = job
+        t = template(icon, s, kind)
+        return None if t.shape[0] < 8 or t.shape[1] < 8 else float(cv2.matchTemplate(small, t, cv2.TM_CCOEFF_NORMED).max())
     for s in sizes:
-        scores = []
-        for icon in icons.values():
-            t = template(icon, s, kind)
-            if t.shape[0] < 8 or t.shape[1] < 8:
-                continue
-            scores.append(cv2.matchTemplate(small, t, cv2.TM_CCOEFF_NORMED).max())
+        scores = [x for x in parallel(score, [(s, icon) for icon in icons.values()]) if x is not None]
         top = float(np.mean(sorted(scores)[-6:])) if scores else 0
         if top > best[0]:
             best = (top, s * 2)
@@ -107,19 +115,23 @@ def detect(image, icons, kind="hero", size=None, threshold=None):
         return []
     threshold = threshold or THRESHOLD[kind]
     x0f, y0f = INNER[kind][0], INNER[kind][1]
-    found = []
-    for s in (size * 0.95, size, size * 1.05):
+
+    def match(job):
+        s, name, icon = job
         h = s * ASPECT.get(kind, 1)
-        for name, icon in icons.items():
-            t = template(icon, s, kind)
-            res = cv2.matchTemplate(img, t, cv2.TM_CCOEFF_NORMED)
-            peaks = (res >= threshold) & (res == cv2.dilate(res, np.ones((max(3, int(s / 2)),) * 2, np.uint8)))
-            for y, x in zip(*np.nonzero(peaks)):
-                patch = img[y:y + t.shape[0], x:x + t.shape[1]]
-                if np.abs(patch.astype(np.int16) - t.astype(np.int16)).mean() > MAX_DIFF[kind]:
-                    continue
-                found.append((float(res[y, x]), name, (x - x0f * s) / scale, (y - y0f * h) / scale, s / scale))
-    found.sort(reverse=True)
+        t = template(icon, s, kind)
+        res = cv2.matchTemplate(img, t, cv2.TM_CCOEFF_NORMED)
+        peaks = (res >= threshold) & (res == cv2.dilate(res, np.ones((max(3, int(s / 2)),) * 2, np.uint8)))
+        out = []
+        for y, x in zip(*np.nonzero(peaks)):
+            patch = img[y:y + t.shape[0], x:x + t.shape[1]]
+            if np.abs(patch.astype(np.int16) - t.astype(np.int16)).mean() > MAX_DIFF[kind]:
+                continue
+            out.append((float(res[y, x]), name, (x - x0f * s) / scale, (y - y0f * h) / scale, s / scale))
+        return out
+    jobs = [(s, name, icon) for s in (size * 0.95, size, size * 1.05) for name, icon in icons.items()]
+    found = [f for part in parallel(match, jobs) for f in part]
+    found.sort(reverse=True)  # the order of the threads does not matter
     kept = []
     for score, name, x, y, s in found:  # one icon per spot: keep the best score
         if all((x - k["x"]) ** 2 + (y - k["y"]) ** 2 > (0.6 * min(s, k["size"])) ** 2 for k in kept):

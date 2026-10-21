@@ -1,0 +1,8 @@
+# Paket Python untuk alat analisa (mc_lineup.py, mc_patch.py, mc_match.py, mc_vision.py, video_frames.py, mc_validate.py).
+# Windows dan Linux: pip install -r requirements.txt
+# mc_data.py / mc_tables.py / mc_images.py (ekstraksi file game) memakai .venv terpisah: UnityPy, capstone, pycryptodome, pillow.
+numpy
+pillow
+opencv-python         # mc_vision.py (deteksi ikon); juga dibutuhkan rapidocr_onnxruntime
+av                    # video_frames.py / mc_match.py --video (PyAV, bisa HEVC)
+rapidocr_onnxruntime  # OCR di luar Windows dan untuk layar hasil (mc_ocr.py); di Windows opsional (ada OCR bawaan)

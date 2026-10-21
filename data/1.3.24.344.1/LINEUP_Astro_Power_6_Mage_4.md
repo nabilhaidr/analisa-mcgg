@@ -1,6 +1,6 @@
 # Analisa Lineup — Astro Power 6, Mage 4
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 22:46_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 16:53_
 
 Target: **Astro Power 6, Mage 4** · 9 slot · crystal tetap - · crystal bebas 1
 
@@ -18,13 +18,7 @@ Odette, Gord, Irithel, Vexana, Hilda, Kadita, Karina, Martis, Alice
 - 9/9 hero di Level 9; crystal: Astro Power
 - Commander: Minotaur
 
-- Enchanted Tales 1/2 belum aktif (hero: Vexana).
-- Marksman 1/2 belum aktif (hero: Irithel).
-- Phasewarper 1/2 belum aktif (hero: Kadita).
-- Shadeweaver 1/2 belum aktif (hero: Kadita).
-- Stargazer 1/2 belum aktif (hero: Karina).
-- Swiftblade 1/2 belum aktif (hero: Karina).
-- Weapon Master 1/2 belum aktif (hero: Martis).
+- Belum aktif: Enchanted Tales 1/2 (Vexana); Marksman 1/2 (Irithel); Phasewarper 1/2 (Kadita); Shadeweaver 1/2 (Kadita); Stargazer 1/2 (Karina); Swiftblade 1/2 (Karina); Weapon Master 1/2 (Martis).
 - 2 hero 5 Gold (Odette, Alice): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Irithel: Patch 20/10 (server) Batas Mana ★3: 100 → 90
 - Karina: Patch 7.2 (server) Hybrid ATK ★2/★3: 215/285 → 200/260
@@ -33,15 +27,17 @@ Odette, Gord, Irithel, Vexana, Hilda, Kadita, Karina, Martis, Alice
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415 | Swan Song |
-| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580 | Mystic Gush |
-| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025 | Strafe |
-| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580 | Eternal Guard |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
-| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905 | Ocean Ode |
-| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635* | Dance of Death |
-| Martis | 2 Gold | Astro Power, Weapon Master | ★2: HP 3935 | Decimation |
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
+| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415, ATK 265 | Swan Song |
+| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580, ATK 200 | Mystic Gush |
+| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025, ATK 250 | Strafe |
+| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580, ATK 220 | Eternal Guard |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905, ATK 155 | Ocean Ode |
+| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635, ATK 200* | Dance of Death |
+| Martis | 2 Gold | Astro Power, Weapon Master | ★2: HP 3935, ATK 180 | Decimation |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -127,13 +123,7 @@ Odette, Gord, Irithel, Vexana, Hilda, Kadita, Karina, Minotaur, Alice
 - 9/9 hero di Level 9; crystal: Astro Power
 - Commander: Minotaur
 
-- Defender 1/2 belum aktif (hero: Minotaur).
-- Enchanted Tales 1/2 belum aktif (hero: Vexana).
-- Marksman 1/2 belum aktif (hero: Irithel).
-- Phasewarper 1/2 belum aktif (hero: Kadita).
-- Shadeweaver 1/2 belum aktif (hero: Kadita).
-- Stargazer 1/2 belum aktif (hero: Karina).
-- Swiftblade 1/2 belum aktif (hero: Karina).
+- Belum aktif: Defender 1/2 (Minotaur); Enchanted Tales 1/2 (Vexana); Marksman 1/2 (Irithel); Phasewarper 1/2 (Kadita); Shadeweaver 1/2 (Kadita); Stargazer 1/2 (Karina); Swiftblade 1/2 (Karina).
 - 2 hero 5 Gold (Odette, Alice): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Irithel: Patch 20/10 (server) Batas Mana ★3: 100 → 90
 - Karina: Patch 7.2 (server) Hybrid ATK ★2/★3: 215/285 → 200/260
@@ -142,15 +132,17 @@ Odette, Gord, Irithel, Vexana, Hilda, Kadita, Karina, Minotaur, Alice
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415 | Swan Song |
-| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580 | Mystic Gush |
-| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025 | Strafe |
-| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580 | Eternal Guard |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
-| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905 | Ocean Ode |
-| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635* | Dance of Death |
-| Minotaur | 1 Gold | Astro Power, Defender | ★2: HP 3655 | Motivation Roar |
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
+| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415, ATK 265 | Swan Song |
+| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580, ATK 200 | Mystic Gush |
+| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025, ATK 250 | Strafe |
+| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580, ATK 220 | Eternal Guard |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+| Kadita | 3 Gold | Shadeweaver, Mage, Phasewarper | ★2: HP 3905, ATK 155 | Ocean Ode |
+| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635, ATK 200* | Dance of Death |
+| Minotaur | 1 Gold | Astro Power, Defender | ★2: HP 3655, ATK 160 | Motivation Roar |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 
@@ -236,12 +228,7 @@ Odette, Gord, Irithel, Vexana, Hilda, Karina, Martis, Zhuxin, Alice
 - 9/9 hero di Level 9; crystal: Astro Power
 - Commander: Minotaur
 
-- Enchanted Tales 1/2 belum aktif (hero: Vexana).
-- Marksman 1/2 belum aktif (hero: Irithel).
-- Starbelle 1/2 belum aktif (hero: Zhuxin).
-- Stargazer 1/2 belum aktif (hero: Karina).
-- Swiftblade 1/2 belum aktif (hero: Karina).
-- Weapon Master 1/2 belum aktif (hero: Martis).
+- Belum aktif: Enchanted Tales 1/2 (Vexana); Marksman 1/2 (Irithel); Starbelle 1/2 (Zhuxin); Stargazer 1/2 (Karina); Swiftblade 1/2 (Karina); Weapon Master 1/2 (Martis).
 - 2 hero 5 Gold (Odette, Alice): masing-masing hanya 9 salinan di pool; ★2 butuh 3 salinan.
 - Irithel: Patch 20/10 (server) Batas Mana ★3: 100 → 90
 - Karina: Patch 7.2 (server) Hybrid ATK ★2/★3: 215/285 → 200/260
@@ -250,15 +237,17 @@ Odette, Gord, Irithel, Vexana, Hilda, Karina, Martis, Zhuxin, Alice
 
 | Hero | Harga | Sinergi | Stat | Skill |
 |---|---|---|---|---|
-| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415 | Swan Song |
-| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580 | Mystic Gush |
-| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025 | Strafe |
-| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580 | Eternal Guard |
-| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935 | Power of Wildness |
-| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635* | Dance of Death |
-| Martis | 2 Gold | Astro Power, Weapon Master | ★2: HP 3935 | Decimation |
-| Zhuxin | 2 Gold | Starbelle, Mage | ★2: HP 3070 | Lantern Flare |
-| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180 | Throne of Ruin |
+| Odette | 5 Gold | Astro Power, Mage | ★2: HP 6415, ATK 265 | Swan Song |
+| Gord | 4 Gold | SPECTRE, Mage | ★2: HP 5580, ATK 200 | Mystic Gush |
+| Irithel | 4 Gold | Astro Power, Marksman | ★2: HP 6025, ATK 250 | Strafe |
+| Vexana | 4 Gold | Enchanted Tales, Mage | ★2: HP 5580, ATK 220 | Eternal Guard |
+| Hilda | 3 Gold | Astro Power, Dauntless | ★2: HP 5935, ATK 205 | Power of Wildness |
+| Karina | 3 Gold | Astro Power, Swiftblade, Stargazer | ★2: HP 4635, ATK 200* | Dance of Death |
+| Martis | 2 Gold | Astro Power, Weapon Master | ★2: HP 3935, ATK 180 | Decimation |
+| Zhuxin | 2 Gold | Starbelle, Mage | ★2: HP 3070, ATK 130 | Lantern Flare |
+| Alice | 5 Gold | SPECTRE, Dauntless | ★2: HP 7180, ATK 345 | Throne of Ruin |
+
+_* = angka Patch server (bukan file game)._
 
 ## Sinergi
 

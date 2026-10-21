@@ -1,6 +1,6 @@
 # Analisa Patch — Penyesuaian 20-10
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 17:20_
 
 - 12 item berubah dari 5 screenshot: 1 -, 7 ↑ buff, 4 ↓ nerf
 - Status di data: 12 diterapkan server · tercatat, 4 teks
@@ -55,8 +55,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-21 23:10_
 
 ## Screenshot
 
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1881).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1882).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1883).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1884).png`
-- `F:\Magic Chess\patch-tracker\screenshot\season 7\update patch\Screenshot (1885).png`
+- `screenshot/season 7/update patch/Screenshot (1881).png`
+- `screenshot/season 7/update patch/Screenshot (1882).png`
+- `screenshot/season 7/update patch/Screenshot (1883).png`
+- `screenshot/season 7/update patch/Screenshot (1884).png`
+- `screenshot/season 7/update patch/Screenshot (1885).png`
