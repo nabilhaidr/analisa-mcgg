@@ -1,0 +1,21 @@
+{
+  "_catatan": [
+    "Aturan permainan yang TIDAK tertulis di tabel data game, dicatat MANUAL dari pengalaman bermain pengguna (bukan dari file game, bukan dari patch note).",
+    "mc_data.py menempelkannya ke equipment dengan id yang sama (field gameplay_notes di S<n>.json) dan menampilkannya di S<n>.html/.md sebagai 'Aturan dari pengalaman bermain'.",
+    "Berlaku untuk semua season yang memuat equipment itu; isi 'seasons' bila hanya untuk season tertentu. Hapus/ubah catatan bila aturan in-game berubah."
+  ],
+  "equipment": [
+    {
+      "id": 1101,
+      "name": "Go Go Magic Crystal",
+      "text": "Diambil dari Go Go Box. Kapasitas langsung +1 begitu diambil; ikonnya tetap terlihat di tas/panel item, tapi tidak perlu dipasang ke hero. Hanya bisa diambil sekali per pertandingan: setelah diambil, Go Go Magic Crystal (Kapasitas +1) di Go Go Box berikutnya tidak bisa dipilih lagi.",
+      "source": "Pengalaman bermain pengguna, 2026-10-21 (pertandingan ID 400762236246143209: diambil di Go Go Box setelah babak II-6, kapasitas level 9 menjadi 10). Data pendukung: MCEquipBase m_MaxStack = 1."
+    },
+    {
+      "id": 10001,
+      "name": "Choice Magic Crystal",
+      "text": "Magic Crystal Pilihan didapat 1 setiap masuk Fase II, III, dan IV, tetapi hanya 1 yang bisa aktif: memakai crystal Pilihan berikutnya menggantikan yang lama, jadi totalnya hanya +1 sinergi.",
+      "source": "Pengalaman bermain pengguna, 2026-10-21. Terlihat di pertandingan ID 400762236246143209: crystal Fase IV dipasang ke Yin (Dragon Altar) dan Dragon Altar tetap 6/10, karena crystal sebelumnya hilang."
+    }
+  ]
+}

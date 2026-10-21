@@ -1,0 +1,79 @@
+{
+  "_catatan": [
+    "Perubahan dari Patch Note in-game yang diterapkan server dan TIDAK ada di file game. Diisi manual dari screenshot Update Patch.",
+    "mc_data.py menampilkannya di laporan sebagai catatan 'Patch <x> (server)': nilai hero diperbarui di tabel, deskripsi kartu/skill commander diganti lewat pasangan 'replace' [teks lama, teks baru] (harus persis ada di deskripsi file game).",
+    "Kunci per season (\"7\"). heroes.stat: 'HP', 'Physical ATK', 'Magic ATK', 'Hybrid ATK' (= Physical + Magic), 'ATK Speed', 'Batas Mana Awal', 'Batas Mana'.",
+    "Jika update game berikutnya sudah memuat nilai baru, mc_data.py memberi tanda 'sudah masuk file game' dan catatan itu boleh dihapus.",
+    "hero_skills: seperti commanders (name = hero, skill = nama skill) + opsional attributes [[label, bintang, nilai baru]] untuk tabel Atribut Skill.",
+    "commanders / hero_skills / cards / synergies boleh hanya berisi 'text' tanpa 'replace' = catatan saja, bila angka yang berubah tidak ada di teks file game (mis. stat Johnny atau Turret). 'text' juga mengganti teks ringkasan perubahan."
+  ],
+  "7": [
+    {
+      "patch": "7.2",
+      "source": "Patch Note Season 7.2 (screenshot/season 7/update patch)",
+      "heroes": [
+        {"name": "Alpha", "stat": "HP", "stars": [1, 2], "old": [5000, 9500], "new": [5400, 10260]},
+        {"name": "X.Borg", "stat": "Hybrid ATK", "stars": [1, 2], "old": [240, 365], "new": [260, 395]},
+        {"name": "Gatotkaca", "stat": "Hybrid ATK", "stars": [1, 2], "old": [230, 345], "new": [250, 375]},
+        {"name": "Karina", "stat": "Hybrid ATK", "stars": [2, 3], "old": [215, 285], "new": [200, 260]},
+        {"name": "Mathilda", "stat": "Hybrid ATK", "stars": [2, 3], "old": [155, 210], "new": [145, 195]}
+      ],
+      "commanders": [
+        {"name": "Dyrroth", "skill": "Abyssal Devourer", "replace": [["Mulai Babak I-4", "Mulai Babak I-3"]]},
+        {"name": "Dyrroth", "skill": "Abyssal Favor", "replace": [["2 EXP Commander", "3 EXP Commander"]],
+         "note": "Patch note menulis 1 >> 3 EXP; file game berisi 2 EXP."},
+        {"name": "Aurora", "skill": "Frost Treasures", "replace": [["minimal 7 Gold", "minimal 8 Gold"]]}
+      ],
+      "cards": [
+        {"id": 2027, "name": "Dimensional Shot Ⅰ", "replace": [["sebesar 4%", "sebesar 5%"]]},
+        {"id": 1132, "name": "Dimensional Shot Ⅱ", "replace": [["sebesar 6%", "sebesar 8%"]]},
+        {"id": 59, "name": "Death Oracle", "replace": [["30 Shield", "35 Shield"]]},
+        {"id": 3017, "name": "Lunox's Power", "replace": [["Mendapatkan 10 Gold", "Mendapatkan 8 Gold"], ["20 Gold lagi", "18 Gold lagi"]]},
+        {"id": 3061, "name": "Angela's Power", "replace": [["100 / 190 / 320/540", "100 / 190 / 300 / 500"]],
+         "note": "Patch note menulis nilai lama 120/230/390/640; file game berisi 100/190/320/540."},
+        {"id": 507, "name": "Divine Execution", "replace": [["di bawah 16%", "di bawah 14%"]]},
+        {"id": 2017, "name": "Healing Fountain", "replace": [["mendapatkan 6 Gold", "mendapatkan 4 Gold"]]},
+        {"id": 1202, "name": "Transmutation", "replace": [["Setelah 4 babak", "Setelah 5 babak"]]},
+        {"id": 2015, "name": "Solid Alliance Ⅰ", "removed": true},
+        {"id": 1043, "name": "Solid Alliance Ⅱ", "removed": true}
+      ],
+      "notes": [
+        "Equipment gelombang kedua yang dijatuhkan creep pada Babak IV-3 kini selalu berisi Magic Crystal Faction acak."
+      ]
+    },
+    {
+      "patch": "20/10",
+      "source": "Patch Note Penyesuaian Keseimbangan (20/10) (screenshot/season 7/update patch, 1881–1885)",
+      "heroes": [
+        {"name": "Layla", "stat": "Hybrid ATK", "stars": [1, 2], "old": [260, 390], "new": [300, 450],
+         "note": "Patch note menulis nilai lama 260/390; file game berisi 220/330."},
+        {"name": "Novaria", "stat": "Hybrid ATK", "stars": [1, 2], "old": [175, 265], "new": [195, 295]},
+        {"name": "Thamuz", "stat": "Batas Mana", "stars": [1, 2], "old": [70, 70], "new": [50, 50]},
+        {"name": "Irithel", "stat": "Batas Mana", "stars": [3], "old": [100], "new": [90]},
+        {"name": "Lunox", "stat": "Hybrid ATK", "stars": [2], "old": [200], "new": [185]}
+      ],
+      "hero_skills": [
+        {"name": "Badang", "skill": "Fist Crack",
+         "replace": [["memiliki 50% peluang", "memiliki 25% peluang"], ["85% ATK/90% ATK/420% ATK", "85% ATK/90% ATK/800% ATK"]],
+         "attributes": [["Peningkatan DMG", 3, "800%"]],
+         "text": "Peluang meninju balik saat menerima DMG 50% → 25%; Pengali DMG Serangan Balik ★3 420% → 800%",
+         "note": "Pengali DMG per Fist Wind 50%/50%/225% juga dicantumkan di patch note, tanpa perubahan."}
+      ],
+      "commanders": [
+        {"name": "Layla", "skill": "Hologram: Destruction Rush", "replace": [["340 Physical DMG", "400 Physical DMG"]]},
+        {"name": "Johnson", "skill": "Johnny, Go!", "text": "Hybrid ATK Dasar Johnny ★3: 285 → 255"},
+        {"name": "Lukas", "skill": "Unleash the Beast", "text": "Makhluk Suci kini muncul di baris depan, bukan di baris belakang"},
+        {"name": "Vexana", "skill": "Unrestricted",
+         "replace": [["yang kamu pilih dan mendapatkan 13 Gold.", "yang kamu pilih. Mendapatkan 10 Gold pada setiap babak Go Go Box selama 3 babak Go Go Box pertama (total 30 Gold)."]],
+         "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold)",
+         "note": "Patch note menyebut skill I Want All of Them!, tapi 13 Gold di file game ada di skill Lv 2 Unrestricted."}
+      ],
+      "synergies": [
+        {"name": "Echomancer", "text": "Echo Energy yang dibutuhkan untuk menaikkan Chrono Wanderer ke ★2: 400 → 350"}
+      ],
+      "cards": [
+        {"id": 504, "name": "Turret of Guardians", "text": "Turret ★3: Hybrid ATK 590 → 530; HP Dasar 7.020 → 5.616"}
+      ]
+    }
+  ]
+}

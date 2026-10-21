@@ -1,0 +1,15 @@
+# Local Python environment and bytecode
+/.venv/
+__pycache__/
+*.py[cod]
+
+# Regenerable extraction and frame cache
+/cache/
+
+# Large raw recordings remain local
+/screenshot/**/*.mp4
+
+# Local credentials
+.env
+.env.*
+!.env.example
