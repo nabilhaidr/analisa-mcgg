@@ -5,15 +5,21 @@ Pemakaian (Python sistem: av, opencv-python, numpy, pillow; OCR lewat mc_ocr.py 
   python mc_match.py --result hasil.jpg --player CinCoeg            hanya layar hasil
 Opsi: --step 5 (detik per frame), --frames <folder> (pakai frame yang sudah diambil), --no-events (lewati OCR frame penuh =
 tanpa daftar kejadian), --ocr auto|windows|rapid, --season, --version.
-OCR: --ocr auto = OCR Windows untuk frame rekaman (di luar Windows: RapidOCR), dan RapidOCR untuk layar hasil bila terpasang
-(di screenshot hasil 21 Okt RapidOCR membaca 8/8 nama pemain, OCR Windows 3/8).
+OCR: --ocr auto = OCR Windows untuk frame rekaman (di luar Windows: RapidOCR), dan RapidOCR untuk layar hasil serta label
+babak yang tidak terbaca bila terpasang (di screenshot hasil 21 Okt RapidOCR membaca 8/8 nama pemain, OCR Windows 3/8; label
+pendek seperti IV-4, IV-6, V-1 sering terlewat OCR Windows).
 
 Cara kerja:
 - Frame diambil tiap --step detik (video_frames.extract, bisa HEVC ponsel). Cache kerja: cache/match/<nama>/.
 - Tata letak HUD dikenali dari rasio layar (ponsel 20:9 atau PC 16:9). Per frame, potongan babak, Gold, Level, dan daftar
-  pemain digabung jadi satu gambar lalu di-OCR.
+  pemain digabung jadi satu gambar lalu di-OCR. Label babak yang tidak terbaca: OCR potongan label saja (rounds/), lalu
+  dicocokkan dari tampilannya dengan label yang sudah terbaca di pertandingan yang sama (rounds_by_look).
 - HP tiap pemain diukur dari PANJANG BAR HP hijau (linear terhadap HP), dikalibrasi otomatis dengan angka HP yang terbaca
-  jelas oleh OCR; angka OCR dipakai bila cocok dengan bar (selisih <= 6).
+  jelas oleh OCR; angka OCR dipakai bila cocok dengan bar (selisih <= 6). Bar pendek (HP rendah) dibedakan dari ikon hati
+  lewat bentuknya. Saat bertarung dua baris teratas bergeser ke kiri (bar bisa terpotong) dan di kanannya ada angka jumlah
+  unit: angka HP hanya diambil dari teks yang sejajar dengan ujung kanan bar; bar terpotong/ber-shield hanya batas bawah.
+- Baris sendiri = nama kuning; salinan putih nama sendiri (baris "Mirror") diabaikan. Peringkat > 1 di layar hasil = HP 0
+  setelah babak terakhir yang masih menampilkan HP sendiri (angka 0 yang redup tidak terbaca OCR).
 - Kejadian (Go Go Card, Go Go Box, crystal Pilihan, naik level, VICTORY/DEFEAT, panel DMG) dibaca dari OCR frame penuh.
 - Layar hasil: hero dan Go Go Card tiap pemain dikenali dari ikon (mc_vision), nama/level dari OCR, sinergi dihitung dari
   hero (crystal tidak terlihat di layar hasil).
@@ -29,6 +35,7 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -49,7 +56,7 @@ LAYOUTS = {
 UPSCALE = 2  # HUD crops are enlarged before OCR (ocr_screens.ps1 enlarges 2x again)
 PARTS = ("round", "round_text", "gold", "level", "panel", "panel_text")  # *_text = white text on black (see text_only)
 HUD_DIR = "hud2"  # bump when PARTS changes: sheets are reused from disk
-ROUND_RE = re.compile(r"(?<![A-Za-z])([IVXl1|]{1,4})\s*[-–]\s*([1-6Il])(?!\d)")
+ROUND_RE = re.compile(r"(?<![A-Za-z])([IVXNl1|]{1,4})\s*[-–]\s*([1-6Il])(?!\d)")
 LEVEL_RE = re.compile(r"Leve[l1I|]\s*(\d{1,2})")
 EVENTS = [  # (regex on a frame's OCR text, kind)
     (r"Pilih Kartu Commander Power", "Pilih Kartu Power"),
@@ -113,35 +120,64 @@ def hud_sheet(im, layout, out):
     return offsets
 
 
+def bands(mask, min_px):
+    """[(y0, y1)] runs of consecutive rows with at least min_px set pixels."""
+    rows, out, y = mask.sum(1), [], 0
+    while y < len(rows):
+        if rows[y] >= min_px:
+            y2 = y
+            while y2 + 1 < len(rows) and rows[y2 + 1] >= min_px:
+                y2 += 1
+            out.append((y, y2))
+            y = y2
+        y += 1
+    return out
+
+
+def longest_run(cols):
+    """(start, end) of the longest run of consecutive column indexes."""
+    runs, start = [], cols[0]
+    for p, q in zip(cols, cols[1:]):
+        if q != p + 1:
+            runs.append((start, p))
+            start = q
+    runs.append((start, cols[-1]))
+    return max(runs, key=lambda t: t[1] - t[0])
+
+
 def hp_bars(im, layout):
-    """[(y in frame px, bar length px, shield)] of the green HP bars in the player list (bars fill from the right).
-    shield = white segment touching the green one: the green part is then shorter than the HP, so the bar is not used."""
+    """[(y in frame px, bar length px, shield, right end x in frame px, cut)] of the green HP bars in the player list (bars
+    fill from the right). The green part is shorter than the HP (so the bar is only a lower bound) when
+    - shield: a white segment just left of the green one. Only the left side is checked: during a fight the avatar, the
+      level badge and the white bracket with the unit count sit right of the bar;
+    - cut: the bar starts at the left edge of the crop (the two rows of the shown fight move left).
+    Long bars are rows with >= 15% of the panel green. Short bars (low HP, ~35 HP and less on the phone) are told from the
+    green heart icons by shape: a bar is a flat band (<= 1.17% of the frame height, phone 8 px / PC 10 px, ends about as wide
+    as its middle), a heart is taller and pointed at the bottom; the green chevrons of the fight bracket are far right."""
     W, H = im.size
     x0, y0, x1, y1 = LAYOUTS[layout]["panel"]
     a = np.asarray(im.crop((int(x0 * W), int(y0 * H), int(x1 * W), int(y1 * H)))).astype(int)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     green = (g > 150) & (g > r + 40) & (g > b + 40)
     white = (r > 200) & (g > 200) & (b > 200)
-    rows, out, y = green.sum(1), [], 0
-    while y < len(rows):
-        if rows[y] >= 0.15 * green.shape[1]:
-            y2 = y
-            while y2 + 1 < len(rows) and rows[y2 + 1] >= 0.15 * green.shape[1]:
-                y2 += 1
-            xs = np.where(green[y:y2 + 1].any(0))[0]
-            runs, start = [], xs[0]
-            for p, q in zip(xs, xs[1:]):
-                if q != p + 1:
-                    runs.append((start, p))
-                    start = q
-            runs.append((start, xs[-1]))
-            a0, a1 = max(runs, key=lambda t: t[1] - t[0])
-            band = white[max(0, y - 1):y2 + 2]
-            shield = band[:, max(0, a0 - 40):a0].sum() + band[:, a1 + 1:a1 + 41].sum() >= 4
-            out.append((int(y0 * H) + (y + y2) / 2, int(a1 - a0 + 1), bool(shield)))
-            y = y2 + 1
-        y += 1
-    return out
+    width, out = green.shape[1], []
+
+    def add(y, y2, a0, a1):
+        shield = white[max(0, y - 1):y2 + 2, max(0, a0 - 40):a0].sum() >= 4
+        out.append((int(y0 * H) + (y + y2) / 2, int(a1 - a0 + 1), bool(shield), int(x0 * W) + int(a1), bool(a0 == 0)))
+
+    long_rows = set()
+    for y, y2 in bands(green, 0.15 * width):
+        add(y, y2, *longest_run(np.where(green[y:y2 + 1].any(0))[0]))
+        long_rows.update(range(y - 1, y2 + 2))
+    for y, y2 in bands(green, 3):
+        if long_rows & set(range(y, y2 + 1)) or not 0.006 * H <= y2 - y + 1 <= 0.0117 * H:
+            continue
+        a0, a1 = longest_run(np.where(green[y:y2 + 1].any(0))[0])
+        run = green[y:y2 + 1, a0:a1 + 1].sum(1)
+        if a1 - a0 + 1 >= 3 and a1 <= 0.65 * width and min(run[0], run[-1]) >= 0.4 * run.max():
+            add(y, y2, a0, a1)
+    return sorted(out)
 
 
 def clean_name(t):
@@ -154,7 +190,7 @@ def parse_round(text):
     m = ROUND_RE.search(text or "")
     if not m:
         return None
-    roman = m.group(1).replace("1", "I").replace("l", "I").replace("|", "I")
+    roman = m.group(1).replace("1", "I").replace("l", "I").replace("|", "I").replace("N", "IV")  # RapidOCR: "N-4" = IV-4
     n = 1 if m.group(2) in "Il" else int(m.group(2))
     return f"{roman}-{n}" if roman in ROMAN else None
 
@@ -175,19 +211,19 @@ def read_frames(frames, work, layout):
     info = {}
     for f in frames:
         im = Image.open(f).convert("RGB")
-        info[f.stem] = (hud_sheet(im, layout, hud / f"{f.stem}.png"), im.size[1], hp_bars(im, layout))
+        info[f.stem] = (hud_sheet(im, layout, hud / f"{f.stem}.png"), im.size, hp_bars(im, layout), round_look(im, layout))
     log(f"OCR {len(frames)} potongan HUD ...")
     ocr = run_ocr(hud)
     recs = []
     for f in frames:
-        off, H, bars = info[f.stem]
+        off, (W, H), bars, look = info[f.stem]
         lines = ocr.get(f"{f.stem}.png", {}).get("lines", [])
         sheet = np.asarray(Image.open(hud / f"{f.stem}.png").convert("RGB")).astype(int)
         part = lambda name: [l for l in lines if off[name][0] <= l["y"] < off[name][0] + off[name][1]]
         text = lambda name: " ".join(l["t"] for l in part(name))
         gold = next((int(m) for m in re.findall(r"\d{1,3}", text("gold")) if int(m) <= 300), None)
         lv = LEVEL_RE.search(text("level"))
-        py0 = LAYOUTS[layout]["panel"][1] * H
+        px0, py0 = LAYOUTS[layout]["panel"][0] * W, LAYOUTS[layout]["panel"][1] * H
         to_frame = lambda l, name: py0 + (l["y"] - off[name][0]) / UPSCALE
 
         def yellow(l):  # own name is drawn in yellow
@@ -197,23 +233,85 @@ def read_frames(frames, work, layout):
             return bool(bright.sum() > 10 and ((b < 120) & bright).sum() > 0.5 * bright.sum())
         names = [(clean_name(l["t"]), to_frame(l, "panel"), yellow(l)) for l in part("panel")
                  if len(re.findall(r"[A-Za-z]", l["t"])) >= 3 and "Mirror" not in l["t"] and "Level" not in l["t"]]
-        nums = []  # (y, hp, shield shown): "•10 •86" = shield 10 + HP 86
+        nums = []  # (y, hp, shield shown, right end x): "•10 •86" = shield 10 + HP 86
         for name in ("panel", "panel_text"):
             for l in part(name):
                 found = re.findall(r"\d{1,3}", l["t"])
                 if 1 <= len(found) <= 2 and not re.search(r"[A-Za-z]{2}", l["t"]) and int(found[-1]) <= 100:
-                    nums.append((to_frame(l, name), int(found[-1]), len(found) == 2))
+                    nums.append((to_frame(l, name), int(found[-1]), len(found) == 2, px0 + l["r"] / UPSCALE))
         rows = []
-        for y, length, shield in bars:
+        for y, length, shield, x_end, cut in bars:
             above = [n for n in names if 0 < y - n[1] < 0.06 * H]
-            below = sorted((v for v in nums if 0 <= v[0] - y < 0.05 * H), key=lambda v: (not v[2], v[0] - y))
+            # the HP number ends where the bar ends; the unit count of a fight ("11" by the sword) is right of the avatar
+            below = sorted((v for v in nums if 0 <= v[0] - y < 0.05 * H and abs(v[3] - x_end) <= 0.012 * W),
+                           key=lambda v: (not v[2], v[0] - y))
             if above:
                 top = max(above, key=lambda n: n[1])
                 rows.append({"name": top[0], "yellow": top[2], "y": y, "bar": length, "shield": shield or bool(below and below[0][2]),
-                             "ocr": below[0][1] if below else None})
+                             "cut": cut, "ocr": below[0][1] if below else None})
         recs.append({"t": int(f.stem[2:]), "round": parse_round(text("round") + " " + text("round_text")), "gold": gold,
-                     "level": int(lv.group(1)) if lv and 1 <= int(lv.group(1)) <= 10 else None, "rows": rows})
+                     "level": int(lv.group(1)) if lv and 1 <= int(lv.group(1)) <= 10 else None, "rows": rows, "look": look})
+    missing = [(f, rec) for f, rec in zip(frames, recs) if not rec["round"] and hud_shown(rec)]
+    if missing:
+        labels = round_labels([f for f, _ in missing], work, layout)
+        for f, rec in missing:
+            rec["round"] = labels.get(f.stem)
     return recs
+
+
+def hud_shown(rec):
+    return bool(rec["rows"] or rec["gold"] is not None or rec["level"])
+
+
+def round_look(im, layout):
+    """Edge map of the round label pill (resized to 120x40, middle part): a label looks the same all match long, whatever
+    the background behind the semi-transparent pill."""
+    c = cv2.resize(np.asarray(crop(im.convert("L"), LAYOUTS[layout]["round"]), np.float32), (120, 40), interpolation=cv2.INTER_AREA)
+    return np.hypot(cv2.Sobel(c, cv2.CV_32F, 1, 0), cv2.Sobel(c, cv2.CV_32F, 0, 1))[4:36, 18:96]
+
+
+LOOK_MIN, LOOK_MARGIN = 0.93, 0.03
+
+
+def rounds_by_look(recs, numbers):
+    """numbers with the frames that have none (and show the HUD) filled from the look of their label pill: the kept label
+    whose frames match best (normalized cross-correlation of the edge maps, +-3 px), when it scores >= LOOK_MIN and beats
+    the next label by >= LOOK_MARGIN. Measured on the 15:38 and Kalea matches: every read frame matches its own label
+    (427/427, leave one out), and short labels missed by both OCR engines (I-4 on a busy background) get placed. A label
+    never read at all (III-4 of 15:38) has no frames to match: its frames score ~0.88 and stay open."""
+    known = [(cv2.copyMakeBorder(rec["look"], 3, 3, 3, 3, cv2.BORDER_CONSTANT, value=0), n)
+             for rec, n in zip(recs, numbers) if n and rec.get("look") is not None]
+    out = list(numbers)
+    for i, rec in enumerate(recs):
+        if out[i] or rec.get("look") is None or not hud_shown(rec):
+            continue
+        best = {}
+        for pad, n in known:
+            best[n] = max(best.get(n, -1.0), float(cv2.matchTemplate(pad, rec["look"], cv2.TM_CCOEFF_NORMED).max()))
+        top = sorted(best.values(), reverse=True) + [-1.0]
+        if best and top[0] >= LOOK_MIN and top[0] - top[1] >= LOOK_MARGIN:
+            out[i] = max(best, key=best.get)
+    return out
+
+
+def round_labels(frames, work, layout):
+    """{frame stem: round label} read from the round box alone (3x, black margin), for frames whose HUD sheet gave none.
+    OCR Windows misses many of these short labels (IV-4, IV-6, the dimmed V-1 behind the shop), also on a single crop;
+    RapidOCR reads most of them ("N-4" = IV-4), so --ocr auto uses it here when installed."""
+    folder = work / "rounds"
+    folder.mkdir(exist_ok=True)
+    for f in frames:
+        out = folder / f"{f.stem}.png"
+        if not out.exists():
+            c = crop(Image.open(f).convert("RGB"), LAYOUTS[layout]["round"])
+            c = c.resize((c.width * 3, c.height * 3), Image.LANCZOS)
+            pad = Image.new("RGB", (c.width + 60, c.height + 40))
+            pad.paste(c, (30, 20))
+            pad.save(out)
+    engine = "rapid" if OCR_ENGINE == "auto" and mc_ocr.rapid_available() else OCR_ENGINE
+    log(f"OCR label babak {len(frames)} frame tanpa label ({mc_ocr.describe(engine)}) ...")
+    ocr = run_ocr(folder, engine, [folder / f"{f.stem}.png" for f in frames])
+    return {f.stem: parse_round(" ".join(l["t"] for l in ocr.get(f"{f.stem}.png", {}).get("lines", []))) for f in frames}
 
 
 def name_key(name):
@@ -258,7 +356,8 @@ def cluster_players(recs, known=()):
 
 def calibrate(recs):
     """(a, b, n): bar = a * HP + b, fitted on rows whose OCR'd HP number is clean; fallback: longest bar = 100 HP."""
-    pairs = np.array([(r["bar"], r["ocr"]) for rec in recs for r in rec["rows"] if r["ocr"] and 5 <= r["ocr"] <= 100], float)
+    pairs = np.array([(r["bar"], r["ocr"]) for rec in recs for r in rec["rows"]
+                      if r["ocr"] and 5 <= r["ocr"] <= 100 and not r["shield"] and not r.get("cut")], float)
     if len(pairs) >= 8:
         keep = np.ones(len(pairs), bool)
         for _ in range(3):
@@ -289,25 +388,42 @@ def accept_rounds(times, numbers):
 
 
 def timeline(recs, clusters, cal, me=None):
-    """Per frame: round number, gold, level, {player: HP}. HP = OCR number when it agrees with the bar (or the bar shows a
-    shield), else the bar estimate. Rounds: labels outside the longest consistent chain are OCR slips (accept_rounds);
-    frames between two kept labels are split evenly (half/half, or thirds when one label in between was never read)."""
+    """Per frame: round number, gold, level, {player: HP}. HP = OCR number when it agrees with the bar (or is above it when
+    the bar is only a lower bound: shield or cut), else from the bar: the number read most often for that player with the
+    same bar length (+-1 px), or the calibrated estimate (off by ~1 HP). Own row = the yellow name; when a frame has one, a
+    white copy of the own name is the "Mirror" row (or the name above another player's unread name) and is skipped.
+    Rounds: labels outside the longest consistent chain are OCR slips (accept_rounds); frames without a label get one by its
+    look (rounds_by_look); frames between two kept labels are split evenly (half/half, or thirds when one label in between
+    was never read)."""
     a, b, _ = cal
-    out, numbers = [], []
+    est = lambda r: max(0.0, min(100.0, (r["bar"] - b) / a))
+    owned = []  # per frame: [(player, row)], first row per player
     for rec in recs:
-        hp = {}
+        rows, mine = {}, me and any(r.get("yellow") for r in rec["rows"])
         for r in rec["rows"]:
             p = me if (me and r.get("yellow")) else player_of(r["name"], clusters)
-            if not p or p in hp:  # first row wins ("<name> Mirror" copies come later in the list)
-                continue
-            est = max(0.0, min(100.0, (r["bar"] - b) / a))
-            if r["ocr"] is not None and (r["shield"] or abs(r["ocr"] - est) <= 6):
+            if p and p not in rows and not (mine and p == me and not r.get("yellow")):
+                rows[p] = r
+        owned.append(rows)
+    sure = defaultdict(Counter)  # (player, bar length) -> HP numbers read on a full bar that agrees
+    for rows in owned:
+        for p, r in rows.items():
+            if r["ocr"] is not None and not (r["shield"] or r.get("cut")) and abs(r["ocr"] - est(r)) <= 6:
+                sure[p, r["bar"]][r["ocr"]] += 1
+    out, numbers = [], []
+    for rec, rows in zip(recs, owned):
+        hp = {}
+        for p, r in rows.items():
+            lower = r["shield"] or r.get("cut")  # green part shorter than the HP: the bar is only a lower bound
+            if r["ocr"] is not None and (abs(r["ocr"] - est(r)) <= 6 or (lower and r["ocr"] >= est(r) - 6)):
                 hp[p] = r["ocr"]
-            elif not r["shield"]:
-                hp[p] = round(est)
+            elif not lower:
+                votes = sure[p, r["bar"] - 1] + sure[p, r["bar"]] + sure[p, r["bar"] + 1]
+                hp[p] = votes.most_common(1)[0][0] if votes else round(est(r))
         numbers.append(round_number(rec["round"]) if rec["round"] else None)
         out.append({"t": rec["t"], "round": None, "gold": rec["gold"], "level": rec["level"], "hp": hp})
-    accepted = accept_rounds([x["t"] for x in out], numbers)
+    times = [x["t"] for x in out]
+    accepted = accept_rounds(times, rounds_by_look(recs, accept_rounds(times, numbers)))
     idx = [i for i, n in enumerate(accepted) if n]
     for i in idx:
         out[i]["round"] = accepted[i]
@@ -336,8 +452,8 @@ def non_increasing(values):
 
 
 def rounds_table(tl, players):
-    """Per round: HP at the start (most common reading in the round's first 60%, made non-increasing per player), gold,
-    level; delta = next start - start."""
+    """Per round: HP at the start (most common reading in the round's first 60%, else its first reading; made non-increasing
+    per player), gold, level; delta = next start - start."""
     by_round = defaultdict(list)
     for x in tl:
         if x["round"]:
@@ -348,7 +464,7 @@ def rounds_table(tl, players):
         head = xs[:max(1, int(len(xs) * 0.6))]
         start = {}
         for p in players:
-            vals = [x["hp"][p] for x in head if p in x["hp"]]
+            vals = [x["hp"][p] for x in head if p in x["hp"]] or [x["hp"][p] for x in xs if p in x["hp"]][:1]
             if vals:
                 start[p] = Counter(vals).most_common(1)[0][0]
         golds = [x["gold"] for x in xs if x["gold"] is not None]
@@ -574,10 +690,15 @@ def main():
             log("OCR frame penuh untuk kejadian ...")
             events = read_events(frames, d, {x["t"]: x["round"] for x in tl})
     final_rank = next((r["rank"] for r in final if me and norm(r["name"]) == norm(me)), None)
+    out_round = None
+    if final_rank and final_rank > 1:  # eliminated: HP 0 after the last round with own HP (the dimmed "0" is not read)
+        out_round = next((r for r in reversed(rounds) if me in r["start"]), None)
+        if out_round and me not in out_round["delta"]:
+            out_round["delta"][me] = -out_round["start"][me]
     title = f"Analisa Pertandingan — {name}"
     body, md = [], [f"# {title}", "", f"_{stamp(d)}_", ""]
 
-    me_hp = [r["start"][me] for r in rounds if me in r["start"]]
+    me_hp = [r["start"][me] for r in rounds if me in r["start"]] + ([0] if out_round else [])
     losses = sum(1 for r in rounds if (r["delta"].get(me) or 0) < 0)
     boxes = [("Peringkat", str(final_rank) if final_rank else "-"),
              ("HP akhir", str(me_hp[-1]) if me_hp else "-"),
@@ -607,7 +728,7 @@ def main():
         cells, md_rows = [], []
         for r in rounds:
             hp, dlt = r["start"].get(me), r["delta"].get(me)
-            res = "" if dlt is None else ("kalah" if dlt < 0 else "tidak kehilangan HP")
+            res = "" if dlt is None else ("kalah, tereliminasi" if r is out_round else "kalah" if dlt < 0 else "tidak kehilangan HP")
             cls = "nerf" if dlt is not None and dlt < 0 else "buff" if dlt == 0 else "muted"
             evs = "; ".join(dict.fromkeys(ev_by_round.get(r["round"], [])))
             cells.append([f"<b>{r['label']}</b>", esc(hp if hp is not None else "-"),
@@ -663,17 +784,24 @@ def main():
         method += [f"Tata letak: {layout}; frame tiap {args.step:g} detik; OCR: {mc_ocr.describe(OCR_ENGINE)}.",
                    f"HP dari panjang bar: HP = (panjang − {b:.1f}) / {a:.3f}" +
                    (f", dikalibrasi dari {n} angka HP yang terbaca OCR." if n else ", tanpa kalibrasi OCR (bar terpanjang = 100 HP)."),
-                   "HP awal babak = nilai terbanyak di 60% awal babak, lalu dibuat tidak pernah naik (nilai yang melanggar urutan "
-                   "digabung dengan tetangganya, diambil mediannya).",
-                   "Label babak dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke "
-                   "depan); frame di antara dua label dibagi rata.",
+                   "Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di "
+                   "samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. "
+                   "Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.",
+                   "HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat "
+                   "tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).",
+                   "Label babak: OCR HUD; bila kosong, OCR potongan label saja "
+                   f"({mc_ocr.describe('rapid' if OCR_ENGINE == 'auto' and mc_ocr.rapid_available() else OCR_ENGINE)}); bila masih "
+                   "kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai "
+                   "terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi "
+                   "rata.",
                    "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.",
                    "Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang "
                    "tampil, jadi tidak dipakai untuk menentukan hasil babak."]
     if final:
         method.append(f"Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "
                       f"({mc_ocr.describe(result_engine)}); "
-                      "peringkat = urutan baris.")
+                      "peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
+                                                     "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))
     body.append(f'<section><h2>Catatan metode</h2><ul>{"".join(f"<li>{esc(m)}</li>" for m in method)}</ul></section>')
     md += ["## Catatan metode", ""] + [f"- {m}" for m in method]
     out_html, out_md = write_report(folder, f"MATCH_{slug(name)}", page(title, "".join(body), stamp(d)), md)

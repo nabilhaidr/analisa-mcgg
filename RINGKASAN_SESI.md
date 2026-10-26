@@ -39,7 +39,7 @@ memastikan isinya sama dengan layar in-game (422 screenshot Season 7).
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Screenshot tumpang tindih digabung | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
-| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
+| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` |
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
@@ -273,6 +273,27 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - `mc_vision.py`: ikon dicocokkan paralel (hasil identik, ±3,8× lebih cepat di 4 inti).
     - Koreksi ringkasan: juara 2/3 pertandingan 15:38 memakai **Kishin 6** (ikon merah bertanduk), bukan SPECTRE 6.
 
+22. (2026-10-26) Repo lokal di-pull (`4062cb0`). `mc_lineup.py` (3 mode) dan `mc_patch.py` (20/10, 7.2) diuji di Windows: laporan
+    identik dengan repo. `mc_match.py` diverifikasi di Windows dengan rekaman 15:38 (ponsel) dan Kalea 02:25 (PC); frame diekstrak
+    ulang ke `cache/match/<nama>/frames`. Penyebab timeline meleset (dicek per frame, bacaan HP per frame ternyata benar):
+    - Saat bertarung dua baris teratas bergeser ke kiri; di kanannya braket pedang + jumlah unit ("11", "25"). Angka itu dibaca
+      sebagai HP, dan garis braket membuat baris dianggap ber-shield (angka OCR lalu dipercaya tanpa cek bar). Kini shield hanya
+      dicek di kiri bar (segmen putih), angka HP hanya teks yang ujung kanannya sejajar ujung kanan bar, bar yang menyentuh tepi
+      kiri crop = `cut` (batas bawah, seperti shield; PC: bar 64 px untuk HP 88).
+    - Bar < 15% lebar panel (HP ≲ 35 ponsel) tidak terdeteksi → baris sendiri hilang di late game. Kini bar pendek dikenali dari
+      bentuk (tinggi ≤ 1,17% tinggi frame, ujung rata); ikon hati lebih tinggi dan meruncing, chevron braket di kolom kanan.
+    - OCR Windows melewatkan label pendek (IV-4, IV-6, V-1 redup di belakang toko) bahkan pada potongan tersendiri. Kini frame
+      tanpa label di-OCR ulang dari potongan label 3× (`rounds/`, RapidOCR bila terpasang: "N-4" = IV-4), lalu sisanya dicocokkan
+      dari tampilan (peta tepi Sobel pil label, korelasi ≥ 0,93 dan unggul ≥ 0,03; uji leave-one-out 427/427 benar).
+    - Tanpa OCR, HP dari bar dikunci ke angka yang paling sering terbaca untuk pemain itu dengan panjang bar sama (selisih ±1 hilang);
+      baris nama putih sendiri (Mirror) diabaikan bila ada baris kuning; HP awal babak = bacaan pertama bila 60% awal kosong;
+      peringkat > 1 = HP 0 setelah babak terakhir dengan HP sendiri ("0" redup tidak terbaca OCR Windows).
+    Hasil: 15:38 cocok 23/23 babak (I-1 – V-1, kalah I-2/II-1/II-2/II-5/II-6/III-5/IV-1, HP akhir 32); Kalea 17/17 + I-4 (88 → 79),
+    IV-4 −18, IV-5 tereliminasi (peringkat 4). Hanya OCR Windows: 15:38 22/23 (V-1 tidak terbaca), Kalea 17/17. RapidOCR 1.2.3
+    dipasang di Python lokal (OpenCV ikut naik ke 5.0.0): layar hasil 8/8 nama + level di kedua pertandingan. Laporan
+    `MATCH_21_Okt_15_38_Minotaur` dan `MATCH_21_Okt_02_25_Kalea_PC` dibuat ulang; 4 frame kunci lama yang tidak dirujuk dihapus.
+    Sisa: Gold awal babak kadang salah baca (0/6), babak non-tempur (II-3 pilih Go Go Card) memutus hitungan "kekalahan beruntun".
+
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
   skrip capstone + daftar simbol PDB (`text_all_syms.json`) di scratchpad sesi lama (folder sementara, bisa hilang).
@@ -294,11 +315,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
 - Ambil screenshot Toko Spirit Sand (beberapa refresh) untuk memverifikasi harga/nama dan bonus ATK +2%/+3% yang
   sebenarnya (3% atau 2%?), lalu set `STORE_VERIFIED`. `mc_validate.py` belum mencocokkan `special_store` dan `go_go_box` ke screenshot (`mc_diff.py` sudah membandingkannya antar versi).
-- **Verifikasi `mc_match.py` di Windows** (butuh rekaman/frame lokal): jalankan ulang kedua pertandingan dengan frame yang sudah
-  ada, lalu bandingkan dengan timeline yang diketahui (15:38: HP 100 → 95 di I-2 → 88/77 (II-1, II-2) → 67/60 (II-5, II-6) → 47
-  (III-5) → 32 (IV-1), juara di V-1; Kalea: kalah 8× beruntun Fase I–II sampai 24 HP, kalah IV-4 −18 dan IV-5). Contoh:
-  `python mc_match.py --frames cache\match\21_Okt_15_38_Minotaur\frames --result <3 screenshot 16-06-*> --player CinCoeg
-  --name "21 Okt 15-38 Minotaur"` (tambah `--ocr rapid` untuk membandingkan mesin OCR). `MATCH_21_Okt_15_38_Minotaur` dan
-  `MATCH_21_Okt_02_25_Kalea_PC` di repo masih dari kode lama (nama "baris N" di papan akhir, babak bergeser).
+- Analisa rekaman pertandingan yang belum diproses (21 Okt 22:15 dan 22:43, 22 Okt 03:18/04:55/06:16, 23 Okt 21:47/22:08) dengan
+  `mc_match.py`; layar Riwayat 22:15/22:44 ada di 5 screenshot `match` yang belum masuk repo.
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
