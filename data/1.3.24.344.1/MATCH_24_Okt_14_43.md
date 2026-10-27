@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 14-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:20_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:39_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -80,7 +80,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:20_
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
 | 1 | LYOU2K | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Miya, Zhuxin, Cici | Chou's Power, Fast Promotion, Premium Client II | SPECTRE 2, Dauntless 2, Starbelle 5, Shadeweaver 2, Marksman 2, Mage 2 |
-| 2 | baris 2 | 9 | Karina, Franco, Hilda, Aldous, Balmond, Uranus, Nana, Lunox, Mathilda | Yu Zhong's Power, Blessing Dauntless, Divine Execution | Astro Power 2, Stargazer 4, Kishin 2, Dauntless 4, Mistbender 3 |
+| 2 | 1254 | 9 | Karina, Franco, Hilda, Aldous, Balmond, Uranus, Nana, Lunox, Mathilda | Yu Zhong's Power, Blessing Dauntless, Divine Execution | Astro Power 2, Stargazer 4, Kishin 2, Dauntless 4, Mistbender 3 |
 | 3 | Yazz | - | Nana, Lunox, Franco, Uranus, Alice, Lancelot, Lolita, Aldous, Luo Yi | Lunox's Power, Badge Dauntless, Novel Equipment | Mistbender 3, Stargazer 3, Kishin 3, Dauntless 4 |
 | 4 | Giommy | - | Lancelot, Thamuz, X.Borg, Karrie, Sora, Angela, Dyrroth, Franco | Lunox's Power, Turret of Guardians, Shield of Fortune / Fortune+ | Kishin 5, Echomancer 2, Weapon Master 2, Chrono Wanderer 1, Dauntless 2, Scavenger 2 |
 | 5 | CinCoeg (kamu) | - | Moskov, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici | Fanny's Power, Reinforcement / Reinforcement+, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | Chrono Wanderer 1, Marksman 2, Echomancer 4, Defender 2, Starbelle 4, Mage 2 |
@@ -97,4 +97,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:20_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).

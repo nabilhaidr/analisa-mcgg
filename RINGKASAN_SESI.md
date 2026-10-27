@@ -39,7 +39,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Screenshot tumpang tindih digabung | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
-| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
+| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR, mis. huruf Korea, tampil sebagai potongan gambar `nama_<peringkat>.png`), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` |
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
@@ -304,7 +304,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       angka bukan nama.
     Hasil (peringkat, commander): 21 Okt 14-42 Minotaur 8, 15-00 Angela 7, 22-15 Fanny 5, 22-43 Fanny 1; 22 Okt 03-18 Fanny 4,
     04-55 Fanny 4, 06-16 Fanny 1; 23 Okt 21-47 Fanny 7, 22-08 Fanny 1; 24 Okt 02-51 Fanny 4, 14-43 Fanny 5, 15-06 Fanny 4,
-    22-17 Fanny 7, 22-40 Fanny 8, 23-02 Minotaur 1; 25 Okt 23-24 Fanny 5, 23-49 Fanny 7; 26 Okt 00-09 Minotaur 3. Semua 20
+    22-17 Fanny 7, 22-40 Fanny 8, 23-02 Minotaur 1; 25 Okt 23-24 Fanny 5, 23-49 Fanny 7; 26 Okt 00-09 Minotaur 4 (semula
+    tercatat 3, lihat 26). Semua 20
     laporan konsisten (peringkat > 1: total kehilangan HP tepat 100; juara: HP akhir = 100 − total). 4 rekaman tanpa screenshot
     hasil (23 Okt 21-47, 24 Okt 14-43, 22-40, 25 Okt 23-24) memakai layar hasil dari rekaman. Nama non-Latin (Korea, dst.)
     tidak terbaca RapidOCR → "baris N" (1 nama di 22-43, 24 Okt 02-51/14-43/15-06, 25 Okt 23-24).
@@ -318,6 +319,28 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     potret diisi manual; Aamon level 10 karena 10 hero). Dicek ke papan tulisan tangan di `analisis_lineup.py`: hero 46/46,
     Go Go Card 30/30, sinergi aktif + jumlahnya sama dengan lencana di atas papan. Screenshot yang tidak dipakai: `23-51-21`
     (tooltip Eudora menutupi Suyou) dan `23-51-57` (kartu pertama tampil Alucard's Power, di `23-52-43` sudah Luo Yi's Power).
+
+25. (2026-10-27) Nama "baris N" di layar hasil (5 laporan) ternyata 3 penyebab: OCR membaca "1254" tapi filter nama
+    mensyaratkan 2 huruf Latin; "FET KAT" terbaca 2 potongan (diambil "FET"); nama Hangul (마샤 주니어, 카일라 잘라), "—X—", dan
+    huruf hias "ᴍᴀʀsᴍᴇℓℓ" tidak menghasilkan teks sama sekali (model RapidOCR terpasang hanya Cina + Inggris, OCR Windows hanya
+    en-US/en-GB; potongan nama 3× juga kosong, "—X—" jadi "1X1"). `mc_match.py`: nama = teks di kolom nama (sejajar "Level N",
+    di atas tengah baris; huruf apa saja atau angka) + kata di sampingnya; bila tetap kosong, laporan menampilkan potongan
+    gambar nama dari layar hasil (`match_<nama>/nama_<peringkat>.png`). Uji 20 pertandingan di `cache/match/_result`: hanya
+    6 baris berubah, 158 sama. Dibuat ulang dari frame cache: `MATCH_21_Okt_22_43`, `24_Okt_02_51`, `24_Okt_14_43` ("1254"),
+    `24_Okt_15_06`, `25_Okt_23_24` (+ "FET KAT"); timeline, HP, kejadian, dan peringkat tidak berubah.
+    Ditemukan: peringkat 26 Okt 00-09 bergeser (diperbaiki di 26). Juga, **belum diperbaiki**: 7 laporan punya level kosong
+    karena "Level9" terbaca "Levelg"; pemain Korea di 22-43 muncul sebagai "FL-loi" di tabel HP (OCR HUD).
+
+26. (2026-10-27) Peringkat layar hasil 26 Okt 00-09: di screenshot `00-32-12` notifikasi "Saved screen recording" menutupi
+    hero baris 1 (XXMAATT), sehingga `grid_ranks` memakai baris CUMA BISA HAMUI sebagai peringkat 1 dan semua peringkat
+    bergeser satu; digabung dengan `00-32-16` (bersih) nama, hero, dan kartu dua baris bercampur, XXMAATT hilang, dan
+    peringkat sendiri tercatat 3. Angka peringkat di kolom kiri tidak terbaca OCR (hanya angka level di avatar), tapi baris
+    "Level N" terbaca 8/8 di semua layar hasil. `mc_match.py`: baris teratas = baris pertama dengan >= 2 hero, atau lebih
+    tinggi bila ada baris "Level N" tepat satu langkah grid (atau lebih) di atasnya; jarak antarbaris tetap dari baris hero.
+    `MATCH_26_Okt_00_09` dibuat ulang dari frame cache: **peringkat 4**, XXMAATT 1, CUMA BISA HAMUI 2, RR10 3, arkana 5,
+    Via Riana 6, KING BALDWIN 7, Xuu 8 (cocok dengan layar); timeline dan HP tidak berubah. Uji 20 pertandingan di
+    `cache/match/_result`: hanya 8 baris pertandingan ini yang berubah, 156 baris lain sama (nama, level, hero, kartu).
+    Xuu: 8 dari 9 hero terdeteksi (sama seperti sebelumnya).
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -343,3 +366,5 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
+- `mc_match.py`: "Levelg" = Level 9 (7 laporan level kosong). Nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
+  atau model RapidOCR Korea yang diunduh); sekarang tampil sebagai gambar.

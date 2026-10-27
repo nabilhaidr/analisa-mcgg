@@ -552,38 +552,87 @@ def read_result(paths, d, folder, engine=None):
         pts = re.search(r"(\d{3,5})\s*([+-]\d{1,3})\b", text)
         if pts:
             meta.setdefault("points", f"{pts.group(1)} ({pts.group(2)})")
-        for i, r, y in grid_ranks(heroes):
+        lv_lines = [l for l in lines if NOT_NAME.match(l["t"])]
+        col_x = statistics.median(l["x"] for l in lv_lines) if lv_lines else None  # names start where "Level N" starts
+        for i, r, y in grid_ranks(heroes, [(l["y"] + l["b"]) / 2 for l in lv_lines]):
             size = r[0]["size"]
             x_first = min(f["x"] for f in r)
             near = [l for l in lines if abs((l["y"] + l["b"]) / 2 - y) < size * 0.9 and l["r"] < x_first - size]
-            name = next((clean_name(l["t"]) for l in sorted(near, key=lambda l: l["y"])  # "AJ11" has 2 letters, badge "39" none
-                         if len(re.findall(r"[A-Za-z]", l["t"])) >= 2 and not re.match(r"\W*Leve[l1I|]", l["t"])),
-                        f"baris {i}")  # "Level" without its number is no name either
+            name = row_name(near, col_x, y, size)
             lv = next((int(m.group(1)) for l in near if (m := LEVEL_RE.search(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
-            cur = rows.setdefault(i, {"rank": i, "name": name, "level": lv, "heroes": [], "cards": []})
-            if cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"])):
+            cur = rows.setdefault(i, {"rank": i, "name": name or f"baris {i}", "level": lv, "heroes": [], "cards": []})
+            if name and (cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"]))):
                 cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
+            if not name and col_x is not None:
+                cur.setdefault("slot", (p, name_box(near, col_x, y, size, row_cards)))
             cur["heroes"] = list(dict.fromkeys(cur["heroes"] + [f["name"] for f in r]))
             cur["cards"] = list(dict.fromkeys(cur["cards"] + [f["name"] for f in row_cards]))
             cur["level"] = cur["level"] or lv
-    return [rows[k] for k in sorted(rows)], meta
+    out = [rows[k] for k in sorted(rows)]
+    for r in out:
+        if not r["name"].startswith("baris "):
+            r.pop("slot", None)  # read on another screenshot of the same screen
+    return out, meta
 
 
-def grid_ranks(rows):
-    """[(rank, hero row, y)] of the hero rows on a result screen. The rows are evenly spaced and rank 1 always shows
-    heroes, so rank = 1 + row steps below the first row with >= 2 heroes; a row with a single hero counts only when it
-    sits on that grid (+-15% of the spacing). The "Level N" lines are not used for this: on the 21 Okt 22:43 screen one
-    was read "Levelg", and the row of a player with one hero (SABRINA) was dropped, so two rows shared a rank."""
+NOT_NAME = re.compile(r"\W*Leve[l1I|]")  # the "Level N" line (also "Levelg", or without its number)
+
+
+def row_name(near, col_x, y, size):
+    """Player name of one result row, or None. The name is the top line above the row's middle that starts in the name
+    column (where "Level N" starts; the level badge under the avatar and the rank number sit further left), joined with
+    the words beside it on the same line ("FET" + "KAT"). Any script and digits count ("1254"); a name the OCR does not
+    know (Korean, small capitals) gives no line at all. Without a "Level" line on the screen: a line with >= 2 Latin
+    letters, as before."""
+    if col_x is None:
+        cand = [l for l in near if len(re.findall(r"[A-Za-z]", l["t"])) >= 2 and not NOT_NAME.match(l["t"])]
+    else:
+        cand = [l for l in near if abs(l["x"] - col_x) < 0.6 * size and (l["y"] + l["b"]) / 2 < y
+                and re.search(r"\w", l["t"]) and not NOT_NAME.match(l["t"])]
+    if not cand:
+        return None
+    first = min(cand, key=lambda l: l["y"])
+    mid, h = (first["y"] + first["b"]) / 2, first["b"] - first["y"]
+    words = [first] + sorted((l for l in near if l["x"] > first["r"] and abs((l["y"] + l["b"]) / 2 - mid) < 0.5 * h
+                              and not NOT_NAME.match(l["t"])), key=lambda l: l["x"])
+    return clean_name(" ".join(l["t"] for l in words)) or None
+
+
+def name_box(near, col_x, y, size, row_cards):
+    """(x0, y0, x1, y1) of the name in one result row: above its "Level N" line (else above the row's middle), from the
+    name column to the first Go Go Card. The report shows this picture when the OCR cannot read the name."""
+    lv = next((l for l in near if NOT_NAME.match(l["t"])), None)
+    if lv:
+        h = lv["b"] - lv["y"]
+        top, bottom = lv["y"] - 2.6 * h, lv["y"] - 0.1 * h
+    else:
+        top, bottom = y - 0.65 * size, y - 0.05 * size
+    right = min(c["x"] - 0.6 * c["size"] for c in row_cards) if row_cards else col_x + 3 * size
+    return int(col_x - 0.12 * size), int(top), int(right), int(bottom)
+
+
+def grid_ranks(rows, levels=()):
+    """[(rank, hero row, y)] of the hero rows on a result screen. The rows are evenly spaced, so rank = 1 + row steps
+    below the top row; a row with a single hero counts only when it sits on that grid (+-15% of the spacing). The top
+    row is the first row with >= 2 heroes, or higher when a "Level N" line (its y in `levels`) sits whole steps above
+    it: on the 26 Okt 00:32 screenshot a "Saved screen recording" notice covered the heroes of rank 1, and every rank
+    moved up by one. The "Level N" lines do not set the spacing: on the 21 Okt 22:43 screen one was read "Levelg", and
+    the row of a player with one hero (SABRINA) was dropped, so two rows shared a rank."""
     y_of = lambda r: sum(f["y"] for f in r) / len(r)
     full = [r for r in rows if len(r) >= 2]
     gaps = [b - a for a, b in zip(map(y_of, full), map(y_of, full[1:])) if b - a > 0]
     if not gaps:
         return [(i, r, y_of(r)) for i, r in enumerate(full, 1)]
     pitch = statistics.median(g / max(1, round(g / min(gaps))) for g in gaps)
+    top = y_of(full[0])
+    steps = [(y - top) / pitch for y in levels if -7.5 < (y - top) / pitch < 7.5]
+    if steps:  # the "Level N" line sits a fraction of a step below the hero row's middle
+        off = statistics.median(s - round(s) for s in steps)
+        top += min(0, min(round(s - off) for s in steps)) * pitch
     out = []
     for r in rows:
-        step = (y_of(r) - y_of(full[0])) / pitch
+        step = (y_of(r) - top) / pitch
         if -0.15 < step < 7.5 and (len(r) >= 2 or abs(step - round(step)) < 0.15):
             out.append((1 + round(step), r, y_of(r)))
     return out
@@ -807,11 +856,20 @@ def main():
             known = [h for h in r["heroes"] if h in game.H]
             counts, active = game.counts(known, []), game.active_tiers(known, [])
             mine = bool(me and norm(r["name"]) == norm(me))
-            rows.append([f"<b>{r['rank']}</b>", esc(r["name"]) + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
+            shown, md_name = esc(r["name"]), r["name"]
+            if r.get("slot"):  # name the OCR cannot read (Korean, small capitals): its picture from the result screen
+                src, box = r["slot"]
+                assets.mkdir(exist_ok=True)
+                pic = assets / f"nama_{r['rank']}.png"
+                Image.open(src).crop(box).save(pic)
+                alt = f"nama baris {r['rank']} (tidak terbaca OCR)"
+                shown = f'<img src="{esc(rel_src(pic, folder))}" alt="{esc(alt)}" title="{esc(alt)}" style="height:2.2em;vertical-align:middle">'
+                md_name = f"![{alt}]({rel_src(pic, folder)})"
+            rows.append([f"<b>{r['rank']}</b>", shown + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
                          " ".join(chip(h, game.H[h].get("icon"), f"c{game.H[h]['cost']}") for h in known),
                          " ".join(chip(c) for c in r["cards"]),
                          " ".join(chip(f"{s} {counts[s]}", game.S[s].get("icon")) for s in active)])
-            md_rows.append([r["rank"], r["name"] + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(known),
+            md_rows.append([r["rank"], md_name + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(known),
                             ", ".join(r["cards"]), ", ".join(f"{s} {counts[s]}" for s in active)])
         heads = ["#", "Pemain", "Level", "Hero", "Go Go Card", "Sinergi dari hero"]
         body.append(f'<section><h2>Papan akhir (layar hasil)</h2>{table(heads, rows)}'
@@ -853,8 +911,9 @@ def main():
     if final:
         method.append(("Layar hasil (frame akhir rekaman, tanpa screenshot)" if not args.result else "Layar hasil") +
                       ": hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "
-                      f"({mc_ocr.describe(result_engine)}); "
-                      "peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
+                      f"({mc_ocr.describe(result_engine)}); nama = teks di kolom nama (sejajar \"Level N\", huruf apa saja "
+                      "atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan "
+                      "gambar dari layar hasil; peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
                                                      "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))
     body.append(f'<section><h2>Catatan metode</h2><ul>{"".join(f"<li>{esc(m)}</li>" for m in method)}</ul></section>')
     md += ["## Catatan metode", ""] + [f"- {m}" for m in method]

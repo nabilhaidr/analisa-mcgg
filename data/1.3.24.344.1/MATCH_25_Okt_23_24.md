@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-24
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:04_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:41_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -56,7 +56,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:04_
 | Laurent.Elias-16 | 100 | 100 | 100 | 95 | 89 | 76 | 64 | 64 | 64 | 53 | 53 | 53 | 53 | 53 | 53 | 53 | 41 | 20 | 20 | 20 | 20 |  |
 | Etiya bang | 100 | 100 | 93 | 86 | 80 | 80 | 80 | 80 | 80 | 80 | 80 | 80 | 61 | 61 | 61 | 43 | 28 | 28 | 11 | 11 |  |  |
 | bachtimi | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 92 | 77 | 77 | 67 | 67 | 67 | 67 | 50 | 25 |  | 2 | 2 |  |
-| FET | 100 | 100 | 94 | 87 | 87 | 76 | 76 | 76 | 69 | 69 | 53 | 33 | 17 | 17 | 4 | 4 | 4 | 4 |  | 4 | 4 |  |
+| FET KAT | 100 | 100 | 94 | 87 | 87 | 76 | 76 | 76 | 69 | 69 | 53 | 33 | 17 | 17 | 4 | 4 | 4 | 4 |  | 4 | 4 |  |
 | ATENG | 100 | 100 | 93 | 88 | 83 | 83 | 70 | 70 | 57 | 46 | 37 | 26 | 26 | 26 | 7 |  |  |  |  |  |  |  |
 | MagsMeee | 100 | 100 | 94 | 94 | 87 | 75 | 65 | 65 | 57 | 46 | 46 | 10 | 10 | 10 | 10 | 1 | 1 | 1 | 1 | 1 | 1 |  |
 
@@ -84,9 +84,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:04_
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
 | 1 | Assiur | 8 | Dyrroth, Zilong, Karrie, Lunox, Franco | Johnson's Power, Pas de Deux, Badge Weapon Master | Kishin 4, Weapon Master 2 |
-| 2 | baris 2 | - | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
+| 2 | ![nama baris 2 (tidak terbaca OCR)](match_25_Okt_23_24/nama_2.png) | - | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
 | 3 | Laurent.Elias-16 | 8 | Saber, Karina, Yi Sun-shin, Novaria, Gusion, Mathilda, Natalia, Luo Yi, Eudora | Kagura's Power, Echomancer's Badge, Stargazer's Badge | Swiftblade 5, Stargazer 5, Dragon Altar 2, Chrono Wanderer 1, Dragoncaller 2 |
-| 4 | FET | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Hylos, Zhuxin, Karrie | Kalea's Power, Legacy of Valor, Marksman's Badge | SPECTRE 2, Dauntless 2, Starbelle 3, Shadeweaver 3, Marksman 2, Mage 2 |
+| 4 | FET KAT | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Hylos, Zhuxin, Karrie | Kalea's Power, Legacy of Valor, Marksman's Badge | SPECTRE 2, Dauntless 2, Starbelle 3, Shadeweaver 3, Marksman 2, Mage 2 |
 | 5 | CinCoeg (kamu) | - | Thamuz, X.Borg, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin | Fanny's Power, Apex Weapons, Trust Fund | Echomancer 4, Chrono Wanderer 1, Dauntless 2, Starbelle 4, Defender 2 |
 | 6 | bachtimi | - | Nana, Gatotkaca, Lolita, Lunox, Karina, Franco, Mathilda, Luo Yi, Eudora | Freya's Power, Emergency Rift, Steel Front | Mistbender 1, Stargazer 6, Chrono Wanderer 1, Dauntless 2, Kishin 2 |
 | 7 | Etiya bang | 9 | Alice, Fanny, Thamuz, X.Borg, Melissa, Lolita, Franco, Edith | Lukas's Power, Reinforcement / Reinforcement+, Glittering Jewels II | Dauntless 4, Starbelle 3, Weapon Master 2, Chrono Wanderer 1 |
@@ -101,4 +101,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:04_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).

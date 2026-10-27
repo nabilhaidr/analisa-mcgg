@@ -1,8 +1,8 @@
 # Analisa Pertandingan — 26 Okt 00-09
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:13_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 17:44_
 
-- **Peringkat:** 3
+- **Peringkat:** 4
 - **HP akhir:** 0
 - **Babak terbaca:** I-1 – IV-4 (20 babak), kehilangan HP di 9 babak
 - **Pertandingan:** ID 426715031399180648 · poin 1937 (+86)
@@ -10,7 +10,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:13_
 
 ## Catatan otomatis
 
-- Peringkat akhir 3.
+- Peringkat akhir 4.
 - HP hilang per fase: Fase I −13, Fase II −33, Fase III −49, Fase IV −5. Terbanyak di Fase III.
 - 4 babak beruntun tanpa kehilangan HP (sampai II-3).
 - 5 kekalahan beruntun (sampai III-2).
@@ -83,14 +83,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:13_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | CUMABISAHAMUI | 10 | Alpha, Alice, Layla, Odette, Thamuz, Gord, Sora, Phoveus, Lolita, Lancelot, X.Borg, Karrie, Lunox, Melissa, Franco, Kadita, Harley | Cyclops' Power, Trust Fund, Talisman Unleashed, Nana's Power, Premium Client I, Fully Loaded | SPECTRE 4, Dauntless 4, Chrono Wanderer 2, Marksman 3, Mage 3, Echomancer 3, Weapon Master 2, Scavenger 2, Kishin 4, Phasewarper 3, Shadeweaver 2 |
-| 2 | RR10 | 10 | Fanny, Lolita, Irithel, Miya, Cici, Melissa, Sora, Edith, Angela, Alpha, Alice, Layla, Odette, Thamuz, Gord, Phoveus | Diggie's Power, Fateful Dice, Starbelle's Badge, Cyclops' Power, Trust Fund, Talisman Unleashed | Starbelle 5, Dauntless 2, Astro Power 2, Marksman 4, Weapon Master 2, Echomancer 2, Scavenger 3, SPECTRE 4, Chrono Wanderer 1, Mage 2 |
-| 3 | CinCoeg (kamu) | 9 | Odette, Gord, Vexana, Irithel, Atlas, Karina, Hilda, Zhuxin, Minotaur, Fanny, Lolita, Miya, Cici, Melissa, Sora, Edith, Angela | Minotaur's Power, Trust Fund, Purest Power Ⅱ, Diggie's Power, Fateful Dice, Starbelle's Badge | Astro Power 5, Mage 4, Enchanted Tales 2, Marksman 3, Defender 3, Swiftblade 2, Dauntless 2, Starbelle 6, Scavenger 2 |
-| 4 | arkana | 9 | Badang, Yin, Suyou, Aldous, Wanwan, Paquito, Yi Sun-shin, Dyrroth, Baxia, Odette, Gord, Vexana, Irithel, Atlas, Karina, Hilda, Zhuxin, Minotaur | Ling's Power, Glittering Jewels II, Howling Wind, Minotaur's Power, Trust Fund, Purest Power Ⅱ | Bruiser 5, Dragon Altar 5, Mistbender 1, Marksman 2, SPECTRE 2, Swiftblade 2, Defender 3, Astro Power 5, Mage 4, Enchanted Tales 2 |
-| 5 | Via Riana | 9 | Lolita, Irithel, Karina, Edith, Fanny, Odette, Hilda, Miya, Zhuxin, Badang, Yin, Suyou, Aldous, Wanwan, Paquito, Yi Sun-shin, Dyrroth, Baxia | Dyrroth's Power, Breath of Berserk Ⅱ, Payday, Ling's Power, Glittering Jewels II, Howling Wind | Starbelle 5, Dauntless 2, Astro Power 4, Marksman 3, Swiftblade 3, Defender 2, Mage 2, Bruiser 5, Dragon Altar 5, Mistbender 1 |
-| 6 | KINGBALDWIN | 10 | Franco, Kadita, Harley, Lolita, Irithel, Karina, Edith, Fanny, Odette, Hilda, Miya, Zhuxin | Alucard's Power, Trust Fund, Fully Loaded, Dyrroth's Power, Breath of Berserk Ⅱ, Payday | Dauntless 3, Mage 3, Phasewarper 2, Starbelle 5, Astro Power 4, Marksman 2, Swiftblade 2 |
-| 7 | Xuu | 9 | Lunox, Sora, Franco, Moskov, Lancelot, Melissa, Karrie, Kadita, Harley | Guinevere's Power, Magic Surge, Emergency Rift, Alucard's Power, Trust Fund, Fully Loaded | Kishin 4, Echomancer 2, Chrono Wanderer 1, Marksman 3, Phasewarper 3, Shadeweaver 2 |
-| 8 | Xuu | 9 | Layla, X.Borg, Lancelot, Melissa, Karrie, Lunox, Sora, Franco | Guinevere's Power, Magic Surge, Emergency Rift | Chrono Wanderer 2, Marksman 3, Dauntless 2, Kishin 4 |
+| 1 | XXMAATT | 9 | Lancelot, X.Borg, Karrie, Lunox, Thamuz, Melissa, Franco, Kadita, Harley | Nana's Power, Premium Client I, Fully Loaded | Kishin 4, Phasewarper 3, Chrono Wanderer 1, Dauntless 2, Marksman 2, Echomancer 2, Weapon Master 2, Shadeweaver 2 |
+| 2 | CUMABISAHAMUI | 10 | Alpha, Alice, Layla, Odette, Thamuz, Gord, Sora, Phoveus, Lolita | Cyclops' Power, Trust Fund, Talisman Unleashed | SPECTRE 4, Dauntless 2, Chrono Wanderer 1, Mage 2, Echomancer 2, Scavenger 2 |
+| 3 | RR10 | 10 | Fanny, Lolita, Irithel, Miya, Cici, Melissa, Sora, Edith, Angela | Diggie's Power, Fateful Dice, Starbelle's Badge | Starbelle 5, Marksman 3, Scavenger 2 |
+| 4 | CinCoeg (kamu) | 9 | Odette, Gord, Vexana, Irithel, Atlas, Karina, Hilda, Zhuxin, Minotaur | Minotaur's Power, Trust Fund, Purest Power Ⅱ | Astro Power 5, Mage 4, Enchanted Tales 2, Defender 2 |
+| 5 | arkana | 9 | Badang, Yin, Suyou, Aldous, Wanwan, Paquito, Yi Sun-shin, Dyrroth, Baxia | Ling's Power, Glittering Jewels II, Howling Wind | Bruiser 5, Dragon Altar 5, Mistbender 1 |
+| 6 | Via Riana | 9 | Lolita, Irithel, Karina, Edith, Fanny, Odette, Hilda, Miya, Zhuxin | Dyrroth's Power, Breath of Berserk Ⅱ, Payday | Starbelle 5, Dauntless 2, Astro Power 4, Marksman 2, Swiftblade 2, Mage 2 |
+| 7 | KINGBALDWIN | 10 | Franco, Kadita, Harley, Moskov, Lancelot, Melissa, Karrie, Lunox, Sora | Alucard's Power, Trust Fund, Fully Loaded | Kishin 4, Shadeweaver 2, Phasewarper 3, Echomancer 2, Chrono Wanderer 1, Marksman 3 |
+| 8 | Xuu | 9 | Lunox, Sora, Franco, Layla, X.Borg, Lancelot, Melissa, Karrie | Guinevere's Power, Magic Surge, Emergency Rift | Kishin 4, Dauntless 2, Chrono Wanderer 2, Marksman 3 |
 
 ## Catatan metode
 
@@ -101,4 +101,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:13_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 3: HP sendiri dianggap 0 setelah IV-4 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-4 (babak terakhir yang masih menampilkan HP sendiri).
