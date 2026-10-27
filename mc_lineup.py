@@ -5,6 +5,8 @@ Pemakaian (Python sistem; screenshot butuh opencv-python):
                       --crystals "Astro Power" --commander Minotaur --level 9
   python mc_lineup.py --synergies "Astro Power 6, Mage 4" --level 9 [--free-crystals 1] [--top 3]
   python mc_lineup.py --screenshot hasil.jpg [--row 2 | --all-rows] [--crystals ...]
+  python mc_lineup.py --screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"
+                      (layar Rekomendasi Lineup: semua baris papan = satu lineup, jalur Go Go Card di bawahnya ikut)
   python mc_lineup.py --file lineup.txt        baris "heroes: ...", "crystals: ...", "synergies: ...", "commander: ...", "level: 9"
 Opsi umum: --season 8, --capacity (Kapasitas +1 sudah diambil), --star 2 (bintang untuk tabel stat; per hero "Odette:3"),
 --name "judul" (nama file).
@@ -359,13 +361,17 @@ def render_md(game, a, heading="##"):
 
 # ------------------------------------------------------------------ main
 
-def from_screenshot(d, folder, path, row, all_rows):
+def from_screenshot(d, folder, path, row, all_rows, board=False):
     import mc_vision
-    rows = [r for r in mc_vision.rows(mc_vision.detect(path, mc_vision.load_icons(d, folder, "hero"), "hero")) if len(r) >= 2]
+    rows = [r for r in mc_vision.rows(mc_vision.detect(path, mc_vision.load_icons(d, folder, "hero"), "hero"))
+            if board or len(r) >= 2]
     if not rows:
         raise SystemExit("Tidak ada ikon hero yang dikenali di screenshot ini (papan 3D/toko tidak bisa; pakai layar hasil, "
                          "Rekomendasi Lineup, atau panel Hero yang Ditempatkan).")
     cards = mc_vision.rows(mc_vision.detect(path, mc_vision.load_icons(d, folder, "card"), "card"))
+    if board:  # Rekomendasi Lineup: every grid row (also a lone hero) is one lineup; the Go Go Card path is a row below
+        return [{"heroes": list(dict.fromkeys(f["name"] for r in rows for f in r)), "row": "papan",
+                 "cards": [f["name"] for r in cards for f in r]}], len(rows)
     picked = rows if all_rows else [rows[min(max(row, 1), len(rows)) - 1]]
     out = []
     for r in picked:
@@ -393,6 +399,7 @@ def main():
     ap.add_argument("--star", type=int, default=2)
     ap.add_argument("--row", type=int, default=1)
     ap.add_argument("--all-rows", action="store_true")
+    ap.add_argument("--board", action="store_true", help="semua baris = satu lineup (layar Rekomendasi Lineup)")
     ap.add_argument("--season", type=int)
     ap.add_argument("--version")
     ap.add_argument("--name")
@@ -421,14 +428,14 @@ def main():
 
     lineups, intro, intro_md = [], "", []
     if args.screenshot:
-        found, total = from_screenshot(d, folder, args.screenshot, args.row, args.all_rows)
-        lineups = [{"title": f"Baris {f['row']}", "heroes": f["heroes"], "stars": {}, "crystals": crystals, "cards": f["cards"]}
-                   for f in found]
-        picked = ", ".join(str(f["row"]) for f in found)
+        found, total = from_screenshot(d, folder, args.screenshot, args.row, args.all_rows, args.board)
+        lineups = [{"title": "Papan" if args.board else f"Baris {f['row']}", "heroes": f["heroes"], "stars": {},
+                    "crystals": crystals, "cards": f["cards"]} for f in found]
+        picked = "semua baris sebagai satu papan" if args.board else "baris " + ", ".join(str(f["row"]) for f in found)
         intro = (f'<section><h2>Screenshot</h2><p><img class="shot" src="{esc(rel_src(args.screenshot, folder))}" alt=""></p>'
-                 f'<p class="muted">{total} baris hero dikenali dari ikon; dianalisa: baris {picked}. '
+                 f'<p class="muted">{total} baris hero dikenali dari ikon; dianalisa: {picked}. '
                  "Crystal tidak terlihat dari ikon: isi --crystals bila ada.</p></section>")
-        intro_md = [f"Screenshot: `{shown_path(args.screenshot)}` · {total} baris hero dikenali; dianalisa: baris {picked}", ""]
+        intro_md = [f"Screenshot: `{shown_path(args.screenshot)}` · {total} baris hero dikenali; dianalisa: {picked}", ""]
     elif args.heroes:
         heroes, unknown = parse_heroes(split_list(args.heroes), game.hero_names)
         if unknown:

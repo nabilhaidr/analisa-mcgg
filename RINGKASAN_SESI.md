@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-21)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-27)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -10,14 +10,14 @@ Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (bra
 ## Tujuan
 Membaca isi patch Magic Chess: Go Go langsung dari file game PC (hero, sinergi faksi/role, stat, skill, commander, Go Go Card,
 equipment, Ensiklopedia), menyajikannya sebagai laporan per season (HTML/MD/JSON), membandingkan antar versi game, dan
-memastikan isinya sama dengan layar in-game (422 screenshot Season 7).
+memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Status sekarang
 - Versi game **1.3.24.344.1** (cek terakhir: belum ada update). Season aktif **S7 "Chrono Echoes"** (Rank Season 9,
   2026-08-11 s/d 2026-11-15); **S8 "Arena Para Penyihir"** sudah ada di file (mulai 2026-11-15, 28 hero baru, faksi baru
   FAIRY TAIL, Dawnbringer, Dragonslayer, Frostrider, Titan; role Deadeye, Weapons Master).
 - Laporan terbaru: `data/1.3.24.344.1/S7.html|md|json` dan `S8.*`.
-- **S7.html sudah divalidasi ke 432 screenshot: semua cocok** (0 selisih). Satu-satunya beda = angka balance Patch 7.2 dan
+- **S7.html sudah divalidasi ke 430 screenshot: semua cocok** (0 selisih). Satu-satunya beda = angka balance Patch 7.2 dan
   Penyesuaian Keseimbangan 20/10 yang diterapkan server; keduanya sudah dicatat di `server_patch.json` dan tampil di S7.html
   sebagai catatan oranye "Patch 7.2 (server)" / "Patch 20/10 (server)".
 
@@ -37,14 +37,14 @@ memastikan isinya sama dengan layar in-game (422 screenshot Season 7).
 | `analisis_lineup.py` | Halaman analisis 5 lineup pengguna (peringkat tanpa ultra, papan, sinergi, kartu, build Odette/Lancelot, aturan crystal, pelajaran pertandingan 20 Okt) → `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` + `.md` dengan ikon dari `img/`. Angka dibaca dari S7.json; teks analisis ditulis tangan di skrip | `python analisis_lineup.py` (setelah `mc_data.py`) |
 | `video_frames.ps1` | Ambil frame dari rekaman pertandingan MP4 (API `Windows.Media.Editing`, tanpa ffmpeg) → `f_<detik>.jpg`; lalu bisa `ocr_screens.ps1 -Folder <folder frame>`. **Tidak bisa HEVC** (rekaman layar ponsel; error `0xC00D5212`): sekarang berhenti dengan pesan, tidak lagi meninggalkan JPG 0 byte | `powershell -ExecutionPolicy Bypass -File video_frames.ps1 -Video <mp4> -Out <folder> -Step 5` |
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
-| `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` |
+| `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Screenshot tumpang tindih digabung | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
 | `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` |
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
 | `data/1.3.24.344.1/VALIDASI_S7.md` | Laporan validasi manual (perbaikan yang dibuat + daftar beda karena server) | — |
-| `screenshot/season 7/` | 422 screenshot (hero & sinergi, commander, equipment, go go card, ensiklopedia, update patch) + `ocr.json`; subfolder `match/` = rekaman + 2 screenshot hasil pertandingan 21 Okt | — |
+| `screenshot/season 7/` | 430 screenshot (hero & sinergi 138, commander 60, equipment 134, go go card 58, ensiklopedia 18, update patch 22) + `ocr.json` (432 gambar, 2 di antaranya dari `match/`); subfolder `match/` = 20 rekaman pertandingan 21–26 Okt (MP4, di-`.gitignore`) + 41 screenshot: layar hasil, 7 Rekomendasi Lineup 20/10, 2 daftar Riwayat, 1 Toko Spirit Sand (8 ada di git, 33 belum) | — |
 
 `.venv` berisi UnityPy, capstone, pycryptodome, pillow. Skrip lain cukup Python sistem (3.13) + `requirements.txt`.
 
@@ -113,7 +113,7 @@ memastikan isinya sama dengan layar in-game (422 screenshot Season 7).
 | Go Go Box (tab Info Season, field `go_go_box`) | `MCRoundRandomEquip_S<n>` (baris `m_RoundConfigId` 0): babak `m_Round` (label dari `AMCRoundStage`), equipment biasa `m_NormalEquipMin–Max` dari `m_NormalEquip`, crystal = `m_EquipTotal` − equipment biasa dari `m_CrystallEquip`, Kapasitas +1 = 8 − `m_EquipTotal` (8 orb = pengamatan, `GO_GO_BOX_ORBS`), hero `m_HeroListNumber` dengan harga diundi bobot `m_HeroList`/`m_HeroListRate` (harga sama dijumlahkan). Teks orb in-game = `summary` item. ID yang tidak ada di tabel equipment → `notes`. S7 cocok dengan rekaman 21 Okt (I-4, II-6, III-6, IV-6) |
 | Toko Spirit Sand (Mistbender) | `SpecialStore` (tanpa varian `_S<n>`; harga `m_ChipNum`, bobot acak `m_Probability`, batas beli `m_MaximumPurchase`, 999 = tanpa batas) + `MCSpecialCardPool` (nama `mName`, teks `mSpecialDes`, `m_SkillID`). Efek dari `MCSkill`/`MCEffect` skill item: `OperEnum 20` ke efek `4590200` = bayar Spirit Sand, `OperEnum 1` + `OperEnum 20` = stack buff permanen, bonus per stack dari efek `m_Calculate 10021` (stack × `FPara3`), `OperEnum 50/20009` = equipment tetap/acak. Ditautkan ke sinergi lewat keluarga ID (skill 45900/45901 ↔ buff 4590200). Nama mata uang = `DescriptionIconShow` 27. **Belum terverifikasi** (belum ada screenshot toko) |
 
-## Hasil validasi S7 (422 screenshot)
+## Hasil validasi S7 (430 screenshot)
 - `VALIDASI_S7_auto.md`: **0 selisih**, 17 cek manual (semua salah baca OCR yang sudah dicek). Cakupan: 52/52 hero toko,
   20/22 sinergi, 40/40 commander, 110/110 level equipment aktif, 199/199 kartu aktif, 8 tab Ensiklopedia.
 - Belum ada screenshot: hero panggilan (Alpha, Gatotkaca, Layla, Moskov, Novaria, X.Borg), sinergi Chrono Wanderer dan
@@ -310,6 +310,14 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     tidak terbaca RapidOCR → "baris N" (1 nama di 22-43, 24 Okt 02-51/14-43/15-06, 25 Okt 23-24).
     Bukan input `mc_match`: 7 screenshot "Lineup Akhir" 20/10 (Kalea, Minotaur, Aamon, Luo Yi, Kagura), 2 daftar Riwayat, dan
     `Screenshot_2026-10-22-06-38-48` (Toko Spirit Sand di tengah permainan: "ATK Rekan +1%").
+
+24. (2026-10-27) 7 screenshot Rekomendasi Lineup 20/10 di `match/` = 5 lineup (Kalea dan Luo Yi masing-masing 2 screenshot).
+    `mc_lineup.py --board`: semua baris papan jadi satu lineup (baris 1 hero ikut, mis. Odette di lineup Luo Yi) dan jalur
+    Go Go Card di bawah papan ikut terbaca; sebelumnya tiap baris papan dianggap lineup sendiri dan baris 1 hero dibuang.
+    Laporan `LINEUP_Rekomendasi_<Kalea|Minotaur|Aamon|Luo_Yi|Kagura>_20_Okt.html/.md` (commander dan crystal dari lencana di
+    potret diisi manual; Aamon level 10 karena 10 hero). Dicek ke papan tulisan tangan di `analisis_lineup.py`: hero 46/46,
+    Go Go Card 30/30, sinergi aktif + jumlahnya sama dengan lencana di atas papan. Screenshot yang tidak dipakai: `23-51-21`
+    (tooltip Eudora menutupi Suyou) dan `23-51-57` (kartu pertama tampil Alucard's Power, di `23-52-43` sudah Luo Yi's Power).
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
