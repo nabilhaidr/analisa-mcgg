@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 04-55
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:05_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:46_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -80,7 +80,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:05_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | Naylla08 | 9 | Gusion, Suyou, Karina, Wanwan, Yi Sun-shin, Fanny, Baxia, Zilong | Gusion's Power, Shrouded Blade, Glittering Jewels II | Dragoncaller 2, Swiftblade 4, Dragon Altar 4, Weapon Master 2 |
+| 1 | Naylla08 | 9 | Johnny, Gusion, Suyou, Karina, Wanwan, Yi Sun-shin, Fanny, Baxia, Zilong | Gusion's Power, Shrouded Blade, Glittering Jewels II | Dragoncaller 2, Swiftblade 4, Dragon Altar 4, Weapon Master 2 |
 | 2 | Schnee | 9 | Lancelot, Melissa, Karrie, Franco, Hylos, Baxia, Zilong, Clint, Kadita | Kagura's Power, Fast Promotion, Kishin Unbound | Kishin 3, Phasewarper 3, Shadeweaver 3, Marksman 2, Weapon Master 2, Defender 2, Dragoncaller 2 |
 | 3 | Bg mingg | 9 | Irithel, Fanny, Odette, Karina, Lolita, Hilda, Edith, Miya, Zhuxin | Chou's Power, Premium Client I, Fateful Dice | Astro Power 4, Marksman 2, Starbelle 5, Swiftblade 2, Mage 2, Dauntless 2 |
 | 4 | CinCoeg (kamu) | 9 | Fanny, Layla, Thamuz, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Cici, Alice, Lolita | Fanny's Power, Glittering Jewels II, Steel Front | Starbelle 6, Swiftblade 2, Chrono Wanderer 1, Marksman 2, Echomancer 4, Weapon Master 2, Defender 2, Dauntless 2 |
@@ -98,4 +98,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:05_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-6 (babak terakhir yang masih menampilkan HP sendiri).

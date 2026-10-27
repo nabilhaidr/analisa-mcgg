@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-40
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:50_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:56_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -82,7 +82,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:50_
 | 1 | TRUEBLUES? | 9 | Nana, Lunox, Franco, Balmond, Eudora, Uranus, Alice, Karina, Mathilda | Lunox's Power, Magic Immersion Ⅰ, Premium Client II | Mistbender 2, Stargazer 5, Kishin 2, Dauntless 4, Dragoncaller 2 |
 | 2 | tnnnnn | 9 | X.Borg, Melissa, Lunox, Franco, Lancelot, Karrie, Kadita, Harley, Hylos | Nana's Power, Rock Solid, Shield of Fortune / Fortune+ | Chrono Wanderer 1, Dauntless 2, Shadeweaver 3, Marksman 2, Kishin 4, Phasewarper 3 |
 | 3 | Sunshinev | 9 | Gatotkaca, Thamuz, Karrie, Lunox, Sora, Franco, Dyrroth, Lancelot, Melissa | Nana's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Bruiser 2, Echomancer 2, Weapon Master 2, Kishin 5, Marksman 2 |
-| 4 | Laurent.Elias-16 | 9 | Franco, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
+| 4 | Laurent.Elias-16 | 9 | Franco, Johnny, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
 | 5 | lap_Dung.29 | 9 | Irithel, Edith, Miya, Cici, Fanny, Lolita, Karina, Hilda, Minotaur | Alucard's Power, Breath of Berserk Ⅰ, Divine Execution | Astro Power 4, Marksman 2, Starbelle 5, Defender 2, Swiftblade 2, Dauntless 2 |
 | 6 | saaaaa | 9 | Lancelot, Karrie, Lunox, Karina, Franco, Mathilda, Nana, Fanny, Angela | Alucard's Power, Uncertain Fortune, Shield of Fortune / Fortune+ | Kishin 5, Stargazer 4, Swiftblade 2, Mistbender 1 |
 | 7 | Lhmsyhh | 9 | Melissa, Irithel, Martis, Odette, Karrie, Hilda, Wanwan, Miya, Granger | Aurora's Power, Rogue's Aid, Astro Power's Blessing | Marksman 6, Astro Power 4 |

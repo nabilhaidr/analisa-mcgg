@@ -362,6 +362,20 @@ class Season:
             out.append(hero)
         return sorted(out, key=lambda x: (x["cost"] or 0, x["name"]))
 
+    def summons(self):
+        """Units on the board that are not season heroes: summon-only rows of the shared MCHero table (m_GuideType 3)
+        that an effect gives the player (OperEnum 20002/20005, unit id in m_Para2): Johnny (Johnson), Turret (Turret of
+        Guardians), Makhluk Suci (Lukas). The result screen lists them among the heroes. The bots of that table
+        (Bot, Physical ATK, Magic ATK) are given by no effect."""
+        given = {int(r.get("m_Para2", 0)) for r in self.effects.values() if r.get("m_OperEnum") in (20002, 20005)}
+        season = {r["m_ID"] for r in self.t.parse(f"MCHero{self.s}")}
+        out = []
+        for h in self.t.parse("MCHero"):
+            name = self.L.get("MCHero", "mName", h["m_ID"])
+            if h.get("m_GuideType") == 3 and h["m_ID"] in given and h["m_ID"] not in season and name:
+                out.append({"id": h["m_ID"], "name": name, "icon": h.get("m_Head")})
+        return out
+
     def cards(self):
         # m_Value1..3 = weight in Go Go Card round 1/2/3. The in-game card book (MCUIHandBookSuperCrystal.RefreshCardList)
         # lists only cards with a non-zero weight, so all-zero cards are inactive this season.
@@ -691,6 +705,7 @@ class Season:
             "info": info,
             "synergies": syn,
             "heroes": heroes,
+            "summons": self.summons(),
             "commanders": self.commanders(cards, syn),
             "cards": cards,
             "equipment": equipment,

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-49
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:09_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:56_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -78,7 +78,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:09_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | A4ACLAN YUKA | 8 | Karina, Luo Yi, Eudora, Gusion, Yin, Suyou, Yi Sun-shin | Johnson's Power, Jump the Gun+, Swiftblade's Badge | Swiftblade 3, Stargazer 3, Dragon Altar 4, Dragoncaller 2 |
+| 1 | A4ACLAN YUKA | 8 | Johnny, Karina, Luo Yi, Eudora, Gusion, Yin, Suyou, Yi Sun-shin | Johnson's Power, Jump the Gun+, Swiftblade's Badge | Swiftblade 3, Stargazer 3, Dragon Altar 4, Dragoncaller 2 |
 | 2 | Aria wigianto | 9 | X.Borg, Franco, Miya, Granger, Uranus, Thamuz, Melissa, Lolita, Karrie | Nana's Power, Jump the Gun+, Glittering Jewels II | Chrono Wanderer 1, Dauntless 4, Kishin 2, Weapon Master 2, Starbelle 2, Marksman 4, Mistbender 1 |
 | 3 | Kibooo | 9 | X.Borg, Novaria, Karrie, Lancelot, Melissa, Lunox, Sora, Franco, Kadita | Nana's Power, Jump the Gun+, Emergency Rift | Chrono Wanderer 2, Dauntless 2, Stargazer 2, Kishin 4, Marksman 2, Phasewarper 2, Shadeweaver 2 |
 | 4 | kones | 9 | Alice, Lolita, Gord, Saber, Paquito, Fanny, Melissa, Edith, Miya | Chou's Power, Breath of Berserk Ⅰ, Payday | SPECTRE 4, Dauntless 2, Starbelle 4, Swiftblade 2, Marksman 2 |
@@ -96,4 +96,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:09_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah III-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah III-6 (babak terakhir yang masih menampilkan HP sendiri).

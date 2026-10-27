@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-38 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 21:55_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 00:00_
 
 - **Peringkat:** 1
 - **HP akhir:** 32
@@ -98,10 +98,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 21:55_
 | 2 | musuhkoruptor | 9 | Gatotkaca, Lancelot, Thamuz, Zilong, Franco, Harley, Dyrroth, Karrie, Lunox | Lunox's Power, Jump the Gun+, Divine Execution | Chrono Wanderer 1, Bruiser 2, Kishin 5, Phasewarper 2, Echomancer 2, Weapon Master 3 |
 | 3 | TT:jawirGG | 9 | Badang, Zilong, Karrie, Lunox, Franco, Eudora, Clint, Angela, Dyrroth | Kagura's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Divine Execution | Dragoncaller 4, Bruiser 2, Weapon Master 2, Kishin 5, Stargazer 2 |
 | 4 | qwerty89 | 9 | Alice, Nana, Lancelot, Melissa, Lolita, Uranus, Lunox, Franco, Hilda | Popol & Kupa's Power, Glittering Jewels Ⅰ, Synergy Constellation | Dauntless 5, Mistbender 2, Stargazer 2, Kishin 3 |
-| 5 | sogok_ontong | 9 | Lancelot, Clint, Kadita, Alice, Melissa, Dyrroth, Karrie, Lunox, Franco | Moskov's Power, Uncertain Fortune, Divine Execution | Kishin 5, Phasewarper 3, Shadeweaver 2, Dauntless 2, Marksman 2 |
-| 6 | Cybertron | 10 | Tigreal, Edith, Baxia, Melissa, Karrie, Irithel, Atlas, Miya | Ling's Power, Rock Solid, The More, the Merrier | Defender 4, Starbelle 2, Marksman 4 |
+| 5 | sogok_ontong | 9 | Lancelot, Karrie, Lunox, Franco, Clint, Kadita, Alice, Melissa, Dyrroth | Moskov's Power, Uncertain Fortune, Divine Execution | Kishin 5, Phasewarper 3, Marksman 2, Dauntless 2, Shadeweaver 2 |
+| 6 | Cybertron | 10 | Tigreal, Edith, Baxia, Melissa, Karrie, Irithel, Atlas, Miya, Miya | Ling's Power, Rock Solid, The More, the Merrier | Defender 4, Starbelle 2, Marksman 4 |
 | 7 | MasAKID | 9 | Layla, Lunox, Tigreal, Franco, Harley, Alice, Lancelot, Thamuz, Karrie | Kagura's Power, Rock Solid, Divine Execution | Chrono Wanderer 1, Marksman 2, Kishin 4, Echomancer 3, Dauntless 2, Weapon Master 2, Phasewarper 2 |
-| 8 | AJ11 | 8 | Eudora, Uranus, Nana, Lunox, Franco, Hilda, Balmond | Gusion's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Divine Execution | Dragoncaller 2, Stargazer 3, Mistbender 2, Dauntless 4, Kishin 2 |
+| 8 | AJ11 | 8 | Eudora, Uranus, Nana, Lunox, Franco, Hilda, Balmond, Uranus | Gusion's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Divine Execution | Dragoncaller 2, Stargazer 3, Mistbender 2, Dauntless 4, Kishin 2 |
 
 ## Catatan metode
 
@@ -112,4 +112,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 21:55_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.

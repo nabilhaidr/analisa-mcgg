@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 23 Okt 22-08
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:26_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:48_
 
 - **Peringkat:** 1
 - **HP akhir:** 62
@@ -84,7 +84,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:26_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | CinCoeg (kamu) | 9 | Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici, Fanny, Moskov, Thamuz, Novaria, Lolita | Fanny's Power, Purest Power Ⅰ, Emergency Rift | Echomancer 5, Defender 2, Starbelle 6, Marksman 2, Swiftblade 2, Mage 2, Weapon Master 2, Chrono Wanderer 2 |
+| 1 | CinCoeg (kamu) | 9 | Moskov, Thamuz, Novaria, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici, Fanny | Fanny's Power, Purest Power Ⅰ, Emergency Rift | Chrono Wanderer 2, Marksman 2, Echomancer 5, Weapon Master 2, Starbelle 6, Defender 2, Swiftblade 2, Mage 2 |
 | 2 | iCellz | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Edith, Miya, Zhuxin | Lunox's Power, Uncertain Fortune, Purest Power Ⅱ | SPECTRE 2, Dauntless 2, Starbelle 5, Shadeweaver 2, Marksman 2, Mage 2 |
 | 3 | RaigorT | 9 | Fanny, Layla, Melissa, Lolita, Edith, Miya, Thamuz, Gusion, Natalia | Lancelot's Power, Uncertain Fortune, Blood Claw | Starbelle 4, Swiftblade 3, Chrono Wanderer 1, Marksman 3, Echomancer 2 |
 | 4 | wongedan·bebas | 9 | Nana, Badang, Zilong, Yin, Suyou, Aldous, Thamuz, Franco, Martis | Lunox's Power, Magic Immersion Ⅰ, Blood Claw, Transmutation | Mistbender 2, Dragoncaller 2, Bruiser 3, Weapon Master 5, Dragon Altar 2 |
@@ -102,4 +102,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:26_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.

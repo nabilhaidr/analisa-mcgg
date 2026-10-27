@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-00 Angela
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:34_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:41_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -78,14 +78,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:34_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | NafsuMembara | 9 | Tigreal, Edith, Moskov, Karrie, Atlas, Hylos, Minotaur, Baxia | Miya's Power, Aftershock, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | Defender 6, Chrono Wanderer 1, Marksman 2 |
+| 1 | NafsuMembara | 9 | Tigreal, Edith, Moskov, Karrie, Atlas, Hylos, Minotaur, Baxia, Baxia | Miya's Power, Aftershock, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | Defender 6, Chrono Wanderer 1, Marksman 2 |
 | 2 | Devil16 | 9 | Alpha, Alice, Fanny, Baxia, Melissa, Lolita, Suyou, Miya, Hylos | Chou's Power, Payday, Healing Fountain | SPECTRE 2, Dauntless 2, Starbelle 3, Dragon Altar 2, Defender 2, Shadeweaver 2, Marksman 2 |
 | 3 | Quentin | 9 | Nana, Lolita, Lunox, Karina, Franco, Aldous, Mathilda, Eudora, Uranus | Gusion's Power, Apex Weapons, Healing Fountain | Mistbender 3, Stargazer 5, Dauntless 3, Kishin 2 |
 | 4 | EternalFire | 8 | Uranus, Nana, Lolita, Lunox, Karina, Franco, Hilda, Eudora, Mathilda | Lunox's Power, Magic Immersion ⅠI, Prime Selection | Mistbender 2, Dauntless 4, Stargazer 5, Kishin 2, Astro Power 2 |
 | 5 | BASKERVILLE | 9 | Alpha, Alice, Paquito, Phoveus, Zilong, Gord, Gusion, Clint, Eudora | Angela's Power, Fast Promotion, Uncertain Fortune | SPECTRE 5, Dragoncaller 4 |
 | 6 | IYANGG'DSKY | 8 | Yi Sun-shin, Gusion, Fanny, Zilong, Lolita, Yin, Karina, Clint | Gusion's Power, Backline Breach, Healing Fountain | Dragon Altar 2, Swiftblade 4, Dragoncaller 3, Starbelle 2 |
 | 7 | CinCoeg (kamu) | 8 | Novaria, Natalia, Harley, Nana, Thamuz, Lunox, Sora, Tigreal, Karina | Angela's Power, Talisman Unleashed, Prime Selection | Chrono Wanderer 1, Stargazer 4, Echomancer 5, Swiftblade 2, Mistbender 1 |
-| 8 | Lexx | 8 | Uranus, Nana, Gusion, Yin, Suyou, Aldous | Aamon's Power, Payday, Prime Selection | Mistbender 3, Dragon Altar 2, Bruiser 2 |
+| 8 | Lexx | 8 | Uranus, Uranus, Nana, Gusion, Yin, Suyou, Aldous, Uranus | Aamon's Power, Payday, Prime Selection | Mistbender 3, Dragon Altar 2, Bruiser 2 |
 
 ## Catatan metode
 
@@ -96,4 +96,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:34_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah III-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah III-6 (babak terakhir yang masih menampilkan HP sendiri).

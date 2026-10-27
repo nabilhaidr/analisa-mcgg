@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 14-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:19_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:50_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -82,7 +82,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:19_
 | 1 | LYOU2K | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Miya, Zhuxin, Cici | Chou's Power, Fast Promotion, Premium Client II | SPECTRE 2, Dauntless 2, Starbelle 5, Shadeweaver 2, Marksman 2, Mage 2 |
 | 2 | 1254 | 9 | Karina, Franco, Hilda, Aldous, Balmond, Uranus, Nana, Lunox, Mathilda | Yu Zhong's Power, Blessing Dauntless, Divine Execution | Astro Power 2, Stargazer 4, Kishin 2, Dauntless 4, Mistbender 3 |
 | 3 | Yazz | 9 | Nana, Lunox, Franco, Uranus, Alice, Lancelot, Lolita, Aldous, Luo Yi | Lunox's Power, Badge Dauntless, Novel Equipment | Mistbender 3, Stargazer 3, Kishin 3, Dauntless 4 |
-| 4 | Giommy | 9 | Lancelot, Thamuz, X.Borg, Karrie, Sora, Angela, Dyrroth, Franco | Lunox's Power, Turret of Guardians, Shield of Fortune / Fortune+ | Kishin 5, Echomancer 2, Weapon Master 2, Chrono Wanderer 1, Dauntless 2, Scavenger 2 |
+| 4 | Giommy | 9 | Turret, Lancelot, Thamuz, X.Borg, Karrie, Sora, Angela, Dyrroth, Franco | Lunox's Power, Turret of Guardians, Shield of Fortune / Fortune+ | Kishin 5, Echomancer 2, Weapon Master 2, Chrono Wanderer 1, Dauntless 2, Scavenger 2 |
 | 5 | CinCoeg (kamu) | 9 | Moskov, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici | Fanny's Power, Reinforcement / Reinforcement+, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | Chrono Wanderer 1, Marksman 2, Echomancer 4, Defender 2, Starbelle 4, Mage 2 |
 | 6 | MickyMouse | 9 | Novaria, Lolita, Gord, Lunox, Alice, Nana, Odette, Vexana, Karina | Vexana's Power, Legacy of Valor, Fully Armed | Chrono Wanderer 1, Stargazer 4, Dauntless 2, SPECTRE 2, Mage 3, Mistbender 1, Astro Power 2 |
 | 7 | TT:Kanekikev | 9 | Layla, Atlas, Tigreal, Edith, Fanny, Thamuz, Melissa, Lolita, Vexana | Lancelot's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Starbelle's Blessing | Chrono Wanderer 1, Marksman 2, Enchanted Tales 2, Defender 3, Echomancer 2, Starbelle 3 |

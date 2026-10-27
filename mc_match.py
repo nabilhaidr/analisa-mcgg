@@ -529,7 +529,8 @@ def read_events(frames, d, by_time):
 def read_result(paths, d, folder, engine=None):
     """Rows of the result screen(s): rank order, name, level, heroes, cards. Several screenshots of the same screen
     (scrolled hero list) are merged per row; the icon size found on the first one is reused."""
-    hero_icons, card_icons = mc_vision.load_icons(d, folder, "hero"), mc_vision.load_icons(d, folder, "card")
+    hero_icons = mc_vision.load_icons(d, folder, "hero") | mc_vision.load_icons(d, folder, "summon")  # + Johnny, Turret, ...
+    card_icons = mc_vision.load_icons(d, folder, "card")
     tmp = HERE / "cache" / "match" / "_result"  # OCR copies here so no ocr.json lands in the screenshot folder
     tmp.mkdir(parents=True, exist_ok=True)
     for p in paths:
@@ -544,8 +545,11 @@ def read_result(paths, d, folder, engine=None):
         for kind, found in (("hero", found_h), ("card", found_c)):
             if found and kind not in sizes:
                 sizes[kind] = statistics.median(f["size"] for f in found)
-        heroes = mc_vision.rows(found_h)
         cards = mc_vision.rows(found_c)
+        if cards:  # heroes stand right of the Go Go Cards; further left the avatar of a Johnson player is Johnny's face
+            card_right = statistics.median(c[-1]["x"] for c in cards)  # (24 Okt 02:51, SINGKUANG)
+            found_h = [f for f in found_h if f["x"] > card_right]
+        heroes = mc_vision.rows(found_h)
         lines = ocr.get(p.name, {}).get("lines", [])
         text = " ".join(l["t"] for l in lines)
         meta.setdefault("id", next(iter(re.findall(r"\b\d{15,20}\b", text)), None))
@@ -568,7 +572,7 @@ def read_result(paths, d, folder, engine=None):
                 cur.setdefault("slot", (p, name_box(near, col_x, y, size, row_cards)))
             if lv is None and (lv_line := next((l for l in near if NOT_NAME.match(l["t"])), None)):
                 cur.setdefault("level_box", (p, level_box(lv_line)))
-            cur["heroes"] = list(dict.fromkeys(cur["heroes"] + [f["name"] for f in r]))
+            cur["heroes"] = merge_heroes(cur["heroes"], [f["name"] for f in r])
             cur["cards"] = list(dict.fromkeys(cur["cards"] + [f["name"] for f in row_cards]))
             cur["level"] = cur["level"] or lv
     out = [rows[k] for k in sorted(rows)]
@@ -588,6 +592,26 @@ def read_result(paths, d, folder, engine=None):
         if not r["name"].startswith("baris "):
             r.pop("slot", None)  # read on another screenshot of the same screen
     return out, meta
+
+
+def merge_heroes(a, b):
+    """Heroes of one result row seen on two screenshots, left to right. One hero can stand on the board twice (Xuu, 26 Okt
+    00:09: two Lancelots; 10 rows in 7 of 20 matches), so the lists are not joined by name but where they overlap: one inside
+    the other (a row half covered by a notice), or the end of one is the start of the other (the hero list scrolled
+    sideways). Lists that do not fit keep the longer one plus what only the other one shows."""
+    def inside(x, y):
+        return any(y[i:i + len(x)] == x for i in range(len(y) - len(x) + 1))
+    if inside(b, a):
+        return a
+    if inside(a, b):
+        return b
+    for k in range(min(len(a), len(b)) - 1, 0, -1):
+        if a[-k:] == b[:k]:
+            return a + b[k:]
+        if b[-k:] == a[:k]:
+            return b + a[k:]
+    long, short = (a, b) if len(a) >= len(b) else (b, a)
+    return long + list((Counter(short) - Counter(long)).elements())
 
 
 NOT_NAME = re.compile(r"\W*Leve[l1I|]")  # the "Level N" line (also "Levelg", or without its number)
@@ -879,9 +903,12 @@ def main():
         md += ["## Kejadian", ""] + md_table(["Waktu", "Babak", "Kejadian", "Detail"], rows) + [""]
     if final:
         rows, md_rows = [], []
+        summons = {u["name"]: u for u in d.get("summons", [])}
         for r in final:
             known = [h for h in r["heroes"] if h in game.H]
-            counts, active = game.counts(known, []), game.active_tiers(known, [])
+            units = [h for h in r["heroes"] if h in game.H or h in summons]
+            unique = list(dict.fromkeys(known))  # a hero twice on the board counts once (as on the result screen)
+            counts, active = game.counts(unique, []), game.active_tiers(unique, [])
             mine = bool(me and norm(r["name"]) == norm(me))
             shown, md_name = esc(r["name"]), r["name"]
             if r.get("slot"):  # name the OCR cannot read (Korean, small capitals): its picture from the result screen
@@ -893,10 +920,12 @@ def main():
                 shown = f'<img src="{esc(rel_src(pic, folder))}" alt="{esc(alt)}" title="{esc(alt)}" style="height:2.2em;vertical-align:middle">'
                 md_name = f"![{alt}]({rel_src(pic, folder)})"
             rows.append([f"<b>{r['rank']}</b>", shown + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
-                         " ".join(chip(h, game.H[h].get("icon"), f"c{game.H[h]['cost']}") for h in known),
+                         " ".join(chip(h, game.H[h].get("icon"), f"c{game.H[h]['cost']}") if h in game.H
+                                  else chip(h, summons[h].get("icon"), title="unit panggilan: sinergi acak, tidak dihitung")
+                                  for h in units),
                          " ".join(chip(c) for c in r["cards"]),
                          " ".join(chip(f"{s} {counts[s]}", game.S[s].get("icon")) for s in active)])
-            md_rows.append([r["rank"], md_name + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(known),
+            md_rows.append([r["rank"], md_name + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(units),
                             ", ".join(r["cards"]), ", ".join(f"{s} {counts[s]}" for s in active)])
         heads = ["#", "Pemain", "Level", "Hero", "Go Go Card", "Sinergi dari hero"]
         body.append(f'<section><h2>Papan akhir (layar hasil)</h2>{table(heads, rows)}'

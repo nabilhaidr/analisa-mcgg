@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 26 Okt 00-09
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 17:44_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 00:00_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -89,8 +89,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 17:44_
 | 4 | CinCoeg (kamu) | 9 | Odette, Gord, Vexana, Irithel, Atlas, Karina, Hilda, Zhuxin, Minotaur | Minotaur's Power, Trust Fund, Purest Power Ⅱ | Astro Power 5, Mage 4, Enchanted Tales 2, Defender 2 |
 | 5 | arkana | 9 | Badang, Yin, Suyou, Aldous, Wanwan, Paquito, Yi Sun-shin, Dyrroth, Baxia | Ling's Power, Glittering Jewels II, Howling Wind | Bruiser 5, Dragon Altar 5, Mistbender 1 |
 | 6 | Via Riana | 9 | Lolita, Irithel, Karina, Edith, Fanny, Odette, Hilda, Miya, Zhuxin | Dyrroth's Power, Breath of Berserk Ⅱ, Payday | Starbelle 5, Dauntless 2, Astro Power 4, Marksman 2, Swiftblade 2, Mage 2 |
-| 7 | KINGBALDWIN | 10 | Franco, Kadita, Harley, Moskov, Lancelot, Melissa, Karrie, Lunox, Sora | Alucard's Power, Trust Fund, Fully Loaded | Kishin 4, Shadeweaver 2, Phasewarper 3, Echomancer 2, Chrono Wanderer 1, Marksman 3 |
-| 8 | Xuu | 9 | Lunox, Sora, Franco, Layla, X.Borg, Lancelot, Melissa, Karrie | Guinevere's Power, Magic Surge, Emergency Rift | Kishin 4, Dauntless 2, Chrono Wanderer 2, Marksman 3 |
+| 7 | KINGBALDWIN | 10 | Moskov, Lancelot, Melissa, Karrie, Lunox, Sora, Franco, Kadita, Harley | Alucard's Power, Trust Fund, Fully Loaded | Chrono Wanderer 1, Marksman 3, Kishin 4, Phasewarper 3, Shadeweaver 2, Echomancer 2 |
+| 8 | Xuu | 9 | Layla, X.Borg, Lancelot, Lancelot, Melissa, Karrie, Lunox, Sora, Franco | Guinevere's Power, Magic Surge, Emergency Rift | Chrono Wanderer 2, Marksman 3, Dauntless 2, Kishin 4 |
 
 ## Catatan metode
 

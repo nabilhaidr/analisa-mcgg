@@ -26,7 +26,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 |---|---|---|
 | `patch_tracker.py` | Snapshot & diff hash file game (manifest, ResCheckConf, mini_patch, LuaRepair) → `snapshots/`, `reports/` | `python patch_tracker.py snapshot` / `diff` / `list` |
 | `mc_tables.py` | Library: skema tabel dari PDB, ekstrak TextAsset (cache `cache/<versi>/`), parser tabel, teks bahasa | di-import `mc_data.py` |
-| `mc_data.py` | Ekspor data season → `data/<versi>/S<n>.json/.md/.html` (bahasa Indonesia, opsi `--season 7 8`, `--lang EN`); juga menerapkan `server_patch.json` | `.venv\Scripts\python mc_data.py` |
+| `mc_data.py` | Ekspor data season → `data/<versi>/S<n>.json/.md/.html` (bahasa Indonesia, opsi `--season 7 8`, `--lang EN`); juga menerapkan `server_patch.json`. `summons` = unit panggilan di luar daftar hero (Johnny, Turret, Makhluk Suci) untuk deteksi layar hasil | `.venv\Scripts\python mc_data.py` |
 | `mc_images.py` | Ekstrak ikon dari atlas UI NGUI (`StreamingAssets/UI/windows/<Atlas>.unity3d`: Texture2D + MonoBehaviour `mSprites` = nama, x, y, lebar, tinggi; asal kiri atas) → `data/<versi>/img/<Atlas>/<sprite>.png`; field `icon` di JSON jadi path relatif. File yang sudah ada tidak diekstrak ulang | dipanggil `mc_data.py` |
 | `report_template.html` | Template S<n>.html: tab Hero, Sinergi (+ tabel Toko Spirit Sand di bawahnya, tautan dari kartu Mistbender), Commander, Go Go Card, Equipment, Info Season, Ensiklopedia, Patch Server; cari/filter, tombol "Tampilkan nonaktif", mode gelap | dipakai `mc_data.py` |
 | `mc_diff.py` | Bandingkan `S<n>.json` dua versi terakhir: buff/nerf stat, skill, sinergi, commander (+tipe Aktif/Pasif, +detail tooltip), kartu (+aktif), equipment (+aktif), Ensiklopedia/DMG, Toko Spirit Sand (harga/batas beli = buff/nerf, peluang, efek, pilihan), Go Go Box (jumlah orb per jenis, harga hero, isi pool; babak dengan perubahan sama digabung) → `data/diff/`. Field yang belum ada di ekspor lama ditandai "tidak dibandingkan" | `python mc_diff.py` |
@@ -340,7 +340,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     `MATCH_26_Okt_00_09` dibuat ulang dari frame cache: **peringkat 4**, XXMAATT 1, CUMA BISA HAMUI 2, RR10 3, arkana 5,
     Via Riana 6, KING BALDWIN 7, Xuu 8 (cocok dengan layar); timeline dan HP tidak berubah. Uji 20 pertandingan di
     `cache/match/_result`: hanya 8 baris pertandingan ini yang berubah, 156 baris lain sama (nama, level, hero, kartu).
-    Xuu: 8 dari 9 hero terdeteksi (sama seperti sebelumnya).
+    Xuu: 8 dari 9 hero terdeteksi (sama seperti sebelumnya; diperbaiki di 28).
 
 27. (2026-10-27) Level kosong di papan akhir: 24 baris di 7 laporan. 23 baris terbaca "Levelg" (53 dari 330 baris "Level" di
     `cache/match/_result`; layar menunjukkan "Level9"), 1 baris (saaaaa, 24 Okt 22-40) hanya "Level" tanpa angka di kedua
@@ -349,7 +349,26 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     Dibuat ulang dari frame cache: `MATCH_21_Okt_22_15`, `21_Okt_22_43`, `23_Okt_21_47`, `24_Okt_14_43`, `24_Okt_22_40`,
     `24_Okt_23_02`, `25_Okt_23_24`; kini 0 baris papan akhir tanpa level di 20 laporan. Uji 20 pertandingan: hanya 24 baris
     itu berubah (level kosong → 9), 140 sama; diff laporan hanya kolom level, waktu dibuat, dan catatan metode. `check.py`
-    lolos, peringkat tidak berubah. Ditemukan: Giommy (24 Okt 14-43) 8 dari 9 hero terdeteksi, seperti Xuu di 26.
+    lolos, peringkat tidak berubah. Ditemukan: Giommy (24 Okt 14-43) 8 dari 9 hero terdeteksi, seperti Xuu di 26 (diperbaiki
+    di 28).
+
+28. (2026-10-28) Hero terlewat di layar hasil, dua penyebab. (a) Unit panggilan yang bukan hero season tidak punya ikon untuk
+    dicocokkan: Giommy (24 Okt 14-43) punya **Turret** dari kartu "Turret of Guardians"; **Johnny** (commander Johnson) ada di
+    8 baris, **Makhluk Suci** (commander Lukas) di 2. Ketiganya baris `MCHero` umum (bukan `MCHero_S7`) dengan `m_GuideType`
+    3 yang diberikan sebuah efek (`OperEnum` 20002/20005, ID unit di `m_Para2`); bot latihan di tabel itu tidak diberikan efek
+    apa pun. `mc_data.py` kini menulis `summons` di `S<n>.json` (+ ikon `HeroHead2900`, `MonsterHead47131`),
+    `mc_vision.load_icons(..., "summon")` memuatnya, dan `mc_match.py` mencocokkannya bersama ikon hero. Di papan akhir unit
+    ini tampil dengan ikon, tapi tidak ikut hitungan sinergi (sinerginya acak). Deteksi di kiri kolom Go Go Card diabaikan:
+    avatar pemain commander Johnson = ikon Johnny (24 Okt 02-51, SINGKUANG kehilangan nama dan level). (b) Hero yang sama dua
+    kali di papan dibuang karena baris dua screenshot digabung per nama: Xuu punya dua Lancelot; 10 baris di 7 pertandingan
+    punya hero kembar (semua dicek di gambar). Kini baris digabung lewat tumpang-tindih urutan (baris tertutup notifikasi,
+    daftar hero digeser), dan sinergi dihitung dari hero unik, sama seperti layar hasil (15:38 Cybertron: Marksman 4 dengan
+    Miya ×2, bukan 5). Uji 20 pertandingan di `cache/match/_result`: 24 baris berubah (hanya kolom hero), 140 sama; 4 di
+    antaranya urutan hero yang dulu salah (daftar digeser ke kiri). Dibuat ulang dari frame cache: `MATCH_21_Okt_14_42_Minotaur`,
+    `21_Okt_15_00_Angela`, `21_Okt_15_38_Minotaur`, `21_Okt_22_43`, `22_Okt_03_18`, `22_Okt_04_55`, `23_Okt_22_08`,
+    `24_Okt_02_51`, `24_Okt_14_43`, `24_Okt_22_17`, `24_Okt_22_40`, `25_Okt_23_24`, `25_Okt_23_49`, `26_Okt_00_09`. Diff
+    laporan hanya baris papan akhir, waktu dibuat, dan catatan metode; nilai sinergi sama (5 baris hanya berubah urutan); 6
+    laporan lain identik; `check.py` lolos. `S7`/`S8` dibuat ulang: hanya `summons` dan waktu ekstrak yang berubah.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -375,5 +394,5 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `mc_match.py`: ikon hero yang terlewat di layar hasil (Xuu 26 Okt 00-09 dan Giommy 24 Okt 14-43: 8 dari 9). Nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
+- `mc_match.py`: nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
   atau model RapidOCR Korea yang diunduh); sekarang tampil sebagai gambar.

@@ -53,6 +53,8 @@ def load_icons(d, folder, kind):
         items = [(h["name"], h.get("icon")) for h in d["heroes"]]
     elif kind == "synergy":
         items = [(s["name"], s.get("icon")) for s in d["synergies"]]
+    elif kind == "summon":  # Johnny, Turret, Makhluk Suci: on the board, not season heroes (matched as kind "hero")
+        items = [(u["name"], u.get("icon")) for u in d.get("summons", [])]
     elif kind == "card":
         items = [(c["name"], c.get("icon")) for c in d["cards"] if c.get("active", True)]
     else:

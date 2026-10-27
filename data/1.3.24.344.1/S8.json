@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.24.344.1",
  "season": 8,
- "generated_at": "2026-10-21T21:37:22",
+ "generated_at": "2026-10-27T22:43:22",
  "info": {
   "name": "Arena Para Penyihir",
   "levels": [
@@ -4757,6 +4757,23 @@
    ],
    "summoned": true,
    "icon": "img/Atlas_HeroHeadIcon_S8/SkinHead028_07.png"
+  }
+ ],
+ "summons": [
+  {
+   "id": 501,
+   "name": "Johnny",
+   "icon": "img/Atlas_HeroHeadIcon_New_MC/HeroHead45216.png"
+  },
+  {
+   "id": 502,
+   "name": "Turret",
+   "icon": "img/Atlas_HeroHeadIcon_New_MC/HeroHead2900.png"
+  },
+  {
+   "id": 505,
+   "name": "Makhluk Suci",
+   "icon": "img/Atlas_HeroHeadIcon_New_MC/MonsterHead47131.png"
   }
  ],
  "commanders": [
