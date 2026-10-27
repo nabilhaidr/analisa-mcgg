@@ -544,7 +544,7 @@ def read_result(paths, d, folder, engine=None):
         for kind, found in (("hero", found_h), ("card", found_c)):
             if found and kind not in sizes:
                 sizes[kind] = statistics.median(f["size"] for f in found)
-        heroes = [r for r in mc_vision.rows(found_h) if len(r) >= 2]
+        heroes = mc_vision.rows(found_h)
         cards = mc_vision.rows(found_c)
         lines = ocr.get(p.name, {}).get("lines", [])
         text = " ".join(l["t"] for l in lines)
@@ -552,16 +552,13 @@ def read_result(paths, d, folder, engine=None):
         pts = re.search(r"(\d{3,5})\s*([+-]\d{1,3})\b", text)
         if pts:
             meta.setdefault("points", f"{pts.group(1)} ({pts.group(2)})")
-        x_left = min((f["x"] for r in heroes for f in r), default=0)
-        level_ys = sorted((l["y"] + l["b"]) / 2 for l in lines if LEVEL_RE.search(l["t"]) and l["r"] < x_left)
-        for i, r in enumerate(heroes, 1):
-            y, size = sum(f["y"] for f in r) / len(r), r[0]["size"]
-            if len(heroes) <= len(level_ys) <= 8:  # rank = order of the "Level N" lines, so a row without heroes shifts nothing
-                i = 1 + min(range(len(level_ys)), key=lambda k: abs(level_ys[k] - y))
+        for i, r, y in grid_ranks(heroes):
+            size = r[0]["size"]
             x_first = min(f["x"] for f in r)
             near = [l for l in lines if abs((l["y"] + l["b"]) / 2 - y) < size * 0.9 and l["r"] < x_first - size]
             name = next((clean_name(l["t"]) for l in sorted(near, key=lambda l: l["y"])  # "AJ11" has 2 letters, badge "39" none
-                         if len(re.findall(r"[A-Za-z]", l["t"])) >= 2 and not LEVEL_RE.search(l["t"])), f"baris {i}")
+                         if len(re.findall(r"[A-Za-z]", l["t"])) >= 2 and not re.match(r"\W*Leve[l1I|]", l["t"])),
+                        f"baris {i}")  # "Level" without its number is no name either
             lv = next((int(m.group(1)) for l in near if (m := LEVEL_RE.search(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
             cur = rows.setdefault(i, {"rank": i, "name": name, "level": lv, "heroes": [], "cards": []})
@@ -571,6 +568,58 @@ def read_result(paths, d, folder, engine=None):
             cur["cards"] = list(dict.fromkeys(cur["cards"] + [f["name"] for f in row_cards]))
             cur["level"] = cur["level"] or lv
     return [rows[k] for k in sorted(rows)], meta
+
+
+def grid_ranks(rows):
+    """[(rank, hero row, y)] of the hero rows on a result screen. The rows are evenly spaced and rank 1 always shows
+    heroes, so rank = 1 + row steps below the first row with >= 2 heroes; a row with a single hero counts only when it
+    sits on that grid (+-15% of the spacing). The "Level N" lines are not used for this: on the 21 Okt 22:43 screen one
+    was read "Levelg", and the row of a player with one hero (SABRINA) was dropped, so two rows shared a rank."""
+    y_of = lambda r: sum(f["y"] for f in r) / len(r)
+    full = [r for r in rows if len(r) >= 2]
+    gaps = [b - a for a, b in zip(map(y_of, full), map(y_of, full[1:])) if b - a > 0]
+    if not gaps:
+        return [(i, r, y_of(r)) for i, r in enumerate(full, 1)]
+    pitch = statistics.median(g / max(1, round(g / min(gaps))) for g in gaps)
+    out = []
+    for r in rows:
+        step = (y_of(r) - y_of(full[0])) / pitch
+        if -0.15 < step < 7.5 and (len(r) >= 2 or abs(step - round(step)) < 0.15):
+            out.append((1 + round(step), r, y_of(r)))
+    return out
+
+
+def result_frames(frames, work):
+    """The result screen at the end of the recording, for a run without --result: copies of the first and the last frame
+    that show it (the hero rows may have been scrolled in between). On the 15:38 match these two frames gave the same
+    ranks, names, heroes and cards as the screenshots (some levels unread). A result frame shows the match ID (15-20
+    digits) next to the column titles: the in-game "Hero yang Ditempatkan" panel has the same title but no ID, and a
+    result screen of the previous match at the start of a recording has another ID, so only frames with the ID of the
+    last one are used. Copies are named after the match because read_result keeps one OCR copy per file name in
+    cache/match/_result."""
+    ocr = run_ocr(frames[0].parent)
+    hits = []
+    for f in frames:
+        text = " ".join(l["t"] for l in ocr.get(f.name, {}).get("lines", []))
+        ids = re.findall(r"\b\d{15,20}\b", text)
+        if ids and re.search(r"Hero yang Ditempatkan|Sinergi yang Diaktifkan", text):
+            hits.append((f, ids[0]))
+    hits = [f for f, i in hits if i == hits[-1][1]] if hits else []
+    out = []
+    for f in dict.fromkeys(hits[:1] + hits[-1:]):
+        copy = work / f"{work.name}_{f.name}"
+        if not copy.exists():
+            copy.write_bytes(f.read_bytes())
+        out.append(copy)
+    return out
+
+
+def own_name(names, player):
+    """The player's name as read on the result screen (exact, else similar), else as given."""
+    if not player:
+        return None
+    return next((n for n in names if norm(n) == norm(player)), None) or \
+        next((n for n in names if difflib.SequenceMatcher(None, norm(n), norm(player)).ratio() > 0.7), player)
 
 
 # ------------------------------------------------------------------ insights
@@ -663,10 +712,7 @@ def main():
     if final:
         log(f"Layar hasil: {len(final)} pemain dikenali")
     names = [r["name"] for r in final]
-    me = None
-    if args.player:
-        me = next((n for n in names if norm(n) == norm(args.player)), None) or \
-             next((n for n in names if difflib.SequenceMatcher(None, norm(n), norm(args.player)).ratio() > 0.7), args.player)
+    me = own_name(names, args.player)
 
     rounds, events, players, cal, layout = [], [], [], (1.0, 0.0, 0), None
     if args.video or args.frames:
@@ -677,6 +723,13 @@ def main():
         w, h = Image.open(frames[0]).size
         layout = "ponsel" if w / h >= 2.0 else "pc"
         log(f"{len(frames)} frame, tata letak {layout}")
+        if not args.result:
+            shots = result_frames(frames, work)
+            if shots:
+                final, meta = read_result(shots, d, folder, result_engine)
+                log(f"Layar hasil dari rekaman ({', '.join(p.name for p in shots)}): {len(final)} pemain dikenali")
+                names = [r["name"] for r in final]
+                me = own_name(names, args.player)
         recs = read_frames(frames, work, layout)
         clusters = cluster_players(recs, names)
         players = [c[0] for c in clusters]
@@ -798,7 +851,8 @@ def main():
                    "Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang "
                    "tampil, jadi tidak dipakai untuk menentukan hasil babak."]
     if final:
-        method.append(f"Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "
+        method.append(("Layar hasil (frame akhir rekaman, tanpa screenshot)" if not args.result else "Layar hasil") +
+                      ": hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "
                       f"({mc_ocr.describe(result_engine)}); "
                       "peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
                                                      "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))

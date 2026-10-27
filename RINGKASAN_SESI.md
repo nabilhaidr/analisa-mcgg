@@ -294,6 +294,23 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     `MATCH_21_Okt_15_38_Minotaur` dan `MATCH_21_Okt_02_25_Kalea_PC` dibuat ulang; 4 frame kunci lama yang tidak dirujuk dihapus.
     Sisa: Gold awal babak kadang salah baca (0/6), babak non-tempur (II-3 pilih Go Go Card) memutus hitungan "kekalahan beruntun".
 
+23. (2026-10-27) `mc_match.py` dijalankan untuk semua rekaman di `screenshot/season 7/match` (20 rekaman 21–26 Okt; 18 baru,
+    2 worker paralel, ±8–17 menit per rekaman, frame di `cache/match/<nama>/frames`). Layar hasil dipasangkan dari waktu
+    screenshot (mulai rekaman + durasi). Perbaikan selama batch:
+    - Tanpa `--result`: layar hasil diambil dari frame akhir rekaman (`result_frames`: frame dengan ID pertandingan + judul kolom;
+      panel "Hero yang Ditempatkan" di tengah permainan tidak punya ID). Di 15:38 hasilnya sama dengan screenshot.
+    - Peringkat di layar hasil dari grid baris hero (`grid_ranks`), bukan urutan baris "Level N": di 22:43 "Levelg" + baris
+      SABRINA (1 hero) membuat Arch. digabung ke TUKANG TOCO. Baris 1 hero kini ikut bila tepat di grid. Teks "Level" tanpa
+      angka bukan nama.
+    Hasil (peringkat, commander): 21 Okt 14-42 Minotaur 8, 15-00 Angela 7, 22-15 Fanny 5, 22-43 Fanny 1; 22 Okt 03-18 Fanny 4,
+    04-55 Fanny 4, 06-16 Fanny 1; 23 Okt 21-47 Fanny 7, 22-08 Fanny 1; 24 Okt 02-51 Fanny 4, 14-43 Fanny 5, 15-06 Fanny 4,
+    22-17 Fanny 7, 22-40 Fanny 8, 23-02 Minotaur 1; 25 Okt 23-24 Fanny 5, 23-49 Fanny 7; 26 Okt 00-09 Minotaur 3. Semua 20
+    laporan konsisten (peringkat > 1: total kehilangan HP tepat 100; juara: HP akhir = 100 − total). 4 rekaman tanpa screenshot
+    hasil (23 Okt 21-47, 24 Okt 14-43, 22-40, 25 Okt 23-24) memakai layar hasil dari rekaman. Nama non-Latin (Korea, dst.)
+    tidak terbaca RapidOCR → "baris N" (1 nama di 22-43, 24 Okt 02-51/14-43/15-06, 25 Okt 23-24).
+    Bukan input `mc_match`: 7 screenshot "Lineup Akhir" 20/10 (Kalea, Minotaur, Aamon, Luo Yi, Kagura), 2 daftar Riwayat, dan
+    `Screenshot_2026-10-22-06-38-48` (Toko Spirit Sand di tengah permainan: "ATK Rekan +1%").
+
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
   skrip capstone + daftar simbol PDB (`text_all_syms.json`) di scratchpad sesi lama (folder sementara, bisa hilang).
@@ -315,7 +332,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
 - Ambil screenshot Toko Spirit Sand (beberapa refresh) untuk memverifikasi harga/nama dan bonus ATK +2%/+3% yang
   sebenarnya (3% atau 2%?), lalu set `STORE_VERIFIED`. `mc_validate.py` belum mencocokkan `special_store` dan `go_go_box` ke screenshot (`mc_diff.py` sudah membandingkannya antar versi).
-- Analisa rekaman pertandingan yang belum diproses (21 Okt 22:15 dan 22:43, 22 Okt 03:18/04:55/06:16, 23 Okt 21:47/22:08) dengan
-  `mc_match.py`; layar Riwayat 22:15/22:44 ada di 5 screenshot `match` yang belum masuk repo.
+  Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
