@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 23 Okt 21-47
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:18_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:17_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -85,11 +85,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:18_
 |---|---|---|---|---|---|
 | 1 | jet darat | 9 | Eudora, Uranus, Alice, Nana, Lolita, Lunox, Franco, Hilda, Mathilda | Alice's Power, Howling Wind, Stargazer's Badge | Stargazer 4, Mistbender 2, Dauntless 5, Kishin 2 |
 | 2 | Skyzoo BR | 9 | Fanny, Badang, Zilong, Lolita, Gusion, Edith, Cici, Miya, Balmond | Nana's Power, Steel Front, Payday | Starbelle 5, Swiftblade 2, Dragoncaller 4, Weapon Master 2, Dauntless 2 |
-| 3 | Yslat | - | Layla, X.Borg, Lolita, Kadita, Edith, Miya, Natalia, Cici, Fanny | Brody's Power, Cyclone Sigil, Emergency Rift | Chrono Wanderer 2, Marksman 2, Dauntless 2, Starbelle 5, Swiftblade 2 |
+| 3 | Yslat | 9 | Layla, X.Borg, Lolita, Kadita, Edith, Miya, Natalia, Cici, Fanny | Brody's Power, Cyclone Sigil, Emergency Rift | Chrono Wanderer 2, Marksman 2, Dauntless 2, Starbelle 5, Swiftblade 2 |
 | 4 | GAMEANEH | 9 | Layla, Lancelot, Melissa, Karrie, Lunox, Franco, Kadita, Dyrroth, Harley | Kalea's Power, Fully Loaded, Echomancer's Badge | Chrono Wanderer 1, Marksman 3, Kishin 5, Phasewarper 3, Shadeweaver 2 |
-| 5 | Zydn | - | Irithel, Hilda, Fanny, Odette, Lolita, Karina, Edith, Miya, Zhuxin | Luo Yi's Power, Reinforcement / Reinforcement+, Bright Sunshine | Astro Power 4, Marksman 2, Dauntless 2, Starbelle 5, Swiftblade 2, Mage 2 |
-| 6 | K.R.A.T.O.S | - | Fanny, Franco, Zhuxin, Thamuz, Zilong, Lolita, Gusion, Suyou, Minotaur | Alucard's Power, Starbelle's Badge, Fateful Dice | Starbelle 3, Swiftblade 2, Dauntless 2, Weapon Master 4, Dragoncaller 2 |
-| 7 | CinCoeg (kamu) | - | Moskov, Tigreal, Miya, Zhuxin, Cici, Thamuz, Lolita, Sora, Karina | Fanny's Power, Starbelle's Badge, Echomancer's Badge | Chrono Wanderer 1, Marksman 2, Echomancer 3, Starbelle 4, Weapon Master 2 |
+| 5 | Zydn | 9 | Irithel, Hilda, Fanny, Odette, Lolita, Karina, Edith, Miya, Zhuxin | Luo Yi's Power, Reinforcement / Reinforcement+, Bright Sunshine | Astro Power 4, Marksman 2, Dauntless 2, Starbelle 5, Swiftblade 2, Mage 2 |
+| 6 | K.R.A.T.O.S | 9 | Fanny, Franco, Zhuxin, Thamuz, Zilong, Lolita, Gusion, Suyou, Minotaur | Alucard's Power, Starbelle's Badge, Fateful Dice | Starbelle 3, Swiftblade 2, Dauntless 2, Weapon Master 4, Dragoncaller 2 |
+| 7 | CinCoeg (kamu) | 9 | Moskov, Tigreal, Miya, Zhuxin, Cici, Thamuz, Lolita, Sora, Karina | Fanny's Power, Starbelle's Badge, Echomancer's Badge | Chrono Wanderer 1, Marksman 2, Echomancer 3, Starbelle 4, Weapon Master 2 |
 | 8 | Pinkkkeu | 9 | Novaria, Alice, Nana, Lolita, Lunox, Sora, Franco, Aldous, Eudora | Kalea's Power, Tactical Airdrop | Chrono Wanderer 1, Stargazer 4, Dauntless 3, Mistbender 2, Kishin 2 |
 
 ## Catatan metode
@@ -101,4 +101,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 03:18_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah IV-1 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah IV-1 (babak terakhir yang masih menampilkan HP sendiri).

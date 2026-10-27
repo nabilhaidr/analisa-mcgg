@@ -328,8 +328,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     gambar nama dari layar hasil (`match_<nama>/nama_<peringkat>.png`). Uji 20 pertandingan di `cache/match/_result`: hanya
     6 baris berubah, 158 sama. Dibuat ulang dari frame cache: `MATCH_21_Okt_22_43`, `24_Okt_02_51`, `24_Okt_14_43` ("1254"),
     `24_Okt_15_06`, `25_Okt_23_24` (+ "FET KAT"); timeline, HP, kejadian, dan peringkat tidak berubah.
-    Ditemukan: peringkat 26 Okt 00-09 bergeser (diperbaiki di 26). Juga, **belum diperbaiki**: 7 laporan punya level kosong
-    karena "Level9" terbaca "Levelg"; pemain Korea di 22-43 muncul sebagai "FL-loi" di tabel HP (OCR HUD).
+    Ditemukan: peringkat 26 Okt 00-09 bergeser (diperbaiki di 26) dan 7 laporan punya level kosong karena "Level9" terbaca
+    "Levelg" (diperbaiki di 27). **Belum diperbaiki**: pemain Korea di 22-43 muncul sebagai "FL-loi" di tabel HP (OCR HUD).
 
 26. (2026-10-27) Peringkat layar hasil 26 Okt 00-09: di screenshot `00-32-12` notifikasi "Saved screen recording" menutupi
     hero baris 1 (XXMAATT), sehingga `grid_ranks` memakai baris CUMA BISA HAMUI sebagai peringkat 1 dan semua peringkat
@@ -341,6 +341,15 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     Via Riana 6, KING BALDWIN 7, Xuu 8 (cocok dengan layar); timeline dan HP tidak berubah. Uji 20 pertandingan di
     `cache/match/_result`: hanya 8 baris pertandingan ini yang berubah, 156 baris lain sama (nama, level, hero, kartu).
     Xuu: 8 dari 9 hero terdeteksi (sama seperti sebelumnya).
+
+27. (2026-10-27) Level kosong di papan akhir: 24 baris di 7 laporan. 23 baris terbaca "Levelg" (53 dari 330 baris "Level" di
+    `cache/match/_result`; layar menunjukkan "Level9"), 1 baris (saaaaa, 24 Okt 22-40) hanya "Level" tanpa angka di kedua
+    frame hasil. `mc_match.py`, khusus layar hasil: "Levelg" = Level 9; bila angka tetap tidak ada, potongan baris "Level"
+    itu (dengan margin) di-OCR ulang dan terbaca "Level9". Level HUD tidak diubah (hanya 1 "Level g" di ribuan bacaan HUD).
+    Dibuat ulang dari frame cache: `MATCH_21_Okt_22_15`, `21_Okt_22_43`, `23_Okt_21_47`, `24_Okt_14_43`, `24_Okt_22_40`,
+    `24_Okt_23_02`, `25_Okt_23_24`; kini 0 baris papan akhir tanpa level di 20 laporan. Uji 20 pertandingan: hanya 24 baris
+    itu berubah (level kosong → 9), 140 sama; diff laporan hanya kolom level, waktu dibuat, dan catatan metode. `check.py`
+    lolos, peringkat tidak berubah. Ditemukan: Giommy (24 Okt 14-43) 8 dari 9 hero terdeteksi, seperti Xuu di 26.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -366,5 +375,5 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `mc_match.py`: "Levelg" = Level 9 (7 laporan level kosong). Nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
+- `mc_match.py`: ikon hero yang terlewat di layar hasil (Xuu 26 Okt 00-09 dan Giommy 24 Okt 14-43: 8 dari 9). Nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
   atau model RapidOCR Korea yang diunduh); sekarang tampil sebagai gambar.

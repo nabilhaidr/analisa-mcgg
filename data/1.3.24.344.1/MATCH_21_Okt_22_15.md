@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 22-15
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:44_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:10_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -91,7 +91,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:44_
 | 5 | CinCoeg (kamu) | 9 | Novaria, Lunox, Sora, Tigreal, Karina, Mathilda, Natalia, Luo Yi, Nana | Fanny's Power, Glittering Jewels II, Purest Power Ⅰ | Chrono Wanderer 1, Stargazer 6, Echomancer 3, Swiftblade 2, Mistbender 1 |
 | 6 | BesokPensiun | 9 | Alpha, Badang, Gord, Yin, Dyrroth, Aldous, Paquito, Granger | Freya's Power, Fateful Dice, Rock Solid | SPECTRE 4, Bruiser 5, Mistbender 1 |
 | 7 | 0LORENGX00 | 9 | Atlas, Baxia, Karrie, Yin, Suyou, Tigreal, Wanwan, Edith, Luo Yi | Nana's Power, Valor's Embrace, Uncertain Fortune | Defender 4, Dragon Altar 5, Marksman 2 |
-| 8 | EiRaCantik | - | Zilong, Karrie, Suyou, Alice, Lancelot, Thamuz, Lunox, Franco, Angela | Alucard's Power, Reinforcement / Reinforcement+, Prime Selection | Weapon Master 4, Kishin 5, Dauntless 2 |
+| 8 | EiRaCantik | 9 | Zilong, Karrie, Suyou, Alice, Lancelot, Thamuz, Lunox, Franco, Angela | Alucard's Power, Reinforcement / Reinforcement+, Prime Selection | Weapon Master 4, Kishin 5, Dauntless 2 |
 
 ## Catatan metode
 
@@ -102,4 +102,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 01:44_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-6 (babak terakhir yang masih menampilkan HP sendiri).

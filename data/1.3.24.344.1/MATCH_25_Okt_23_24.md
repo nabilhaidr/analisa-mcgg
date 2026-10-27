@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-24
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:41_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:33_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -84,11 +84,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:41_
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
 | 1 | Assiur | 8 | Dyrroth, Zilong, Karrie, Lunox, Franco | Johnson's Power, Pas de Deux, Badge Weapon Master | Kishin 4, Weapon Master 2 |
-| 2 | ![nama baris 2 (tidak terbaca OCR)](match_25_Okt_23_24/nama_2.png) | - | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
+| 2 | ![nama baris 2 (tidak terbaca OCR)](match_25_Okt_23_24/nama_2.png) | 9 | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
 | 3 | Laurent.Elias-16 | 8 | Saber, Karina, Yi Sun-shin, Novaria, Gusion, Mathilda, Natalia, Luo Yi, Eudora | Kagura's Power, Echomancer's Badge, Stargazer's Badge | Swiftblade 5, Stargazer 5, Dragon Altar 2, Chrono Wanderer 1, Dragoncaller 2 |
 | 4 | FET KAT | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Hylos, Zhuxin, Karrie | Kalea's Power, Legacy of Valor, Marksman's Badge | SPECTRE 2, Dauntless 2, Starbelle 3, Shadeweaver 3, Marksman 2, Mage 2 |
-| 5 | CinCoeg (kamu) | - | Thamuz, X.Borg, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin | Fanny's Power, Apex Weapons, Trust Fund | Echomancer 4, Chrono Wanderer 1, Dauntless 2, Starbelle 4, Defender 2 |
-| 6 | bachtimi | - | Nana, Gatotkaca, Lolita, Lunox, Karina, Franco, Mathilda, Luo Yi, Eudora | Freya's Power, Emergency Rift, Steel Front | Mistbender 1, Stargazer 6, Chrono Wanderer 1, Dauntless 2, Kishin 2 |
+| 5 | CinCoeg (kamu) | 9 | Thamuz, X.Borg, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin | Fanny's Power, Apex Weapons, Trust Fund | Echomancer 4, Chrono Wanderer 1, Dauntless 2, Starbelle 4, Defender 2 |
+| 6 | bachtimi | 9 | Nana, Gatotkaca, Lolita, Lunox, Karina, Franco, Mathilda, Luo Yi, Eudora | Freya's Power, Emergency Rift, Steel Front | Mistbender 1, Stargazer 6, Chrono Wanderer 1, Dauntless 2, Kishin 2 |
 | 7 | Etiya bang | 9 | Alice, Fanny, Thamuz, X.Borg, Melissa, Lolita, Franco, Edith | Lukas's Power, Reinforcement / Reinforcement+, Glittering Jewels II | Dauntless 4, Starbelle 3, Weapon Master 2, Chrono Wanderer 1 |
 | 8 | ATENG | 7 | Tigreal, Clint, Kadita, Edith, Harley, Hylos, Layla, Eudora | Ruby's Power, Aftershock, Blood Claw | Echomancer 2, Defender 3, Dragoncaller 2, Phasewarper 3, Shadeweaver 2, Chrono Wanderer 1 |
 

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 22-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:36_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:11_
 
 - **Peringkat:** 1
 - **HP akhir:** 16
@@ -91,7 +91,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:36_
 | 2 | Alyona | 10 | Fanny, Odette, Zilong, Lolita, Irithel, Suyou, Hilda, Martis, Minotaur | Diggie's Power, Badge Weapon Master, Prime Selection | Starbelle 2, Astro Power 5, Weapon Master 3, Dauntless 2 |
 | 3 | SABRINA | 10 | Nana | Lunox's Power, Trust Fund, Healing Fountain | Mistbender 1 |
 | 4 | TUKANGTOCO | 9 | Nana, Lolita, Franco, Hilda, Aldous, Uranus, Lunox, Karina, Mathilda | Lunox's Power, Fast Promotion, Rising Fury Ⅰ / Ⅱ / Ⅲ | Mistbender 3, Stargazer 4, Dauntless 4, Kishin 2, Astro Power 2 |
-| 5 | Arch | - | Gusion, Zhuxin, Cici, Fanny, Badang, Zilong, Lolita, Edith | Kalea's Power, Adequate Stock, Rock Solid | Dragoncaller 3, Swiftblade 2, Starbelle 5, Weapon Master 2 |
+| 5 | Arch | 9 | Gusion, Zhuxin, Cici, Fanny, Badang, Zilong, Lolita, Edith | Kalea's Power, Adequate Stock, Rock Solid | Dragoncaller 3, Swiftblade 2, Starbelle 5, Weapon Master 2 |
 | 6 | I'mKaLenGBLek | 8 | X.Borg, Gusion, Tigreal, Karina, Thamuz, Saber, Natalia, Yi Sun-shin | Johnson's Power, Premium Client I, Dark Blade | Chrono Wanderer 1, Swiftblade 5, Echomancer 3 |
 | 7 | LALAPOOO | 9 | Fanny, Gord, Edith, Phoveus, Cici, Alice, Lolita, Paquito, Miya | Moskov's Power, Legacy of Valor, Healing Fountain | Starbelle 5, SPECTRE 4, Dauntless 2 |
 | 8 | ![nama baris 8 (tidak terbaca OCR)](match_21_Okt_22_43/nama_8.png) | 9 | Clint, Luo Yi, Eudora, Yi Sun-shin, Badang, Baxia, Zilong, Gusion, Yin | Wanwan's Power, Badge Dragon Altar, Prime Selection | Dragoncaller 5, Dragon Altar 4, Stargazer 2, Swiftblade 2, Bruiser 2 |

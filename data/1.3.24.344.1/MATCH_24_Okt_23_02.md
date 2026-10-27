@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 23-02
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:59_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:26_
 
 - **Peringkat:** 1
 - **HP akhir:** 52
@@ -85,8 +85,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:59_
 | 2 | dib | 10 | Layla, Gatotkaca, Baxia, Melissa, Karrie, Tigreal, Wanwan, Edith, Miya | Kalea's Power, Purest Power Ⅱ, Emergency Rift | Chrono Wanderer 2, Marksman 5, Dragon Altar 2, Defender 3, Starbelle 2 |
 | 3 | anomalitop7 | 9 | Alpha, Alice, Fanny, Lolita, Gord, Saber, Miya, Zhuxin, Cici | Alucard's Power, Exclusive Fan, Fateful Dice | SPECTRE 4, Dauntless 2, Starbelle 5, Swiftblade 2, Mage 2 |
 | 4 | MoonLight | 9 | Alpha, Alice, Nana, Novaria, Gord, Yin, Aldous, Paquito, Granger | Diggie's Power, Badge Bruiser, Neon Zenith | SPECTRE 5, Mistbender 2, Stargazer 2, Chrono Wanderer 1, Bruiser 3 |
-| 5 | Noire | - | Zilong, Gusion, Yin, Suyou, Luo Yi, Badang, Baxia, Clint, Balmond | Kalea's Power, Valor's Embrace, Badge Dragon Altar | Dragoncaller 5, Weapon Master 2, Dragon Altar 4, Bruiser 2 |
-| 6 | EM | - | Layla, Tigreal, Hylos, Lancelot, Karrie, Lunox, Sora, Franco, Harley | Gusion's Power, Glorious Rogue, Steel Front | Chrono Wanderer 1, Marksman 2, Echomancer 3, Defender 2, Kishin 4, Phasewarper 2 |
+| 5 | Noire | 9 | Zilong, Gusion, Yin, Suyou, Luo Yi, Badang, Baxia, Clint, Balmond | Kalea's Power, Valor's Embrace, Badge Dragon Altar | Dragoncaller 5, Weapon Master 2, Dragon Altar 4, Bruiser 2 |
+| 6 | EM | 9 | Layla, Tigreal, Hylos, Lancelot, Karrie, Lunox, Sora, Franco, Harley | Gusion's Power, Glorious Rogue, Steel Front | Chrono Wanderer 1, Marksman 2, Echomancer 3, Defender 2, Kishin 4, Phasewarper 2 |
 | 7 | BOLL | 9 | Alice, Fanny, Lolita, Gord, Phoveus, Alpha, Saber, Paquito, Edith | Guinevere's Power, Legacy of Valor, Reinforcement / Reinforcement+ | SPECTRE 6, Dauntless 2, Starbelle 3, Swiftblade 2 |
 | 8 | IMannn | 9 | Lunox, Franco, Aldous, Nana, Lancelot, Karrie, Kadita, Angela, Uranus | Alucard's Power, Trust Fund, Reinforcement / Reinforcement+ | Kishin 5, Stargazer 2, Dauntless 2, Mistbender 3, Phasewarper 2 |
 
@@ -99,4 +99,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:59_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.

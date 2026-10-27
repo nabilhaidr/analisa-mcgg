@@ -559,24 +559,51 @@ def read_result(paths, d, folder, engine=None):
             x_first = min(f["x"] for f in r)
             near = [l for l in lines if abs((l["y"] + l["b"]) / 2 - y) < size * 0.9 and l["r"] < x_first - size]
             name = row_name(near, col_x, y, size)
-            lv = next((int(m.group(1)) for l in near if (m := LEVEL_RE.search(l["t"]))), None)
+            lv = next((v for l in near if (v := result_level(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
             cur = rows.setdefault(i, {"rank": i, "name": name or f"baris {i}", "level": lv, "heroes": [], "cards": []})
             if name and (cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"]))):
                 cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
             if not name and col_x is not None:
                 cur.setdefault("slot", (p, name_box(near, col_x, y, size, row_cards)))
+            if lv is None and (lv_line := next((l for l in near if NOT_NAME.match(l["t"])), None)):
+                cur.setdefault("level_box", (p, level_box(lv_line)))
             cur["heroes"] = list(dict.fromkeys(cur["heroes"] + [f["name"] for f in r]))
             cur["cards"] = list(dict.fromkeys(cur["cards"] + [f["name"] for f in row_cards]))
             cur["level"] = cur["level"] or lv
     out = [rows[k] for k in sorted(rows)]
+    redo = [r for r in out if not r["level"] and r.get("level_box")]
+    if redo:  # "Level" without its number on every screenshot (24 Okt 22:40, saaaaa): the line alone is read whole
+        crops = tmp / "level"
+        crops.mkdir(exist_ok=True)
+        files = {id(r): crops / f"{r['level_box'][0].stem}_{r['rank']}.png" for r in redo}
+        for r in redo:
+            src, box = r["level_box"]
+            Image.open(src).crop(box).save(files[id(r)])
+        crop_ocr = run_ocr(crops, engine, list(files.values()))
+        for r in redo:
+            r["level"] = result_level(" ".join(l["t"] for l in crop_ocr.get(files[id(r)].name, {}).get("lines", [])))
     for r in out:
+        r.pop("level_box", None)
         if not r["name"].startswith("baris "):
             r.pop("slot", None)  # read on another screenshot of the same screen
     return out, meta
 
 
 NOT_NAME = re.compile(r"\W*Leve[l1I|]")  # the "Level N" line (also "Levelg", or without its number)
+RESULT_LEVEL_RE = re.compile(r"Leve[l1I|]\s*(\d{1,2}|g)")  # result screen: "Levelg" = Level 9 (53 of 330 lines, 7 matches)
+
+
+def result_level(text):
+    """Level of a result row from its "Level N" text ("Levelg" = 9), or None."""
+    m = RESULT_LEVEL_RE.search(text)
+    return m and (9 if m.group(1) == "g" else int(m.group(1)))
+
+
+def level_box(line):
+    """(x0, y0, x1, y1) around one "Level N" line, with room on the right for a number the page OCR left out."""
+    h = line["b"] - line["y"]
+    return int(line["x"] - 0.8 * h), int(line["y"] - 0.8 * h), int(line["r"] + 3 * h), int(line["b"] + 0.8 * h)
 
 
 def row_name(near, col_x, y, size):

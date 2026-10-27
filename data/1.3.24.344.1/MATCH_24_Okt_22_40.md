@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-40
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:51_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:50_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -80,13 +80,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:51_
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
 | 1 | TRUEBLUES? | 9 | Nana, Lunox, Franco, Balmond, Eudora, Uranus, Alice, Karina, Mathilda | Lunox's Power, Magic Immersion Ⅰ, Premium Client II | Mistbender 2, Stargazer 5, Kishin 2, Dauntless 4, Dragoncaller 2 |
-| 2 | tnnnnn | - | X.Borg, Melissa, Lunox, Franco, Lancelot, Karrie, Kadita, Harley, Hylos | Nana's Power, Rock Solid, Shield of Fortune / Fortune+ | Chrono Wanderer 1, Dauntless 2, Shadeweaver 3, Marksman 2, Kishin 4, Phasewarper 3 |
-| 3 | Sunshinev | - | Gatotkaca, Thamuz, Karrie, Lunox, Sora, Franco, Dyrroth, Lancelot, Melissa | Nana's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Bruiser 2, Echomancer 2, Weapon Master 2, Kishin 5, Marksman 2 |
-| 4 | Laurent.Elias-16 | - | Franco, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
-| 5 | lap_Dung.29 | - | Irithel, Edith, Miya, Cici, Fanny, Lolita, Karina, Hilda, Minotaur | Alucard's Power, Breath of Berserk Ⅰ, Divine Execution | Astro Power 4, Marksman 2, Starbelle 5, Defender 2, Swiftblade 2, Dauntless 2 |
-| 6 | saaaaa | - | Lancelot, Karrie, Lunox, Karina, Franco, Mathilda, Nana, Fanny, Angela | Alucard's Power, Uncertain Fortune, Shield of Fortune / Fortune+ | Kishin 5, Stargazer 4, Swiftblade 2, Mistbender 1 |
-| 7 | Lhmsyhh | - | Melissa, Irithel, Martis, Odette, Karrie, Hilda, Wanwan, Miya, Granger | Aurora's Power, Rogue's Aid, Astro Power's Blessing | Marksman 6, Astro Power 4 |
-| 8 | CinCoeg (kamu) | - | Layla, Sora, Tigreal, Edith, Natalia, Vale, Cici, Fanny, Thamuz | Fanny's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Echomancer 5, Defender 2, Starbelle 3, Swiftblade 2, Weapon Master 2 |
+| 2 | tnnnnn | 9 | X.Borg, Melissa, Lunox, Franco, Lancelot, Karrie, Kadita, Harley, Hylos | Nana's Power, Rock Solid, Shield of Fortune / Fortune+ | Chrono Wanderer 1, Dauntless 2, Shadeweaver 3, Marksman 2, Kishin 4, Phasewarper 3 |
+| 3 | Sunshinev | 9 | Gatotkaca, Thamuz, Karrie, Lunox, Sora, Franco, Dyrroth, Lancelot, Melissa | Nana's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Bruiser 2, Echomancer 2, Weapon Master 2, Kishin 5, Marksman 2 |
+| 4 | Laurent.Elias-16 | 9 | Franco, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
+| 5 | lap_Dung.29 | 9 | Irithel, Edith, Miya, Cici, Fanny, Lolita, Karina, Hilda, Minotaur | Alucard's Power, Breath of Berserk Ⅰ, Divine Execution | Astro Power 4, Marksman 2, Starbelle 5, Defender 2, Swiftblade 2, Dauntless 2 |
+| 6 | saaaaa | 9 | Lancelot, Karrie, Lunox, Karina, Franco, Mathilda, Nana, Fanny, Angela | Alucard's Power, Uncertain Fortune, Shield of Fortune / Fortune+ | Kishin 5, Stargazer 4, Swiftblade 2, Mistbender 1 |
+| 7 | Lhmsyhh | 9 | Melissa, Irithel, Martis, Odette, Karrie, Hilda, Wanwan, Miya, Granger | Aurora's Power, Rogue's Aid, Astro Power's Blessing | Marksman 6, Astro Power 4 |
+| 8 | CinCoeg (kamu) | 9 | Layla, Sora, Tigreal, Edith, Natalia, Vale, Cici, Fanny, Thamuz | Fanny's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Echomancer 5, Defender 2, Starbelle 3, Swiftblade 2, Weapon Master 2 |
 
 ## Catatan metode
 
@@ -97,4 +97,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:51_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).
