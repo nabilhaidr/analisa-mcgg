@@ -98,6 +98,29 @@ def run_rapid(folder, files, log=print):
     return images
 
 
+KOREAN_REC = HERE / "cache" / "models" / "korean" / "korean_PP-OCRv5_rec_mobile.onnx"
+_korean = None
+
+
+def read_korean(images):
+    """[(text, score)] for one-line text pictures (PIL) read by RapidOCR's Korean recognizer (PP-OCRv5 mobile: Hangul and
+    Latin), or None without the model file or RapidOCR 1.2. The page OCR has only Chinese and English models, so a Hangul
+    name gives no text at all. The model is onnx/PP-OCRv5/rec/korean_PP-OCRv5_rec_mobile.onnx of ModelScope
+    RapidAI/RapidOCR v3.10.0 (13.5 MB); cache/ is not in git, so download it again after a clone."""
+    global _korean
+    if _korean is None:
+        try:
+            from rapidocr_onnxruntime.ch_ppocr_v3_rec.text_recognize import TextRecognizer
+        except ImportError:
+            return None
+        if not KOREAN_REC.exists():
+            return None
+        _korean = TextRecognizer({"model_path": str(KOREAN_REC), "rec_img_shape": [3, 48, 320], "rec_batch_num": 6,
+                                  "use_cuda": False})
+    result, _ = _korean([np.ascontiguousarray(np.asarray(im.convert("RGB"))[..., ::-1]) for im in images])  # BGR
+    return [(text, float(score)) for text, score in result]
+
+
 def ocr_folder(folder, engine="auto", files=None, log=print):
     """OCR of the images in `folder` (all, or only `files`) as {key: {"stamp", "w", "h", "lines"}} (see module doc)."""
     folder = Path(folder)

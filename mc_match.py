@@ -349,9 +349,26 @@ def cluster_players(recs, known=()):
         else:
             clusters.append([name, k, n])
     clusters = sorted((c for c in clusters if c[2] >= 3), key=lambda c: -c[2])[:8]
-    for c in clusters:  # full names from the result screen when the list shows "musuhkoru..."
-        c[0] = next((k for k in known if same_player(norm(k), c[1])), c[0])
+    for c in clusters:  # full names from the result screen when the list shows "musuhkoru..."; a Hangul name has no key
+        c[0] = next((k for k in known if norm(k) and same_player(norm(k), c[1])), c[0])  # ("" is a prefix of every key)
     return clusters
+
+
+def unread_player(tl, players, final):
+    """{HUD player: result row} for the one name the page OCR could not read on the result screen (a picture, or read by
+    the Korean model), else {}. The HUD OCR turns that name into something else ("마샤 주니어" -> "FL-loi", 21 Okt 22:43),
+    so it is the one player that matches no name the page OCR read. A cut-off second reading of another row ("MCG" for
+    KeyyMCGG, 24 Okt 02:51) matches none either, but never stands beside that row in a frame; real players share frames
+    with every other one (at least 7 in 20 matches)."""
+    pics = [r for r in final if r.get("slot") or r.get("ko")]
+    keys = [name_key(r["name"]) for r in final if not (r.get("slot") or r.get("ko"))]
+    seen = defaultdict(set)
+    for i, x in enumerate(tl):
+        for p in x["hp"]:
+            seen[p].add(i)
+    odd = [p for p in players if not any(same_player(name_key(p), k, 0.6) for k in keys)
+           and all(len(seen[p] & seen[q]) >= 3 for q in players if q != p)]
+    return {odd[0]: pics[0]} if len(pics) == 1 and len(odd) == 1 else {}
 
 
 def calibrate(recs):
@@ -569,7 +586,9 @@ def read_result(paths, d, folder, engine=None):
             if name and (cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"]))):
                 cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
             if not name and col_x is not None:
-                cur.setdefault("slot", (p, name_box(near, col_x, y, size, row_cards)))
+                box = name_box(near, col_x, y, size, row_cards)
+                cur.setdefault("slot", (p, box))
+                cur.setdefault("slots", []).append((p, box))
             if lv is None and (lv_line := next((l for l in near if NOT_NAME.match(l["t"])), None)):
                 cur.setdefault("level_box", (p, level_box(lv_line)))
             cur["heroes"] = merge_heroes(cur["heroes"], [f["name"] for f in r])
@@ -587,11 +606,23 @@ def read_result(paths, d, folder, engine=None):
         crop_ocr = run_ocr(crops, engine, list(files.values()))
         for r in redo:
             r["level"] = result_level(" ".join(l["t"] for l in crop_ocr.get(files[id(r)].name, {}).get("lines", [])))
+    unread = [r for r in out if r["name"].startswith("baris ") and r.get("slots")]
+    reads = mc_ocr.read_korean([Image.open(p).crop(box) for r in unread for p, box in r["slots"]]) if unread else None
+    if reads:  # Hangul names: best reading of the Korean model over the screenshots ("마샤 주니어" 0.84; a name in small
+        it = iter(reads)  # capitals or symbols comes out without Hangul and low, "Masmee" 0.29, and stays a picture)
+        for r in unread:
+            text, score = max((next(it) for _ in r["slots"]), key=lambda x: x[1])
+            if len(HANGUL.findall(text)) >= 2 and score >= 0.6:
+                r["name"], r["ko"] = clean_name(text), round(score, 2)
     for r in out:
         r.pop("level_box", None)
+        r.pop("slots", None)
         if not r["name"].startswith("baris "):
-            r.pop("slot", None)  # read on another screenshot of the same screen
+            r.pop("slot", None)  # read on another screenshot of the same screen, or by the Korean model
     return out, meta
+
+
+HANGUL = re.compile(r"[가-힣]")
 
 
 def merge_heroes(a, b):
@@ -661,6 +692,18 @@ def name_box(near, col_x, y, size, row_cards):
         top, bottom = y - 0.65 * size, y - 0.05 * size
     right = min(c["x"] - 0.6 * c["size"] for c in row_cards) if row_cards else col_x + 3 * size
     return int(col_x - 0.12 * size), int(top), int(right), int(bottom)
+
+
+def name_pic(r, assets, folder):
+    """(text, HTML, Markdown) for a result row whose name the OCR cannot read (Korean, small capitals): its picture, cut
+    from the result screen to match_<name>/nama_<rank>.png."""
+    src, box = r["slot"]
+    assets.mkdir(exist_ok=True)
+    pic = assets / f"nama_{r['rank']}.png"
+    Image.open(src).crop(box).save(pic)
+    alt = f"nama baris {r['rank']} (tidak terbaca OCR)"
+    return (alt, f'<img src="{esc(rel_src(pic, folder))}" alt="{esc(alt)}" title="{esc(alt)}" style="height:2.2em;vertical-align:middle">',
+            f"![{alt}]({rel_src(pic, folder)})")
 
 
 def grid_ranks(rows, levels=()):
@@ -872,7 +915,10 @@ def main():
         md += ["## Catatan otomatis", ""] + [f"- {t}" for _, t in notes] + [""]
 
     if rounds:
-        series = {p: [r["start"].get(p) for r in rounds] for p in players}
+        pics = {p: name_pic(r, assets, folder) if r.get("slot") else (r["name"], esc(r["name"]), r["name"])
+                for p, r in unread_player(tl, players, final).items()}
+        label = {p: pics[p][0] if p in pics else p for p in players}
+        series = {label[p]: [r["start"].get(p) for r in rounds] for p in players}
         body.append(f'<section><h2>HP per babak</h2>{svg_chart(series, [r["label"] for r in rounds], highlight=me)}</section>')
         ev_by_round = defaultdict(list)
         for e in events:
@@ -893,9 +939,11 @@ def main():
         body.append(f'<section><h2>Timeline ({esc(me or "pemain")})</h2>{table(heads, cells)}</section>')
         md += [f"## Timeline ({me or 'pemain'})", ""] + md_table(heads, md_rows) + [""]
         heads = ["Pemain"] + [r["label"] for r in rounds]
-        grid = [[p] + [r["start"].get(p, "") for r in rounds] for p in players]
-        body.append(f'<section><h2>HP semua pemain</h2>{table(heads, [[esc(c) for c in row] for row in grid])}</section>')
-        md += ["## HP semua pemain", ""] + md_table(heads, grid) + [""]
+        grid = [[r["start"].get(p, "") for r in rounds] for p in players]
+        cells = [[pics[p][1] if p in pics else esc(p)] + [esc(c) for c in row] for p, row in zip(players, grid)]
+        body.append(f'<section><h2>HP semua pemain</h2>{table(heads, cells)}</section>')
+        md += ["## HP semua pemain", ""] + md_table(heads, [[pics[p][2] if p in pics else p] + row
+                                                            for p, row in zip(players, grid)]) + [""]
     if events:
         rows = [[f"{e['t'] // 60:02d}:{e['t'] % 60:02d}", round_label(e["round"]) if e["round"] else "-", e["kind"], e["detail"]]
                 for e in events]
@@ -911,14 +959,8 @@ def main():
             counts, active = game.counts(unique, []), game.active_tiers(unique, [])
             mine = bool(me and norm(r["name"]) == norm(me))
             shown, md_name = esc(r["name"]), r["name"]
-            if r.get("slot"):  # name the OCR cannot read (Korean, small capitals): its picture from the result screen
-                src, box = r["slot"]
-                assets.mkdir(exist_ok=True)
-                pic = assets / f"nama_{r['rank']}.png"
-                Image.open(src).crop(box).save(pic)
-                alt = f"nama baris {r['rank']} (tidak terbaca OCR)"
-                shown = f'<img src="{esc(rel_src(pic, folder))}" alt="{esc(alt)}" title="{esc(alt)}" style="height:2.2em;vertical-align:middle">'
-                md_name = f"![{alt}]({rel_src(pic, folder)})"
+            if r.get("slot"):
+                _, shown, md_name = name_pic(r, assets, folder)
             rows.append([f"<b>{r['rank']}</b>", shown + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
                          " ".join(chip(h, game.H[h].get("icon"), f"c{game.H[h]['cost']}") if h in game.H
                                   else chip(h, summons[h].get("icon"), title="unit panggilan: sinergi acak, tidak dihitung")
@@ -971,6 +1013,10 @@ def main():
                       "atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan "
                       "gambar dari layar hasil; peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
                                                      "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))
+    ko = [r for r in final if r.get("ko")]
+    if ko:
+        method.append("Nama Hangul dibaca dengan model OCR Korea (RapidOCR PP-OCRv5; dipakai bila skor >= 0,6, satu huruf "
+                      "bisa meleset): " + ", ".join(f"{r['name']} ({r['ko']:.2f})" for r in ko) + ".")
     body.append(f'<section><h2>Catatan metode</h2><ul>{"".join(f"<li>{esc(m)}</li>" for m in method)}</ul></section>')
     md += ["## Catatan metode", ""] + [f"- {m}" for m in method]
     out_html, out_md = write_report(folder, f"MATCH_{slug(name)}", page(title, "".join(body), stamp(d)), md)

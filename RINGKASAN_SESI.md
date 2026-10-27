@@ -329,7 +329,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     6 baris berubah, 158 sama. Dibuat ulang dari frame cache: `MATCH_21_Okt_22_43`, `24_Okt_02_51`, `24_Okt_14_43` ("1254"),
     `24_Okt_15_06`, `25_Okt_23_24` (+ "FET KAT"); timeline, HP, kejadian, dan peringkat tidak berubah.
     Ditemukan: peringkat 26 Okt 00-09 bergeser (diperbaiki di 26) dan 7 laporan punya level kosong karena "Level9" terbaca
-    "Levelg" (diperbaiki di 27). **Belum diperbaiki**: pemain Korea di 22-43 muncul sebagai "FL-loi" di tabel HP (OCR HUD).
+    "Levelg" (diperbaiki di 27). Pemain Korea di 22-43 muncul sebagai "FL-loi" di tabel HP (OCR HUD; diperbaiki di 29).
 
 26. (2026-10-27) Peringkat layar hasil 26 Okt 00-09: di screenshot `00-32-12` notifikasi "Saved screen recording" menutupi
     hero baris 1 (XXMAATT), sehingga `grid_ranks` memakai baris CUMA BISA HAMUI sebagai peringkat 1 dan semua peringkat
@@ -370,6 +370,32 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     laporan hanya baris papan akhir, waktu dibuat, dan catatan metode; nilai sinergi sama (5 baris hanya berubah urutan); 6
     laporan lain identik; `check.py` lolos. `S7`/`S8` dibuat ulang: hanya `summons` dan waktu ekstrak yang berubah.
 
+29. (2026-10-28) Nama di tabel HP untuk nama yang tidak terbaca di layar hasil: OCR HUD membaca "마샤 주니어" (21 Okt 22-43,
+    peringkat 8) sebagai "FL-loi", dan "ᴍᴀʀsᴍᴇℓℓ" (25 Okt 23-24, peringkat 2) sebagai "MagsMeee". `mc_match.py`
+    (`unread_player`): bila layar hasil punya tepat 1 nama gambar dan tepat 1 pemain HUD yang tidak mirip nama mana pun di
+    layar hasil (rasio 0,6) serta tampil bersama setiap pemain lain di >= 3 frame, baris HP itu memakai gambar nama yang sama
+    dengan papan akhir (legenda grafik: "nama baris N (tidak terbaca OCR)"). Syarat frame bersama memisahkan potongan nama:
+    "MCG" (24 Okt 02-51) = KeyyMCGG, "BAYW" (24 Okt 15-06) = BAYYY, "BAL" (26 Okt 00-09) = KINGBALDWIN; masing-masing 0 frame
+    bersama dengan nama aslinya, sedangkan pemain berbeda minimal 7. Dibuat ulang: `MATCH_21_Okt_22_43`, `25_Okt_23_24`;
+    diff hanya nama baris HP, legenda grafik, dan waktu dibuat; 18 laporan lain dan gambar `nama_*.png` identik; `check.py`
+    lolos. Ditemukan, belum diperbaiki: di 24 Okt 02-51 (pemain Korea peringkat 6) dan 24 Okt 15-06 (peringkat 1 "—X—") pemain
+    bernama gambar tidak masuk tabel HP karena slotnya terisi potongan nama (MCG, BAYW); nama HUD terpotong lain tidak diganti
+    nama layar hasil ("AJII" = AJ11, "ENQ" = ENG, "GÖAT", "RRIO", dll., 10 laporan); SABRINA (21 Okt 22-43, peringkat 3, L10)
+    hanya 1 hero di papan akhir (belum dicek di gambar).
+
+30. (2026-10-28) Nama Hangul dibaca sebagai teks dengan model Korea RapidOCR (`cache/models/korean/`, lihat Lingkungan).
+    `mc_ocr.read_korean` (TextRecognizer RapidOCR 1.2.3, model PP-OCRv5; tanpa model: langkah dilewati). `mc_match.py`:
+    nama yang tidak terbaca OCR halaman dibaca dari potongan nama di setiap screenshot layar yang sama (skor tertinggi);
+    dipakai bila >= 2 suku kata Hangul dan skor >= 0,6, selain itu tetap gambar. Variasi potongan (2x, padding, abu-abu,
+    invert) tidak lebih baik. Hasil: "마샤 주니어" (21 Okt 22-43, tepat, 0,84), "카일라 장라" (24 Okt 02-51; di layar
+    "카일라 잘라", 0,73); "ᴍᴀʀsᴍᴇℓℓ" dan "—X—" tidak berisi Hangul (≤ 0,38) dan tetap gambar. Catatan metode laporan
+    menyebut nama dan skornya. Diperbaiki sekalian: `cluster_players` memakai nama layar hasil yang kuncinya kosong (Hangul)
+    untuk setiap kluster ("" awalan semua kunci); di 02-51 SINGKUANG, KeyyMCGG, MCG sempat jadi "카일라 장라". Uji 20
+    pertandingan: hanya 2 nama itu berubah, 160 baris sama. Dibuat ulang: `MATCH_21_Okt_22_43` (papan akhir + baris HP
+    "마샤 주니어"), `24_Okt_02_51` (papan akhir; tabel HP tetap tanpa pemain ini karena slotnya terisi "MCG", lihat 29); diff
+    hanya nama, legenda grafik, catatan metode, waktu dibuat; 18 laporan lain identik; `check.py` lolos. `nama_8.png`
+    (22-43) dan `nama_6.png` (02-51) tidak dirujuk lagi.
+
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
   skrip capstone + daftar simbol PDB (`text_all_syms.json`) di scratchpad sesi lama (folder sementara, bisa hilang).
@@ -378,6 +404,11 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   pemain (Windows 3/8), layar hasil ponsel 8/8 nama + level; patch note 20/10 dan 7.2 menghasilkan laporan `mc_patch.py` yang sama
   (RapidOCR juga membaca panah "Lukas (~)" yang terlewat OCR Windows). Kelemahan: kadang spasi hilang ("MCKOPAKEHAMA", "GoGo
   Card"); semua pencocokan nama/kejadian sudah tidak peka spasi. Waktu: ±4 detik per screenshot di container 4 inti.
+- Model RapidOCR Korea (diunduh 2026-10-28 atas permintaan pengguna): `cache/models/korean/korean_PP-OCRv5_rec_mobile.onnx`
+  (13.488.748 byte, SHA256 `cd6e2ea5…773c9b`) dari ModelScope `RapidAI/RapidOCR` v3.10.0, sesuai `default_models.yaml`
+  RapidOCR. Daftar karakter (11.945, 11.172 Hangul) ada di metadata ONNX; dipakai lewat
+  `rapidocr_onnxruntime.ch_ppocr_v3_rec.TextRecognizer({"model_path": ..., "rec_img_shape": [3, 48, 320]})`. `cache/` di-gitignore:
+  setelah clone, unduh ulang.
 - Unity persistentDataPath `C:\Users\nabil\AppData\LocalLow\mulonggame\MagicChessGoGo` hanya berisi log/cache WebView.
   Pertandingan tidak tersimpan lokal: `Player.log` hanya mencatat ID battle (ditimpa tiap game dibuka; sesi sebelumnya di
   `Player-prev.log`), `.data/db/Database.db` hanya antrean analitik.
@@ -394,5 +425,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `mc_match.py`: nama Hangul sebagai teks butuh OCR berbahasa Korea (OCR Windows ko-KR dipasang pengguna,
-  atau model RapidOCR Korea yang diunduh); sekarang tampil sebagai gambar.
+- `mc_match.py` tabel HP: potongan nama HUD (0 frame bersama dengan nama asli) digabung ke pemain aslinya supaya pemain
+  bernama gambar masuk tabel (24 Okt 02-51, 24 Okt 15-06); nama HUD terpotong diganti nama layar hasil (lihat 29). Cek
+  SABRINA 21 Okt 22-43 (1 hero di papan akhir).
+- `mc_match.py`: nama huruf hias/simbol ("ᴍᴀʀsᴍᴇℓℓ", "—X—") masih tampil sebagai gambar; model Korea membaca "카일라 잘라"
+  sebagai "카일라 장라" (lihat 30).
