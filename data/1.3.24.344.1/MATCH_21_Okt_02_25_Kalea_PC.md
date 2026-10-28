@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 02-25 Kalea PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:38_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -13,7 +13,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:38_
 - Peringkat akhir 4.
 - HP hilang per fase: Fase I −9, Fase II −55, Fase IV −24. Terbanyak di Fase II.
 - 9 babak beruntun tanpa kehilangan HP (sampai IV-3).
-- 3 kekalahan beruntun (sampai II-2).
+- 6 kekalahan beruntun (sampai II-6, babak creep II-3 dilewati).
 - Level 7 pertama terlihat di II-3.
 - Level 8 pertama terlihat di II-6.
 - Level 9 pertama terlihat di III-1.
@@ -61,24 +61,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:38_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 00:50 | I-4 | Lose streak |  |
 | 01:00 | I-4 | Go Go Box |  |
-| 02:10 | II-1 | Lose streak |  |
-| 02:55 | II-2 | Win streak | 5 beruntun |
 | 03:15 | II-3 | Pilih Go Go Card | pilihan: Excellent Recruit |
-| 04:40 | II-4 | Win streak | 6 beruntun |
-| 05:50 | II-5 | Win streak |  |
-| 06:05 | II-5 | Lose streak |  |
-| 06:55 | II-6 | Win streak | 4 beruntun |
 | 07:10 | II-6 | Go Go Box |  |
 | 08:00 | III-1 | Panel DMG | Angela 6.057, Lunox 120 |
 | 08:20 | III-1 | Crystal Pilihan | Dragon Altar |
 | 09:35 | III-2 | Pilih Go Go Card | pilihan: Bright Sunshine, Frontier Blitz |
-| 13:50 | III-6 | Win streak | 5 beruntun |
 | 14:10 | III-6 | Go Go Box |  |
 | 14:55 | IV-1 | Crystal Pilihan | Dragon Altar |
-| 15:25 | IV-1 | Win streak | 6 beruntun |
-| 19:40 | IV-5 | Win streak |  |
 | 19:50 | IV-5 | VICTORY |  |
 
 ## Papan akhir (layar hasil)
@@ -102,5 +92,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:38_
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
-- Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
+- Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).

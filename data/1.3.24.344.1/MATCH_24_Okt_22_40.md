@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-40
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:56_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -60,20 +60,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:56_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 03:55 | I-4 | Win streak | 3 beruntun |
 | 04:20 | I-4 | Go Go Box |  |
-| 05:35 | II-1 | Win streak | 2 beruntun |
-| 06:25 | II-2 | Win streak | 5 beruntun |
 | 06:40 | II-3 | Pilih Go Go Card |  |
-| 08:15 | II-4 | Win streak | 6 beruntun |
-| 10:40 | II-6 | Win streak | 6 beruntun |
 | 11:00 | III-1 | Go Go Box |  |
-| 12:05 | III-1 | Win streak | 4 beruntun |
 | 13:15 | III-2 | Pilih Go Go Card |  |
-| 14:05 | III-3 | Win streak | 1 beruntun |
-| 15:20 | III-4 | Win streak | 3 beruntun |
-| 16:30 | III-5 | Win streak | 4 beruntun |
-| 20:25 | IV-2 | Win streak |  |
 
 ## Papan akhir (layar hasil)
 
@@ -96,5 +86,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:56_
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
-- Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
+- Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).

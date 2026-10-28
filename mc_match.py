@@ -23,8 +23,9 @@ Cara kerja:
 - Kejadian (Go Go Card, Go Go Box, crystal Pilihan, naik level, VICTORY/DEFEAT, panel DMG) dibaca dari OCR frame penuh.
 - Layar hasil: hero dan Go Go Card tiap pemain dikenali dari ikon (mc_vision), nama/level dari OCR, sinergi dihitung dari
   hero (crystal tidak terlihat di layar hasil).
-Hasil per babak memakai perubahan HP: HP turun = kalah; tetap = menang (lawan pemain atau creep). Angka adalah perkiraan
-dari gambar; lihat bagian "Catatan metode" di laporan.
+Hasil per babak memakai perubahan HP: HP turun = kalah; tetap = menang (lawan pemain atau creep). Babak creep (I-1 dan
+babak ke-3 tiap fase berikutnya) tidak memutus kekalahan beruntun; teks Win/Lose Streak di layar tidak dipakai (bisa milik
+lawan). Angka adalah perkiraan dari gambar; lihat bagian "Catatan metode" di laporan.
 """
 import argparse
 import difflib
@@ -66,10 +67,8 @@ EVENTS = [  # (regex on a frame's OCR text, kind)
     (r"Kapasitas Hero \+1|Level Commander ditingkatkan", "Naik level"),
     (r"V[I1l]CTORY", "VICTORY"),
     (r"DEFEAT", "DEFEAT"),
-    (r"Win Streak", "Win streak"),
-    (r"Lose Streak", "Lose streak"),
     (r"DMG yang Diberikan", "Panel DMG"),
-]
+]  # no Win/Lose Streak: in 20 recordings 64 of 170 "Win Streak" texts showed while the player was on a losing streak
 
 
 def log(*a):
@@ -200,6 +199,14 @@ def round_number(label):
     roman, n = label.split("-")
     i = ROMAN.index(roman)
     return [0, 4, 10][i] + int(n) if i < 3 else 16 + (i - 3) * 6 + int(n)
+
+
+def creep_round(label):
+    """I-1 and round 3 of every later phase are creep rounds (II-3 and III-3 start with the Go Go Card pick). In 20 Season 7
+    recordings no player lost HP in 72 of these 74 rounds (one player each in the other two), while every other round of
+    phases I-III had players losing HP, about half of them."""
+    phase, n = label.split("-")
+    return n == ("1" if phase == "I" else "3")
 
 
 # ------------------------------------------------------------------ video timeline
@@ -565,9 +572,6 @@ def read_events(frames, d, by_time):
             elif kind in ("VICTORY", "DEFEAT"):
                 m = re.search(r"Gold:\s*\+?\s*(\d+)", text)
                 detail = f"Gold +{m.group(1)}" if m else ""
-            elif kind in ("Win streak", "Lose streak"):
-                m = re.search(r"(\d+)\s*(?:Win|Lose)\s*Streak", text, re.I)
-                detail = f"{m.group(1)} beruntun" if m else ""
             elif kind == "Panel DMG":
                 pairs = []
                 for i, l in enumerate(lines):
@@ -820,7 +824,9 @@ def insights(rounds, me, events, final_rank):
         worst = max(phases, key=phases.get)
         out.append(("warn" if phases[worst] >= 25 else "", "HP hilang per fase: " + ", ".join(f"Fase {k} −{v}" for k, v in phases.items())
                     + f". Terbanyak di Fase {worst}."))
-    streak, best, lose, worst_lose = 0, (0, None), 0, (0, None)
+    # a creep round where >= 2 players lost HP was a fight after all (a season with other creep rounds)
+    creep = {r["label"] for r in rounds if creep_round(r["label"]) and sum(v < 0 for v in r["delta"].values()) < 2}
+    streak, best, lose, worst_lose, skipped = 0, (0, None), 0, (0, None, []), []
     for r in rounds:
         d = r["delta"].get(me)
         if d is None:
@@ -828,15 +834,21 @@ def insights(rounds, me, events, final_rank):
         if d < 0:
             lose, streak = lose + 1, 0
             if lose > worst_lose[0]:
-                worst_lose = (lose, r["label"])
+                worst_lose = (lose, r["label"], list(skipped))
         else:
-            streak, lose = streak + 1, 0
+            streak += 1
             if streak > best[0]:
                 best = (streak, r["label"])
+            if r["label"] not in creep:
+                lose, skipped = 0, []
+            elif lose:  # no fight against a player: the losing streak goes on (Kalea PC: I-4 to II-6 around II-3)
+                skipped.append(r["label"])
     if best[0] >= 3:
         out.append(("good", f"{best[0]} babak beruntun tanpa kehilangan HP (sampai {best[1]})."))
     if worst_lose[0] >= 2:
-        out.append(("bad", f"{worst_lose[0]} kekalahan beruntun (sampai {worst_lose[1]})."))
+        n, last, gaps = worst_lose
+        out.append(("bad", f"{n} kekalahan beruntun (sampai {last}" + (f", babak creep {', '.join(gaps)} dilewati" if gaps else "")
+                    + ")."))
     for lv in (7, 8, 9):
         first = next((r["label"] for r in rounds if (r["level"] or 0) >= lv), None)
         if first:
@@ -966,7 +978,7 @@ def main():
         body.append(f'<section><h2>HP per babak</h2>{svg_chart(series, [r["label"] for r in rounds], highlight=me)}</section>')
         ev_by_round = defaultdict(list)
         for e in events:
-            if e["round"] and e["kind"] not in ("Panel DMG", "Win streak", "Lose streak"):
+            if e["round"] and e["kind"] != "Panel DMG":
                 ev_by_round[e["round"]].append(e["kind"] + (f" ({e['detail']})" if e["detail"] else ""))
         cells, md_rows = [], []
         for r in rounds:
@@ -1051,8 +1063,9 @@ def main():
                    "terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi "
                    "rata.",
                    "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.",
-                   "Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang "
-                   "tampil, jadi tidak dipakai untuk menentukan hasil babak."]
+                   "Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak "
+                   "lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu "
+                   "babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun."]
     if final:
         method.append(("Layar hasil (frame akhir rekaman, tanpa screenshot)" if not args.result else "Layar hasil") +
                       ": hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR "

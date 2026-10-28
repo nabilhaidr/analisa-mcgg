@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 14-42 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:41_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -13,7 +13,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:41_
 - Peringkat akhir 8.
 - HP hilang per fase: Fase II −41, Fase III −59. Terbanyak di Fase III.
 - 4 babak beruntun tanpa kehilangan HP (sampai I-4).
-- 3 kekalahan beruntun (sampai III-2).
+- 5 kekalahan beruntun (sampai III-5, babak creep III-3 dilewati).
 - Level 7 pertama terlihat di II-4.
 - Level 8 pertama terlihat di III-1.
 - Level 9 pertama terlihat di III-3.
@@ -58,21 +58,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:41_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 02:05 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power, Valir's Power |
-| 04:00 | I-3 | Win streak | 2 beruntun |
 | 05:15 | II-1 | Go Go Box |  |
-| 07:05 | II-2 | Win streak | 5 beruntun |
 | 07:20 | II-3 | Pilih Go Go Card | pilihan: Fully Loaded |
 | 08:15 | II-4 | Naik level |  |
-| 09:10 | II-4 | Lose streak |  |
-| 10:00 | II-5 | Win streak | 4 beruntun |
-| 11:10 | II-6 | Win streak | 5 beruntun |
 | 11:30 | II-6 | Go Go Box |  |
-| 12:50 | III-1 | Lose streak |  |
 | 13:25 | III-2 | Crystal Pilihan | Marksman |
-| 14:00 | III-2 | Lose streak |  |
 | 14:05 | III-3 | Pilih Go Go Card | pilihan: Dark Blade |
 | 14:05 | III-3 | Panel DMG |  |
-| 17:05 | III-5 | Win streak |  |
 
 ## Papan akhir (layar hasil)
 
@@ -95,5 +87,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:41_
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
-- Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
+- Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah III-5 (babak terakhir yang masih menampilkan HP sendiri).
