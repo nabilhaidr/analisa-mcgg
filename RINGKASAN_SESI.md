@@ -460,6 +460,9 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     (hasil `load_icons` identik untuk hero, sinergi, unit panggilan, kartu, equipment). Satu kasus urutan bertahan vs
     peringkat (23 Okt 21-47: GAMEANEH peringkat 4 tak terbaca di IV-2, babak terakhir tabel) ternyata bacaan bolong saat
     rekaman berakhir, jadi babak terakhir tabel tidak dihitung dan pemeriksaan itu hanya peringatan.
+35. (2026-10-28) `match_21_Okt_22_43/nama_8.png` ("마샤 주니어") dan `match_24_Okt_02_51/nama_6.png` ("카일라 잘라") dihapus: tidak
+    dirujuk sejak 30 (nama kini teks dari model Korea). `check_match.py`: 0 kesalahan, 0 peringatan. Bila perlu, pulihkan dari
+    commit `d58b21a`; `mc_match.py` membuatnya lagi hanya bila model Korea tidak ada (nama kembali berupa gambar).
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -503,8 +506,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `check.py` masih ada di PC lokal, bandingkan pemeriksaannya dan tambahkan yang belum ada ke `check_match.py`.
 - Buat ulang 20 laporan MATCH dari frame cache di PC lokal untuk memastikan pembaruan dari tabel di 32 sama dengan hasil
   `mc_match.py` (mestinya hanya waktu dibuat yang berbeda), lalu jalankan `python check_match.py`.
-- Hapus `match_21_Okt_22_43/nama_8.png` dan `match_24_Okt_02_51/nama_6.png` bila memang tidak diperlukan lagi (tidak dirujuk;
-  peringatan `check_match.py`).
 - `mc_match.py`: Gold awal babak kadang salah baca (lihat 22); label kejadian di batas babak bisa satu babak terlalu awal
   (Kalea PC: Pilih Go Go Card untuk III-3 tercatat III-2, padahal III-2 babak PvP).
 - `mc_match.py` tabel HP: pemain yang namanya tidak terbaca di daftar HUD (카일라 잘라, "—X—", "1254", "EM") tidak masuk
