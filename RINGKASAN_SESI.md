@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-27)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-28)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -13,9 +13,10 @@ equipment, Ensiklopedia), menyajikannya sebagai laporan per season (HTML/MD/JSON
 memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Status sekarang
-- Versi game **1.3.24.344.1** (cek terakhir: belum ada update). Season aktif **S7 "Chrono Echoes"** (Rank Season 9,
-  2026-08-11 s/d 2026-11-15); **S8 "Arena Para Penyihir"** sudah ada di file (mulai 2026-11-15, 28 hero baru, faksi baru
-  FAIRY TAIL, Dawnbringer, Dragonslayer, Frostrider, Titan; role Deadeye, Weapons Master).
+- Versi game **1.3.24.344.1** = klien Patch 7.2 (file game sudah memuat revamp Lukas dan Equipment Reforger; listing toko
+  dari hasil pencarian: ±9–14 Okt 2026; cek terakhir: belum ada update). Season aktif **S7 "Chrono Echoes"** (Rank Season 9,
+  2026-08-11 s/d 2026-11-15 17:59:59 waktu server global); **S8 "Arena Para Penyihir"** sudah ada di file (mulai 2026-11-15,
+  28 hero baru, faksi baru FAIRY TAIL, Dawnbringer, Dragonslayer, Frostrider, Titan; role Deadeye, Weapons Master).
 - Laporan terbaru: `data/1.3.24.344.1/S7.html|md|json` dan `S8.*`.
 - **S7.html sudah divalidasi ke 430 screenshot: semua cocok** (0 selisih). Satu-satunya beda = angka balance Patch 7.2 dan
   Penyesuaian Keseimbangan 20/10 yang diterapkan server; keduanya sudah dicatat di `server_patch.json` dan tampil di S7.html
@@ -39,7 +40,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Screenshot tumpang tindih digabung | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
-| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR, mis. huruf Korea, tampil sebagai potongan gambar `nama_<peringkat>.png`), catatan otomatis. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
+| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR, mis. huruf Korea, tampil sebagai potongan gambar `nama_<peringkat>.png`), catatan otomatis (menang/kalah beruntun dari HP; babak creep tidak memutus kekalahan beruntun; teks Win/Lose Streak tidak dipakai). Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/` | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` |
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
@@ -95,6 +96,12 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   **S8 beda:** mulai IV-6 equipment biasa 4–6 + crystal 1–3 (S7: 3–4 + 3–4), jadi crystal Go Go Box akhir lebih sedikit; daftar
   crystal S8 masih memuat ID 1054 (= Dragoncaller di S7) yang tidak ada di `MCEquipBase_S8`; faksi baru Frostrider (maks 6) tidak
   punya Magic Crystal sama sekali. Diekspor ke S<n>.json/.md/.html sejak 2026-10-21.
+- **Babak creep (tanpa lawan pemain)**: I-1 dan babak ke-3 tiap fase berikutnya (II-3, III-3, IV-3, V-3). Go Go Card dipilih
+  di awal II-3 dan III-3 (Valir: "Fase Go Go Card pada Babak II-3"), Kartu Power di I-1/I-2; di III-3 ada panel DMG (creep).
+  Ensiklopedia: "Dalam setiap Stage, Player akan menghadapi Creep Round". Di 20 laporan MATCH tidak ada pemain yang kehilangan
+  HP di 72 dari 74 babak itu (2 sisanya masing-masing 1 pemain), sedangkan setiap babak lain Fase I–III ada yang kalah (±separuh
+  pemain). Jadi di babak creep praktis tidak ada yang kehilangan HP (belum terlihat apakah kalah dari creep mengurangi HP), dan
+  babak itu bukan menang/kalah PvP (dipakai `mc_match.py`).
 
 ## Sumber data per bagian laporan (aturan yang sudah terverifikasi ke screenshot)
 | Bagian | Sumber / aturan |
@@ -163,7 +170,16 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Minotaur #1, Nana, Brody; comp S = Mage+Stargazer, Marksman/Dauntless; A = Astro, Dragoncaller Burst, Echomancer,
   Enchanted Tales/Mage. kitakuji 22 Agt & xcashshop 26 Sep: S = SPECTRE+Starbelle (Lunox, carry Alpha), Hyper Aldous
   (Mistbender+Bruiser, Zilong); A = Starbelle Fanny, Echomancer Dauntless; B = Dragon Altar. Artikel xcashshop 16 Okt memakai
-  sinergi season lama (abaikan).
+  sinergi season lama (abaikan). **Dicari ulang 2026-10-28: belum ada tier list tertulis setelah Patch 7.2**; yang terindeks
+  tetap loadoutgg 27 Sep. Setelah 7.2 hanya konten kreator (judul/deskripsi, belum diverifikasi): TikTok 12 Okt Lunox SPECTRE 6
+  + Starbelle 6 + Scavenger 3 "combo terkuat"; YouTube ±15 Okt "Lukas revamp … lagi META"; YouTube ±17 Okt "Alpha Astro Power x
+  Alice". Diabaikan: Gamezi (memuat sinergi non-S7 "Vonetis Sea"), daftar commander Lapak/Joytify (nama bukan commander MCGG),
+  Topuplist Juli 2026 (S6). loadoutgg.com dan kitakuji.id tidak bisa dibuka dari sesi cloud (jaringan dibatasi).
+- **Data sendiri setelah 7.2** (layar hasil 20 laporan MATCH 21–26 Okt; 140 papan pemain lain, papan sendiri tidak dihitung;
+  sinergi dengan >= 4 hero terlihat, crystal tidak terlihat): Starbelle di 22% papan peringkat 1–4 vs 14% papan 5–8 (juara 4
+  dari 15), Dauntless 17% vs 14% (juara 5), Stargazer 12% vs 10%; Kishin paling populer tapi tidak unggul (23% vs 27%), SPECTRE
+  9% vs 13%, Astro Power 6% vs 10%, Dragoncaller 7% vs 8% (0 juara). Sampel kecil (Starbelle p≈0,24, belum signifikan), satu
+  rentang rank (Mythic). Papan sendiri: juara 5 dari 20 (Starbelle + Echomancer 2×, Astro + Mage 2×, Mage + Stargazer).
 - **5 lineup favorit pengguna** (screenshot Rekomendasi Lineup), peringkat tanpa ultra:
   1. Aamon: Dauntless 6 + Stargazer 4 + Mistbender 3 (Nana ★3 lewat Mirror Device/Spirit Sand; butuh level 10).
   2. Luo Yi: Starbelle 6 + Astro 4. Build pengguna: **Odette ★2 Fan** dengan Winter Crown + Lightstick + Essence Core dari
@@ -200,7 +216,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   layar hasil 2026-10-21); top 3 semuanya punya Divine Execution. Sisa: Divine
   Glaive menganggur di tas IV-4, Gord cuma 1 item.
 
-## Riwayat pekerjaan (2026-10-20)
+## Riwayat pekerjaan (2026-10-20 s/d 2026-10-28)
 1. Analisis client dengan REA/Ghidra + PDB; pecahkan format tabel, teks, LuaRepair; tentukan season aktif.
 2. Buat `patch_tracker.py`, `mc_tables.py`, `mc_data.py`, `report_template.html`, `mc_diff.py`; validasi awal ke screenshot.
 3. Tambah Ensiklopedia + tabel DMG Commander, label Aktif/Pasif commander, status kartu aktif per season.
@@ -292,7 +308,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     IV-4 −18, IV-5 tereliminasi (peringkat 4). Hanya OCR Windows: 15:38 22/23 (V-1 tidak terbaca), Kalea 17/17. RapidOCR 1.2.3
     dipasang di Python lokal (OpenCV ikut naik ke 5.0.0): layar hasil 8/8 nama + level di kedua pertandingan. Laporan
     `MATCH_21_Okt_15_38_Minotaur` dan `MATCH_21_Okt_02_25_Kalea_PC` dibuat ulang; 4 frame kunci lama yang tidak dirujuk dihapus.
-    Sisa: Gold awal babak kadang salah baca (0/6), babak non-tempur (II-3 pilih Go Go Card) memutus hitungan "kekalahan beruntun".
+    Sisa: Gold awal babak kadang salah baca (0/6), babak non-tempur (II-3 pilih Go Go Card) memutus hitungan "kekalahan beruntun"
+    (yang kedua diperbaiki di 32).
 
 23. (2026-10-27) `mc_match.py` dijalankan untuk semua rekaman di `screenshot/season 7/match` (20 rekaman 21–26 Okt; 18 baru,
     2 worker paralel, ±8–17 menit per rekaman, frame di `cache/match/<nama>/frames`). Layar hasil dipasangkan dari waktu
@@ -412,6 +429,24 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     9 laporan lain identik (hasil buat ulang hanya beda waktu, file lama dipertahankan); `check.py` lolos. Kini setiap
     nama di tabel HP sama dengan nama layar hasil (atau gambarnya).
 
+32. (2026-10-28, sesi cloud, langsung di `main`) `mc_match.py`, catatan otomatis dan daftar kejadian:
+    - **Kekalahan beruntun** dulu terputus oleh setiap babak tanpa kehilangan HP, juga babak creep (lihat Temuan teknis). Kini
+      `creep_round()` + `insights()`: babak creep tidak memutus dan tidak menambah kekalahan beruntun, dan catatan menyebut babak
+      yang dilewati; babak creep dengan >= 2 pemain kehilangan HP tetap dihitung pertarungan (jaga-jaga jadwal season lain).
+      8 dari 20 laporan berubah: Kalea PC 3 → 6 (I-4 s/d II-6), 22 Okt 06-16 4 → 8 (I-3 s/d III-1, lalu juara 1), 14-42 3 → 5,
+      15-00 4 → 6, 03-18 2 → 3, 24 Okt 14-43 5 → 6, 22-17 4 → 6, 25 Okt 23-49 3 → 5. "Babak beruntun tanpa kehilangan HP" tetap
+      menghitung babak creep (memang tanpa kehilangan HP).
+    - **Event Win/Lose Streak dihapus**: diambil dari OCR frame penuh, jadi sering milik lawan yang tampil (64 dari 170 teks "Win
+      Streak" muncul saat pemain sendiri sedang kalah beruntun, hanya 56 yang angkanya sama dengan streak menang sendiri; 37 dari
+      38 "Lose Streak" memang milik sendiri tapi 36 tanpa angka), dan angka "Win streak" bisa terambil dari teks "Lose Streak".
+    - Frame cache tidak ada di sesi cloud, jadi 20 laporan diperbarui dari tabelnya sendiri: `insights()` lama menghasilkan
+      catatan yang persis sama dengan laporan lama di 20/20 laporan, lalu `insights()` baru dipakai; 208 baris streak keluar dari
+      tabel Kejadian, catatan metode streak diganti, waktu dibuat diperbarui, bagian lain identik. Smoke test `mc_match.py
+      --frames` dengan 8 frame kunci 640 px jalan tanpa error. Bila dibuat ulang dari frame cache di PC lokal, mestinya hanya
+      waktu dibuat yang berbeda (belum dicek).
+33. (2026-10-28) Riset tier list setelah Patch 7.2 dan ringkasan 140 papan pemain lain dari 20 laporan MATCH (lihat Analisis
+    gameplay). Ringkasan ini dirapikan (tanggal, judul riwayat, Ide lanjutan).
+
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
   skrip capstone + daftar simbol PDB (`text_all_syms.json`) di scratchpad sesi lama (folder sementara, bisa hilang).
@@ -425,6 +460,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   RapidOCR. Daftar karakter (11.945, 11.172 Hangul) ada di metadata ONNX; dipakai lewat
   `rapidocr_onnxruntime.ch_ppocr_v3_rec.TextRecognizer({"model_path": ..., "rec_img_shape": [3, 48, 320]})`. `cache/` di-gitignore:
   setelah clone, unduh ulang.
+- Sesi cloud (2026-10-28): `pip install -r requirements.txt` jalan (OpenCV 5.0.0, PyAV 19, RapidOCR); `mc_validate.py --season 7`
+  bisa dijalankan (0 selisih, 17 cek manual). Frame cache `cache/match/` dan rekaman MP4 tidak ada, jadi laporan MATCH tidak bisa
+  dibuat ulang di cloud (lihat 32). Jaringan dibatasi: halaman di luar daftar domain yang diizinkan (mis. loadoutgg.com,
+  kitakuji.id) tidak bisa dibuka; tambahkan di pengaturan environment (Network access → Allowed domains) bila perlu.
 - Unity persistentDataPath `C:\Users\nabil\AppData\LocalLow\mulonggame\MagicChessGoGo` hanya berisi log/cache WebView.
   Pertandingan tidak tersimpan lokal: `Player.log` hanya mencatat ID battle (ditimpa tiap game dibuka; sesi sebelumnya di
   `Player-prev.log`), `.data/db/Database.db` hanya antrean analitik.
@@ -433,14 +472,24 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   (tidak ada masalah, 0 bad sector). Kalau terjadi lagi: cek `Get-Volume -DriveLetter F` dan event NTFS sebelum menulis ke F:.
 
 ## Ide lanjutan (belum dikerjakan)
+- **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Screenshot dan cek in-game S7 di bawah (Toko Spirit Sand, hero
+  panggilan, Vexana) harus sebelum itu.
+- Screenshot yang belum ada: hero panggilan Alpha, Gatotkaca, Layla, Moskov, Novaria, X.Borg (termasuk X.Borg ★3 "total 2000%
+  ATK", rumus `N*10`), sinergi Chrono Wanderer dan Fan yang Bersorak.
 - Jalankan diff sungguhan (`patch_tracker.py` + `mc_diff.py`) setelah update game berikutnya.
 - S8: Kartu Power ada di level 3 (beda dengan S7); pengelompokan tab galeri S8 baru bisa dicek setelah ada screenshot S8.
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
 - Ambil screenshot Toko Spirit Sand (beberapa refresh) untuk memverifikasi harga/nama dan bonus ATK +2%/+3% yang
   sebenarnya (3% atau 2%?), lalu set `STORE_VERIFIED`. `mc_validate.py` belum mencocokkan `special_store` dan `go_go_box` ke screenshot (`mc_diff.py` sudah membandingkannya antar versi).
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
-- Cari tier list komunitas yang dibuat setelah Patch 7.2.
+- Cek lagi tier list setelah Patch 7.2 / Penyesuaian 20/10 (2026-10-28: belum ada tier list tertulis, lihat Analisis gameplay).
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
+- `check.py` (disebut "lolos" di 27–31) tidak ada di repo maupun riwayat git: bila masih ada di PC lokal, commit agar
+  pemeriksaannya bisa diulang di sesi lain.
+- Buat ulang 20 laporan MATCH dari frame cache di PC lokal untuk memastikan pembaruan dari tabel di 32 sama dengan hasil
+  `mc_match.py` (mestinya hanya waktu dibuat yang berbeda).
+- `mc_match.py`: Gold awal babak kadang salah baca (lihat 22); label kejadian di batas babak bisa satu babak terlalu awal
+  (Kalea PC: Pilih Go Go Card untuk III-3 tercatat III-2, padahal III-2 babak PvP).
 - `mc_match.py` tabel HP: pemain yang namanya tidak terbaca di daftar HUD (카일라 잘라, "—X—", "1254", "EM") tidak masuk
   tabel; bar HP tanpa nama ada 1-4 per frame dari berbagai sebab, jadi perlu pelacakan bar (posisi/HP) untuk menautkannya
   (lihat 31). Cek SABRINA 21 Okt 22-43 (1 hero di papan akhir).
