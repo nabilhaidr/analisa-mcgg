@@ -49,6 +49,11 @@ def to_bgr(image):
 
 def load_icons(d, folder, kind):
     """{name: BGR icon} for one kind of item in the season data."""
+    return {name: to_bgr(folder / icon) for name, icon in icon_labels(d, folder, kind).items()}
+
+
+def icon_labels(d, folder, kind):
+    """{name: icon path} for one kind of item in the season data: the names a detection can carry (check_match.py)."""
     if kind == "hero":
         items = [(h["name"], h.get("icon")) for h in d["heroes"]]
     elif kind == "synergy":
@@ -63,7 +68,7 @@ def load_icons(d, folder, kind):
     for name, icon in items:
         if icon and (folder / icon).exists() and name not in names.setdefault(icon, []):
             names[icon].append(name)
-    return {joined_name(n): to_bgr(folder / icon) for icon, n in names.items()}
+    return {joined_name(n): icon for icon, n in names.items()}
 
 
 def joined_name(names):
