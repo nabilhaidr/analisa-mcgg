@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 15-06
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:39_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:56_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -54,10 +54,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 15:39_
 | GeminiGirL | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 93 | 93 | 93 | 82 | 82 | 82 | 62 | 62 | 62 | 62 | 62 | 62 |
 | O.Ne | 100 | 100 | 95 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 80 | 72 | 72 | 72 | 56 | 43 | 43 | 24 |  |  |  |
 | MMCAK-Abdlkhlg | 100 | 100 | 100 | 100 | 93 | 93 | 93 | 93 | 83 | 83 | 83 | 83 | 70 | 70 | 49 | 49 | 34 | 8 |  |  |  |
-| ENQ | 100 | 100 | 94 | 88 | 83 | 70 |  |  |  | 46 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 16 |
-| BAYW | 100 | 100 | 93 | 87 | 80 | 74 | 65 | 65 | 55 | 39 | 23 | 12 | 12 | 12 | 12 | 7 |  |  |  |  |  |
-| BAYYY | 100 | 100 | 93 | 87 | 80 | 74 | 65 | 65 | 55 | 23 | 12 | 12 | 12 | 12 | 12 | 7 |  |  |  |  |  |
+| ENG | 100 | 100 | 94 | 88 | 83 | 70 |  |  |  | 46 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 16 |
+| BAYYY | 100 | 100 | 93 | 87 | 80 | 74 | 65 | 65 | 55 | 39 | 23 | 12 | 12 | 12 | 12 | 7 |  |  |  |  |  |
 | MB·ZamM |  | 100 | 94 |  |  | 71 |  |  |  | 62 | 35 |  | 17 |  | 2 | 2 |  |  |  |  |  |
+
+Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat 1 (nama berupa gambar).
 
 ## Kejadian
 

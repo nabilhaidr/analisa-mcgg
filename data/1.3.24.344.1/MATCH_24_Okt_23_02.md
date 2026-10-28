@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 23-02
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:26_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:56_
 
 - **Peringkat:** 1
 - **HP akhir:** 52
@@ -58,7 +58,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 19:26_
 | MoonLight | 100 | 100 | 94 | 87 | 82 | 71 | 63 | 63 | 54 | 47 | 47 | 31 | 22 | 22 | 22 | 7 | 7 | 7 | 7 | 7 |  |  |
 | IMannn | 100 | 100 | 94 | 88 | 88 | 88 | 78 | 78 | 66 | 58 | 42 | 42 | 31 | 31 | 16 | 16 |  |  |  |  |  |  |
 | BOLL | 100 | 100 | 94 | 88 | 88 | 88 | 82 | 82 | 82 | 72 | 72 | 59 | 44 | 44 | 44 | 28 | 9 |  |  |  |  |  |
-| Q&100nLight |  | 100 |  |  |  |  |  | 63 |  | 47 |  |  |  |  |  |  |  | 7 |  |  |  |  |
+
+Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat 6 EM.
 
 ## Kejadian
 

@@ -396,6 +396,22 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     hanya nama, legenda grafik, catatan metode, waktu dibuat; 18 laporan lain identik; `check.py` lolos. `nama_8.png`
     (22-43) dan `nama_6.png` (02-51) tidak dirujuk lagi.
 
+31. (2026-10-28) Tabel "HP semua pemain": `cluster_players` baru. (a) Nama mirip tidak digabung bila tampil bersama di >= 3
+    frame: "arkana" dan "Via Riana" (26 Okt 00-09, kemiripan 0,71) dulu satu baris berisi HP keduanya, Via Riana hilang.
+    (b) Kluster yang terpisah (< 3 frame bersama) dari tepat satu kluster yang lebih besar dan tampil bersama semua yang
+    lain = bacaan lain baris pemain itu, digabung (nama anggota dipakai `player_of`): "MCG" + "ANG" (02-51), "BAYW" (15-06),
+    "BAL" + "BIS" (00-09), "Kanew...x" (14-43), "Q&100nLight" (23-02), varian "heprince"/"GÖAT"/"S 00 BR". (c) Nama layar
+    hasil dipasang satu per kluster, pasangan terbaik dulu (`name_score` >= 0,6: awalan, bagian bersama >= 4 huruf, atau
+    kemiripan; I/l/1 dan O/0 dianggap sama): AJII → AJ11, RRIO → RR10, OOLORENG → 0LORENGX00, GÖAT → D%GOATe,
+    S 00 BR → Skyzoo BR, ENQ → ENG, MAC LAN → A4ACLAN YUKA. Pemain bernama gambar/Korea TIDAK bisa masuk tabel lewat ini:
+    namanya tidak terbaca sama sekali di HUD (`read_frames` butuh >= 3 huruf Latin; di atas bar tanpa nama hanya kosong
+    atau angka level). Tabelnya kini 7 baris dengan catatan siapa yang tidak ada (02-51 카일라 장라, 14-43 1254, 15-06
+    peringkat 1 gambar, 23-02 EM). Dibuat ulang 20 laporan dari frame cache; 11 berubah, hanya tabel HP (+ catatan metode
+    terbaru di Kalea PC dan 06-16): nama, baris potongan hilang, urutan Kalea PC, BAYYY 2 babak (= baris BAYW lama),
+    arkana (nilai Via Riana keluar) dan baris baru Via Riana; timeline sendiri, kejadian, papan akhir tidak berubah;
+    9 laporan lain identik (hasil buat ulang hanya beda waktu, file lama dipertahankan); `check.py` lolos. Kini setiap
+    nama di tabel HP sama dengan nama layar hasil (atau gambarnya).
+
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
   skrip capstone + daftar simbol PDB (`text_all_syms.json`) di scratchpad sesi lama (folder sementara, bisa hilang).
@@ -425,8 +441,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Satu screenshot toko sudah ada: `match/Screenshot_2026-10-22-06-38-48` ("ATK Rekan +1%").
 - Cari tier list komunitas yang dibuat setelah Patch 7.2.
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `mc_match.py` tabel HP: potongan nama HUD (0 frame bersama dengan nama asli) digabung ke pemain aslinya supaya pemain
-  bernama gambar masuk tabel (24 Okt 02-51, 24 Okt 15-06); nama HUD terpotong diganti nama layar hasil (lihat 29). Cek
-  SABRINA 21 Okt 22-43 (1 hero di papan akhir).
+- `mc_match.py` tabel HP: pemain yang namanya tidak terbaca di daftar HUD (카일라 잘라, "—X—", "1254", "EM") tidak masuk
+  tabel; bar HP tanpa nama ada 1-4 per frame dari berbagai sebab, jadi perlu pelacakan bar (posisi/HP) untuk menautkannya
+  (lihat 31). Cek SABRINA 21 Okt 22-43 (1 hero di papan akhir).
 - `mc_match.py`: nama huruf hias/simbol ("ᴍᴀʀsᴍᴇℓℓ", "—X—") masih tampil sebagai gambar; model Korea membaca "카일라 잘라"
   sebagai "카일라 장라" (lihat 30).

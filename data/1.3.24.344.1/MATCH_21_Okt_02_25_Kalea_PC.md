@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 02-25 Kalea PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 22:01_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:38_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -49,9 +49,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 22:01_
 | Pemain | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 | IV-3 | IV-4 | IV-5 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Abahhh | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 82 | 82 | 82 | 82 | 82 | 82 | 82 |
-| CinCoeg | 88 | 79 | 67 | 58 | 58 | 44 | 34 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 6 |
 | adikagacor | 92 | 84 | 84 | 84 | 84 | 77 | 77 | 65 | 65 | 65 | 65 | 65 | 41 | 41 | 26 | 7 | 7 | 7 |
 | theprince_cryyyc | 96 | 96 | 89 | 82 | 82 | 82 | 69 | 69 | 69 | 60 | 60 | 60 | 60 | 42 | 22 | 22 | 22 | 22 |
+| CinCoeg | 88 | 79 | 67 | 58 | 58 | 44 | 34 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 6 |
 | aespa | 88 | 88 | 77 | 77 | 77 | 77 | 77 | 77 | 63 | 45 | 45 | 45 | 27 | 15 | 15 | 15 | 15 |  |
 | Oirtzy | 100 | 100 | 100 | 89 | 89 | 80 | 72 | 72 | 59 | 59 | 59 | 46 | 46 | 28 | 7 |  |  |  |
 | pemulaaa | 95 | 86 | 86 | 86 | 86 | 86 | 79 | 66 | 66 | 60 | 60 | 60 | 45 | 26 |  |  |  |  |
@@ -103,4 +103,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-26 22:01_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).

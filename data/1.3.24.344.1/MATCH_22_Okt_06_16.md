@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 06-16
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:17_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:20_
 
 - **Peringkat:** 1
 - **HP akhir:** 19
@@ -64,7 +64,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:17_
 | Giosue.Lauren*g0 | 100 | 100 | 94 | 94 | 87 | 87 | 87 | 87 | 72 | 61 | 61 | 61 | 47 | 47 | 24 | 24 | 24 | 24 | 24 | 24 | 24 |  |  |  |  |  |  |  |
 | SRYIMeremshiki | 100 | 100 | 95 | 95 | 95 | 95 | 95 | 95 | 95 | 87 | 73 | 60 | 54 | 54 | 54 | 54 | 48 | 28 | 14 | 14 |  |  |  |  |  |  |  |  |
 | ULIL | 100 | 100 | 100 | 93 | 93 | 85 | 76 | 76 | 70 | 57 | 50 | 50 | 41 | 41 | 28 | 15 | 15 |  | 1 | 1 |  |  |  |  |  |  |  |  |
-| GÖAT | 100 | 100 |  | 89 | 89 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| D%GOATe | 100 | 100 |  | 89 | 89 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 ## Kejadian
 
@@ -114,4 +114,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 02:17_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak hanya dicatat di daftar Kejadian (tidak di timeline): teks itu bisa milik lawan yang sedang tampil, jadi tidak dipakai untuk menentukan hasil babak.
-- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); peringkat = urutan baris.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.

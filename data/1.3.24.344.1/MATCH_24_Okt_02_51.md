@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 02-51
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 01:29_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:56_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -57,7 +57,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 01:29_
 | SINGKUANG | 100 | 100 | 94 | 94 | 87 | 87 | 81 | 81 | 81 | 68 | 68 | 68 | 51 | 51 | 41 | 41 | 26 | 12 |  |  |  |
 | KeyyMCGG | 100 | 100 | 92 | 86 | 80 | 69 | 58 | 58 | 50 | 50 | 39 | 19 | 19 | 19 | 19 | 19 | 19 |  |  |  |  |
 | T@m@nBerm@in |  | 100 |  | 93 | 84 | 74 | 64 | 64 | 64 | 56 | 41 | 29 |  |  | 13 | 13 | 13 | 13 | 13 | 13 | 13 |
-| MCG |  | 100 |  | 86 | 80 | 69 |  | 50 | 50 | 39 | 39 |  | 19 | 19 | 19 | 19 | 19 |  |  |  |  |
+
+Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat 6 카일라 장라.
 
 ## Kejadian
 

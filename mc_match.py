@@ -325,7 +325,10 @@ def same_player(k, ref, ratio=0.7):
 
 
 def player_of(name, clusters):
-    """Cluster for an OCR'd list name: prefix / similarity, looser (0.6) than when building clusters."""
+    """Cluster for an OCR'd list name: its own cluster, else prefix / similarity, looser (0.6) than when building."""
+    own = next((c for c in clusters if name in c[3]), None)
+    if own:
+        return own[0]
     k = name_key(name)
     if len(k) < 3:
         return None
@@ -335,23 +338,59 @@ def player_of(name, clusters):
     return hit[0] if hit else None
 
 
+LOOK = str.maketrans("il|o", "1110")  # letters the HUD OCR mixes up with digits: "AJII" = AJ11, "RRIO" = RR10
+
+
+def name_score(a, b):
+    """Likeness of a list-name key and a result-screen key: prefix (cut-off list name), a long common part ("maclan" in
+    "a4aclanyuka"), or similarity, after LOOK."""
+    a, b = a.translate(LOOK), b.translate(LOOK)
+    sm = difflib.SequenceMatcher(None, a, b)
+    score = max(sm.ratio(), 0.9 if a.startswith(b[:5]) or b.startswith(a[:5]) else 0)
+    common = sm.find_longest_match(0, len(a), 0, len(b)).size
+    return max(score, common / min(len(a), len(b)) - 0.1) if common >= 4 else score
+
+
 def cluster_players(recs, known=()):
-    """Canonical player names from the (often truncated) list names: clusters of similar names, top 8 by frequency."""
-    counts = Counter(r["name"] for rec in recs for r in rec["rows"])
-    clusters = []  # [display name, key, count]
-    for name, n in counts.most_common():
+    """Canonical player names from the (often truncated) list names: [display name, key, count, names, frames], top 8 by
+    frequency. Similar names form a cluster, but not two names that stand in >= 3 frames together: "arkana" and
+    "Via Riana" (26 Okt 00:09) are 0.71 alike. A cluster that stands apart (< 3 frames together) from exactly one of the
+    bigger clusters, and beside all others, is another reading of that player's row and joins it: cut-off "MCG" for
+    "Kew MCG" (24 Okt 02:51), "BAL" for "KING BAL" (26 Okt 00:09), "BAYW" for "BAYYY". Then every cluster takes the
+    result-screen name it matches best, one name per cluster, best pairs first (name_score >= 0.6)."""
+    at = defaultdict(set)  # name -> frame indexes
+    for i, rec in enumerate(recs):
+        for r in rec["rows"]:
+            at[r["name"]].add(i)
+    clusters = []
+    for name, n in Counter(r["name"] for rec in recs for r in rec["rows"]).most_common():
         k = name_key(name)
         if len(k) < 3:
             continue
-        hit = next((c for c in clusters if same_player(k, c[1])), None)
+        hit = next((c for c in clusters if same_player(k, c[1]) and len(at[name] & c[4]) < 3), None)
         if hit:
             hit[2] += n
+            hit[3].add(name)
+            hit[4] |= at[name]
         else:
-            clusters.append([name, k, n])
-    clusters = sorted((c for c in clusters if c[2] >= 3), key=lambda c: -c[2])[:8]
-    for c in clusters:  # full names from the result screen when the list shows "musuhkoru..."; a Hangul name has no key
-        c[0] = next((k for k in known if norm(k) and same_player(norm(k), c[1])), c[0])  # ("" is a prefix of every key)
-    return clusters
+            clusters.append([name, k, n, {name}, set(at[name])])
+    players = []
+    for c in sorted((c for c in clusters if c[2] >= 3), key=lambda c: -c[2]):
+        apart = [p for p in players if len(c[4] & p[4]) < 3]
+        if not apart and len(players) < 8:
+            players.append(c)
+        elif len(apart) == 1:
+            p = apart[0]
+            p[2] += c[2]
+            p[3] |= c[3]
+            p[4] |= c[4]
+    keys = [(k, name_key(k)) for k in known if name_key(k)]  # a Hangul name has no key
+    used = set()
+    for score, i, k in sorted(((name_score(c[1], kk), i, k) for i, c in enumerate(players) for k, kk in keys), reverse=True):
+        if score >= 0.6 and i not in used and k not in used:
+            players[i][0] = k
+            used |= {i, k}
+    return players
 
 
 def unread_player(tl, players, final):
@@ -915,8 +954,13 @@ def main():
         md += ["## Catatan otomatis", ""] + [f"- {t}" for _, t in notes] + [""]
 
     if rounds:
+        linked = unread_player(tl, players, final)
         pics = {p: name_pic(r, assets, folder) if r.get("slot") else (r["name"], esc(r["name"]), r["name"])
-                for p, r in unread_player(tl, players, final).items()}
+                for p, r in linked.items()}
+        gone = [r for r in final if r["name"] not in players and r not in linked.values()] if len(players) < len(final) else []
+        gone_note = ("Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang "
+                     "dari 3 huruf Latin): " + ", ".join(f"peringkat {r['rank']} " + ("(nama berupa gambar)" if r.get("slot")
+                                                                                       else r["name"]) for r in gone) + ".")
         label = {p: pics[p][0] if p in pics else p for p in players}
         series = {label[p]: [r["start"].get(p) for r in rounds] for p in players}
         body.append(f'<section><h2>HP per babak</h2>{svg_chart(series, [r["label"] for r in rounds], highlight=me)}</section>')
@@ -941,9 +985,12 @@ def main():
         heads = ["Pemain"] + [r["label"] for r in rounds]
         grid = [[r["start"].get(p, "") for r in rounds] for p in players]
         cells = [[pics[p][1] if p in pics else esc(p)] + [esc(c) for c in row] for p, row in zip(players, grid)]
-        body.append(f'<section><h2>HP semua pemain</h2>{table(heads, cells)}</section>')
+        body.append(f'<section><h2>HP semua pemain</h2>{table(heads, cells)}'
+                    + (f'<p class="muted small">{esc(gone_note)}</p>' if gone else "") + '</section>')
         md += ["## HP semua pemain", ""] + md_table(heads, [[pics[p][2] if p in pics else p] + row
                                                             for p, row in zip(players, grid)]) + [""]
+        if gone:
+            md += [gone_note, ""]
     if events:
         rows = [[f"{e['t'] // 60:02d}:{e['t'] % 60:02d}", round_label(e["round"]) if e["round"] else "-", e["kind"], e["detail"]]
                 for e in events]

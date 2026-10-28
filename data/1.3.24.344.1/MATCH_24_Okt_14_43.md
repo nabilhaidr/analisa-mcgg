@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 14-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:50_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 02:56_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -54,7 +54,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-27 23:50_
 | Giommy | 100 | 100 | 100 | 96 | 90 | 79 | 79 | 79 | 68 | 56 | 48 | 34 |  |  | 26 | 26 | 26 | 26 |
 | TT:Kanekikev | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 84 | 84 | 84 | 73 | 73 | 73 | 57 | 37 |  |  |
 | Rapaa | 100 | 100 | 100 | 100 | 93 | 86 | 77 | 77 | 77 | 66 | 56 | 46 | 36 | 36 | 18 | 18 |  |  |
-| Kanew...x | 100 |  |  |  |  |  |  |  |  |  |  | 73 | 73 | 73 | 57 |  |  |  |
+
+Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat 2 1254.
 
 ## Kejadian
 
