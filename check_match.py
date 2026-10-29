@@ -5,7 +5,10 @@ Pemakaian (Python sistem + requirements.txt, sama dengan mc_match.py):
   python check_match.py                          semua laporan MATCH di data versi terbaru
   python check_match.py 15_38 Kalea              hanya laporan yang namanya mengandung salah satu teks ini
   python check_match.py --version 1.3.24.344.1   data versi tertentu
-Keluar dengan kode 1 bila ada kesalahan; peringatan saja tidak menggagalkan.
+Keluar dengan kode 1 bila ada kesalahan; peringatan saja tidak menggagalkan. Tiap laporan satu baris ringkasan (seperti
+check.py lama): pkt = peringkat, HP = HP akhir, babak = babak pertama–terakhir timeline, n = jumlah babak, kalah = babak
+kehilangan HP, nama = nama terbaca sebagai teks / baris papan akhir; kesalahan dan peringatan di bawahnya.
+Tes: python -m pytest test_check_match.py
 
 Kesalahan:
 - md dan html berbeda (ringkasan, catatan otomatis, timeline, HP semua pemain, kejadian, papan akhir, catatan metode, waktu
@@ -20,9 +23,10 @@ Kesalahan:
 - Papan akhir: peringkat bukan 1..N, baris "(kamu)" tidak tepat satu / beda dengan kotak Peringkat, hero, unit panggilan
   atau kartu yang bukan nama ikon S<n>.json (mc_vision.icon_labels: kartu Ⅰ/Ⅱ/Ⅲ bergambar sama = satu nama), sinergi !=
   dihitung ulang dari hero unik (seperti mc_match.py).
-Peringatan: babak terlewat di timeline, level kosong di papan akhir, nama "baris N" tanpa gambar, pemain yang di tabel HP
-bertahan lebih lama tapi peringkatnya lebih buruk (babak terakhir tabel tidak dihitung: bacaannya sering bolong saat
-rekaman berakhir), gambar di match_<nama>/ yang tidak dirujuk, ID/poin pertandingan tidak terbaca.
+Peringatan: babak terlewat di timeline, HP sendiri kosong di timeline (kecuali babak setelah tereliminasi), laporan tanpa
+papan akhir, level kosong di papan akhir, nama "baris N" tanpa gambar, pemain yang di tabel HP bertahan lebih lama tapi
+peringkatnya lebih buruk (babak terakhir tabel tidak dihitung: bacaannya sering bolong saat rekaman berakhir), gambar di
+match_<nama>/ yang tidak dirujuk, ID/poin pertandingan tidak terbaca.
 """
 import argparse
 import html
@@ -88,17 +92,17 @@ def note_matches(text, want):
 
 
 def check(md_path, seasons):
-    """([errors], [warnings]) of one report."""
+    """([errors], [warnings], {overview column: text}) of one report; main() prints the overview as one table row."""
     err, warn = [], []
     html_path = md_path.with_suffix(".html")
     if not html_path.exists():
-        return [f"{html_path.name} tidak ada"], warn
+        return [f"{html_path.name} tidak ada"], warn, {}
     txt, page = md_path.read_text(encoding="utf-8"), html_path.read_text(encoding="utf-8")
     secs = {html.unescape(k): v for k, v in re.findall(r"<section><h2>(.*?)</h2>(.*?)</section>", page, re.S)}
 
     stamp = STAMP_MD.search(txt)
     if not stamp:
-        return ["baris waktu dibuat (_Data game ..._) tidak ada di md"], warn
+        return ["baris waktu dibuat (_Data game ..._) tidak ada di md"], warn, {}
     meta = STAMP_HTML.search(page)
     if not meta or html.unescape(meta.group(1)) != stamp.group(1):
         err.append(f"waktu dibuat md/html beda: {stamp.group(1)!r} vs {meta and meta.group(1)!r}")
@@ -120,6 +124,7 @@ def check(md_path, seasons):
     if not pm or not hp_me or html.unescape(hp_me.group(1)) != pm.group(1):
         err.append("baris Pemain md/html beda atau tidak ada")
     rank = num(boxes.get("Peringkat"))
+    row = {"pkt": boxes.get("Peringkat", "-"), "HP": boxes.get("HP akhir", "-")}
     if not re.search(r"ID \d{15,20} · poin \d+ \([+-]\d+\)", boxes.get("Pertandingan", "")):
         warn.append(f"ID/poin pertandingan tidak terbaca: {boxes.get('Pertandingan')}")
 
@@ -204,6 +209,9 @@ def check(md_path, seasons):
                 err.append(f"{r[0]}: perubahan {dlt:+d} tidak cocok dengan '{res}'")
             elif i + 1 < len(tl) and None not in (hps[i], hps[i + 1]) and dlt != hps[i + 1] - hps[i]:
                 err.append(f"{r[0]}: perubahan {dlt:+d} != {hps[i + 1]} - {hps[i]}")
+        empty = [r[0] for i, (r, v) in enumerate(zip(tl, hps)) if v is None and (out_at is None or i < out_at)]
+        if empty:  # after the elimination round there is no own HP to read
+            warn.append("HP sendiri kosong di timeline: " + ", ".join(empty))
         mine = [i for i, v in enumerate(hps) if v is not None]
         if rank and rank > 1 and mine and out_at != mine[-1]:
             err.append(f"peringkat {rank} tapi tidak tereliminasi di babak terakhir dengan HP sendiri ({tl[mine[-1]][0]})")
@@ -215,6 +223,7 @@ def check(md_path, seasons):
         if rank == 1 and end is not None and end <= 0:
             err.append("juara tapi HP akhir 0")
         losses = sum(1 for r in tl if re.match(r"-\d+ ", r[2]) and int(r[2].split()[0]) < 0)
+        row.update(babak=f"{labels[0]}–{labels[-1]}", n=str(len(tl)), kalah=str(losses))
         want = f"{labels[0]} – {labels[-1]} ({len(tl)} babak), kehilangan HP di {losses} babak"
         if boxes.get("Babak terbaca") != want:
             err.append(f"kotak Babak terbaca {boxes.get('Babak terbaca')!r} != {want!r}")
@@ -272,6 +281,10 @@ def check(md_path, seasons):
             want = ", ".join(f"{s} {counts[s]}" for s in game.active_tiers(unique, []))
             if r[5] != want:
                 err.append(f"papan akhir peringkat {r[0]} ({name}): sinergi {r[5]!r} != dihitung ulang {want!r}")
+        read = [n for _, n in board_names if not n.startswith("[img ") and not re.fullmatch(r"baris \d+", n)]
+        row["nama"] = f"{len(read)}/{len(board)}"
+    else:
+        warn.append("tanpa papan akhir: tidak ada layar hasil yang terbaca")
 
     # HP table names against the result screen
     if hp and board_names:
@@ -315,7 +328,7 @@ def check(md_path, seasons):
     if len(want) != len(hnotes) or not all(c == wc and note_matches(t, wt) for (c, t), (wc, wt) in zip(hnotes, want)):
         diff = [f"{t!r} -> {wt!r}" for (_, t), (_, wt) in zip(hnotes, want) if t != wt][:3]
         err.append(f"Catatan otomatis != mc_match.insights() ({len(hnotes)} vs {len(want)} baris) {'; '.join(diff)}")
-    return err, warn
+    return err, warn, row
 
 
 def main():
@@ -333,10 +346,15 @@ def main():
     orphans += [p.name + "/" for p in sorted(folder.glob("match_*")) if p.is_dir()
                 and not (folder / f"MATCH_{p.name[len('match_'):]}.md").exists()]
     seasons, n_err, n_warn = {}, 0, len(orphans)
+    width = max(len(p.stem) - len("MATCH_") for p in reports)
+    line = lambda status, name, row: (f"{status:5} {name:{width}}  {row.get('pkt', '-'):>3} {row.get('HP', '-'):>3}  "
+                                      f"{row.get('babak', '-'):10} {row.get('n', '-'):>2} {row.get('kalah', '-'):>5} "
+                                      f"{row.get('nama', '-'):>5}")
+    print(line("", "laporan", {c: c for c in ("pkt", "HP", "babak", "n", "kalah", "nama")}))
     for p in reports:
-        err, warn = check(p, seasons)
+        err, warn, row = check(p, seasons)
         n_err, n_warn = n_err + len(err), n_warn + len(warn)
-        print(f"{'GAGAL' if err else 'OK   '} {p.stem[len('MATCH_'):]}" + (f" ({len(warn)} peringatan)" if warn else ""))
+        print(line("GAGAL" if err else "OK", p.stem[len("MATCH_"):], row) + (f"  ({len(warn)} peringatan)" if warn else ""))
         for e in err:
             print(f"      kesalahan: {e}")
         for w in warn:
