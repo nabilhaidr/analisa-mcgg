@@ -9,7 +9,8 @@ Mesin:
   (hasil OCR Windows yang ikut di repo, jadi hasilnya sama dengan di Windows), lalu RapidOCR.
 
 Hasil: {"<path relatif, pemisah \\>": {"stamp", "w", "h", "lines": [{"t", "x", "y", "r", "b"}]}} dalam piksel gambar asli.
-Gambar yang tidak berubah (ukuran + waktu ubah sama) diambil dari cache, seperti ocr_screens.ps1.
+Gambar yang tidak berubah (ukuran + waktu ubah sama) diambil dari cache, seperti ocr_screens.ps1. RapidOCR bisa diberi ambang
+skor lain (text_score, bawaan 0,5); ambang itu ikut di stamp cache.
 """
 import importlib.util
 import json
@@ -25,6 +26,7 @@ HERE = Path(__file__).resolve().parent
 ENGINES = ("auto", "windows", "rapid")
 SUFFIXES = (".png", ".jpg", ".jpeg")
 RAPID_SCALE = 2  # small text is enlarged first, like ocr_screens.ps1
+RAPID_SCORE = 0.5  # RapidOCR's own default text_score (and box_thresh 0.5, unclip_ratio 1.6)
 _rapid = None
 
 
@@ -65,15 +67,15 @@ def run_windows(folder, quiet=True):
     return load_json(Path(folder) / "ocr.json")
 
 
-def run_rapid(folder, files, log=print):
+def run_rapid(folder, files, log=print, text_score=RAPID_SCORE):
+    """RapidOCR of `files` with a cache in <folder>/ocr_rapid.json. A text_score under 0.5 keeps lines read with low
+    confidence (a lone digit scores 0.24-0.5); it is part of each entry's stamp. Every call passes all three thresholds:
+    RapidOCR keeps the last ones it was given, so a low-score call would change the calls after it."""
     global _rapid
     out = Path(folder) / "ocr_rapid.json"
     images = load_json(out)
-    todo = []
-    for f in files:
-        st = f.stat()
-        if images.get(key_of(folder, f), {}).get("stamp") != f"{st.st_size}-{st.st_mtime_ns}":
-            todo.append(f)
+    stamp = lambda st: f"{st.st_size}-{st.st_mtime_ns}" + ("" if text_score == RAPID_SCORE else f"-s{text_score}")
+    todo = [f for f in files if images.get(key_of(folder, f), {}).get("stamp") != stamp(f.stat())]
     if todo:
         from rapidocr_onnxruntime import RapidOCR
         _rapid = _rapid or RapidOCR()
@@ -83,14 +85,15 @@ def run_rapid(folder, files, log=print):
         with Image.open(f) as im:
             w, h = im.size
             big = im.convert("RGB").resize((w * RAPID_SCALE, h * RAPID_SCALE), Image.LANCZOS)
-        result, _ = _rapid(np.ascontiguousarray(np.asarray(big)[..., ::-1]))  # BGR, like cv2.imread
+        result, _ = _rapid(np.ascontiguousarray(np.asarray(big)[..., ::-1]),  # BGR, like cv2.imread
+                           box_thresh=0.5, unclip_ratio=1.6, text_score=text_score)
         lines = []
         for box, text, _score in result or []:
             xs, ys = [p[0] for p in box], [p[1] for p in box]
             lines.append({"t": text, "x": int(min(xs) / RAPID_SCALE), "y": int(min(ys) / RAPID_SCALE),
                           "r": int(max(xs) / RAPID_SCALE), "b": int(max(ys) / RAPID_SCALE)})
         lines.sort(key=lambda l: (l["y"], l["x"]))
-        images[key_of(folder, f)] = {"stamp": f"{st.st_size}-{st.st_mtime_ns}", "w": w, "h": h, "lines": lines}
+        images[key_of(folder, f)] = {"stamp": stamp(st), "w": w, "h": h, "lines": lines}
         if i % 25 == 0 or i == len(todo):
             out.write_text(json.dumps({"version": 1, "engine": "rapid", "images": images}, ensure_ascii=False), encoding="utf-8")
             if i % 25 == 0:
@@ -121,8 +124,9 @@ def read_korean(images):
     return [(text, float(score)) for text, score in result]
 
 
-def ocr_folder(folder, engine="auto", files=None, log=print):
-    """OCR of the images in `folder` (all, or only `files`) as {key: {"stamp", "w", "h", "lines"}} (see module doc)."""
+def ocr_folder(folder, engine="auto", files=None, log=print, text_score=RAPID_SCORE):
+    """OCR of the images in `folder` (all, or only `files`) as {key: {"stamp", "w", "h", "lines"}} (see module doc);
+    text_score only applies to RapidOCR."""
     folder = Path(folder)
     files = [Path(f) for f in files] if files is not None else images_in(folder)
     if engine == "auto":
@@ -143,7 +147,7 @@ def ocr_folder(folder, engine="auto", files=None, log=print):
     if not rapid_available():
         raise SystemExit("OCR tidak tersedia: tidak ada PowerShell (OCR Windows) dan RapidOCR belum terpasang. "
                          "Jalankan: pip install rapidocr_onnxruntime")
-    return run_rapid(folder, files, log)
+    return run_rapid(folder, files, log, text_score)
 
 
 def lines_of(images, folder, path):

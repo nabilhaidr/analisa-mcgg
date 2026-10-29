@@ -83,8 +83,8 @@ def log(*a):
 OCR_ENGINE = "auto"  # set from --ocr
 
 
-def run_ocr(folder, engine=None, files=None):
-    return mc_ocr.ocr_folder(folder, engine or OCR_ENGINE, files, log=log)
+def run_ocr(folder, engine=None, files=None, text_score=mc_ocr.RAPID_SCORE):
+    return mc_ocr.ocr_folder(folder, engine or OCR_ENGINE, files, log=log, text_score=text_score)
 
 
 def crop(im, box):
@@ -366,16 +366,21 @@ def parse_gold(text):
     return next((int(n) for n in re.findall(r"\d{1,3}", text or "") if int(n) <= 300), None)
 
 
+GOLD_SCORE = 0.1  # RapidOCR text_score for the gold box (gold_labels)
+
+
 def gold_labels(frames, work, layout):
     """{frame stem: Gold} read from the gold box alone (3x, black margin), for frames whose Gold counter shows but whose HUD
     sheet gave no number. In 20 recordings OCR Windows read no number on 1539 shown counters (Kalea III-2: a clear 14, 17,
-    10); RapidOCR read 694 of them, and the same number as OCR Windows on all 330 counters both read. A lone digit (0-9) is
-    found as text by neither, so --ocr auto uses RapidOCR here when installed, like round_labels."""
+    10); RapidOCR read 694 of them, the same number as OCR Windows on all 330 counters both read. Most of the rest is a lone
+    digit (0-9): RapidOCR finds it but scores it 0.24-0.5, under its default text_score 0.5, so it is read here with
+    GOLD_SCORE: 710 of 823 more (checked by eye), the same number on all 130 counters already read. --ocr auto uses RapidOCR
+    here when installed, like round_labels."""
     folder = work / "golds"
     files = box_crops(frames, folder, LAYOUTS[layout]["gold"])
     engine = "rapid" if OCR_ENGINE == "auto" and mc_ocr.rapid_available() else OCR_ENGINE
     log(f"OCR Gold {len(frames)} frame tanpa angka Gold ({mc_ocr.describe(engine)}) ...")
-    ocr = run_ocr(folder, engine, files)
+    ocr = run_ocr(folder, engine, files, text_score=GOLD_SCORE)
     return {f.stem: parse_gold(" ".join(l["t"] for l in ocr.get(f"{f.stem}.png", {}).get("lines", []))) for f in frames}
 
 
@@ -1124,7 +1129,7 @@ def main():
                    "kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil "
                    "(harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak "
                    f"Gold saja ({mc_ocr.describe('rapid' if OCR_ENGINE == 'auto' and mc_ocr.rapid_available() else OCR_ENGINE)}"
-                   "; angka satu digit sering tetap tidak terbaca).",
+                   ", ambang skor rendah agar angka satu digit ikut terbaca).",
                    "Label babak: OCR HUD; bila kosong, OCR potongan label saja "
                    f"({mc_ocr.describe('rapid' if OCR_ENGINE == 'auto' and mc_ocr.rapid_available() else OCR_ENGINE)}); bila masih "
                    "kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai "

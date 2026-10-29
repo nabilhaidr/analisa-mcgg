@@ -93,9 +93,12 @@ class ParseGold(unittest.TestCase):
 @unittest.skipUnless(mc_ocr.rapid_available(), "RapidOCR tidak terpasang")
 class GoldLabels(unittest.TestCase):
     def test_gold_missed_by_the_hud_ocr_is_read_from_the_gold_box(self):
-        # Kalea PC 510 s and 22 Okt 04-55 165 s: a clear 14 / 11 that OCR Windows did not read
+        # Kalea PC 510 s and 22 Okt 04-55 165 s: a clear 14 / 11 that OCR Windows did not read; *_satu: a lone digit
+        # (Kalea PC 1165 s, 22 Okt 04-55 65 s) that RapidOCR finds but scores just under its default 0.5
         for name, layout, size, want in (("pc_gold_14_lewat", "pc", (1600, 902), 14),
-                                         ("ponsel_gold_11_lewat", "ponsel", (1600, 720), 11)):
+                                         ("ponsel_gold_11_lewat", "ponsel", (1600, 720), 11),
+                                         ("pc_gold_0_satu", "pc", (1600, 902), 0),
+                                         ("ponsel_gold_2_satu", "ponsel", (1600, 720), 2)):
             with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
                 box = mc_match.LAYOUTS[layout]["gold"]
                 frame = Image.new("RGB", size)
