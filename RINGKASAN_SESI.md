@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-28)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-29)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -219,7 +219,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   layar hasil 2026-10-21); top 3 semuanya punya Divine Execution. Sisa: Divine
   Glaive menganggur di tas IV-4, Gord cuma 1 item.
 
-## Riwayat pekerjaan (2026-10-20 s/d 2026-10-28)
+## Riwayat pekerjaan (2026-10-20 s/d 2026-10-29)
 1. Analisis client dengan REA/Ghidra + PDB; pecahkan format tabel, teks, LuaRepair; tentukan season aktif.
 2. Buat `patch_tracker.py`, `mc_tables.py`, `mc_data.py`, `report_template.html`, `mc_diff.py`; validasi awal ke screenshot.
 3. Tambah Ensiklopedia + tabel DMG Commander, label Aktif/Pasif commander, status kartu aktif per season.
@@ -445,8 +445,8 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - Frame cache tidak ada di sesi cloud, jadi 20 laporan diperbarui dari tabelnya sendiri: `insights()` lama menghasilkan
       catatan yang persis sama dengan laporan lama di 20/20 laporan, lalu `insights()` baru dipakai; 208 baris streak keluar dari
       tabel Kejadian, catatan metode streak diganti, waktu dibuat diperbarui, bagian lain identik. Smoke test `mc_match.py
-      --frames` dengan 8 frame kunci 640 px jalan tanpa error. Bila dibuat ulang dari frame cache di PC lokal, mestinya hanya
-      waktu dibuat yang berbeda (belum dicek).
+      --frames` dengan 8 frame kunci 640 px jalan tanpa error. Dibuat ulang dari frame cache di PC lokal pada 29 Okt: memang
+      hanya waktu dibuat yang berbeda (lihat 36).
 33. (2026-10-28) Riset tier list setelah Patch 7.2 dan ringkasan 140 papan pemain lain dari 20 laporan MATCH (lihat Analisis
     gameplay). Ringkasan ini dirapikan (tanggal, judul riwayat, Ide lanjutan).
 34. (2026-10-28) `check_match.py`, pengganti `check.py` (yang asli tidak pernah di-commit; isinya tidak diketahui, jadi
@@ -463,6 +463,13 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 35. (2026-10-28) `match_21_Okt_22_43/nama_8.png` ("마샤 주니어") dan `match_24_Okt_02_51/nama_6.png` ("카일라 잘라") dihapus: tidak
     dirujuk sejak 30 (nama kini teks dari model Korea). `check_match.py`: 0 kesalahan, 0 peringatan. Bila perlu, pulihkan dari
     commit `d58b21a`; `mc_match.py` membuatnya lagi hanya bila model Korea tidak ada (nama kembali berupa gambar).
+36. (2026-10-29) PC lokal tertinggal 4 commit sesi cloud (32–35); ditarik fast-forward. 20 laporan MATCH dibuat ulang dari
+    frame cache lokal dengan input yang sama seperti di 31 (`mc_match.py --frames cache\match\<nama>\frames --player CinCoeg
+    --name ... --result <layar hasil>`): 20/20 hanya beda waktu dibuat (md per bagian, html, gambar `match_*/` identik), jadi
+    pembaruan dari tabel di 32 sama dengan hasil `mc_match.py`. `check_match.py` pada hasil buat ulang: 0 kesalahan, 0
+    peringatan; file lama dipertahankan. Tiga `mc_match.py` paralel kehabisan memori (18 dari 20 gagal saat mulai, lihat
+    Lingkungan); yang gagal diulang satu per satu, 9 terakhir dengan `OPENBLAS_NUM_THREADS=1`, hasilnya juga hanya beda waktu
+    dibuat. `check.py` asli ditemukan dan dibandingkan dengan `check_match.py` (lihat Ide lanjutan).
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -487,6 +494,12 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Drive F: adalah HDD eksternal USB. Pada 2026-10-21 koneksinya sempat putus (NTFS Event 140 "failed to flush", lalu Event 98
   "needs Full Chkdsk"; baca file → Input/output error, Edge headless macet). Diperbaiki dengan pindah kabel/port + `chkdsk F: /f`
   (tidak ada masalah, 0 bad sector). Kalau terjadi lagi: cek `Get-Volume -DriveLetter F` dan event NTFS sebelum menulis ke F:.
+- RAM PC lokal 7,2 GB (page file 22 GB, batas commit ±29 GB). Pada 2026-10-29 sisa commit memori sering < 1 GB saat Chrome,
+  WSL (vmmem ±3 GB), ChatGPT, Codex dan Claude terbuka, dan tiga `mc_match.py` paralel gagal (OpenBLAS "Memory allocation
+  still failed", `MemoryError`, WinError 1450 "Insufficient system resources"). Satu `mc_match.py` memakai ±0,6 GB dan
+  ±1,5–3 menit per laporan dari frame cache: buat ulang laporan satu per satu dan cek `FreeVirtualMemory`
+  (`Get-CimInstance Win32_OperatingSystem`) dulu; `OPENBLAS_NUM_THREADS=1` menghemat memori tanpa mengubah hasil. Proses
+  latar belakang yang dimulai Claude Code tetap berjalan walau sesinya berakhir: cek dulu sebelum menjalankan ulang.
 
 ## Ide lanjutan (belum dikerjakan)
 - **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Screenshot dan cek in-game S7 di bawah (Toko Spirit Sand, hero
@@ -502,10 +515,11 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Cek lagi tier list setelah Patch 7.2 / Penyesuaian 20/10 beberapa hari lagi (2026-10-28, dua kali: belum ada tier list
   tertulis, lihat Analisis gameplay).
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `check.py` asli (disebut "lolos" di 27–31) tidak ada di repo maupun riwayat git; penggantinya `check_match.py` (34). Bila
-  `check.py` masih ada di PC lokal, bandingkan pemeriksaannya dan tambahkan yang belum ada ke `check_match.py`.
-- Buat ulang 20 laporan MATCH dari frame cache di PC lokal untuk memastikan pembaruan dari tabel di 32 sama dengan hasil
-  `mc_match.py` (mestinya hanya waktu dibuat yang berbeda), lalu jalankan `python check_match.py`.
+- `check.py` asli (disebut "lolos" di 27–31) tidak ada di repo, tapi masih ada di scratchpad sesi 27–28 Okt (folder
+  sementara, bisa hilang): `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\f5e92041-9922-4f68-8c14-45a5613a0cb9\scratchpad\check.py`.
+  Dibandingkan 29 Okt: hampir semua pemeriksaannya sudah ada di `check_match.py` (34). Yang belum: peringatan babak dengan HP
+  sendiri kosong di timeline, peringatan laporan tanpa papan akhir, dan tabel ringkasan per laporan (peringkat, HP akhir,
+  rentang babak, jumlah kalah, nama terbaca). Tambahkan ke `check_match.py` bila perlu.
 - `mc_match.py`: Gold awal babak kadang salah baca (lihat 22); label kejadian di batas babak bisa satu babak terlalu awal
   (Kalea PC: Pilih Go Go Card untuk III-3 tercatat III-2, padahal III-2 babak PvP).
 - `mc_match.py` tabel HP: pemain yang namanya tidak terbaca di daftar HUD (카일라 잘라, "—X—", "1254", "EM") tidak masuk
