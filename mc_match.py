@@ -15,7 +15,8 @@ Cara kerja:
   pemain digabung jadi satu gambar lalu di-OCR. Label babak yang tidak terbaca: OCR potongan label saja (rounds/), lalu
   dicocokkan dari tampilannya dengan label yang sudah terbaca di pertandingan yang sama (rounds_by_look), juga saat HUD
   lain tertutup overlay (layar pilih Go Go Card). Gold hanya dibaca saat penghitung Gold (koin kuning) tampil di kotaknya,
-  bukan harga jual unit yang sedang diseret atau dialog (gold_shown).
+  bukan harga jual unit yang sedang diseret atau dialog (gold_shown); angka yang terlewat dibaca ulang dari kotak Gold saja
+  (golds/, RapidOCR bila terpasang: gold_labels). Gold awal babak = Gold tertinggi dalam 10 detik sejak bacaan pertama.
 - HP tiap pemain diukur dari PANJANG BAR HP hijau (linear terhadap HP), dikalibrasi otomatis dengan angka HP yang terbaca
   jelas oleh OCR; angka OCR dipakai bila cocok dengan bar (selisih <= 6). Bar pendek (HP rendah) dibedakan dari ikon hati
   lewat bentuknya. Saat bertarung dua baris teratas bergeser ke kiri (bar bisa terpotong) dan di kanannya ada angka jumlah
@@ -253,7 +254,7 @@ def read_frames(frames, work, layout):
         sheet = np.asarray(Image.open(hud / f"{f.stem}.png").convert("RGB")).astype(int)
         part = lambda name: [l for l in lines if off[name][0] <= l["y"] < off[name][0] + off[name][1]]
         text = lambda name: " ".join(l["t"] for l in part(name))
-        gold = next((int(m) for m in re.findall(r"\d{1,3}", text("gold")) if int(m) <= 300), None) if counter else None
+        gold = parse_gold(text("gold")) if counter else None
         lv = LEVEL_RE.search(text("level"))
         px0, py0 = LAYOUTS[layout]["panel"][0] * W, LAYOUTS[layout]["panel"][1] * H
         to_frame = lambda l, name: py0 + (l["y"] - off[name][0]) / UPSCALE
@@ -288,6 +289,12 @@ def read_frames(frames, work, layout):
         labels = round_labels([f for f, _ in missing], work, layout)
         for f, rec in missing:
             rec["round"] = labels.get(f.stem)
+    # only with the HUD shown: overlays between rounds (Go Go Card pick) dim it and show the Gold before the round's income
+    unread = [(f, rec) for f, rec in zip(frames, recs) if rec["gold"] is None and info[f.stem][4] and hud_shown(rec)]
+    if unread:
+        golds = gold_labels([f for f, _ in unread], work, layout)
+        for f, rec in unread:
+            rec["gold"] = golds.get(f.stem)
     return recs
 
 
@@ -328,24 +335,48 @@ def rounds_by_look(recs, numbers):
     return out
 
 
+def box_crops(frames, folder, box):
+    """Each frame's HUD box alone, 3x with a black margin, as <folder>/<frame stem>.png (kept when already there)."""
+    folder.mkdir(exist_ok=True)
+    for f in frames:
+        out = folder / f"{f.stem}.png"
+        if not out.exists():
+            c = crop(Image.open(f).convert("RGB"), box)
+            c = c.resize((c.width * 3, c.height * 3), Image.LANCZOS)
+            pad = Image.new("RGB", (c.width + 60, c.height + 40))
+            pad.paste(c, (30, 20))
+            pad.save(out)
+    return [folder / f"{f.stem}.png" for f in frames]
+
+
 def round_labels(frames, work, layout):
     """{frame stem: round label} read from the round box alone (3x, black margin), for frames whose HUD sheet gave none.
     OCR Windows misses many of these short labels (IV-4, IV-6, the dimmed V-1 behind the shop), also on a single crop;
     RapidOCR reads most of them ("N-4" = IV-4), so --ocr auto uses it here when installed."""
     folder = work / "rounds"
-    folder.mkdir(exist_ok=True)
-    for f in frames:
-        out = folder / f"{f.stem}.png"
-        if not out.exists():
-            c = crop(Image.open(f).convert("RGB"), LAYOUTS[layout]["round"])
-            c = c.resize((c.width * 3, c.height * 3), Image.LANCZOS)
-            pad = Image.new("RGB", (c.width + 60, c.height + 40))
-            pad.paste(c, (30, 20))
-            pad.save(out)
+    files = box_crops(frames, folder, LAYOUTS[layout]["round"])
     engine = "rapid" if OCR_ENGINE == "auto" and mc_ocr.rapid_available() else OCR_ENGINE
     log(f"OCR label babak {len(frames)} frame tanpa label ({mc_ocr.describe(engine)}) ...")
-    ocr = run_ocr(folder, engine, [folder / f"{f.stem}.png" for f in frames])
+    ocr = run_ocr(folder, engine, files)
     return {f.stem: parse_round(" ".join(l["t"] for l in ocr.get(f"{f.stem}.png", {}).get("lines", []))) for f in frames}
+
+
+def parse_gold(text):
+    """Gold in the OCR text of the gold box: the first number up to 300 (the coin is read as a letter, "U 75", or not at all)."""
+    return next((int(n) for n in re.findall(r"\d{1,3}", text or "") if int(n) <= 300), None)
+
+
+def gold_labels(frames, work, layout):
+    """{frame stem: Gold} read from the gold box alone (3x, black margin), for frames whose Gold counter shows but whose HUD
+    sheet gave no number. In 20 recordings OCR Windows read no number on 1539 shown counters (Kalea III-2: a clear 14, 17,
+    10); RapidOCR read 694 of them, and the same number as OCR Windows on all 330 counters both read. A lone digit (0-9) is
+    found as text by neither, so --ocr auto uses RapidOCR here when installed, like round_labels."""
+    folder = work / "golds"
+    files = box_crops(frames, folder, LAYOUTS[layout]["gold"])
+    engine = "rapid" if OCR_ENGINE == "auto" and mc_ocr.rapid_available() else OCR_ENGINE
+    log(f"OCR Gold {len(frames)} frame tanpa angka Gold ({mc_ocr.describe(engine)}) ...")
+    ocr = run_ocr(folder, engine, files)
+    return {f.stem: parse_gold(" ".join(l["t"] for l in ocr.get(f"{f.stem}.png", {}).get("lines", []))) for f in frames}
 
 
 def name_key(name):
@@ -543,7 +574,9 @@ def non_increasing(values):
 
 def rounds_table(tl, players):
     """Per round: HP at the start (most common reading in the round's first 60%, else its first reading; made non-increasing
-    per player), gold, level; delta = next start - start."""
+    per player), gold at the start (the highest reading within 10 s of the round's first: the income can come a few seconds
+    after the label changes, Kalea IV-5 19 then 38; later readings are spent Gold or, at the end, the next round's income),
+    level; delta = next start - start."""
     by_round = defaultdict(list)
     for x in tl:
         if x["round"]:
@@ -557,9 +590,10 @@ def rounds_table(tl, players):
             vals = [x["hp"][p] for x in head if p in x["hp"]] or [x["hp"][p] for x in xs if p in x["hp"]][:1]
             if vals:
                 start[p] = Counter(vals).most_common(1)[0][0]
-        golds = [x["gold"] for x in xs if x["gold"] is not None]
+        golds = [(x["t"], x["gold"]) for x in xs if x["gold"] is not None]
         levels = [x["level"] for x in xs if x["level"]]
-        rows.append({"round": n, "label": round_label(n), "start": start, "gold": golds[0] if golds else None,
+        gold = max(g for t, g in golds if t - golds[0][0] <= 10) if golds else None
+        rows.append({"round": n, "label": round_label(n), "start": start, "gold": gold,
                      "level": max(levels) if levels else None, "delta": {}})
     for p in players:
         have = [r for r in rows if p in r["start"]]
@@ -1086,6 +1120,11 @@ def main():
                    "Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.",
                    "HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat "
                    "tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).",
+                   "Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak "
+                   "kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil "
+                   "(harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak "
+                   f"Gold saja ({mc_ocr.describe('rapid' if OCR_ENGINE == 'auto' and mc_ocr.rapid_available() else OCR_ENGINE)}"
+                   "; angka satu digit sering tetap tidak terbaca).",
                    "Label babak: OCR HUD; bila kosong, OCR potongan label saja "
                    f"({mc_ocr.describe('rapid' if OCR_ENGINE == 'auto' and mc_ocr.rapid_available() else OCR_ENGINE)}); bila masih "
                    "kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai "

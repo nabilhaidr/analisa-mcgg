@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 02-25 Kalea PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:52_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 01:16_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -17,8 +17,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:52_
 - Level 7 pertama terlihat di II-3.
 - Level 8 pertama terlihat di II-6.
 - Level 9 pertama terlihat di III-1.
-- Rata-rata Gold di awal babak Fase II: 38.
-- Rata-rata Gold di awal babak Fase III: 37.
+- Rata-rata Gold di awal babak Fase II: 41.
+- Rata-rata Gold di awal babak Fase III: 30.
 - Panel DMG III-1: Angela 6.057, Lunox 120.
 
 ## Timeline (CinCoeg)
@@ -28,17 +28,17 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:52_
 | I-4 | 88 | -9 kalah | 30 | 6 | Go Go Box |
 | II-1 | 79 | -12 kalah | 24 | 6 |  |
 | II-2 | 67 | -9 kalah | 47 | 6 |  |
-| II-3 | 58 | +0 tidak kehilangan HP | 29 | 7 | Pilih Go Go Card (pilihan: Excellent Recruit) |
+| II-3 | 58 | +0 tidak kehilangan HP | 31 | 7 | Pilih Go Go Card (pilihan: Excellent Recruit) |
 | II-4 | 58 | -14 kalah | 42 | 7 |  |
-| II-5 | 44 | -10 kalah | 54 | 7 |  |
-| II-6 | 34 | -10 kalah | 33 | 8 | Go Go Box |
+| II-5 | 44 | -10 kalah | 52 | 7 |  |
+| II-6 | 34 | -10 kalah | 50 | 8 | Go Go Box |
 | III-1 | 24 | +0 tidak kehilangan HP | 79 | 9 | Crystal Pilihan (Dragon Altar) |
-| III-2 | 24 | +0 tidak kehilangan HP | - | 9 |  |
+| III-2 | 24 | +0 tidak kehilangan HP | 17 | 9 |  |
 | III-3 | 24 | +0 tidak kehilangan HP | 24 | 9 | Pilih Go Go Card (pilihan: Bright Sunshine, Frontier Blitz) |
-| III-4 | 24 | +0 tidak kehilangan HP | - | 9 |  |
+| III-4 | 24 | +0 tidak kehilangan HP | 17 | 9 |  |
 | III-5 | 24 | +0 tidak kehilangan HP | 24 | 9 |  |
 | III-6 | 24 | +0 tidak kehilangan HP | 20 | 9 | Go Go Box |
-| IV-1 | 24 | +0 tidak kehilangan HP | 24 | 9 | Crystal Pilihan (Dragon Altar) |
+| IV-1 | 24 | +0 tidak kehilangan HP | 17 | 9 | Crystal Pilihan (Dragon Altar) |
 | IV-2 | 24 | +0 tidak kehilangan HP | 24 | 9 |  |
 | IV-3 | 24 | +0 tidak kehilangan HP | 24 | 9 |  |
 | IV-4 | 24 | -18 kalah | 23 | 9 |  |
@@ -90,6 +90,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:52_
 - HP dari panjang bar: HP = (panjang − 10.7) / 1.176, dikalibrasi dari 904 angka HP yang terbaca OCR.
 - Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
+- Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil (harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak Gold saja (rapid; angka satu digit sering tetap tidak terbaca).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.

@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-29)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-30)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -40,7 +40,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Screenshot tumpang tindih digabung | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
-| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan, juga di frame yang HUD-nya tertutup overlay seperti layar pilih Go Go Card; Gold hanya saat penghitung Gold tampil, bukan harga jual unit atau dialog), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box di babak jadwal I-4/II-6/III-6/…, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR, mis. huruf Korea, tampil sebagai potongan gambar `nama_<peringkat>.png`), catatan otomatis (menang/kalah beruntun dari HP; babak creep tidak memutus kekalahan beruntun; teks Win/Lose Streak tidak dipakai). Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/`. Tes: `test_mc_match.py` (+ `test_data/gold/`) | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja · `python -m pytest test_mc_match.py` |
+| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan, juga di frame yang HUD-nya tertutup overlay seperti layar pilih Go Go Card; Gold hanya saat penghitung Gold tampil, bukan harga jual unit atau dialog; angka yang terlewat OCR Windows dibaca ulang dari kotak Gold dengan RapidOCR; Gold awal = tertinggi dalam 10 detik sejak bacaan pertama babak), grafik HP semua pemain, kejadian (Go Go Card, Go Go Box di babak jadwal I-4/II-6/III-6/…, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR, mis. huruf Korea, tampil sebagai potongan gambar `nama_<peringkat>.png`), catatan otomatis (menang/kalah beruntun dari HP; babak creep tidak memutus kekalahan beruntun; teks Win/Lose Streak tidak dipakai). Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/`. Tes: `test_mc_match.py` (+ `test_data/gold/`) | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja · `python -m pytest test_mc_match.py` |
 | `check_match.py` | **Pemeriksaan konsistensi laporan MATCH** (pengganti `check.py` yang tidak pernah masuk git): md = html, timeline sendiri (perubahan, tereliminasi, kotak ringkasan), tabel HP vs layar hasil, catatan otomatis = `mc_match.insights()` dari tabel laporan, kejadian, papan akhir (nama ikon, sinergi dihitung ulang), gambar ada. Peringatan: babak terlewat, HP sendiri kosong (selain setelah tereliminasi), tanpa papan akhir, level kosong, urutan bertahan vs peringkat, gambar tidak dirujuk. Tiap laporan satu baris ringkasan: peringkat, HP akhir, babak pertama–terakhir, jumlah babak, babak kalah, nama terbaca/baris papan. Kode keluar 1 bila ada kesalahan. Jalankan setelah laporan dibuat ulang/diubah. Tes: `test_check_match.py` | `python check_match.py` · `python check_match.py 15_38 Kalea` · `python -m pytest test_check_match.py` |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU; `icon_labels()` = nama yang bisa dihasilkan deteksi, kartu bergambar sama = satu nama). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` |
@@ -219,7 +219,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   layar hasil 2026-10-21); top 3 semuanya punya Divine Execution. Sisa: Divine
   Glaive menganggur di tas IV-4, Gord cuma 1 item.
 
-## Riwayat pekerjaan (2026-10-20 s/d 2026-10-29)
+## Riwayat pekerjaan (2026-10-20 s/d 2026-10-30)
 1. Analisis client dengan REA/Ghidra + PDB; pecahkan format tabel, teks, LuaRepair; tentukan season aktif.
 2. Buat `patch_tracker.py`, `mc_tables.py`, `mc_data.py`, `report_template.html`, `mc_diff.py`; validasi awal ke screenshot.
 3. Tambah Ensiklopedia + tabel DMG Commander, label Aktif/Pasif commander, status kartu aktif per season.
@@ -496,6 +496,19 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     20 laporan dibuat ulang dari frame cache (satu per satu): 19 berubah hanya di kejadian, kolom Kejadian timeline, Gold awal,
     dan rata-rata Gold; HP, perubahan, level, dan jumlah babak sama; 25 Okt 23-24 hanya beda waktu dibuat (file lama
     dipertahankan). `check_match.py`: 0 kesalahan, 0 peringatan.
+39. (2026-10-30) `mc_match.py`: fallback RapidOCR untuk kotak Gold dan aturan Gold awal babak (TDD: `parse_gold`,
+    `gold_labels`, Gold awal di `rounds_table`; 2 fixture baru `test_data/gold/*_lewat.png`). Di 20 rekaman OCR Windows tidak
+    membaca angka di 1539 penghitung Gold yang tampil; RapidOCR pada kotak Gold saja (3x + tepi hitam, cache `golds/`, kode
+    potong bersama `round_labels`: `box_crops`) membaca 694 di antaranya, dan angkanya sama dengan OCR Windows di 330/330
+    penghitung yang terbaca keduanya. Angka satu digit (0–9) tetap tidak terbaca: detektor teks tidak menemukan satu karakter.
+    Fallback hanya untuk frame yang HUD-nya tampil, karena layar transisi (pilih Go Go Card) meredupkan HUD dan menampilkan
+    Gold sebelum pendapatan babak (Kalea 575 s: 15, lalu 22, 24). Bacaan yang lebih rapat menunjukkan pendapatan babak biasanya
+    masuk di akhir babak sebelumnya, tapi kadang beberapa detik setelah label berganti (Kalea IV-5: 19 lalu 38), dan Gold awal
+    lama kadang bacaan akhir babak yang sudah memuat pendapatan babak berikutnya (24 Okt 02-51 III-1: 47 di detik ke-75; Gold
+    awal sebenarnya 37). Gold awal kini = Gold tertinggi dalam 10 detik sejak bacaan pertama babak (dengan bacaan pertama saja,
+    6 babak memakai Gold sebelum pendapatan). 20 laporan dibuat ulang: hanya Gold awal yang berubah (59 naik, 4 turun = Gold
+    akhir babak lama, 4 terisi; kosong 49 → 45 dari 407 babak), rata-rata Gold di catatan otomatis (16 laporan), dan satu
+    catatan metode baru; kolom lain identik. `check_match.py`: 0 kesalahan, 0 peringatan.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -541,9 +554,9 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Cek lagi tier list setelah Patch 7.2 / Penyesuaian 20/10 beberapa hari lagi (2026-10-28, dua kali: belum ada tier list
   tertulis, lihat Analisis gameplay).
 - Cek in-game apakah bonus 30 Gold commander Vexana (Penyesuaian 20/10) aktif dari Lv 1 atau baru di Lv 2 ("Unrestricted").
-- `mc_match.py` Gold awal: OCR Windows tidak membaca banyak angka Gold yang jelas (Kalea III-2/III-4: 14, 17, 10, 16, 11),
-  jadi Gold awal kadang diambil dari frame yang lebih akhir di babak itu atau kosong (Kalea III-2, III-4; 06-16 V-4; 22-17
-  IV-1). Fallback RapidOCR untuk kotak Gold (seperti label babak, `round_labels`) bisa menutupnya (lihat 38).
+- `mc_match.py` Gold satu digit (0–9): OCR Windows dan RapidOCR sama-sama tidak membacanya (detektor teks tidak menemukan
+  satu karakter), jadi 845 penghitung Gold yang tampil tetap tanpa angka dan 45 dari 407 babak tanpa Gold awal. Bisa dicoba
+  RapidOCR pengenal saja (`use_det=False`) pada potongan angka di kanan ikon koin (lihat 39).
 - `mc_match.py`: 23 Okt 21-47 mencatat "Pilih Go Go Card" di II-6 (09:05) dan III-2 (11:55), di tengah babak; kartu yang
   ada (Premium Client I, Fast Promotion, Starbelle's Badge) tidak memberi pilihan tambahan. Cek frame-nya (mungkin layar lain
   yang memuat teks "pilih 1 Go Go Card").

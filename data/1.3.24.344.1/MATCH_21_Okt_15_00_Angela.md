@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-00 Angela
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:20_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 00:34_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -16,7 +16,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:20_
 - Level 7 pertama terlihat di II-6.
 - Level 8 pertama terlihat di III-2.
 - Rata-rata Gold di awal babak Fase II: 27.
-- Rata-rata Gold di awal babak Fase III: 36.
+- Rata-rata Gold di awal babak Fase III: 38.
 
 ## Timeline (CinCoeg)
 
@@ -25,18 +25,18 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:20_
 | I-1 | 100 | +0 tidak kehilangan HP | - | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | - | 4 |  |
 | I-3 | 100 | -6 kalah | 13 | 4 |  |
-| I-4 | 94 | -7 kalah | 13 | 4 |  |
+| I-4 | 94 | -7 kalah | 14 | 4 |  |
 | II-1 | 87 | -7 kalah | 20 | 5 |  |
 | II-2 | 80 | -10 kalah | 21 | 5 |  |
 | II-3 | 70 | +0 tidak kehilangan HP | 34 | 6 | Pilih Go Go Card (pilihan: Glorious Rogue, Fateful Dice); Naik level |
 | II-4 | 70 | -6 kalah | 28 | 6 |  |
 | II-5 | 64 | -10 kalah | 37 | 6 |  |
 | II-6 | 54 | +0 tidak kehilangan HP | 23 | 7 |  |
-| III-1 | 54 | +0 tidak kehilangan HP | 31 | 7 |  |
+| III-1 | 54 | +0 tidak kehilangan HP | 33 | 7 |  |
 | III-2 | 54 | -17 kalah | 41 | 8 |  |
 | III-3 | 37 | +0 tidak kehilangan HP | 29 | 8 | Pilih Go Go Card |
 | III-4 | 37 | -16 kalah | 34 | 8 |  |
-| III-5 | 21 | -17 kalah | 34 | 8 |  |
+| III-5 | 21 | -17 kalah | 45 | 8 |  |
 | III-6 | 4 | -4 kalah, tereliminasi | 46 | 8 |  |
 
 ## HP semua pemain
@@ -79,6 +79,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:20_
 - HP dari panjang bar: HP = (panjang − 8.1) / 0.943, dikalibrasi dari 1042 angka HP yang terbaca OCR.
 - Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
+- Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil (harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak Gold saja (rapid; angka satu digit sering tetap tidak terbaca).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.

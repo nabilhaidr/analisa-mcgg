@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 03-18
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:25_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 00:41_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -17,8 +17,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:25_
 - Level 7 pertama terlihat di II-5.
 - Level 8 pertama terlihat di III-2.
 - Level 9 pertama terlihat di III-6.
-- Rata-rata Gold di awal babak Fase II: 34.
-- Rata-rata Gold di awal babak Fase III: 40.
+- Rata-rata Gold di awal babak Fase II: 35.
+- Rata-rata Gold di awal babak Fase III: 41.
 
 ## Timeline (CinCoeg)
 
@@ -30,22 +30,22 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:25_
 | I-4 | 94 | +0 tidak kehilangan HP | 23 | 5 | Go Go Box |
 | II-1 | 94 | +0 tidak kehilangan HP | 28 | 5 |  |
 | II-2 | 94 | +0 tidak kehilangan HP | 35 | 6 |  |
-| II-3 | 94 | +0 tidak kehilangan HP | 25 | 6 | Pilih Go Go Card |
+| II-3 | 94 | +0 tidak kehilangan HP | 27 | 6 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 38 | 6 |  |
 | II-5 | 94 | -10 kalah | 50 | 7 |  |
 | II-6 | 84 | +0 tidak kehilangan HP | 31 | 7 | Go Go Box |
 | III-1 | 84 | +0 tidak kehilangan HP | 35 | 7 |  |
 | III-2 | 84 | +0 tidak kehilangan HP | 25 | 8 |  |
-| III-3 | 84 | +0 tidak kehilangan HP | 29 | 8 | Pilih Go Go Card |
+| III-3 | 84 | +0 tidak kehilangan HP | 33 | 8 | Pilih Go Go Card |
 | III-4 | 84 | -15 kalah | 46 | 8 |  |
 | III-5 | 69 | +0 tidak kehilangan HP | 46 | 8 |  |
 | III-6 | 69 | +0 tidak kehilangan HP | 60 | 9 |  |
 | IV-1 | 69 | -20 kalah | 31 | 9 |  |
 | IV-2 | 49 | -17 kalah | 20 | 9 |  |
-| IV-3 | 32 | +0 tidak kehilangan HP | 11 | 9 |  |
+| IV-3 | 32 | +0 tidak kehilangan HP | 15 | 9 |  |
 | IV-4 | 32 | -23 kalah | 21 | 9 |  |
 | IV-5 | 9 | +0 tidak kehilangan HP | 21 | 9 |  |
-| IV-6 | 9 | +0 tidak kehilangan HP | - | 9 | Go Go Box |
+| IV-6 | 9 | +0 tidak kehilangan HP | 13 | 9 | Go Go Box |
 | V-1 | 9 | -9 kalah, tereliminasi | - | 9 | VICTORY |
 
 ## HP semua pemain
@@ -91,6 +91,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:25_
 - HP dari panjang bar: HP = (panjang − 8.0) / 0.949, dikalibrasi dari 980 angka HP yang terbaca OCR.
 - Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
+- Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil (harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak Gold saja (rapid; angka satu digit sering tetap tidak terbaca).
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
