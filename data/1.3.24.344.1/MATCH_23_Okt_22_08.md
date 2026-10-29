@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 23 Okt 22-08
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:33_
 
 - **Peringkat:** 1
 - **HP akhir:** 62
@@ -17,7 +17,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - Level 7 pertama terlihat di II-6.
 - Level 8 pertama terlihat di III-2.
 - Level 9 pertama terlihat di III-5.
-- Rata-rata Gold di awal babak Fase II: 22.
+- Rata-rata Gold di awal babak Fase II: 29.
 - Rata-rata Gold di awal babak Fase III: 38.
 
 ## Timeline (CinCoeg)
@@ -28,10 +28,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-2 | 100 | -7 kalah | 10 | 3 |  |
 | I-3 | 93 | -5 kalah | 15 | 4 |  |
 | I-4 | 88 | -5 kalah | 22 | 5 |  |
-| II-1 | 83 | +0 tidak kehilangan HP | 4 | 5 |  |
-| II-2 | 83 | +0 tidak kehilangan HP | 30 | 6 | Pilih Go Go Card |
-| II-3 | 83 | +0 tidak kehilangan HP | 21 | 6 |  |
-| II-4 | 83 | +0 tidak kehilangan HP | 4 | 6 |  |
+| II-1 | 83 | +0 tidak kehilangan HP | 22 | 5 |  |
+| II-2 | 83 | +0 tidak kehilangan HP | 30 | 6 |  |
+| II-3 | 83 | +0 tidak kehilangan HP | 21 | 6 | Pilih Go Go Card |
+| II-4 | 83 | +0 tidak kehilangan HP | 31 | 6 |  |
 | II-5 | 83 | +0 tidak kehilangan HP | 44 | 6 |  |
 | II-6 | 83 | +0 tidak kehilangan HP | 28 | 7 |  |
 | III-1 | 83 | +0 tidak kehilangan HP | 39 | 7 |  |
@@ -63,8 +63,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 07:00 | II-2 | Pilih Go Go Card |  |
-| 07:00 | II-2 | Panel DMG |  |
+| 07:00 | II-3 | Pilih Go Go Card |  |
+| 07:00 | II-3 | Panel DMG |  |
 | 13:25 | III-3 | Pilih Go Go Card | pilihan: Emergency Rift, Manic Slam |
 | 23:00 | IV-5 | VICTORY |  |
 

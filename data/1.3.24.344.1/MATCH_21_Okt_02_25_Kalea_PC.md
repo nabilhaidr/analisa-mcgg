@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 02-25 Kalea PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:52_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -18,7 +18,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - Level 8 pertama terlihat di II-6.
 - Level 9 pertama terlihat di III-1.
 - Rata-rata Gold di awal babak Fase II: 38.
-- Rata-rata Gold di awal babak Fase III: 26.
+- Rata-rata Gold di awal babak Fase III: 37.
 - Panel DMG III-1: Angela 6.057, Lunox 120.
 
 ## Timeline (CinCoeg)
@@ -33,9 +33,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-5 | 44 | -10 kalah | 54 | 7 |  |
 | II-6 | 34 | -10 kalah | 33 | 8 | Go Go Box |
 | III-1 | 24 | +0 tidak kehilangan HP | 79 | 9 | Crystal Pilihan (Dragon Altar) |
-| III-2 | 24 | +0 tidak kehilangan HP | 0 | 9 | Pilih Go Go Card (pilihan: Bright Sunshine, Frontier Blitz) |
-| III-3 | 24 | +0 tidak kehilangan HP | 24 | 9 |  |
-| III-4 | 24 | +0 tidak kehilangan HP | 6 | 9 |  |
+| III-2 | 24 | +0 tidak kehilangan HP | - | 9 |  |
+| III-3 | 24 | +0 tidak kehilangan HP | 24 | 9 | Pilih Go Go Card (pilihan: Bright Sunshine, Frontier Blitz) |
+| III-4 | 24 | +0 tidak kehilangan HP | - | 9 |  |
 | III-5 | 24 | +0 tidak kehilangan HP | 24 | 9 |  |
 | III-6 | 24 | +0 tidak kehilangan HP | 20 | 9 | Go Go Box |
 | IV-1 | 24 | +0 tidak kehilangan HP | 24 | 9 | Crystal Pilihan (Dragon Altar) |
@@ -66,7 +66,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | 07:10 | II-6 | Go Go Box |  |
 | 08:00 | III-1 | Panel DMG | Angela 6.057, Lunox 120 |
 | 08:20 | III-1 | Crystal Pilihan | Dragon Altar |
-| 09:35 | III-2 | Pilih Go Go Card | pilihan: Bright Sunshine, Frontier Blitz |
+| 09:35 | III-3 | Pilih Go Go Card | pilihan: Bright Sunshine, Frontier Blitz |
 | 14:10 | III-6 | Go Go Box |  |
 | 14:55 | IV-1 | Crystal Pilihan | Dragon Altar |
 | 19:50 | IV-5 | VICTORY |  |

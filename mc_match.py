@@ -13,7 +13,9 @@ Cara kerja:
 - Frame diambil tiap --step detik (video_frames.extract, bisa HEVC ponsel). Cache kerja: cache/match/<nama>/.
 - Tata letak HUD dikenali dari rasio layar (ponsel 20:9 atau PC 16:9). Per frame, potongan babak, Gold, Level, dan daftar
   pemain digabung jadi satu gambar lalu di-OCR. Label babak yang tidak terbaca: OCR potongan label saja (rounds/), lalu
-  dicocokkan dari tampilannya dengan label yang sudah terbaca di pertandingan yang sama (rounds_by_look).
+  dicocokkan dari tampilannya dengan label yang sudah terbaca di pertandingan yang sama (rounds_by_look), juga saat HUD
+  lain tertutup overlay (layar pilih Go Go Card). Gold hanya dibaca saat penghitung Gold (koin kuning) tampil di kotaknya,
+  bukan harga jual unit yang sedang diseret atau dialog (gold_shown).
 - HP tiap pemain diukur dari PANJANG BAR HP hijau (linear terhadap HP), dikalibrasi otomatis dengan angka HP yang terbaca
   jelas oleh OCR; angka OCR dipakai bila cocok dengan bar (selisih <= 6). Bar pendek (HP rendah) dibedakan dari ikon hati
   lewat bentuknya. Saat bertarung dua baris teratas bergeser ke kiri (bar bisa terpotong) dan di kanannya ada angka jumlah
@@ -119,6 +121,19 @@ def hud_sheet(im, layout, out):
     return offsets
 
 
+GOLD_SHARE = 0.37
+
+
+def gold_shown(box):
+    """The Gold counter (a yellow coin disc) fills the gold box; while a unit is dragged the box shows its red sell price
+    instead ("1" on a tag, "5" in the trash can), and dialogs may cover it. Share of yellow-orange pixels (HSV hue 24-64
+    degrees, saturation >= 110, value >= 60) in 20 recordings: Gold counter 0.48-0.95 (3292 readings; the lowest two
+    dimmed by an overlay, their numbers right), sell prices and dialogs <= 0.26 (32 readings, read as Gold 0-15)."""
+    hsv = cv2.cvtColor(np.asarray(box.convert("RGB")), cv2.COLOR_RGB2HSV)
+    h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+    return float(((h >= 12) & (h <= 32) & (s >= 110) & (v >= 60)).mean()) >= GOLD_SHARE
+
+
 def bands(mask, min_px):
     """[(y0, y1)] runs of consecutive rows with at least min_px set pixels."""
     rows, out, y = mask.sum(1), [], 0
@@ -209,26 +224,36 @@ def creep_round(label):
     return n == ("1" if phase == "I" else "3")
 
 
+def event_round(kind, rnd, box_rounds):
+    """Round of an event seen in a frame of round rnd. The Go Go Box ("Pilih Hadiah") ends a phase, in the season's box
+    rounds (go_go_box.rounds, S7: I-4, II-6, III-6, ...), and its screen hides the round label, so a box frame that the
+    timeline split into the next round belongs to the box round (20 Season 7 recordings: 12 of 24 boxes were in II-1, III-1
+    or IV-1)."""
+    return rnd - 1 if kind == "Go Go Box" and rnd and rnd - 1 in box_rounds else rnd
+
+
 # ------------------------------------------------------------------ video timeline
 
 def read_frames(frames, work, layout):
-    """Per frame: round, gold, level, player rows [{name, y, bar, ocr}] from the HUD sheets and HP bars."""
+    """Per frame: round, gold (only while the Gold counter shows, gold_shown), level, player rows [{name, y, bar, ocr}]
+    from the HUD sheets and HP bars."""
     hud = work / HUD_DIR
     hud.mkdir(exist_ok=True)
     info = {}
     for f in frames:
         im = Image.open(f).convert("RGB")
-        info[f.stem] = (hud_sheet(im, layout, hud / f"{f.stem}.png"), im.size, hp_bars(im, layout), round_look(im, layout))
+        info[f.stem] = (hud_sheet(im, layout, hud / f"{f.stem}.png"), im.size, hp_bars(im, layout), round_look(im, layout),
+                        gold_shown(crop(im, LAYOUTS[layout]["gold"])))
     log(f"OCR {len(frames)} potongan HUD ...")
     ocr = run_ocr(hud)
     recs = []
     for f in frames:
-        off, (W, H), bars, look = info[f.stem]
+        off, (W, H), bars, look, counter = info[f.stem]
         lines = ocr.get(f"{f.stem}.png", {}).get("lines", [])
         sheet = np.asarray(Image.open(hud / f"{f.stem}.png").convert("RGB")).astype(int)
         part = lambda name: [l for l in lines if off[name][0] <= l["y"] < off[name][0] + off[name][1]]
         text = lambda name: " ".join(l["t"] for l in part(name))
-        gold = next((int(m) for m in re.findall(r"\d{1,3}", text("gold")) if int(m) <= 300), None)
+        gold = next((int(m) for m in re.findall(r"\d{1,3}", text("gold")) if int(m) <= 300), None) if counter else None
         lv = LEVEL_RE.search(text("level"))
         px0, py0 = LAYOUTS[layout]["panel"][0] * W, LAYOUTS[layout]["panel"][1] * H
         to_frame = lambda l, name: py0 + (l["y"] - off[name][0]) / UPSCALE
@@ -281,16 +306,18 @@ LOOK_MIN, LOOK_MARGIN = 0.93, 0.03
 
 
 def rounds_by_look(recs, numbers):
-    """numbers with the frames that have none (and show the HUD) filled from the look of their label pill: the kept label
-    whose frames match best (normalized cross-correlation of the edge maps, +-3 px), when it scores >= LOOK_MIN and beats
-    the next label by >= LOOK_MARGIN. Measured on the 15:38 and Kalea matches: every read frame matches its own label
-    (427/427, leave one out), and short labels missed by both OCR engines (I-4 on a busy background) get placed. A label
-    never read at all (III-4 of 15:38) has no frames to match: its frames score ~0.88 and stay open."""
+    """numbers with the frames that have none filled from the look of their label pill: the kept label whose frames match
+    best (normalized cross-correlation of the edge maps, +-3 px), when it scores >= LOOK_MIN and beats the next label by
+    >= LOOK_MARGIN. Measured on the 15:38 and Kalea matches: every read frame matches its own label (427/427, leave one
+    out), and short labels missed by both OCR engines (I-4 on a busy background) get placed. A label never read at all
+    (III-4 of 15:38) has no frames to match: its frames score ~0.88 and stay open. Frames whose HUD is hidden count too:
+    the Go Go Card pick dims the HUD but not the label (Kalea 575 s: III-3, 0.946; split evenly it went to III-2), while
+    loading and result screens score far below LOOK_MIN."""
     known = [(cv2.copyMakeBorder(rec["look"], 3, 3, 3, 3, cv2.BORDER_CONSTANT, value=0), n)
              for rec, n in zip(recs, numbers) if n and rec.get("look") is not None]
     out = list(numbers)
     for i, rec in enumerate(recs):
-        if out[i] or rec.get("look") is None or not hud_shown(rec):
+        if out[i] or rec.get("look") is None:
             continue
         best = {}
         for pad, n in known:
@@ -548,6 +575,7 @@ def read_events(frames, d, by_time):
     cards = sorted((c["name"] for c in d["cards"] if c.get("active", True)), key=len, reverse=True)
     syns = [s["name"] for s in d["synergies"]]
     heroes = [h["name"] for h in d["heroes"]]
+    box_rounds = {r["round"] for r in d.get("go_go_box", {}).get("rounds", [])}
     events, seen = [], {}
     for f in frames:
         lines = ocr.get(f.name, {}).get("lines", [])
@@ -580,7 +608,8 @@ def read_events(frames, d, by_time):
                     if h and num and h not in [p[0] for p in pairs]:
                         pairs.append((h, num))
                 detail = ", ".join(f"{h} {n:,}".replace(",", ".") for h, n in pairs[:5])
-            events.append({"t": t, "round": by_time.get(t), "kind": kind, "detail": detail, "frame": f})
+            events.append({"t": t, "round": event_round(kind, by_time.get(t), box_rounds), "kind": kind, "detail": detail,
+                           "frame": f})
     return events
 
 

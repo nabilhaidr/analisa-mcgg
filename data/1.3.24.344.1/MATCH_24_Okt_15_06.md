@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 15-06
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:39_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -29,8 +29,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 100 | +0 tidak kehilangan HP | 12 | 4 |  |
 | I-4 | 100 | +0 tidak kehilangan HP | 21 | 5 | Go Go Box |
 | II-1 | 100 | +0 tidak kehilangan HP | 27 | 5 |  |
-| II-2 | 100 | -6 kalah | 36 | 5 | Pilih Go Go Card |
-| II-3 | 94 | +0 tidak kehilangan HP | 26 | 6 |  |
+| II-2 | 100 | -6 kalah | 36 | 5 |  |
+| II-3 | 94 | +0 tidak kehilangan HP | 26 | 6 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 35 | 6 |  |
 | II-5 | 94 | +0 tidak kehilangan HP | 42 | 6 |  |
 | II-6 | 94 | +0 tidak kehilangan HP | 26 | 7 |  |
@@ -65,8 +65,8 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 04:50 | I-4 | Go Go Box |  |
-| 07:10 | II-2 | Pilih Go Go Card |  |
-| 07:10 | II-2 | Panel DMG |  |
+| 07:10 | II-3 | Pilih Go Go Card |  |
+| 07:10 | II-3 | Panel DMG |  |
 | 24:00 | IV-5 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

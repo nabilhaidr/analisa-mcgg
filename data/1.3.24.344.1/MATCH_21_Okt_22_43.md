@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 22-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:23_
 
 - **Peringkat:** 1
 - **HP akhir:** 16
@@ -17,23 +17,23 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - Level 8 pertama terlihat di III-2.
 - Level 9 pertama terlihat di III-6.
 - Rata-rata Gold di awal babak Fase II: 31.
-- Rata-rata Gold di awal babak Fase III: 38.
+- Rata-rata Gold di awal babak Fase III: 43.
 
 ## Timeline (CinCoeg)
 
 | Babak | HP awal | Perubahan | Gold awal | Level | Kejadian |
 |---|---|---|---|---|---|
-| I-1 | 100 | +0 tidak kehilangan HP | - | 3 | Pilih Kartu Power (pilihan: Angela's Power) |
-| I-2 | 100 | -6 kalah | 10 | 4 |  |
+| I-1 | 100 | +0 tidak kehilangan HP | - | 3 |  |
+| I-2 | 100 | -6 kalah | 10 | 4 | Pilih Kartu Power (pilihan: Angela's Power) |
 | I-3 | 94 | +0 tidak kehilangan HP | 14 | 4 |  |
 | I-4 | 94 | +0 tidak kehilangan HP | 17 | 4 |  |
 | II-1 | 94 | +0 tidak kehilangan HP | 21 | 4 |  |
-| II-2 | 94 | +0 tidak kehilangan HP | 31 | 5 | Crystal Pilihan (Echomancer); Pilih Go Go Card |
-| II-3 | 94 | +0 tidak kehilangan HP | 36 | 5 |  |
+| II-2 | 94 | +0 tidak kehilangan HP | 31 | 5 | Crystal Pilihan (Echomancer) |
+| II-3 | 94 | +0 tidak kehilangan HP | 36 | 5 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 29 | 6 |  |
 | II-5 | 94 | +0 tidak kehilangan HP | 42 | 6 |  |
-| II-6 | 94 | +0 tidak kehilangan HP | 28 | 7 |  |
-| III-1 | 94 | +0 tidak kehilangan HP | 9 | 7 | Go Go Box |
+| II-6 | 94 | +0 tidak kehilangan HP | 28 | 7 | Go Go Box |
+| III-1 | 94 | +0 tidak kehilangan HP | 37 | 7 |  |
 | III-2 | 94 | -13 kalah | 51 | 8 |  |
 | III-3 | 81 | +0 tidak kehilangan HP | 43 | 8 | Pilih Go Go Card (pilihan: Glittering Jewels Ⅰ) |
 | III-4 | 81 | +0 tidak kehilangan HP | 48 | 8 |  |
@@ -67,10 +67,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 01:20 | I-1 | Pilih Kartu Power | pilihan: Angela's Power |
+| 01:20 | I-2 | Pilih Kartu Power | pilihan: Angela's Power |
 | 06:10 | II-2 | Crystal Pilihan | Echomancer |
-| 07:00 | II-2 | Pilih Go Go Card |  |
-| 11:20 | III-1 | Go Go Box |  |
+| 07:00 | II-3 | Pilih Go Go Card |  |
+| 11:20 | II-6 | Go Go Box |  |
 | 13:40 | III-3 | Pilih Go Go Card | pilihan: Glittering Jewels Ⅰ |
 | 29:20 | V-4 | VICTORY |  |
 

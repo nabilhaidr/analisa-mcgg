@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 06-16
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:30_
 
 - **Peringkat:** 1
 - **HP akhir:** 19
@@ -29,8 +29,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 100 | -6 kalah | 18 | 4 |  |
 | I-4 | 94 | -4 kalah | 21 | 4 |  |
 | II-1 | 90 | -11 kalah | 23 | 5 |  |
-| II-2 | 79 | -10 kalah | 31 | 5 | Pilih Go Go Card |
-| II-3 | 69 | +0 tidak kehilangan HP | 26 | 6 |  |
+| II-2 | 79 | -10 kalah | 31 | 5 |  |
+| II-3 | 69 | +0 tidak kehilangan HP | 26 | 6 | Pilih Go Go Card |
 | II-4 | 69 | -6 kalah | 36 | 6 |  |
 | II-5 | 63 | -7 kalah | 33 | 7 |  |
 | II-6 | 56 | -8 kalah | 29 | 7 |  |
@@ -39,17 +39,17 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | III-3 | 38 | +0 tidak kehilangan HP | 27 | 8 | Pilih Go Go Card (pilihan: Healing Fountain) |
 | III-4 | 38 | +0 tidak kehilangan HP | 43 | 8 |  |
 | III-5 | 38 | -4 kalah | 43 | 9 |  |
-| III-6 | 34 | +0 tidak kehilangan HP | 14 | 9 |  |
-| IV-1 | 34 | -11 kalah | 16 | 9 | Go Go Box |
+| III-6 | 34 | +0 tidak kehilangan HP | 14 | 9 | Go Go Box |
+| IV-1 | 34 | -11 kalah | 16 | 9 |  |
 | IV-2 | 23 | -4 kalah | 20 | 9 |  |
 | IV-3 | 19 | +0 tidak kehilangan HP | - | 9 |  |
 | IV-4 | 19 | +0 tidak kehilangan HP | - | 9 |  |
 | IV-5 | 19 | +0 tidak kehilangan HP | - | 9 |  |
 | IV-6 | 19 | +0 tidak kehilangan HP | - | 9 |  |
 | V-1 | 19 | +0 tidak kehilangan HP | 14 | 9 |  |
-| V-2 | 19 | +0 tidak kehilangan HP | 0 | 9 |  |
+| V-2 | 19 | +0 tidak kehilangan HP | 10 | 9 |  |
 | V-3 | 19 | +0 tidak kehilangan HP | 12 | 9 |  |
-| V-4 | 19 | +0 tidak kehilangan HP | 15 | 9 |  |
+| V-4 | 19 | +0 tidak kehilangan HP | - | 9 |  |
 | V-5 | 19 | +0 tidak kehilangan HP | 12 | 9 |  |
 | V-6 | 19 | - | 12 | 9 | VICTORY |
 
@@ -70,9 +70,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 07:15 | II-2 | Pilih Go Go Card |  |
+| 07:15 | II-3 | Pilih Go Go Card |  |
 | 13:30 | III-3 | Pilih Go Go Card | pilihan: Healing Fountain |
-| 18:05 | IV-1 | Go Go Box |  |
+| 18:05 | III-6 | Go Go Box |  |
 | 30:25 | V-6 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

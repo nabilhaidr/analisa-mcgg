@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-40
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:42_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -33,10 +33,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-3 | 94 | +0 tidak kehilangan HP | 20 | 6 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 32 | 6 |  |
 | II-5 | 94 | +0 tidak kehilangan HP | 41 | 6 |  |
-| II-6 | 94 | +0 tidak kehilangan HP | 25 | 7 |  |
-| III-1 | 94 | -10 kalah | 37 | 7 | Go Go Box |
-| III-2 | 84 | +0 tidak kehilangan HP | 44 | 7 | Pilih Go Go Card |
-| III-3 | 84 | +0 tidak kehilangan HP | 41 | 8 |  |
+| II-6 | 94 | +0 tidak kehilangan HP | 25 | 7 | Go Go Box |
+| III-1 | 94 | -10 kalah | 37 | 7 |  |
+| III-2 | 84 | +0 tidak kehilangan HP | 44 | 7 |  |
+| III-3 | 84 | +0 tidak kehilangan HP | 41 | 8 | Pilih Go Go Card |
 | III-4 | 84 | +0 tidak kehilangan HP | 45 | 8 |  |
 | III-5 | 84 | -13 kalah | 55 | 8 |  |
 | III-6 | 71 | -19 kalah | 15 | 9 |  |
@@ -62,8 +62,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 |---|---|---|---|
 | 04:20 | I-4 | Go Go Box |  |
 | 06:40 | II-3 | Pilih Go Go Card |  |
-| 11:00 | III-1 | Go Go Box |  |
-| 13:15 | III-2 | Pilih Go Go Card |  |
+| 11:00 | II-6 | Go Go Box |  |
+| 13:15 | III-3 | Pilih Go Go Card |  |
 
 ## Papan akhir (layar hasil)
 

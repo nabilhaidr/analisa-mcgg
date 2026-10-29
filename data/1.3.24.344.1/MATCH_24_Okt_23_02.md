@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 23-02
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:43_
 
 - **Peringkat:** 1
 - **HP akhir:** 52
@@ -29,8 +29,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 100 | +0 tidak kehilangan HP | 17 | 4 |  |
 | I-4 | 100 | +0 tidak kehilangan HP | 22 | 5 |  |
 | II-1 | 100 | +0 tidak kehilangan HP | 30 | 5 |  |
-| II-2 | 100 | +0 tidak kehilangan HP | 25 | 6 | Pilih Go Go Card (pilihan: Apex Weapons, Manic Slam) |
-| II-3 | 100 | +0 tidak kehilangan HP | 35 | 6 |  |
+| II-2 | 100 | +0 tidak kehilangan HP | 25 | 6 |  |
+| II-3 | 100 | +0 tidak kehilangan HP | 35 | 6 | Pilih Go Go Card (pilihan: Apex Weapons, Manic Slam) |
 | II-4 | 100 | +0 tidak kehilangan HP | 58 | 7 |  |
 | II-5 | 100 | +0 tidak kehilangan HP | 36 | 7 |  |
 | II-6 | 100 | -11 kalah | 49 | 8 |  |
@@ -65,7 +65,7 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 07:05 | II-2 | Pilih Go Go Card | pilihan: Apex Weapons, Manic Slam |
+| 07:05 | II-3 | Pilih Go Go Card | pilihan: Apex Weapons, Manic Slam |
 | 13:35 | III-3 | Pilih Go Go Card | pilihan: Fully Loaded, Steel Front |
 | 24:20 | IV-6 | VICTORY |  |
 

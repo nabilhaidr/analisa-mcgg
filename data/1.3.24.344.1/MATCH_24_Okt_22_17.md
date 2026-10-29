@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-17
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:40_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -30,8 +30,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 100 | +0 tidak kehilangan HP | 14 | 4 |  |
 | I-4 | 100 | +0 tidak kehilangan HP | 20 | 5 | VICTORY (Gold +10) |
 | II-1 | 100 | -9 kalah | 25 | 5 |  |
-| II-2 | 91 | -6 kalah | 29 | 5 | Pilih Go Go Card (pilihan: Forbidden Power) |
-| II-3 | 85 | +0 tidak kehilangan HP | 24 | 6 | Naik level; Crystal Pilihan (Echomancer) |
+| II-2 | 91 | -6 kalah | 29 | 5 |  |
+| II-3 | 85 | +0 tidak kehilangan HP | 24 | 6 | Pilih Go Go Card (pilihan: Forbidden Power); Naik level; Crystal Pilihan (Echomancer) |
 | II-4 | 85 | -11 kalah | 0 | 7 |  |
 | II-5 | 74 | +0 tidak kehilangan HP | 28 | 7 |  |
 | II-6 | 74 | +0 tidak kehilangan HP | 33 | 7 |  |
@@ -40,8 +40,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | III-3 | 55 | +0 tidak kehilangan HP | 57 | 8 | Pilih Go Go Card |
 | III-4 | 55 | -17 kalah | 30 | 8 |  |
 | III-5 | 38 | -20 kalah | 30 | 8 |  |
-| III-6 | 18 | -15 kalah | 55 | 9 | Naik level |
-| IV-1 | 3 | -3 kalah, tereliminasi | 4 | 9 | Go Go Box |
+| III-6 | 18 | -15 kalah | 55 | 9 | Naik level; Go Go Box |
+| IV-1 | 3 | -3 kalah, tereliminasi | - | 9 |  |
 
 ## HP semua pemain
 
@@ -62,12 +62,12 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 |---|---|---|---|
 | 01:35 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power |
 | 04:40 | I-4 | VICTORY | Gold +10 |
-| 07:15 | II-2 | Pilih Go Go Card | pilihan: Forbidden Power |
+| 07:15 | II-3 | Pilih Go Go Card | pilihan: Forbidden Power |
 | 07:25 | II-3 | Naik level |  |
 | 07:35 | II-3 | Crystal Pilihan | Echomancer |
 | 14:35 | III-3 | Pilih Go Go Card |  |
 | 17:30 | III-6 | Naik level |  |
-| 18:55 | IV-1 | Go Go Box |  |
+| 18:55 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)
 

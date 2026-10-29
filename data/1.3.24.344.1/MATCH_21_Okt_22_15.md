@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 22-15
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:21_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -35,8 +35,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-5 | 79 | -8 kalah | 35 | 6 |  |
 | II-6 | 71 | +0 tidak kehilangan HP | 44 | 7 |  |
 | III-1 | 71 | -8 kalah | 23 | 7 |  |
-| III-2 | 63 | +0 tidak kehilangan HP | 26 | 7 | Pilih Go Go Card |
-| III-3 | 63 | +0 tidak kehilangan HP | 40 | 7 |  |
+| III-2 | 63 | +0 tidak kehilangan HP | 26 | 7 |  |
+| III-3 | 63 | +0 tidak kehilangan HP | 40 | 7 | Pilih Go Go Card |
 | III-4 | 63 | +0 tidak kehilangan HP | 49 | 7 |  |
 | III-5 | 63 | +0 tidak kehilangan HP | 49 | 8 |  |
 | III-6 | 63 | -17 kalah | 39 | 8 |  |
@@ -66,7 +66,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 |---|---|---|---|
 | 05:00 | II-1 | Crystal Pilihan | Echomancer |
 | 07:05 | II-3 | Pilih Go Go Card | pilihan: Frontier Blitz |
-| 13:45 | III-2 | Pilih Go Go Card |  |
+| 13:45 | III-3 | Pilih Go Go Card |  |
 | 13:50 | III-3 | Panel DMG |  |
 
 ## Papan akhir (layar hasil)

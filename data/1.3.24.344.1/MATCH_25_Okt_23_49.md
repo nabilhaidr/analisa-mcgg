@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-49
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:47_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -16,7 +16,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - 5 kekalahan beruntun (sampai III-6, babak creep III-3 dilewati).
 - Level 7 pertama terlihat di II-6.
 - Level 8 pertama terlihat di III-3.
-- Rata-rata Gold di awal babak Fase II: 25.
+- Rata-rata Gold di awal babak Fase II: 30.
 - Rata-rata Gold di awal babak Fase III: 33.
 
 ## Timeline (CinCoeg)
@@ -31,9 +31,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-2 | 77 | +0 tidak kehilangan HP | 31 | 5 |  |
 | II-3 | 77 | +0 tidak kehilangan HP | 34 | 6 | Pilih Go Go Card (pilihan: Glittering Jewels Ⅰ) |
 | II-4 | 77 | +0 tidak kehilangan HP | 31 | 6 |  |
-| II-5 | 77 | -9 kalah | 4 | 6 |  |
-| II-6 | 68 | +0 tidak kehilangan HP | 21 | 7 |  |
-| III-1 | 68 | -10 kalah | 29 | 7 | Go Go Box |
+| II-5 | 77 | -9 kalah | 37 | 6 |  |
+| II-6 | 68 | +0 tidak kehilangan HP | 21 | 7 | Go Go Box |
+| III-1 | 68 | -10 kalah | 29 | 7 |  |
 | III-2 | 58 | -12 kalah | 36 | 7 |  |
 | III-3 | 46 | +0 tidak kehilangan HP | 49 | 8 | Pilih Go Go Card (pilihan: Echomancer's Badge) |
 | III-4 | 46 | -17 kalah | 25 | 8 | Crystal Pilihan (Weapon Master) |
@@ -59,7 +59,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 |---|---|---|---|
 | 05:00 | II-1 | Crystal Pilihan | Echomancer |
 | 06:50 | II-3 | Pilih Go Go Card | pilihan: Glittering Jewels Ⅰ |
-| 11:05 | III-1 | Go Go Box |  |
+| 11:05 | II-6 | Go Go Box |  |
 | 13:30 | III-3 | Pilih Go Go Card | pilihan: Echomancer's Badge |
 | 14:55 | III-4 | Crystal Pilihan | Weapon Master |
 

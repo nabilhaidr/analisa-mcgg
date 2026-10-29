@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-38 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:51_
 
 - **Peringkat:** 1
 - **HP akhir:** 32
@@ -17,7 +17,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - Level 7 pertama terlihat di II-3.
 - Level 8 pertama terlihat di III-2.
 - Level 9 pertama terlihat di III-5.
-- Rata-rata Gold di awal babak Fase II: 28.
+- Rata-rata Gold di awal babak Fase II: 32.
 - Rata-rata Gold di awal babak Fase III: 39.
 
 ## Timeline (CinCoeg)
@@ -29,14 +29,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 95 | +0 tidak kehilangan HP | 23 | 4 |  |
 | I-4 | 95 | +0 tidak kehilangan HP | 33 | 5 | Naik level; Go Go Box |
 | II-1 | 95 | -7 kalah | 21 | 6 |  |
-| II-2 | 88 | -11 kalah | 31 | 6 | Pilih Go Go Card (pilihan: Dark Blade) |
-| II-3 | 77 | +0 tidak kehilangan HP | 39 | 7 |  |
-| II-4 | 77 | +0 tidak kehilangan HP | 0 | 7 |  |
+| II-2 | 88 | -11 kalah | 31 | 6 |  |
+| II-3 | 77 | +0 tidak kehilangan HP | 39 | 7 | Pilih Go Go Card (pilihan: Dark Blade) |
+| II-4 | 77 | +0 tidak kehilangan HP | 25 | 7 |  |
 | II-5 | 77 | -10 kalah | 35 | 7 |  |
-| II-6 | 67 | -7 kalah | 42 | 7 |  |
-| III-1 | 60 | +0 tidak kehilangan HP | 50 | 7 | Go Go Box; Crystal Pilihan (Astro Power) |
-| III-2 | 60 | +0 tidak kehilangan HP | 24 | 8 | Pilih Go Go Card (pilihan: The More, the Merrier, Disco Fever) |
-| III-3 | 60 | +0 tidak kehilangan HP | 36 | 8 |  |
+| II-6 | 67 | -7 kalah | 42 | 7 | Go Go Box |
+| III-1 | 60 | +0 tidak kehilangan HP | 50 | 7 | Crystal Pilihan (Astro Power) |
+| III-2 | 60 | +0 tidak kehilangan HP | 24 | 8 |  |
+| III-3 | 60 | +0 tidak kehilangan HP | 36 | 8 | Pilih Go Go Card (pilihan: The More, the Merrier, Disco Fever) |
 | III-4 | 60 | +0 tidak kehilangan HP | 50 | 8 |  |
 | III-5 | 60 | -13 kalah | 50 | 9 |  |
 | III-6 | 47 | +0 tidak kehilangan HP | 22 | 9 |  |
@@ -68,11 +68,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | 01:50 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power, Miya's Power |
 | 04:15 | I-4 | Naik level |  |
 | 05:20 | I-4 | Go Go Box |  |
-| 08:00 | II-2 | Pilih Go Go Card | pilihan: Dark Blade |
-| 08:00 | II-2 | Panel DMG |  |
-| 12:35 | III-1 | Go Go Box |  |
+| 08:00 | II-3 | Pilih Go Go Card | pilihan: Dark Blade |
+| 08:00 | II-3 | Panel DMG |  |
+| 12:35 | II-6 | Go Go Box |  |
 | 13:15 | III-1 | Crystal Pilihan | Astro Power |
-| 15:05 | III-2 | Pilih Go Go Card | pilihan: The More, the Merrier, Disco Fever |
+| 15:05 | III-3 | Pilih Go Go Card | pilihan: The More, the Merrier, Disco Fever |
 | 27:55 | V-1 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

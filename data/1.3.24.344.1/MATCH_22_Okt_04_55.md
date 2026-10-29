@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 04-55
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:27_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -35,8 +35,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-5 | 75 | -9 kalah | 33 | 6 |  |
 | II-6 | 66 | -7 kalah | 35 | 6 |  |
 | III-1 | 59 | +0 tidak kehilangan HP | 42 | 7 |  |
-| III-2 | 59 | -8 kalah | 23 | 7 | Pilih Go Go Card (pilihan: Steel Front) |
-| III-3 | 51 | +0 tidak kehilangan HP | 32 | 7 |  |
+| III-2 | 59 | -8 kalah | 23 | 7 |  |
+| III-3 | 51 | +0 tidak kehilangan HP | 32 | 7 | Pilih Go Go Card (pilihan: Steel Front) |
 | III-4 | 51 | -13 kalah | 46 | 7 |  |
 | III-5 | 38 | +0 tidak kehilangan HP | 46 | 8 |  |
 | III-6 | 38 | +0 tidak kehilangan HP | 29 | 8 | Go Go Box |
@@ -65,7 +65,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 07:20 | II-3 | Pilih Go Go Card | pilihan: Apex Weapons |
-| 13:40 | III-2 | Pilih Go Go Card | pilihan: Steel Front |
+| 13:40 | III-3 | Pilih Go Go Card | pilihan: Steel Front |
 | 18:10 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)

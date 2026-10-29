@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 14-42 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:18_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -27,8 +27,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-1 | 100 | +0 tidak kehilangan HP | 11 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 11 | 4 | Pilih Kartu Power (pilihan: Minotaur's Power, Valir's Power) |
 | I-3 | 100 | +0 tidak kehilangan HP | 14 | 4 |  |
-| I-4 | 100 | +0 tidak kehilangan HP | 26 | 5 |  |
-| II-1 | 100 | -9 kalah | 35 | 5 | Go Go Box |
+| I-4 | 100 | +0 tidak kehilangan HP | 26 | 5 | Go Go Box |
+| II-1 | 100 | -9 kalah | 35 | 5 |  |
 | II-2 | 91 | -10 kalah | 43 | 6 |  |
 | II-3 | 81 | +0 tidak kehilangan HP | 33 | 6 | Pilih Go Go Card (pilihan: Fully Loaded) |
 | II-4 | 81 | -10 kalah | 20 | 7 | Naik level |
@@ -58,7 +58,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 02:05 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power, Valir's Power |
-| 05:15 | II-1 | Go Go Box |  |
+| 05:15 | I-4 | Go Go Box |  |
 | 07:20 | II-3 | Pilih Go Go Card | pilihan: Fully Loaded |
 | 08:15 | II-4 | Naik level |  |
 | 11:30 | II-6 | Go Go Box |  |

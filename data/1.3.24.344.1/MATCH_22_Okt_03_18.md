@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 03-18
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:25_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -18,7 +18,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 - Level 8 pertama terlihat di III-2.
 - Level 9 pertama terlihat di III-6.
 - Rata-rata Gold di awal babak Fase II: 34.
-- Rata-rata Gold di awal babak Fase III: 31.
+- Rata-rata Gold di awal babak Fase III: 40.
 
 ## Timeline (CinCoeg)
 
@@ -33,13 +33,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-3 | 94 | +0 tidak kehilangan HP | 25 | 6 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 38 | 6 |  |
 | II-5 | 94 | -10 kalah | 50 | 7 |  |
-| II-6 | 84 | +0 tidak kehilangan HP | 31 | 7 |  |
-| III-1 | 84 | +0 tidak kehilangan HP | 35 | 7 | Go Go Box |
-| III-2 | 84 | +0 tidak kehilangan HP | 25 | 8 | Pilih Go Go Card |
-| III-3 | 84 | +0 tidak kehilangan HP | 29 | 8 |  |
+| II-6 | 84 | +0 tidak kehilangan HP | 31 | 7 | Go Go Box |
+| III-1 | 84 | +0 tidak kehilangan HP | 35 | 7 |  |
+| III-2 | 84 | +0 tidak kehilangan HP | 25 | 8 |  |
+| III-3 | 84 | +0 tidak kehilangan HP | 29 | 8 | Pilih Go Go Card |
 | III-4 | 84 | -15 kalah | 46 | 8 |  |
 | III-5 | 69 | +0 tidak kehilangan HP | 46 | 8 |  |
-| III-6 | 69 | +0 tidak kehilangan HP | 7 | 9 |  |
+| III-6 | 69 | +0 tidak kehilangan HP | 60 | 9 |  |
 | IV-1 | 69 | -20 kalah | 31 | 9 |  |
 | IV-2 | 49 | -17 kalah | 20 | 9 |  |
 | IV-3 | 32 | +0 tidak kehilangan HP | 11 | 9 |  |
@@ -67,8 +67,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 |---|---|---|---|
 | 04:45 | I-4 | Go Go Box |  |
 | 07:05 | II-3 | Pilih Go Go Card |  |
-| 11:30 | III-1 | Go Go Box |  |
-| 13:30 | III-2 | Pilih Go Go Card |  |
+| 11:30 | II-6 | Go Go Box |  |
+| 13:30 | III-3 | Pilih Go Go Card |  |
 | 24:50 | IV-6 | Go Go Box |  |
 | 26:05 | V-1 | VICTORY |  |
 

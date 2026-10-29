@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 26 Okt 00-09
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:49_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -29,14 +29,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | I-3 | 95 | -8 kalah | 23 | 4 |  |
 | I-4 | 87 | +0 tidak kehilangan HP | 29 | 5 | Go Go Box |
 | II-1 | 87 | +0 tidak kehilangan HP | 21 | 6 |  |
-| II-2 | 87 | +0 tidak kehilangan HP | 33 | 6 | Pilih Go Go Card (pilihan: Rising Fury Ⅱ, Apex Weapons) |
-| II-3 | 87 | +0 tidak kehilangan HP | 48 | 7 |  |
+| II-2 | 87 | +0 tidak kehilangan HP | 33 | 6 |  |
+| II-3 | 87 | +0 tidak kehilangan HP | 48 | 7 | Pilih Go Go Card (pilihan: Rising Fury Ⅱ, Apex Weapons) |
 | II-4 | 87 | -10 kalah | 33 | 7 |  |
 | II-5 | 77 | -13 kalah | 42 | 7 |  |
-| II-6 | 64 | -10 kalah | 52 | 8 | Naik level |
-| III-1 | 54 | -14 kalah | 43 | 8 | Go Go Box |
-| III-2 | 40 | -18 kalah | 56 | 8 | Crystal Pilihan (Astro Power); Pilih Go Go Card |
-| III-3 | 22 | +0 tidak kehilangan HP | 31 | 9 |  |
+| II-6 | 64 | -10 kalah | 52 | 8 | Naik level; Go Go Box |
+| III-1 | 54 | -14 kalah | 43 | 8 |  |
+| III-2 | 40 | -18 kalah | 56 | 8 | Crystal Pilihan (Astro Power) |
+| III-3 | 22 | +0 tidak kehilangan HP | 31 | 9 | Pilih Go Go Card |
 | III-4 | 22 | +0 tidak kehilangan HP | 18 | 9 |  |
 | III-5 | 22 | -17 kalah | 11 | 9 |  |
 | III-6 | 5 | +0 tidak kehilangan HP | - | 9 |  |
@@ -63,11 +63,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 04:55 | I-4 | Go Go Box |  |
-| 07:15 | II-2 | Pilih Go Go Card | pilihan: Rising Fury Ⅱ, Apex Weapons |
+| 07:15 | II-3 | Pilih Go Go Card | pilihan: Rising Fury Ⅱ, Apex Weapons |
 | 10:15 | II-6 | Naik level |  |
-| 11:35 | III-1 | Go Go Box |  |
+| 11:35 | II-6 | Go Go Box |  |
 | 13:00 | III-2 | Crystal Pilihan | Astro Power |
-| 13:55 | III-2 | Pilih Go Go Card |  |
+| 13:55 | III-3 | Pilih Go Go Card |  |
 | 22:35 | IV-4 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

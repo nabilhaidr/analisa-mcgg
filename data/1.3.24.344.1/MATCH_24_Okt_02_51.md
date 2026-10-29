@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 02-51
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-29 23:35_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -33,10 +33,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-28 11:14_
 | II-3 | 89 | +0 tidak kehilangan HP | 21 | 6 | Pilih Go Go Card (pilihan: Breath of Berserk Ⅱ) |
 | II-4 | 89 | +0 tidak kehilangan HP | 30 | 6 |  |
 | II-5 | 89 | +0 tidak kehilangan HP | 42 | 7 |  |
-| II-6 | 89 | +0 tidak kehilangan HP | 24 | 7 |  |
-| III-1 | 89 | -13 kalah | 47 | 7 | Go Go Box |
-| III-2 | 76 | +0 tidak kehilangan HP | 42 | 7 | Pilih Go Go Card (pilihan: Uncertain Fortune, Rock Solid) |
-| III-3 | 76 | +0 tidak kehilangan HP | 29 | 8 |  |
+| II-6 | 89 | +0 tidak kehilangan HP | 24 | 7 | Go Go Box |
+| III-1 | 89 | -13 kalah | 47 | 7 |  |
+| III-2 | 76 | +0 tidak kehilangan HP | 42 | 7 |  |
+| III-3 | 76 | +0 tidak kehilangan HP | 29 | 8 | Pilih Go Go Card (pilihan: Uncertain Fortune, Rock Solid) |
 | III-4 | 76 | -16 kalah | 38 | 8 |  |
 | III-5 | 60 | -12 kalah | 38 | 8 |  |
 | III-6 | 48 | -14 kalah | 55 | 9 |  |
@@ -66,8 +66,8 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 |---|---|---|---|
 | 04:10 | I-4 | VICTORY | Gold +7 |
 | 07:00 | II-3 | Pilih Go Go Card | pilihan: Breath of Berserk Ⅱ |
-| 11:35 | III-1 | Go Go Box |  |
-| 13:55 | III-2 | Pilih Go Go Card | pilihan: Uncertain Fortune, Rock Solid |
+| 11:35 | II-6 | Go Go Box |  |
+| 13:55 | III-3 | Pilih Go Go Card | pilihan: Uncertain Fortune, Rock Solid |
 | 21:30 | IV-2 | VICTORY | Gold +10 |
 | 24:40 | IV-5 | VICTORY |  |
 
