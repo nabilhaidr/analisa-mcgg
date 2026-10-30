@@ -63,6 +63,45 @@ class EventRound(unittest.TestCase):
         self.assertIsNone(mc_match.event_round("Go Go Box", None, self.BOX))
 
 
+class EventKinds(unittest.TestCase):
+    def test_card_pick_with_the_p_cut_off(self):
+        # 24 Okt 15-06 825 s: the III-3 pick, its prompt split by OCR Windows
+        self.assertIn("Pilih Go Go Card", mc_match.event_kinds("Silakan | sh | ilih 1 Go Go Card. | Bright Sunshine"))
+
+    def test_card_pick_prompt(self):
+        self.assertIn("Pilih Go Go Card", mc_match.event_kinds("Silakan pilih 1 Go Go Card. | Fast Promotion"))
+
+    def test_go_go_card_panel_is_no_pick(self):
+        # the board info panel (24 Okt 15-06 535 s)
+        self.assertNotIn("Pilih Go Go Card", mc_match.event_kinds("Go Go Card | Hero yang Ditempatkan | O.Ne | 014"))
+
+
+class ReopenedPicks(unittest.TestCase):
+    @staticmethod
+    def pick(t, rnd, *options):
+        return {"t": t, "round": rnd, "kind": "Pilih Go Go Card", "detail": "pilihan: " + ", ".join(options),
+                "options": list(options)}
+
+    def test_pick_screen_opened_again_is_marked(self):
+        # 23 Okt 21-47: the II-3 pick put off and opened again in II-6 and (after Refresh) III-2; the result screen shows
+        # two Go Go Cards, Starbelle's Badge and Echomancer's Badge
+        events = [self.pick(375, 7, "Fast Promotion", "Premium Client I"),
+                  {"t": 500, "round": 9, "kind": "Go Go Box", "detail": ""},
+                  self.pick(545, 10, "Fast Promotion", "Premium Client I"),
+                  self.pick(715, 12, "Starbelle's Badge", "Premium Client I"),
+                  self.pick(780, 13, "Total Domination", "Echomancer's Badge")]
+        self.assertEqual([e["detail"] for e in mc_match.reopened_picks(events)],
+                         ["pilihan: Fast Promotion, Premium Client I", "",
+                          "dibuka lagi, pilihan II-3: Fast Promotion, Premium Client I",
+                          "dibuka lagi, pilihan II-3: Starbelle's Badge, Premium Client I",
+                          "pilihan: Total Domination, Echomancer's Badge"])
+
+    def test_separate_picks_stay_separate(self):
+        events = [self.pick(430, 7, "Dark Blade", "Rising Fury Ⅰ"), self.pick(825, 13, "Bright Sunshine", "Frontier Blitz")]
+        self.assertEqual([e["detail"] for e in mc_match.reopened_picks(events)],
+                         ["pilihan: Dark Blade, Rising Fury Ⅰ", "pilihan: Bright Sunshine, Frontier Blitz"])
+
+
 class GoldShown(unittest.TestCase):
     def test_gold_counter_is_read_also_when_dimmed(self):
         # pc_gold_redup_24 / ponsel_gold_redup_22: an overlay dims the counter, the number is still right

@@ -64,7 +64,7 @@ ROUND_RE = re.compile(r"(?<![A-Za-z])([IVXNl1|]{1,4})\s*[-–]\s*([1-6Il])(?!\d)
 LEVEL_RE = re.compile(r"Leve[l1I|]\s*(\d{1,2})")
 EVENTS = [  # (regex on a frame's OCR text, kind)
     (r"Pilih Kartu Commander Power", "Pilih Kartu Power"),
-    (r"pilih 1 Go Go Card", "Pilih Go Go Card"),
+    (r"ilih 1 Go Go Card", "Pilih Go Go Card"),  # OCR may cut the p (24 Okt 15-06 825 s: "Silakan | sh | ilih 1 Go Go Card.")
     (r"Pilih Hadiah", "Go Go Box"),
     (r"Magic Crystal pilihan aktif", "Crystal Pilihan"),
     (r"Kapasitas Hero \+1|Level Commander ditingkatkan", "Naik level"),
@@ -621,14 +621,12 @@ def read_events(frames, d, by_time):
         text = " | ".join(l["t"] for l in lines)
         t = int(f.stem[2:])
         flat = norm(text)
-        for pattern, kind in EVENTS:
-            if not re.search(pattern.replace(" ", r"\s*"), text, re.I):  # RapidOCR may drop spaces ("GoGo Card")
-                continue
+        for kind in event_kinds(text):
             repeat = kind in seen and t - seen[kind] <= 15  # the same event on consecutive frames
             seen[kind] = t
             if repeat:
                 continue
-            detail = ""
+            detail, found = "", []
             if kind in ("Pilih Kartu Power", "Pilih Go Go Card"):
                 found = list(dict.fromkeys(c for c in cards if norm(c) in flat))
                 found = [c for c in found if not any(norm(c) in norm(o) and c != o for o in found)]  # Rising Fury Ⅰ in Ⅱ
@@ -648,7 +646,28 @@ def read_events(frames, d, by_time):
                         pairs.append((h, num))
                 detail = ", ".join(f"{h} {n:,}".replace(",", ".") for h, n in pairs[:5])
             events.append({"t": t, "round": event_round(kind, by_time.get(t), box_rounds), "kind": kind, "detail": detail,
-                           "frame": f})
+                           "frame": f, "options": found})
+    return reopened_picks(events)
+
+
+def event_kinds(text):
+    """Kinds of EVENTS whose text shows in a frame's OCR text (RapidOCR may drop spaces: "GoGo Card")."""
+    return [kind for pattern, kind in EVENTS if re.search(pattern.replace(" ", r"\s*"), text, re.I)]
+
+
+def reopened_picks(events):
+    """events with a Go Go Card pick screen that shows a card of the pick before it marked "dibuka lagi": a pick can be put
+    off (the screen hides behind a "Silakan pilih" button) and opened again, with the same cards or, after Refresh, some of
+    them (23 Okt 21-47: the II-3 pick seen again in II-6 and III-2; the result screen shows 2 Go Go Cards)."""
+    first, shown = None, set()
+    for e in events:
+        if e["kind"] != "Pilih Go Go Card" or not e.get("options"):
+            continue
+        if first and shown & set(e["options"]):
+            e["detail"] = f"dibuka lagi, pilihan {round_label(first['round']) if first['round'] else '-'}: " + ", ".join(e["options"])
+            shown |= set(e["options"])
+        else:
+            first, shown = e, set(e["options"])
     return events
 
 
@@ -1135,7 +1154,9 @@ def main():
                    "kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai "
                    "terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi "
                    "rata.",
-                   "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil.",
+                   "Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. "
+                   "Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan "
+                   "sebelumnya (sama, atau sebagian setelah Refresh) ditandai \"dibuka lagi\", bukan pilihan baru.",
                    "Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak "
                    "lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu "
                    "babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun."]
