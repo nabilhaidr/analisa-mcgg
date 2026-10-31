@@ -1,6 +1,6 @@
 # Validasi otomatis Season 7 (data 1.3.24.344.1)
 
-- Dibuat 2026-10-31T04:58:30 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
+- Dibuat 2026-10-31T21:44:59 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
 - **Selisih** = terbaca jelas tapi beda dengan data. **Cek manual** = kemungkinan salah baca OCR / panel di-scroll; lihat screenshot-nya.
 
 | Bagian | Layar | Selisih | Cek manual | Cakupan |
@@ -12,6 +12,7 @@
 | Go Go Card | 58 | 0 | 4 | 199 dari 199 kartu aktif terlihat di screenshot Go Go Card |
 | Ensiklopedia | 15 | 0 | 2 | 15 screenshot dicocokkan dengan 8 tab Ensiklopedia |
 | Toko Spirit Sand | 54 | 0 | 3 | 10 dari 11 item terlihat dengan harga; 11 pembelian sesuai stack data |
+| Go Go Box | 3 | 0 | 0 | 1 dari 3 layar menampilkan 8 orb utuh, cocok babak II-6 |
 | Patch Note | 27 | 0 | 0 | 49 perubahan terbaca dari 27 screenshot patch note |
 
 ## Selisih
@@ -145,3 +146,4 @@ Tidak ada.
 - Hero: Tanpa screenshot: Alpha (panggilan), Gatotkaca (panggilan), Layla (panggilan), Moskov (panggilan), Novaria (panggilan), X.Borg (panggilan)
 - Sinergi: Tanpa screenshot: Chrono Wanderer, Fan yang Bersorak
 - Toko Spirit Sand: Tidak terbaca harganya (angka merah): 1 Equipment Acak yang Diperkuat
+- Go Go Box: Tanpa layar orb utuh: I-4, III-6, IV-6, V-6, VI-6, VII-6, VIII-6

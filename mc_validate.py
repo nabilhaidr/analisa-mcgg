@@ -35,7 +35,7 @@ PHASES = re.compile(r"(?<![\w.])(?:[1Il]{1,3}|[1Il]?V)(?:\s*/\s*(?:[1Il]{1,3}|[1
 UI_TEXT = re.compile(r"(Naikkan Bintang|Naik Bintang|Dapatkan|Buka Emblem|Sedang Digunakan|Gunakan)\s*")
 HERO_ROWS = ["HP", "Physical ATK", "Magic ATK", "ATK Speed", "Jangkauan ATK", "Batas Mana Awal", "Batas Mana"]
 KINDS = {"hero": "Hero", "synergy": "Sinergi", "commander": "Commander", "equipment": "Equipment",
-         "card": "Go Go Card", "book": "Ensiklopedia", "store": "Toko Spirit Sand", "patch": "Patch Note"}
+         "card": "Go Go Card", "book": "Ensiklopedia", "store": "Toko Spirit Sand", "go_go_box": "Go Go Box", "patch": "Patch Note"}
 # Toko Spirit Sand, 1366x768 layout (PC and phone alike): 3 columns around the screen centre, prices above names
 STORE_X, STORE_COLUMNS = (420, 940), (600, 766)
 STORE_PRICE_Y, STORE_NAME_Y = (425, 470), (470, 530)
@@ -154,6 +154,8 @@ def classify(lines):
         return "commander"
     if any(t.strip() == "Toko Spirit Sand" for t in texts) or has("rekan meningkat sebesar"):
         return "store"
+    if has("ih Hadiah"):  # "Pilih Hadiah"; the OCR often misreads the l ("Piiih", "P/lih")
+        return "go_go_box"
     return "other"
 
 
@@ -765,6 +767,73 @@ def check_store(d, shots, rep):
         rep.notes["store"].append("Tidak terbaca harganya (angka merah): " + ", ".join(sorted((set(items) & named) - seen)))
 
 
+# ------------------------------------------------------------------ Go Go Box
+
+def stacked_text(lines):
+    """Text blocks of a screen: an orb label wraps to two lines, one right under the other and centred on the same x."""
+    lines = sorted(lines, key=lambda l: l["y"])
+    used, out = set(), []
+    for i, a in enumerate(lines):
+        if i in used:
+            continue
+        h = a["b"] - a["y"]
+        under = next((j for j, b in enumerate(lines) if j > i and j not in used and 0 < b["y"] - a["y"] < 2 * h
+                      and abs((b["x"] + b["r"]) - (a["x"] + a["r"])) < 6 * h), None)
+        used.add(under)
+        out.append(a["t"] + (" " + lines[under]["t"] if under is not None else ""))
+    return out
+
+
+def box_orbs(lines, box):
+    """Orb labels of a Pilih Hadiah screen per kind, sorted. `box` = go_go_box of S<n>.json; text that matches no label of
+    its pools (player names, a notice) is left out."""
+    key = lambda s: re.sub(r"[^a-z0-9+]", "", s.lower())
+    labels = {key(item["summary"]): (kind, item["summary"]) for r in box["rounds"]
+              for kind in ("equipment", "crystals", "special") for item in r[kind]["pool"]}
+    out = {"equipment": [], "crystals": [], "special": []}
+    for text in stacked_text(lines):
+        hit = difflib.get_close_matches(key(text), labels, n=1, cutoff=0.75)
+        if hit:
+            kind, label = labels[hit[0]]
+            out[kind].append(label)
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def box_rounds(orbs, box):
+    """Labels of the rounds that can hold these orbs. With every orb on show the numbers must fit exactly; orbs already
+    taken leave fewer labels, so a partial screen only must not exceed a round."""
+    e, c, s = (len(orbs[k]) for k in ("equipment", "crystals", "special"))
+    whole = e + c + s == box["orbs"]
+
+    def fits(r):
+        if whole:
+            return r["equipment"]["min"] <= e <= r["equipment"]["max"] and r["crystals"]["min"] <= c <= r["crystals"]["max"] \
+                and s == r["special"]["count"]
+        return e <= r["equipment"]["max"] and c <= r["crystals"]["max"] and s <= r["special"]["count"]
+    return [r["label"] for r in box["rounds"] if fits(r)]
+
+
+def check_go_go_box(d, shots, rep):
+    """Pilih Hadiah screens against go_go_box. The screen has no round label: the numbers of its 8 orbs tell the round."""
+    box = d.get("go_go_box")
+    if not box:
+        rep.notes["go_go_box"].append("Data tidak punya Go Go Box")
+        return
+    seen, whole = set(), 0
+    for name, lines in sorted(shots):
+        orbs = box_orbs(lines, box)
+        rounds = box_rounds(orbs, box)
+        if not rounds:
+            rep.add("go_go_box", "selisih", name, f"susunan orb tidak ada di babak mana pun di data: {orbs}")
+        elif sum(map(len, orbs.values())) == box["orbs"]:
+            whole += 1
+            seen.update(rounds)
+    rep.notes["go_go_box"].append(f"{whole} dari {len(shots)} layar menampilkan {box['orbs']} orb utuh" +
+                                  (f", cocok babak {', '.join(sorted(seen))}" if seen else ""))
+    if shots and {r["label"] for r in box["rounds"]} - seen:
+        rep.notes["go_go_box"].append("Tanpa layar orb utuh: " + ", ".join(r["label"] for r in box["rounds"] if r["label"] not in seen))
+
+
 # ------------------------------------------------------------------ main
 
 def latest_version():
@@ -849,6 +918,7 @@ def main():
     check_cards(d, groups["card"], rep)
     check_book(d, groups["book"], rep)
     check_store(d, groups["store"], rep)
+    check_go_go_box(d, groups["go_go_box"], rep)
     check_patch(d, groups["patch"], rep)
 
     out = DATA / version / f"VALIDASI_S{args.season}_auto.md"

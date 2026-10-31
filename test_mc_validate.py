@@ -164,5 +164,60 @@ class CocokkanToko(unittest.TestCase):
         self.assertFalse(any(n.startswith("Tanpa screenshot") and unread in n for n in notes))
 
 
+BOX_FULL ="31-17-05-38-617_com.mobilechess.mi.jpg"  # II-6, sisa 20 detik: 8 orb masih utuh (dibaca dari gambarnya)
+BOX_PICKED = "31-17-05-48-931_com.mobilechess.mi.jpg"  # sisa 10 detik: 3 pemain sudah mengambil orbnya
+
+
+class LayarPilihHadiah(unittest.TestCase):
+    def test_layar_dikenali(self):
+        self.assertEqual(V.classify(store_shot(BOX_FULL)), "go_go_box")
+
+    def test_judul_dengan_l_terbaca_i_tetap_dikenali(self):  # 141 dari 197 judul di 20 rekaman terbaca begini
+        self.assertEqual(V.classify([{"t": "17 Piiih Hadiah", "x": 500, "y": 10, "r": 600, "b": 30}]), "go_go_box")
+
+    def test_rincian_gold_babak_bukan_go_go_box(self):
+        self.assertNotEqual(V.classify([{"t": "Hadiah Dasar", "x": 500, "y": 10, "r": 600, "b": 30}]), "go_go_box")
+
+    def test_orb_dibaca_per_jenis(self):
+        self.assertEqual(V.box_orbs(store_shot(BOX_FULL), S7["go_go_box"]),
+                         {"equipment": ["Counter Lifesteal", "DMG Tambahan", "DMG Tank", "Memantulkan Physical DMG",
+                                        "Pembunuh Tank", "Spell Vamp"],
+                          "crystals": ["Dapatkan Sinergi Dragoncaller"], "special": ["Kapasitas +1"]})
+
+    def test_nama_pemain_bukan_orb(self):
+        orbs = V.box_orbs(store_shot(BOX_PICKED), S7["go_go_box"])
+        self.assertFalse({"CinCoeg", "PARANOIA", "L.O.L"} & set(sum(orbs.values(), [])))
+
+
+def run_box(names, data=None):
+    rep = V.Report()
+    V.check_go_go_box(data or S7, [(n, store_shot(n)) for n in names], rep)
+    return rep
+
+
+class CocokkanGoGoBox(unittest.TestCase):
+    def test_delapan_orb_cocok_dengan_satu_babak(self):
+        rep = run_box([BOX_FULL])
+        self.assertEqual(rep.items["go_go_box"]["selisih"], [])
+        self.assertIn("II-6", " ".join(rep.notes["go_go_box"]))
+
+    def test_susunan_yang_tidak_ada_di_data_jadi_selisih(self):
+        data = copy.deepcopy(S7)
+        for r in data["go_go_box"]["rounds"]:
+            r["special"]["count"] = 0  # 1 Kapasitas +1 di layar, 0 di data
+        self.assertEqual(len(run_box([BOX_FULL], data).items["go_go_box"]["selisih"]), 1)
+
+    def test_jumlah_equipment_beda_dengan_data_jadi_selisih(self):
+        data = copy.deepcopy(S7)
+        next(r for r in data["go_go_box"]["rounds"] if r["label"] == "II-6")["equipment"]["min"] = 7
+        self.assertEqual(len(run_box([BOX_FULL], data).items["go_go_box"]["selisih"]), 1)
+
+    def test_orb_yang_sudah_diambil_bukan_selisih(self):
+        self.assertEqual(run_box([BOX_PICKED]).items["go_go_box"]["selisih"], [])
+
+    def test_layar_sebagian_tidak_diklaim_cocok_babak(self):
+        self.assertNotIn("cocok babak", " ".join(run_box([BOX_PICKED]).notes["go_go_box"]))
+
+
 if __name__ == "__main__":
     unittest.main()
