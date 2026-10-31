@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.24.344.1",
  "season": 7,
- "generated_at": "2026-10-27T22:43:15",
+ "generated_at": "2026-10-31T04:58:18",
  "info": {
   "name": "Chrono Echoes",
   "levels": [
@@ -3899,7 +3899,23 @@
     }
    ],
    "summoned": false,
-   "icon": "img/Atlas_HeroHeadIcon_S7/HeroHead113.png"
+   "icon": "img/Atlas_HeroHeadIcon_S7/HeroHead113.png",
+   "stats_server": {
+    "2": {
+     "Physical ATK": "275",
+     "Magic ATK": "275"
+    },
+    "3": {
+     "Physical ATK": "410",
+     "Magic ATK": "410"
+    }
+   },
+   "server": [
+    {
+     "patch": "28/10",
+     "text": "Hybrid ATK ★2/★3: 250/370 → 275/410"
+    }
+   ]
   },
   {
    "id": 16,
@@ -5703,12 +5719,16 @@
       "attributes": [],
       "cooldown_ms": null,
       "icon": "img/Atlas_Commander_Skill1_MC_New/S471810.png",
-      "description_server": "Dyrroth mendapatkan 3 EXP Commander setiap kali melahap. Setelah setiap 2 kali melahap, lahapan berikutnya memberikan 2 Hero, yang masing-masing memiliki Sinergi sama dengan Hero yang dilahap.\n\n2 Hero dipilih secara acak dari Sinergi milik Hero yang dilahap, mengutamakan 1 Sinergi Role + 1 Sinergi Faction.\n\nJika tidak ada Hero yang memenuhi kriteria tersebut (habis di Hero Pool Bersama atau tidak ada Hero berharga lebih tinggi dari Sinergi tersebut), maka akan memberikan Hero berharga lebih tinggi dari Sinergi acak lain sebagai gantinya (harga +1 Gold, maksimal 5 Gold)."
+      "description_server": "Dyrroth mendapatkan 4 EXP Commander setiap kali melahap. Setelah setiap 1 kali melahap, lahapan berikutnya memberikan 2 Hero, yang masing-masing memiliki Sinergi sama dengan Hero yang dilahap.\n\n2 Hero dipilih secara acak dari Sinergi milik Hero yang dilahap, mengutamakan 1 Sinergi Role + 1 Sinergi Faction.\n\nJika tidak ada Hero yang memenuhi kriteria tersebut (habis di Hero Pool Bersama atau tidak ada Hero berharga lebih tinggi dari Sinergi tersebut), maka akan memberikan Hero berharga lebih tinggi dari Sinergi acak lain sebagai gantinya (harga +1 Gold, maksimal 5 Gold)."
      },
      "server": [
       {
        "patch": "7.2",
        "text": "2 EXP Commander → 3 EXP Commander (Patch note menulis 1 >> 3 EXP; file game berisi 2 EXP.)"
+      },
+      {
+       "patch": "28/10",
+       "text": "EXP Commander per lahapan: 3 → 4; Lahapan yang memberi 2 Hero setiap selesai melahap: 2 → 1 kali"
       }
      ]
     }
@@ -6250,6 +6270,10 @@
       {
        "patch": "20/10",
        "text": "Makhluk Suci kini muncul di baris depan, bukan di baris belakang"
+      },
+      {
+       "patch": "28/10",
+       "text": "Hybrid ATK Makhluk Suci ★2: 165 → 145"
       }
      ]
     },
@@ -6262,8 +6286,15 @@
       "description": "Menempatkan Hero ke dalam altar juga memberikan Gold acak sebesar 1 hingga 3 kali lipat dari harga Gold Hero tersebut.",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill1_MC_New/S482610.png"
-     }
+      "icon": "img/Atlas_Commander_Skill1_MC_New/S482610.png",
+      "description_server": "Menempatkan Hero ke dalam altar juga memberikan Gold acak sebesar 3 hingga 4 kali lipat dari harga Gold Hero tersebut."
+     },
+     "server": [
+      {
+       "patch": "28/10",
+       "text": "Kelipatan acak Gold saat Hero masuk altar: 2X–3X → 3X–4X (Patch note menulis nilai lama 2X–3X; file game berisi 1–3 kali lipat.)"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -6287,7 +6318,13 @@
       "attributes": [],
       "cooldown_ms": null,
       "icon": "img/Atlas_Commander_Skill3_MC/S452200.png"
-     }
+     },
+     "server": [
+      {
+       "patch": "28/10",
+       "text": "Jumlah Hero dengan Blessing: 3 → 2 (Angka 3 tidak ada di teks Power of Chaos (1 Hero, 1 kali). Satu-satunya '3 Hero' di skill Lunox ada di Power of Order (3 Hero acak dari Sinergi yang diberikan skill-nya), jadi kemungkinan itu yang berubah; belum dicek in-game.)"
+      }
+     ]
     },
     {
      "from_level": 2,
@@ -6298,8 +6335,15 @@
       "description": "Setelah Lunox menggunakan skill, mendapatkan 3 Hero acak dari Sinergi yang diberikan skill-nya (dipengaruhi oleh peluang refresh Toko saat ini) dan 6 Gold.",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill3_MC/S452210.png"
-     }
+      "icon": "img/Atlas_Commander_Skill3_MC/S452210.png",
+      "description_server": "Setelah Lunox menggunakan skill, mendapatkan 3 Hero acak dari Sinergi yang diberikan skill-nya (dipengaruhi oleh peluang refresh Toko saat ini) dan 4 Gold."
+     },
+     "server": [
+      {
+       "patch": "28/10",
+       "text": "Perolehan Gold: 6 → 4"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -6730,8 +6774,15 @@
       "description": "Selama 3 babak Go Go Box pertama, setelah semua Commander memilih, pilih satu hadiah tambahan dari pilihan yang tersisa.",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill2_MC/S451700.png"
-     }
+      "icon": "img/Atlas_Commander_Skill2_MC/S451700.png",
+      "description_server": "Mendapatkan 10 Gold setiap babak selama 3 babak Go Go Box pertama. Pilih satu hadiah tambahan dari pilihan yang tersisa setelah semua Commander selesai memilih."
+     },
+     "server": [
+      {
+       "patch": "20/10",
+       "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold) (Aktif sejak Commander bintang 1 (Lv 1). Teks in-game 31 Okt menaruhnya di skill ini; rekaman 31 Okt (Vexana ★★): +10 Gold di I-4, II-6, III-6.)"
+      }
+     ]
     },
     {
      "from_level": 2,
@@ -6743,12 +6794,12 @@
       "attributes": [],
       "cooldown_ms": null,
       "icon": "img/Atlas_Commander_Skill2_MC/S451710.png",
-      "description_server": "Pada babak Go Go Box pertama, menyalin item atau Hero pertama yang kamu pilih. Mendapatkan 10 Gold pada setiap babak Go Go Box selama 3 babak Go Go Box pertama (total 30 Gold)."
+      "description_server": "Pada babak Go Go Box pertama, menyalin item atau Hero pertama yang kamu pilih."
      },
      "server": [
       {
        "patch": "20/10",
-       "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold) (Patch note menyebut skill I Want All of Them!, tapi 13 Gold di file game ada di skill Lv 2 Unrestricted.)"
+       "text": "13 Gold di babak Go Go Box pertama dihapus dari skill Lv 2 (pindah ke I Want All of Them!) (File game masih menaruh 13 Gold di skill ini; teks in-game 31 Okt sudah tanpa Gold.)"
       }
      ]
     }
@@ -9487,7 +9538,14 @@
     1
    ],
    "description": "Ketika pertarungan dimulai, Hero di baris terakhir kehilangan 10% Max HP, tapi mendapatkan 25% Peningkatan DMG.",
-   "icon": "img/Atlas_GoGoCard_02_MC/GOGO_Icon_1111_mini.png"
+   "icon": "img/Atlas_GoGoCard_02_MC/GOGO_Icon_1111_mini.png",
+   "description_server": "Ketika pertarungan dimulai, Hero di baris terakhir kehilangan 10% Max HP, tapi mendapatkan 30% Peningkatan DMG.",
+   "server": [
+    {
+     "patch": "28/10",
+     "text": "Peningkatan DMG: 25% → 30%"
+    }
+   ]
   },
   {
    "id": 1112,
@@ -14682,7 +14740,7 @@
   "currency_text": "Aktifkan Sinergi Mistbender untuk mengumpulkannya. Gunakan untuk menukarkannya dengan hadiah di Toko Spirit Sand.",
   "max_storage": 99,
   "total_weight": 980,
-  "verified": false,
+  "verified": true,
   "items": [
    {
     "id": 1,
@@ -14748,7 +14806,7 @@
     "effect": "+3% Hybrid ATK untuk Hero rekan, permanen sampai akhir pertandingan (+3 stack; bisa dibeli lagi dan menumpuk)",
     "pool": [],
     "notes": [
-     "Nama item menyebut +2%, tapi data efek memberi 3 stack (+3%)."
+     "Nama item menyebut +2%, tapi data efek memberi 3 stack (+3%). Cocok dengan kenaikan baris ATK rekan di layar toko."
     ]
    },
    {
@@ -14763,7 +14821,7 @@
     "effect": "+5% Hybrid ATK untuk Hero rekan, permanen sampai akhir pertandingan (+5 stack; bisa dibeli lagi dan menumpuk)",
     "pool": [],
     "notes": [
-     "Nama item menyebut +3%, tapi data efek memberi 5 stack (+5%)."
+     "Nama item menyebut +3%, tapi data efek memberi 5 stack (+5%). Cocok dengan kenaikan baris ATK rekan di layar toko."
     ]
    },
    {
@@ -17372,8 +17430,14 @@
     },
     {
      "kind": "Commander",
-     "target": "Vexana / Unrestricted",
+     "target": "Vexana / I Want All of Them!",
      "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold)",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Vexana / Unrestricted",
+     "text": "13 Gold di babak Go Go Box pertama dihapus dari skill Lv 2 (pindah ke I Want All of Them!)",
      "status": "diterapkan server"
     },
     {
@@ -17396,6 +17460,57 @@
     }
    ],
    "notes": []
+  },
+  {
+   "patch": "28/10",
+   "source": "Patch Note Penyesuaian Keseimbangan (28/10) (screenshot/season 7/update patch, 1893–1895)",
+   "changes": [
+    {
+     "kind": "Hero",
+     "target": "Yin",
+     "text": "Hybrid ATK ★2/★3: 250/370 → 275/410",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Lukas / Unleash the Beast",
+     "text": "Hybrid ATK Makhluk Suci ★2: 165 → 145",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    },
+    {
+     "kind": "Commander",
+     "target": "Lukas / Sacred Gift",
+     "text": "Kelipatan acak Gold saat Hero masuk altar: 2X–3X → 3X–4X",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Dyrroth / Abyssal Favor",
+     "text": "EXP Commander per lahapan: 3 → 4; Lahapan yang memberi 2 Hero setiap selesai melahap: 2 → 1 kali",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Lunox / Power of Chaos",
+     "text": "Jumlah Hero dengan Blessing: 3 → 2",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    },
+    {
+     "kind": "Commander",
+     "target": "Lunox / Power of Order",
+     "text": "Perolehan Gold: 6 → 4",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Go Go Card",
+     "target": "Forbidden Power",
+     "text": "Peningkatan DMG: 25% → 30%",
+     "status": "diterapkan server"
+    }
+   ],
+   "notes": [
+    "Deskripsi efek Sinergi in-game kini menampilkan atribut pertarungan dan efek khusus sebagai ikon (tampilan saja, angka tidak berubah)."
+   ]
   }
  ]
 }

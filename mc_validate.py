@@ -35,7 +35,14 @@ PHASES = re.compile(r"(?<![\w.])(?:[1Il]{1,3}|[1Il]?V)(?:\s*/\s*(?:[1Il]{1,3}|[1
 UI_TEXT = re.compile(r"(Naikkan Bintang|Naik Bintang|Dapatkan|Buka Emblem|Sedang Digunakan|Gunakan)\s*")
 HERO_ROWS = ["HP", "Physical ATK", "Magic ATK", "ATK Speed", "Jangkauan ATK", "Batas Mana Awal", "Batas Mana"]
 KINDS = {"hero": "Hero", "synergy": "Sinergi", "commander": "Commander", "equipment": "Equipment",
-         "card": "Go Go Card", "book": "Ensiklopedia", "patch": "Patch Note"}
+         "card": "Go Go Card", "book": "Ensiklopedia", "store": "Toko Spirit Sand", "patch": "Patch Note"}
+# Toko Spirit Sand, 1366x768 layout (PC and phone alike): 3 columns around the screen centre, prices above names
+STORE_X, STORE_COLUMNS = (420, 940), (600, 766)
+STORE_PRICE_Y, STORE_NAME_Y = (425, 470), (470, 530)
+STORE_NAMES = ((r"Nana", "Nana"), (r"Mirror\s*Device", "Mirror Device"), (r"Crystal", "Magic Crystal Acak"),
+               (r"Hero\s*4\s*Gold", "Hero 4 Gold Bintang 1 Acak"), (r"Equipment", "1 Equipment Acak yang Diperkuat"))
+STORE_STATS = re.compile(r"(A?TK|HP)\s*Rekan(?:\s*\+\s*([123]))?", re.I)  # "+30" and "+3%" = +3%; "TK" = cut-off "ATK"
+STORE_PERCENT = re.compile(r"(ATK|HP)\s*r\s*ekan\s*meningkat\s*sebesar\s*(.+)", re.I)
 
 
 # ------------------------------------------------------------------ text helpers
@@ -145,6 +152,8 @@ def classify(lines):
         return "commander_list"
     if any(l["t"].startswith("Comman") and l["y"] < 60 and l["x"] < 320 for l in lines):
         return "commander"
+    if any(t.strip() == "Toko Spirit Sand" for t in texts) or has("rekan meningkat sebesar"):
+        return "store"
     return "other"
 
 
@@ -548,16 +557,39 @@ def entity_texts(d):
     return out, key
 
 
-def recorded_server_changes(season, key):
-    """Names (hero / commander / skill / synergy / card) already noted in server_patch.json for this season."""
-    path = HERE / "server_patch.json"
+def change_values(ch):
+    """Values a server_patch.json change ends in: hero "new", numbers in a "replace" result, numbers after "→" in "text"."""
+    values = {n for v in ch.get("new", []) for n in numbers(str(v), keep_single=True)}
+    for _, new in ch.get("replace", []):
+        values |= set(numbers(new, keep_single=True))
+    for part in ch.get("text", "").split(";"):
+        if "→" in part:
+            values |= set(numbers(part.split("→", 1)[1], keep_single=True))
+    return {v.rstrip("%") for v in values}
+
+
+def recorded_server_changes(season, key, path=None):
+    """{name (hero / commander / skill / synergy / card): values its changes end in} noted in server_patch.json."""
+    path = path or HERE / "server_patch.json"
     if not path.exists():
-        return set()
-    names = set()
+        return {}
+    names = defaultdict(set)
     for p in json.loads(path.read_text(encoding="utf-8")).get(str(season), []):
         for ch in sum((p.get(k, []) for k in ("heroes", "commanders", "hero_skills", "synergies", "cards")), []):
-            names |= {key(ch["name"])} | ({key(ch["skill"])} if ch.get("skill") else set())
-    return names
+            for name in filter(None, (ch["name"], ch.get("skill"))):
+                names[key(name)] |= change_values(ch)
+    return dict(names)
+
+
+def is_recorded(recorded, name, new):
+    """Patch line already noted: the name has a change ending in the line's new value; an earlier patch on the same name
+    does not count (Lunox 20/10 vs. "Perolehan Gold: 6 >> 4" of 28/10). A line without a number only needs the name.
+    OCR can read the "/" of "300/450" as a 1, so two noted values joined by a 1 count as noted."""
+    if name not in recorded:
+        return False
+    noted = recorded[name]
+    joined = {a + "1" + b for a in noted for b in noted}
+    return all(v.rstrip("%") in noted | joined for v in numbers(new, keep_single=True))
 
 
 def check_patch(d, shots, rep):
@@ -639,11 +671,98 @@ def check_patch(d, shots, rep):
                 status = "tidak bisa dipastikan"
             rep.patch_rows.append((entity, t, status))
     # server-only changes: are they already noted in server_patch.json (shown in the report as "Patch x (server)")?
-    rep.patch_rows = [(e, t, s + (" · tercatat di server_patch.json" if key(e) in recorded else " · belum dicatat di server_patch.json")
+    noted = lambda e, t: is_recorded(recorded, key(e), " ".join(b for _, b in change.findall(t)))
+    rep.patch_rows = [(e, t, s + (" · tercatat di server_patch.json" if noted(e, t) else " · belum dicatat di server_patch.json")
                        if s.startswith("belum") else s) for e, t, s in rep.patch_rows]
     unrecorded = sum(s.endswith("belum dicatat di server_patch.json") for _, _, s in rep.patch_rows)
     rep.notes["patch"].append(f"{len(rep.patch_rows)} perubahan terbaca dari {len(shots)} screenshot patch note"
                               + (f"; {unrecorded} perubahan server belum dicatat di server_patch.json" if unrecorded else ""))
+
+
+# ------------------------------------------------------------------ Toko Spirit Sand
+
+def store_slots(lines, items):
+    """[(item name, price)] of the 3 shop columns; None where OCR did not read it. OCR can join two names in one line, so
+    each name is placed by its share of the line. A stat name without a readable "+n%" is told by its price."""
+    names, prices = [None] * 3, [None] * 3
+    column = lambda x: sum(x > edge for edge in STORE_COLUMNS)
+    known = {i["price"] for i in items}
+    for l in lines:
+        if not STORE_X[0] <= (l["x"] + l["r"]) / 2 < STORE_X[1]:  # level badges of the player list sit at the same height
+            continue
+        if STORE_PRICE_Y[0] <= l["y"] < STORE_PRICE_Y[1] and re.fullmatch(r"\d{1,3}", l["t"]) and int(l["t"]) in known:
+            prices[column((l["x"] + l["r"]) / 2)] = int(l["t"])
+        if not STORE_NAME_Y[0] <= l["y"] < STORE_NAME_Y[1]:
+            continue
+        at = lambda m: l["x"] + (l["r"] - l["x"]) * (m.start() + m.end()) / 2 / len(l["t"])
+        for pattern, name in STORE_NAMES:
+            for m in re.finditer(pattern, l["t"], re.I):
+                names[column(at(m))] = name
+        for m in STORE_STATS.finditer(l["t"]):
+            stat = "HP" if m.group(1).upper() == "HP" else "ATK"
+            names[column(at(m))] = f"{stat} Rekan +{m.group(2)}%" if m.group(2) else stat
+    for c in range(3):
+        if names[c] in ("ATK", "HP"):
+            names[c] = next((i["name"] for i in items if i["name"].startswith(names[c] + " ") and i["price"] == prices[c]), None)
+    return list(zip(names, prices))
+
+
+def store_percent(lines):
+    """{"ATK": n, "HP": n} from the two lines under the shop ("ATK rekan meningkat sebesar 4%."), where read."""
+    out = {}
+    for l in lines:
+        m = STORE_PERCENT.search(l["t"])
+        values = numbers(m.group(2), keep_single=True) if m else []
+        if values:
+            out[m.group(1).upper()] = int(values[0].rstrip("%"))
+    return out
+
+
+def store_stacks(item):
+    """Stacks one purchase adds, from the item's effect text; 0 for an item without a lasting bonus."""
+    m = re.search(r"\(\+(\d+) stack", item.get("effect", ""))
+    return int(m.group(1)) if m else 0
+
+
+def check_store(d, shots, rep):
+    """Names and prices against special_store, and the rise of the "ATK/HP rekan" lines between two screens against the
+    stacks of the item that left its column (a bought column can get the same item again: then any such item on show).
+    Screens of one match follow each other in file order."""
+    store = d.get("special_store")
+    if not store:
+        rep.notes["store"].append("Data tidak punya Toko Spirit Sand")
+        return
+    items = {i["name"]: i for i in store["items"]}
+    named, seen, purchases, previous = set(), set(), 0, {}
+    for name, lines in sorted(shots):
+        slots, percent = store_slots(lines, store["items"]), store_percent(lines)
+        for shown, price in slots:
+            named.add(shown)
+            if shown and shown not in items:
+                rep.add("store", "selisih", name, f"{shown} tampil di game tapi tidak ada di data")
+            elif shown and price is not None:
+                if price != items[shown]["price"]:
+                    rep.add("store", "selisih", name, f"{shown}: harga game {price}, data {items[shown]['price']}")
+                seen.add(shown)
+        match = name[:name.rfind("Screenshot") + 11]  # "Screenshot (n)" = PC, "Screenshot_<waktu>" = ponsel
+        before_slots, before = previous.get(match, ([], {}))
+        for stat in set(percent) & set(before):
+            gain = percent[stat] - before[stat]
+            if gain:
+                left = [p[0] for p, n in zip(before_slots, slots) if p[0] and n[0] and p[0] != n[0]]
+                bought = [s for s in (left or [p[0] for p in before_slots]) if s and s.startswith(stat)]
+                stacks = {store_stacks(items[s]) for s in bought if s in items}
+                if gain in stacks:
+                    purchases += 1
+                else:
+                    rep.add("store", "selisih" if stacks else "manual", name,
+                            f"{stat} rekan naik {gain}%, item yang dibeli {bought or '?'} memberi {sorted(stacks) or '?'} stack")
+        previous[match] = (slots, percent)
+    rep.notes["store"].append(f"{len(seen)} dari {len(items)} item terlihat dengan harga; {purchases} pembelian sesuai stack data")
+    if set(items) - named:
+        rep.notes["store"].append("Tanpa screenshot: " + ", ".join(sorted(set(items) - named)))
+    if (set(items) & named) - seen:
+        rep.notes["store"].append("Tidak terbaca harganya (angka merah): " + ", ".join(sorted((set(items) & named) - seen)))
 
 
 # ------------------------------------------------------------------ main
@@ -729,6 +848,7 @@ def main():
     check_equipment(d, groups["equipment"], rep)
     check_cards(d, groups["card"], rep)
     check_book(d, groups["book"], rep)
+    check_store(d, groups["store"], rep)
     check_patch(d, groups["patch"], rep)
 
     out = DATA / version / f"VALIDASI_S{args.season}_auto.md"

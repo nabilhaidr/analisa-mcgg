@@ -425,6 +425,7 @@ def build_rows(d, entries):
                              "status": "dihapus (server)" if "dihapus" in st.lower() else ("baru" if e["arrow"] == "baru" else "teks")})
             hero = heroes.get(name) if kind == "Hero" else None
             rows += [{**base, "label": label, "old": old, "new": new, "pct": percent(old, new),
+                      "recorded": V.is_recorded(recorded, key(name or e["entity"]), new),
                       "status": (hero and hero_status(hero, label, old, new)) or status(texts, key, name or e["entity"], old, new, st)}
                      for label, old, new in pairs]
     return rows

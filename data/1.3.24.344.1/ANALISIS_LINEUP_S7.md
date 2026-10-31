@@ -27,9 +27,20 @@ _Patch note server 20 Oktober (dicatat di server_patch.json; angka di bawah diba
 - **Nerf terbesar untuk lineup-mu** — <img src="img/Atlas_HeroHeadIcon_S7/SkinHead077_05.png" width="28" alt="Badang"> **Badang** (carry ★2; Lineup: #5 Kalea): Peluang meninju balik saat menerima DMG 50% → 25% (semua bintang). Di ★2 satu tinju balik = 90% ATK ≈ 288 Physical DMG, jadi rata-rata DMG balasan per serangan yang diterima turun dari ±144 ke ±72. HP, DEF, dan skill aktif Fist Crack (8 Fist Wind × 50% ATK) tidak berubah: Badang ★2 tetap tebal, tapi damage-nya turun. Pengali ★3 naik 420% → 800%, tapi ★3 butuh seluruh 9 stok hero 5 Gold.
 - **Nerf kecil** — <img src="img/Atlas_HeroHeadIcon_S7/SkinHead068_08.png" width="28" alt="Lunox"> **Lunox** (pengisi; Lineup: #1 Aamon, #3 Kagura): Hybrid ATK ★2 200 → 185 (−7,5%), jadi 3 Chaos Assault (500% Total Magic ATK di ★2) ikut turun ±7,5%. Di kedua lineup Lunox hanya pengisi (Stargazer di Aamon, Kishin di Kagura); jumlah sinerginya tetap.
 - **Buff, hanya di ★3** — <img src="img/Atlas_HeroHeadIcon_S7/SkinHead043_04.png" width="28" alt="Irithel"> **Irithel** (pengisi; Lineup: #2 Luo Yi, #4 Minotaur): Batas Mana ★3 100 → 90: skill Strafe lebih cepat keluar, tapi hanya di ★3. Di kedua lineup Irithel pengisi Astro ★1/★2 tanpa item, jadi tidak berpengaruh.
-- **Buff commander, bukan hero** — <img src="img/Atlas_HeroHeadIcon_Skin_New03_MC/HeroHead45171.png" width="28" alt="Vexana"> **Vexana** (Commander; Tidak dipakai di 5 lineup): Hero Vexana di lineup Minotaur tidak berubah. Yang di-buff commander Vexana: 13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold, +17 Gold), di samping hadiah ekstra I Want All of Them! di 3 Go Go Box itu. Jadi Vexana kini commander ekonomi awal yang kuat. Catatan: di file game 13 Gold ada di skill Lv 2 "Unrestricted", jadi bonus ini kemungkinan baru aktif setelah Vexana naik level itu (belum dicek in-game).
+- **Buff commander, bukan hero** — <img src="img/Atlas_HeroHeadIcon_Skin_New03_MC/HeroHead45171.png" width="28" alt="Vexana"> **Vexana** (Commander; Tidak dipakai di 5 lineup): Hero Vexana di lineup Minotaur tidak berubah. Yang di-buff commander Vexana: 13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold, +17 Gold), di samping hadiah ekstra I Want All of Them! di 3 Go Go Box itu. Jadi Vexana kini commander ekonomi awal yang kuat. Bonus ini aktif sejak Commander bintang 1 (skill Lv 1 I Want All of Them!); rekaman 31 Okt: +10 Gold di I-4, II-6, dan III-6.
 
 _Tidak berdampak ke 5 lineup ini: Layla (hero), Novaria (hero), Thamuz (hero), Layla (commander), Johnson (commander), Lukas (commander), Echomancer (sinergi), Turret of Guardians (Go Go Card)._
+
+## Dampak Penyesuaian Keseimbangan 28/10
+
+_Patch note server 28 Oktober (dicatat di server_patch.json; angka di bawah dibaca dari S7.json). Peringkat tidak berubah: 5 lineup ini tidak memakai commander Lukas, Dyrroth, atau Lunox, dan hanya lineup Kalea yang memakai Yin._
+
+- **Buff kecil untuk lineup Kalea** — <img src="img/Atlas_HeroHeadIcon_S7/HeroHead113.png" width="28" alt="Yin"> **Yin** (pengisi; Lineup: #5 Kalea): Hybrid ATK ★2 250 → 275 dan ★3 370 → 410 (+10%). Yin hanya pengisi Dragon Altar di lineup ini, jadi jaraknya ke lineup lain tidak berubah.
+- **Buff commander ekonomi** — <img src="img/Atlas_HeroHeadIcon_New_MC/HeroHead47131.png" width="28" alt="Lukas"> **Lukas** (Commander; Tidak dipakai di 5 lineup): Hybrid ATK Makhluk Suci ★2: 165 → 145; Kelipatan acak Gold saat Hero masuk altar: 2X–3X → 3X–4X. Gold dari altar naik, Makhluk Suci ★2 sedikit melemah.
+- **Buff commander** — <img src="img/Atlas_HeroHeadIcon_New_MC/HeroHead47181.png" width="28" alt="Dyrroth"> **Dyrroth** (Commander; Tidak dipakai di 5 lineup): EXP Commander per lahapan: 3 → 4; Lahapan yang memberi 2 Hero setiap selesai melahap: 2 → 1 kali.
+- **Nerf commander** — <img src="img/Atlas_HeroHeadIcon_New_MC/HeroHead45226.png" width="28" alt="Lunox"> **Lunox** (Commander; Tidak dipakai di 5 lineup): Jumlah Hero dengan Blessing: 3 → 2; Perolehan Gold: 6 → 4. Angka 3 Hero di file game ada di Power of Order (3 Hero acak dari Sinergi yang diberikan skill-nya), bukan di Power of Chaos; belum dicek in-game. Lineup SPECTRE + Starbelle dengan commander Lunox ikut melemah.
+
+_Tidak berdampak ke 5 lineup ini: Forbidden Power (Go Go Card)._
 
 ## Mekanik penting: crystal, stok, dan peluang
 
@@ -517,7 +528,7 @@ _C = carry, T = tank (target bintang dari layar Rekomendasi Lineup)._
 
 ## Catatan data dan asumsi
 
-- Sumber angka: S7.json versi game 1.3.24.344.1, Season 7 "Chrono Echoes", termasuk perubahan server Patch 7.2 dan Patch 20/10 (server_patch.json).
+- Sumber angka: S7.json versi game 1.3.24.344.1, Season 7 "Chrono Echoes", termasuk perubahan server Patch 7.2 dan Patch 20/10 dan Patch 28/10 (server_patch.json).
 - Hero, sinergi, dan Go Go Card di screenshot Rekomendasi Lineup dikenali dengan mencocokkan potret ke ikon asli dari file game. Kartu Badge/Blessing di lineup Luo Yi dan Minotaur dikonfirmasi dari screenshot Rekomendasi Go Go Card.
 - Aturan 1 crystal Pilihan aktif berasal dari pengalaman bermain; logikanya ada di kode client, bukan di tabel data.
 - Angka build adalah perkiraan: semua bonus persen dianggap dijumlahkan dari ATK/HP dasar, karena urutan penumpukannya tidak tertulis di file game.

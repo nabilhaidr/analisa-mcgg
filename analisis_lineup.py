@@ -122,7 +122,6 @@ BADANG = H["Badang"]["skills"][0]
 B_OLD, B_NEW = (next(a for a in BADANG[k] if a["label"] == "Peningkatan DMG")["values"] for k in ("attributes", "attributes_server"))
 B_HIT = atk("Badang", 2) * int(B_OLD[1].rstrip("%")) / 100  # one ★2 counter-punch
 LUNOX_PCT = (stat("Lunox", 2, "Magic ATK") / stat("Lunox", 2, "Magic ATK", server=False) - 1) * 100
-VEXANA_GOLD = next(s for s in C["Vexana"]["skills"] if s["skill"]["name"] == "Unrestricted")
 PATCH_IMPACT = [  # (hero or commander, chip label, lineup ids, box class, title, text)
     ("Badang", "carry ★2", ["kalea"], "bad", "Nerf terbesar untuk lineup-mu",
      f"Peluang meninju balik saat menerima DMG 50% → 25% (semua bintang). Di ★2 satu tinju balik = {B_OLD[1]} ATK ≈ {num(B_HIT)} Physical DMG, "
@@ -138,14 +137,38 @@ PATCH_IMPACT = [  # (hero or commander, chip label, lineup ids, box class, title
     ("Vexana", "Commander", [], "good", "Buff commander, bukan hero",
      "Hero Vexana di lineup Minotaur tidak berubah. Yang di-buff commander Vexana: 13 Gold di babak Go Go Box pertama → 10 Gold di tiap "
      "3 babak Go Go Box pertama (total 30 Gold, +17 Gold), di samping hadiah ekstra I Want All of Them! di 3 Go Go Box itu. Jadi Vexana kini "
-     "commander ekonomi awal yang kuat. "
-     f"Catatan: di file game 13 Gold ada di skill Lv {VEXANA_GOLD['from_level']} \"Unrestricted\", jadi bonus ini kemungkinan baru aktif "
-     "setelah Vexana naik level itu (belum dicek in-game)."),
+     "commander ekonomi awal yang kuat. Bonus ini aktif sejak Commander bintang 1 (skill Lv 1 I Want All of Them!); rekaman 31 Okt: "
+     "+10 Gold di I-4, II-6, dan III-6."),
 ]
 KIND_LABEL = {"Hero": "hero", "Commander": "commander", "Skill hero": "skill hero", "Sinergi": "sinergi", "Go Go Card": "Go Go Card"}
 OTHER_2010 = list(dict.fromkeys(
     f"{c['target'].split(' / ')[0]} ({KIND_LABEL.get(c['kind'], c['kind'])})" for c in P2010["changes"]
     if c["target"].split(" / ")[0] not in {"Badang", "Lunox", "Irithel", "Vexana"}))
+
+
+# ------------------------------------------------------------------ server balance patch 28/10
+P2810 = next(p for p in d["server_patches"] if p["patch"] == "28/10")
+
+
+def changes_2810(name):
+    return "; ".join(c["text"] for c in P2810["changes"] if c["target"].split(" / ")[0] == name) + "."
+
+
+PATCH_IMPACT_2810 = [
+    ("Yin", "pengisi", ["kalea"], "good", "Buff kecil untuk lineup Kalea",
+     f"Hybrid ATK ★2 {change('Yin', 2, 'Magic ATK')} dan ★3 {change('Yin', 3, 'Magic ATK')} (+10%). Yin hanya pengisi Dragon Altar di lineup "
+     "ini, jadi jaraknya ke lineup lain tidak berubah."),
+    ("Lukas", "Commander", [], "good", "Buff commander ekonomi", changes_2810("Lukas") + " Gold dari altar naik, Makhluk Suci ★2 sedikit melemah."),
+    ("Dyrroth", "Commander", [], "good", "Buff commander", changes_2810("Dyrroth")),
+    ("Lunox", "Commander", [], "bad", "Nerf commander",
+     changes_2810("Lunox") + " Angka 3 Hero di file game ada di Power of Order (3 Hero acak dari Sinergi yang diberikan skill-nya), bukan di "
+     "Power of Chaos; belum dicek in-game. Lineup SPECTRE + Starbelle dengan commander Lunox ikut melemah."),
+]
+PATCH_LEAD_2810 = ("Patch note server 28 Oktober (dicatat di server_patch.json; angka di bawah dibaca dari S7.json). Peringkat tidak berubah: "
+                   "5 lineup ini tidak memakai commander Lukas, Dyrroth, atau Lunox, dan hanya lineup Kalea yang memakai Yin.")
+OTHER_2810 = list(dict.fromkeys(
+    f"{c['target']} ({KIND_LABEL.get(c['kind'], c['kind'])})" for c in P2810["changes"]
+    if c["target"].split(" / ")[0] not in {x[0] for x in PATCH_IMPACT_2810}))
 
 # ------------------------------------------------------------------ the five lineups, in the order of the no-ultra ranking
 LINEUPS = [
@@ -479,17 +502,24 @@ def impact_lineups(ids):
     return "Lineup: " + ", ".join(f"#{BY_ID[i]['rank']} {BY_ID[i]['commander']}" for i in ids) if ids else "Tidak dipakai di 5 lineup"
 
 
+PATCH_SECTIONS = [("patch2010", "20/10", PATCH_LEAD, PATCH_IMPACT, OTHER_2010),
+                  ("patch2810", "28/10", PATCH_LEAD_2810, PATCH_IMPACT_2810, OTHER_2810)]
+
+
 def patch_html():
-    boxes = []
-    for name, label, ids, cls, title, text in PATCH_IMPACT:
-        chip = (f'<span class="hero">{img(C[name]["icon"], "hi", name)}<span><b>{e(name)}</b><small>Commander</small></span></span>'
-                if label == "Commander" else hero_chip(name, label))
-        links = ", ".join(f'<a href="#{i}">#{BY_ID[i]["rank"]} {e(BY_ID[i]["commander"])}</a>' for i in ids)
-        boxes.append(f'<div class="box {cls}"><h4>{e(title)}</h4><p>{chip}</p>'
-                     f'<p class="small muted">{("Lineup: " + links) if ids else "Tidak dipakai di 5 lineup"}</p><p>{e(text)}</p></div>')
-    return (f'<section id="patch2010"><h2>Dampak Penyesuaian Keseimbangan 20/10</h2><p class="muted">{e(PATCH_LEAD)}</p>'
-            f'<div class="grid3">{"".join(boxes)}</div>'
-            f'<p class="muted small">Tidak berdampak ke 5 lineup ini: {e(", ".join(OTHER_2010))}.</p></section>')
+    out = []
+    for section, patch, lead, impact, other in PATCH_SECTIONS:
+        boxes = []
+        for name, label, ids, cls, title, text in impact:
+            chip = (f'<span class="hero">{img(C[name]["icon"], "hi", name)}<span><b>{e(name)}</b><small>Commander</small></span></span>'
+                    if label == "Commander" else hero_chip(name, label))
+            links = ", ".join(f'<a href="#{i}">#{BY_ID[i]["rank"]} {e(BY_ID[i]["commander"])}</a>' for i in ids)
+            boxes.append(f'<div class="box {cls}"><h4>{e(title)}</h4><p>{chip}</p>'
+                         f'<p class="small muted">{("Lineup: " + links) if ids else "Tidak dipakai di 5 lineup"}</p><p>{e(text)}</p></div>')
+        out.append(f'<section id="{section}"><h2>Dampak Penyesuaian Keseimbangan {patch}</h2><p class="muted">{e(lead)}</p>'
+                   f'<div class="grid3">{"".join(boxes)}</div>'
+                   f'<p class="muted small">Tidak berdampak ke 5 lineup ini: {e(", ".join(other))}.</p></section>')
+    return "".join(out)
 
 
 def page_html():
@@ -505,7 +535,7 @@ def page_html():
 <header>
   <h1>Analisis 5 Lineup Magic Chess: Go Go — Season {d['season']} "{e(d['info']['name'])}"</h1>
   <p class="meta">Versi game {e(d['game_version'])} · dibuat 20 Oktober 2026, diperbarui 21 Oktober 2026 (Penyesuaian 20/10) dari data game (S7.json) · gambar hero, sinergi, kartu, dan item dari file game</p>
-  <nav class="toc">{toc}<a href="#patch2010">Patch 20/10</a><a href="#mekanik">Mekanik crystal</a><a href="#pertandingan">Pertandingan 20 Okt</a><a href="#catatan">Catatan</a></nav>
+  <nav class="toc">{toc}<a href="#patch2010">Patch 20/10</a><a href="#patch2810">Patch 28/10</a><a href="#mekanik">Mekanik crystal</a><a href="#pertandingan">Pertandingan 20 Okt</a><a href="#catatan">Catatan</a></nav>
 </header>
 <main>
 <section id="ringkasan">
@@ -517,7 +547,7 @@ def page_html():
   </div>
   <h3>Peringkat tanpa ultra</h3>
   <div class="scroll"><table class="list"><tr><th>#</th><th>Lineup</th><th>Commander</th><th>Crystal wajib</th><th>Level</th><th>Konsistensi</th><th>Puncak (dengan ultra)</th></tr>{rank_rows}</table></div>
-  <p class="muted">Selisih kekuatan #2 sampai #4 kecil; pilihannya lebih ditentukan hero yang sedang banyak diambil pemain lain. #3 (Kagura) tidak memakai Karina maupun Hilda, cocok saat lobby penuh pemain Astro. Penyesuaian 20/10 tidak mengubah peringkat (<a href="#patch2010">lihat dampaknya</a>).</p>
+  <p class="muted">Selisih kekuatan #2 sampai #4 kecil; pilihannya lebih ditentukan hero yang sedang banyak diambil pemain lain. #3 (Kagura) tidak memakai Karina maupun Hilda, cocok saat lobby penuh pemain Astro. Penyesuaian <a href="#patch2010">20/10</a> dan <a href="#patch2810">28/10</a> tidak mengubah peringkat.</p>
 </section>
 {patch_html()}
 <section id="mekanik"><h2>Mekanik penting: crystal, stok, dan peluang</h2>{ul(MECHANICS, "")}</section>
@@ -682,13 +712,14 @@ def page_md():
         lu = BY_ID[i]
         out.append(f"| {lu['rank']} | {lu['name']} | {mimg(C[lu['commander']]['icon'], 24, lu['commander'])} {lu['commander']} | "
                    f"{short_need(lu)} | {lvl} | {kons} | {peak} |")
-    out += ["", "_Selisih kekuatan #2 sampai #4 kecil; pilihannya lebih ditentukan hero yang sedang banyak diambil pemain lain._", "",
-            "## Dampak Penyesuaian Keseimbangan 20/10", "", f"_{PATCH_LEAD}_", ""]
-    for name, label, ids, _, title, text in PATCH_IMPACT:
-        icon = C[name]["icon"] if label == "Commander" else H[name]["icon"]
-        out.append(f"- **{title}** — {mimg(icon, 28, name)} **{name}** ({label}; {impact_lineups(ids)}): {text}")
-    out += ["", f"_Tidak berdampak ke 5 lineup ini: {', '.join(OTHER_2010)}._", "",
-            "## Mekanik penting: crystal, stok, dan peluang", ""] + [f"- {x}" for x in MECHANICS] + ["", "---", ""]
+    out += ["", "_Selisih kekuatan #2 sampai #4 kecil; pilihannya lebih ditentukan hero yang sedang banyak diambil pemain lain._", ""]
+    for _, patch, lead, impact, other in PATCH_SECTIONS:
+        out += [f"## Dampak Penyesuaian Keseimbangan {patch}", "", f"_{lead}_", ""]
+        for name, label, ids, _, title, text in impact:
+            icon = C[name]["icon"] if label == "Commander" else H[name]["icon"]
+            out.append(f"- **{title}** — {mimg(icon, 28, name)} **{name}** ({label}; {impact_lineups(ids)}): {text}")
+        out += ["", f"_Tidak berdampak ke 5 lineup ini: {', '.join(other)}._", ""]
+    out += ["## Mekanik penting: crystal, stok, dan peluang", ""] + [f"- {x}" for x in MECHANICS] + ["", "---", ""]
     for lu in LINEUPS:
         out += md_lineup(lu)
     out += ["## Pelajaran dari pertandingan 20 Oktober", ""] + [f"- {x}" for x in MATCH]

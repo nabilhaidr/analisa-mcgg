@@ -70,6 +70,21 @@ Konten baru di patch yang sama sudah ada di laporan: 8 Go Go Card sinergi Role b
 Whirl of Carnage, Hail of Shots, Star Chorus, Shrouded Blade, Critical Spellcraft), Equipment Reforger, Chrono Wanderer
 (Layla, Novaria), revamp Lukas, Vexana's Power, Novel Equipment 3 Equipment, Magic Surge 100% Mana.
 
+## Toko Spirit Sand (31 Okt, 54 layar toko dari 3 pertandingan)
+
+Semua 11 item terlihat dan harganya cocok dengan `special_store`. Kenaikan baris "ATK/HP rekan meningkat sebesar X%" setelah membeli:
+
+| Item | Kenaikan in-game | Contoh screenshot | Data |
+|---|---|---|---|
+| ATK Rekan +1% | +1 | 1903→1904 (0→1), 1916→1917 (10→11) | 1 stack |
+| ATK Rekan +2% | **+3** | 1908→1909 (1→4), 1923→1924 (14→17) | 3 stack |
+| ATK Rekan +3% | **+5** | 1914→1915 (5→10), ponsel 03-35-48→03-35-54 (1→6) | 5 stack |
+| HP Rekan +1% | +1 | 1917→1918 (4→5), ponsel 03-38-09→03-38-12 (5→6) | 1 stack |
+| HP Rekan +2% | +2 | 1909→1910 (0→2), 1925→1926 (5→7) | 2 stack |
+| HP Rekan +3% | +3 | ponsel 03-39-17→03-39-21 (6→9) | 3 stack |
+
+Harga merah 1 Equipment Acak yang Diperkuat (80) tidak terbaca OCR dan dicek langsung di screenshot ponsel 03-38-09.
+
 ## Catatan
 
 - Aturan equipment aktif (`m_DropState`) disimpulkan dari data + screenshot (cocok 67/67), bukan dibaca dari kode game.

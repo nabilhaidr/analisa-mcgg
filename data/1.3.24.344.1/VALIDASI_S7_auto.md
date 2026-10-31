@@ -1,17 +1,18 @@
 # Validasi otomatis Season 7 (data 1.3.24.344.1)
 
-- Dibuat 2026-10-21T21:37:30 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
+- Dibuat 2026-10-31T04:58:30 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
 - **Selisih** = terbaca jelas tapi beda dengan data. **Cek manual** = kemungkinan salah baca OCR / panel di-scroll; lihat screenshot-nya.
 
 | Bagian | Layar | Selisih | Cek manual | Cakupan |
 |---|---|---|---|---|
 | Hero | 103 | 0 | 1 | 52 dari 52 hero toko punya screenshot Detail Hero |
-| Sinergi | 21 | 0 | 0 | 20 dari 22 sinergi punya screenshot Panduan Sinergi |
+| Sinergi | 22 | 0 | 1 | 20 dari 22 sinergi punya screenshot Panduan Sinergi |
 | Commander | 45 | 0 | 4 | 40 dari 40 commander punya screenshot detail; 35 nama terbaca di daftar commander |
 | Equipment | 134 | 0 | 6 | 110 dari 110 level equipment aktif punya screenshot panel detail |
 | Go Go Card | 58 | 0 | 4 | 199 dari 199 kartu aktif terlihat di screenshot Go Go Card |
 | Ensiklopedia | 15 | 0 | 2 | 15 screenshot dicocokkan dengan 8 tab Ensiklopedia |
-| Patch Note | 22 | 0 | 0 | 42 perubahan terbaca dari 22 screenshot patch note |
+| Toko Spirit Sand | 54 | 0 | 3 | 10 dari 11 item terlihat dengan harga; 11 pembelian sesuai stack data |
+| Patch Note | 27 | 0 | 0 | 49 perubahan terbaca dari 27 screenshot patch note |
 
 ## Selisih
 
@@ -22,6 +23,12 @@ Tidak ada.
 ### Hero (1)
 
 - `hero and synergies\Screenshot (1577).png`: Minotaur ★1 HP: game 030, data 2030
+
+### Sinergi (1)
+
+- `match\commander vexana\Screenshot_2026-10-31-04-15-45-812_com.mobilechess.mi.jpg`: SPECTRE: penjelasan beda
+  - game: menyebabkan ledakan. Setelah itu, Alpha Saat mendapatkan Hero SPECTRE memanggil Beta untuk mengejar lawan di sepanjang SPECTRE + Bintang 2 dengan harga yang retakan. Basic ATK Alpha juga menembakkan Force Wave tambahan. ditentukan untuk pertama kali 4 Alpha Bintang 1 bergabung menjadi Alpha Bintang 1 Gold atau 2 Gold 2, dan 4 Alpha Bintang 2 bergabung menjadi Alpha Bintang 3. 3 Gold atau 4 Gold 40% Skill Commander Dyrroth, Vale, dan Alice tidak bisa digunakan pada Alpha. 5 Gold Peluang refresh Alpha di Toko sama dengan Hero 5 5 Gold 400% Gold. t) 11 Saat pertarungan dimulai, endapatkan 1 level Bintang; Hero SPECTRE +400% HP Lihåt RékomendasiILineyp1 •
+  - data: Saat pertama kali mendapatkan Hero SPECTRE Bintang 2, kamu akan menerima Hero SPECTRE dengan harga yang lebih tinggi. Hero SPECTRE mendapatkan Peningkatan DMG.
 
 ### Commander (4)
 
@@ -73,6 +80,12 @@ Tidak ada.
 - `ensiklopedia\Screenshot (1787).png`: Ensiklopedia: angka game ['114', '1114'] tidak ada di data
   - game: oommanuer. 'Biaya Peningkatan Level 3 4 Gold yang @ 3 Dibutuhkan: 'DMG Commander @ 20 @ 32 @ 40 @ 54 10 9 (Maks) 74 DMG Commander: Setelah setiap babak, Commander yang menang memberikan sejumlah DMG ke Commander yang kalah. DMG bervariasi berdasarkan babak dan jumlah unit yang masih bertahan. DMG Commander = DMG Dasar Babak + Total Level Bintang Unit yang Masih Bertahan Babak 1-2 14 II-1 114 11-5 11-6 111-1 0>111-3 1114>111-6 tv-1>tv-3 >tv-6 V-1 •y V-5 DMG Dasar 3 5 6 7 11 13 14 15 Kasus Khusus: Unit non-Hero tertentu yang masih bertahan meningkatkan DMG Commander sebanyak 1. Jika babak berakhir seri, kedua belah pihak memberikan DMG satu sama Iain.
 
+### Toko Spirit Sand (3)
+
+- `match\spirit sand\Screenshot (1918).png`: HP rekan naik 1%, item yang dibeli ? memberi ? stack
+- `match\spirit sand\Screenshot_2026-10-31-03-33-32-699_com.mobilechess.mi.jpg`: ATK rekan naik 1%, item yang dibeli ? memberi ? stack
+- `match\spirit sand\Screenshot_2026-10-31-03-35-54-171_com.mobilechess.mi.jpg`: ATK rekan naik 5%, item yang dibeli ? memberi ? stack
+
 ## Patch note vs data
 
 | Item | Patch note | Status di data |
@@ -119,8 +132,16 @@ Tidak ada.
 | Badang | Saat menerima DMG, Badang berpeluang 50% >> 25% untuk meninju target satu kali. | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 | Badang | Pengali DMG Serangan Balik pada Bintang 3: 420% >> 800% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 | Turret of Guardians | Hybrid ATK Turret pada Bintang 3: 590 >> 530; HP Dasar Turret pada Bintang 3: 7.020 >> | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Dyrroth | Abyssal Favor: Dyrroth mendapatkan 3 >> 4 EXP Commander setiap kali melahap Hero. | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Dyrroth | Setiap selesai melahap 2 >> 1 kali, lahapan berikutnya memberikan 2 Hero yang memiliki | belum: data masih nilai lama (diterapkan server) · tercatat di server_patch.json |
+| Lunox | Power of Chaos - Jumlah Hero dengan Blessing: 3 >> 2 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Lunox | Power of Order - Perolehan Gold: 6 >> 4 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Yin | Hybrid ATK Dasar pada Bintang 2/3: 250/370 >> 275/410 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Forbidden Power | Mendapatkan 25% >> 30% Peningkatan DMG. | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Lukas | Hybrid ATK Makhluk Suci Bintang 2: 165 >> 145. | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 
 ## Belum ada screenshot
 
 - Hero: Tanpa screenshot: Alpha (panggilan), Gatotkaca (panggilan), Layla (panggilan), Moskov (panggilan), Novaria (panggilan), X.Borg (panggilan)
 - Sinergi: Tanpa screenshot: Chrono Wanderer, Fan yang Bersorak
+- Toko Spirit Sand: Tidak terbaca harganya (angka merah): 1 Equipment Acak yang Diperkuat

@@ -70,7 +70,7 @@ ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 # is the [img=27] icon used in the Mistbender text (DescriptionIconShow 27). m_MaximumPurchase 999 = no limit.
 STORE_CURRENCY_ICON, STORE_UNLIMITED = 27, 999
 STACK_FORMULA = 10021  # m_Calculate: attribute = stacks of effect FPara1 x FPara3 (Echomancer 0.03% per Echo Energy)
-STORE_VERIFIED = set()  # seasons whose Toko Spirit Sand was checked against in-game screenshots
+STORE_VERIFIED = {7}  # seasons whose Toko Spirit Sand was checked against in-game screenshots
 # Orbs per Go Go Box (heroes not counted). Not in a table: seen in every box of the 2026-10-21 match, also with 2 players left.
 GO_GO_BOX_ORBS = 8
 
@@ -545,7 +545,8 @@ class Season:
             named = re.search(r"\+(\d+(?:\.\d+)?)%", name)
             if named and effect.get("percent") and float(named.group(1)) not in effect["percent"]:
                 notes.append(f"Nama item menyebut +{named.group(1)}%, tapi data efek memberi {effect['stacks']} stack "
-                             f"(+{fmt_num(effect['percent'][0])}%).")
+                             f"(+{fmt_num(effect['percent'][0])}%)."
+                             + (" Cocok dengan kenaikan baris ATK rekan di layar toko." if self.sid in STORE_VERIFIED else ""))
             if effect["cost"] and effect["cost"] != r.get("m_ChipNum"):
                 notes.append(f"Efek pembayaran memotong {effect['cost']} Spirit Sand, bukan {r.get('m_ChipNum')}.")
             limit = r.get("m_MaximumPurchase", 0)
@@ -860,7 +861,8 @@ def apply_server_patches(d, sid, path=SERVER_PATCH):
                     continue
                 pairs = ch.get("replace", [])
                 text = ch.get("text") or "; ".join(f"{a} → {b}" for a, b in pairs)
-                updated = replace_text(base.get("description", ""), pairs) if base else None
+                # a later patch continues an earlier one on the same skill (Abyssal Favor 7.2 then 28/10)
+                updated = replace_text(base.get("description_server") or base.get("description", ""), pairs) if base else None
                 attrs = server_attributes(base.get("attributes") or [], ch["attributes"]) if base and ch.get("attributes") else None
                 if not base:
                     status = f"{kind.lower()} tidak ada di data"
