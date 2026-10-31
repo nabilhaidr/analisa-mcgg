@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 30 Okt 04-12
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 05:37_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:19_
 
 - **Peringkat:** 2
 - **Pertandingan:** ID 383580206694375844 · poin 4421 (+126)
@@ -21,8 +21,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 05:37_
 | 5 | alanggg | 9 | Lancelot, Lolita, Franco, Dyrroth, Fanny, Karrie, Lunox, Edith, Miya | Dyrroth's Power, Legacy of Valor, Prime Selection | Kishin 5, Starbelle 4, Dauntless 2, Marksman 2 |
 | 6 | kallkoll | 8 | Alice, Lolita, Gord, Paquito, Alpha, Fanny, Edith, Zhuxin, Vale | Zilong's Power, Payday, Prime Selection | SPECTRE 4, Dauntless 2, Starbelle 4, Mage 3 |
 | 7 | mas Ho | 9 | Makhluk Suci, Layla, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Fanny | Lukas's Power, Glittering Jewels II, Glittering Jewels Ⅰ | Chrono Wanderer 1, Marksman 2, Starbelle 4, Echomancer 3, Defender 2, Swiftblade 2 |
-| 8 | ![nama baris 8 (tidak terbaca OCR)](match_30_Okt_04_12/nama_8.png) | 6 | Eudora, Layla, Yin, Franco, Natalia, Harley, Vale | Moskov's Power | Chrono Wanderer 1, Echomancer 3 |
+| 8 | シンデレラ | 6 | Eudora, Layla, Yin, Franco, Natalia, Harley, Vale | Moskov's Power | Chrono Wanderer 1, Echomancer 3 |
 
 ## Catatan metode
 
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.
+- Nama yang tidak dikenal OCR (huruf Jepang, huruf hias) dibaca dengan mata dari layar hasil (catatan_nama.json): シンデレラ.

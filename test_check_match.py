@@ -123,12 +123,8 @@ class LayarHasilSementara(unittest.TestCase):
     def test_baris_tanpa_peringkat_bukan_kesalahan(self):
         self.assertEqual(check_match.check(DATA / "MATCH_25_Okt_23_49.md", SEASONS)[0], [])
 
-    def test_baris_di_atas_baris_sendiri_boleh_tanpa_peringkat_walau_ada_poin(self):  # 31 Okt 20:13: pedang + "4791 +28"
-        with tempfile.TemporaryDirectory() as tmp:
-            md = copy_report("24_Okt_02_51", Path(tmp),
-                             md_edits=[(r"^\| 1 \| nagita", "| - | nagita")],
-                             html_edits=[(r"<td><b>1</b></td><td>nagita", "<td><b>-</b></td><td>nagita")])
-            errors = check_match.check(md, SEASONS)[0]
+    def test_baris_di_atas_baris_sendiri_boleh_tanpa_peringkat_walau_ada_poin(self):  # 24 Okt 02:51: 3 pedang + "2277 (+84)"
+        errors = check_match.check(DATA / "MATCH_24_Okt_02_51.md", SEASONS)[0]
         self.assertEqual([e for e in errors if "tanpa peringkat" in e], [])
 
     def test_baris_di_bawah_baris_sendiri_tanpa_peringkat_jadi_kesalahan(self):  # dia tersingkir lebih dulu, jadi berperingkat
@@ -162,11 +158,27 @@ class ModeClassic(unittest.TestCase):
         self.assertEqual(len(self.poin_warnings(note=False)), 1)
 
 
+class HealingFountain(unittest.TestCase):
+    """Kartu ini memulihkan 3 HP tiap babak, jadi HP pemegangnya boleh naik; pemain lain tidak."""
+
+    def test_kenaikan_sah(self):
+        self.assertEqual(check_match.rises([7, 10, None, 16], heal=True), False)
+
+    def test_kenaikan_lebih_dari_3_per_babak_tetap_salah(self):
+        self.assertEqual(check_match.rises([7, 11], heal=True), True)
+
+    def test_tanpa_kartu_hp_tidak_boleh_naik(self):
+        self.assertEqual(check_match.rises([7, 10], heal=False), True)
+
+    def test_hp_turun_selalu_boleh(self):
+        self.assertEqual(check_match.rises([40, 12, None, 3], heal=False), False)
+
+
 class BarisRingkasan(unittest.TestCase):
     # dibaca tangan dari laporannya: kotak Peringkat, HP akhir, Babak terbaca, dan nama di papan akhir
     WANT = {
         "24_Okt_02_51": {"pkt": "4", "HP": "0", "babak": "I-1–IV-5", "n": "21", "kalah": "8", "nama": "8/8"},
-        "24_Okt_15_06": {"pkt": "4", "HP": "0", "babak": "I-1–IV-5", "n": "21", "kalah": "7", "nama": "7/8"},  # peringkat 1 = gambar
+        "24_Okt_15_06": {"pkt": "4", "HP": "0", "babak": "I-1–IV-5", "n": "21", "kalah": "7", "nama": "8/8"},
         "21_Okt_15_38_Minotaur": {"pkt": "1", "HP": "32", "babak": "I-1–V-1", "n": "23", "kalah": "7", "nama": "8/8"},
     }
 

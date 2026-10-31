@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 15-06
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:13_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:04_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -56,9 +56,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:13_
 | MMCAK-Abdlkhlg | 100 | 100 | 100 | 100 | 93 | 93 | 93 | 93 | 83 | 83 | 83 | 83 | 70 | 70 | 49 | 49 | 34 | 8 |  |  |  |
 | ENG | 100 | 100 | 94 | 88 | 83 | 70 |  |  |  | 46 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 32 | 16 |
 | BAYYY | 100 | 100 | 93 | 87 | 80 | 74 | 65 | 65 | 55 | 39 | 23 | 12 | 12 | 12 | 12 | 7 |  |  |  |  |  |
-| MB·ZamM |  | 100 | 94 |  |  | 71 |  |  |  | 62 | 35 |  | 17 |  | 2 | 2 |  |  |  |  |  |
-
-Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat - (nama berupa gambar).
+| MB·ZamM |  | 100 | 94 |  |  | 71 |  |  |  | 62 | 35 | 17 | 17 |  | 2 | 2 |  |  |  |  |  |
+| —X— |  | 100 | 100 | 100 | 100 | 91 | 77 | 77 |  | 57 |  | 45 | 45 | 45 | 45 | 30 | 30 | 13 | 13 | 13 | 13 |
 
 ## Kejadian
 
@@ -76,7 +75,7 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| - | ![nama baris 1 (tidak terbaca OCR)](match_24_Okt_15_06/nama_1.png) | 9 | Fanny, Layla, Thamuz, Lolita, Gusion, Edith, Miya, Natalia, Cici | Wanwan's Power, Dark Blade, Starbelle's Badge | Starbelle 5, Swiftblade 3, Chrono Wanderer 1, Marksman 2, Echomancer 2, Weapon Master 2 |
+| - | —X— | 9 | Fanny, Layla, Thamuz, Lolita, Gusion, Edith, Miya, Natalia, Cici | Wanwan's Power, Dark Blade, Starbelle's Badge | Starbelle 5, Swiftblade 3, Chrono Wanderer 1, Marksman 2, Echomancer 2, Weapon Master 2 |
 | - | GeminiGirL | 9 | Lancelot, Melissa, Karrie, Lunox, Franco, Kadita, Hilda, Harley, Dyrroth | Kalea's Power, Glittering Jewels Ⅰ, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | Kishin 5, Phasewarper 3, Shadeweaver 2, Marksman 2, Dauntless 2 |
 | - | ENG | 9 | Nana, Layla, Lancelot, Thamuz, Melissa, Novaria, Karrie, Lunox, Franco | Moskov's Power, Jump the Gun+, Emergency Rift | Mistbender 1, Stargazer 3, Chrono Wanderer 2, Marksman 3, Kishin 4, Weapon Master 2 |
 | 4 | CinCoeg (kamu) | 9 | Fanny, Layla, Thamuz, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici, Lolita, Sora | Fanny's Power, Dimensional Shot Ⅰ / Ⅱ, Fully Loaded | Starbelle 6, Swiftblade 2, Chrono Wanderer 1, Marksman 2, Echomancer 5, Weapon Master 2, Defender 2, Mage 2 |
@@ -88,7 +87,7 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 ## Catatan metode
 
 - Tata letak: ponsel; frame tiap 5 detik; OCR: windows.
-- HP dari panjang bar: HP = (panjang − 7.9) / 0.945, dikalibrasi dari 939 angka HP yang terbaca OCR.
+- HP dari panjang bar: HP = (panjang − 7.9) / 0.945, dikalibrasi dari 1056 angka HP yang terbaca OCR.
 - Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
 - Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil (harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak Gold saja (rapid, ambang skor rendah agar angka satu digit ikut terbaca).
@@ -97,3 +96,4 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).
 - Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.
+- Nama yang tidak dikenal OCR (huruf Jepang, huruf hias) dibaca dengan mata dari layar hasil (catatan_nama.json): —X—.

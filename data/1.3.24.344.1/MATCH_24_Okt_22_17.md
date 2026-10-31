@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-17
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:16_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:06_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -19,7 +19,6 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:16_
 - Level 9 pertama terlihat di III-6.
 - Rata-rata Gold di awal babak Fase II: 30.
 - Rata-rata Gold di awal babak Fase III: 44.
-- Tereliminasi: OlgaXFANLEE (III-6).
 
 ## Timeline (CinCoeg)
 
@@ -47,14 +46,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:16_
 
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| KingCremona? | 100 | 100 | 100 | 100 | 92 | 81 | 72 | 72 | 72 | 72 | 72 | 58 | 46 | 46 | 46 | 46 | 46 |
 | PRIA-SOLO | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 83 | 73 | 73 | 73 | 65 | 65 | 65 | 47 | 26 |
 | ZedSmurf | 100 | 100 | 93 | 84 | 84 | 84 | 84 | 84 | 72 | 72 | 57 | 57 | 57 | 57 | 57 | 41 | 25 |
 | azonkkk | 100 | 100 | 94 | 91 | 84 | 84 | 84 | 84 | 84 | 73 | 65 | 65 | 48 | 48 | 26 | 26 | 26 |
+| KingCremona? | 100 | 100 | 100 | 100 | 92 | 81 | 72 | 72 | 72 | 72 | 72 | 58 | 46 | 46 | 46 | 46 | 46 |
 | NelfiGusrianti | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 |
-| CinCoeg | 100 | 100 | 100 | 100 | 100 | 91 | 85 | 85 | 74 | 74 | 74 | 63 | 55 | 55 | 38 | 18 | 3 |
 | dikz magnus | 100 | 100 | 100 | 96 | 91 | 82 | 70 | 70 | 70 | 63 | 47 | 32 | 32 | 32 | 32 | 11 | 11 |
-| OlgaXFANLEE | 100 | 100 | 93 | 85 | 76 | 69 | 56 | 56 | 48 | 32 | 22 | 11 | 11 | 11 | 11 | 0 |  |
+| CinCoeg | 100 | 100 | 100 | 100 | 100 | 91 | 85 | 85 | 74 | 74 | 74 | 63 | 55 | 55 | 38 | 18 | 3 |
+| OlgaXFANLEE | 100 | 100 | 93 | 85 | 76 | 69 | 56 | 56 | 48 | 32 | 22 | 11 | 11 | 14 | 14 | 11 | 11 |
 
 ## Kejadian
 

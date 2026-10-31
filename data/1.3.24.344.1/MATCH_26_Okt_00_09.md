@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 26 Okt 00-09
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:11_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:18_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -49,14 +49,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:11_
 
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 | IV-3 | IV-4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| RR10 | 100 | 100 | 92 | 88 | 88 | 80 | 74 | 74 | 68 | 68 | 59 | 59 | 48 | 48 | 48 | 48 | 48 | 48 | 48 | 48 |
 | XXMAATT | 100 | 100 | 100 | 94 | 89 | 89 | 80 | 80 | 68 | 58 | 51 | 51 | 51 | 51 | 51 | 51 | 51 | 33 | 7 | 7 |
-| Via Riana | 100 | 100 | 96 | 96 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 71 | 53 | 29 | 4 |  |  |
+| RR10 | 100 | 100 | 92 | 88 | 88 | 80 | 74 | 74 | 68 | 68 | 59 | 59 | 48 | 48 | 48 | 48 | 48 | 48 | 48 | 48 |
+| CUMABISAHAMUI | 100 | 100 | 100 | 95 | 90 | 81 | 71 | 71 | 71 | 71 | 60 | 47 | 39 | 39 | 21 | 2 | 2 | 2 | 2 | 2 |
 | CinCoeg | 100 | 100 | 95 | 87 | 87 | 87 | 87 | 87 | 77 | 64 | 54 | 40 | 22 | 22 | 22 | 5 | 5 | 5 | 5 | 5 |
+| Via Riana | 100 | 100 | 96 | 96 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 71 | 53 | 29 | 4 |  |  |
 | Xuu | 100 | 100 | 93 | 93 | 93 | 85 | 75 | 75 | 75 | 63 | 63 | 63 | 63 | 63 | 47 | 24 | 3 |  |  |  |
 | KINGBALDWIN | 100 | 100 | 100 | 100 | 95 | 87 | 87 | 87 | 75 | 64 | 64 | 56 | 42 | 42 | 42 | 42 | 19 | 19 |  |  |
-| CUMABISAHAMUI | 100 | 100 | 100 | 95 | 90 | 81 | 71 | 71 | 71 | 71 | 60 | 47 | 39 | 39 | 21 | 2 | 2 | 2 | 2 | 2 |
-| arkana | 100 | 100 | 100 | 100 | 100 | 100 | 100 |  |  |  |  | 92 |  |  | 92 | 73 | 51 | 31 |  | 5 |
+| arkana | 100 | 100 | 100 | 100 | 100 | 100 | 100 |  |  |  |  | 92 |  |  | 92 | 73 | 51 | 31 | 5 | 5 |
 
 ## Kejadian
 
@@ -75,9 +75,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:11_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | XXMAATT | 9 | Lancelot, X.Borg, Karrie, Lunox, Thamuz, Melissa, Franco, Kadita, Harley | Nana's Power, Premium Client I, Fully Loaded | Kishin 4, Phasewarper 3, Chrono Wanderer 1, Dauntless 2, Marksman 2, Echomancer 2, Weapon Master 2, Shadeweaver 2 |
-| 2 | CUMABISAHAMUI | 10 | Alpha, Alice, Layla, Odette, Thamuz, Gord, Sora, Phoveus, Lolita | Cyclops' Power, Trust Fund, Talisman Unleashed | SPECTRE 4, Dauntless 2, Chrono Wanderer 1, Mage 2, Echomancer 2, Scavenger 2 |
-| 3 | RR10 | 10 | Fanny, Lolita, Irithel, Miya, Cici, Melissa, Sora, Edith, Angela | Diggie's Power, Fateful Dice, Starbelle's Badge | Starbelle 5, Marksman 3, Scavenger 2 |
+| - | XXMAATT | 9 | Lancelot, X.Borg, Karrie, Lunox, Thamuz, Melissa, Franco, Kadita, Harley | Nana's Power, Premium Client I, Fully Loaded | Kishin 4, Phasewarper 3, Chrono Wanderer 1, Dauntless 2, Marksman 2, Echomancer 2, Weapon Master 2, Shadeweaver 2 |
+| - | CUMABISAHAMUI | 10 | Alpha, Alice, Layla, Odette, Thamuz, Gord, Sora, Phoveus, Lolita | Cyclops' Power, Trust Fund, Talisman Unleashed | SPECTRE 4, Dauntless 2, Chrono Wanderer 1, Mage 2, Echomancer 2, Scavenger 2 |
+| - | RR10 | 10 | Fanny, Lolita, Irithel, Miya, Cici, Melissa, Sora, Edith, Angela | Diggie's Power, Fateful Dice, Starbelle's Badge | Starbelle 5, Marksman 3, Scavenger 2 |
 | 4 | CinCoeg (kamu) | 9 | Odette, Gord, Vexana, Irithel, Atlas, Karina, Hilda, Zhuxin, Minotaur | Minotaur's Power, Trust Fund, Purest Power Ⅱ | Astro Power 5, Mage 4, Enchanted Tales 2, Defender 2 |
 | 5 | arkana | 9 | Badang, Yin, Suyou, Aldous, Wanwan, Paquito, Yi Sun-shin, Dyrroth, Baxia | Ling's Power, Glittering Jewels II, Howling Wind | Bruiser 5, Dragon Altar 5, Mistbender 1 |
 | 6 | Via Riana | 9 | Lolita, Irithel, Karina, Edith, Fanny, Odette, Hilda, Miya, Zhuxin | Dyrroth's Power, Breath of Berserk Ⅱ, Payday | Starbelle 5, Dauntless 2, Astro Power 4, Marksman 2, Swiftblade 2, Mage 2 |
@@ -95,3 +95,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:11_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-4 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

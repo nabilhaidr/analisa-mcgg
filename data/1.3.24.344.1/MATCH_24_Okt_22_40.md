@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-40
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:05_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:08_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -48,13 +48,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:05_
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Lhmsyhh | 100 | 100 | 93 | 85 | 76 | 76 | 76 | 76 | 70 | 56 | 56 | 56 | 48 | 48 | 48 | 48 | 48 | 48 |
+| Sunshinev | 100 | 100 | 94 | 94 | 94 | 76 | 76 | 76 | 68 | 56 | 46 | 35 | 26 | 26 | 14 | 14 | 14 | 14 |
 | TRUEBLUES? | 100 | 100 | 100 | 91 | 84 | 78 | 69 | 69 | 54 | 54 | 46 | 46 | 46 | 46 | 46 | 46 | 46 | 46 |
-| CinCoeg | 100 | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 84 | 84 | 84 | 84 | 71 | 52 | 26 |
 | lap_Dung.29 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 90 | 90 | 90 | 90 | 90 | 71 | 49 | 23 |
+| CinCoeg | 100 | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 84 | 84 | 84 | 84 | 71 | 52 | 26 |
 | Laurent.Elias-16 | 100 | 100 | 95 | 95 | 95 | 95 | 95 | 95 | 95 | 83 | 70 | 59 | 59 | 59 | 45 | 25 | 6 | 6 |
-| Sunshinev | 100 | 100 | 94 | 94 | 94 | 76 | 76 | 76 | 68 | 56 | 46 | 35 |  | 26 | 14 | 14 | 14 | 14 |
+| tnnnnn | 100 | 100 | 92 | 83 | 77 | 68 | 60 | 60 | 49 | 40 | 40 | 25 | 25 | 25 | 25 | 25 | 17 | 17 |
 | saaaaa | 100 | 100 | 100 | 100 | 94 | 87 | 79 | 79 | 79 | 79 | 79 | 79 | 66 | 66 | 66 | 47 | 47 | 32 |
-| tnnnnn | 100 | 100 | 92 | 83 | 77 | 68 | 60 | 60 | 49 | 40 | 40 | 25 |  |  | 25 | 25 | 17 | 17 |
 
 ## Kejadian
 
@@ -70,13 +70,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:05_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | TRUEBLUES? | 9 | Nana, Lunox, Franco, Balmond, Eudora, Uranus, Alice, Karina, Mathilda | Lunox's Power, Magic Immersion Ⅰ, Premium Client II | Mistbender 2, Stargazer 5, Kishin 2, Dauntless 4, Dragoncaller 2 |
-| 2 | tnnnnn | 9 | X.Borg, Melissa, Lunox, Franco, Lancelot, Karrie, Kadita, Harley, Hylos | Nana's Power, Rock Solid, Shield of Fortune / Fortune+ | Chrono Wanderer 1, Dauntless 2, Shadeweaver 3, Marksman 2, Kishin 4, Phasewarper 3 |
-| 3 | Sunshinev | 9 | Gatotkaca, Thamuz, Karrie, Lunox, Sora, Franco, Dyrroth, Lancelot, Melissa | Nana's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Bruiser 2, Echomancer 2, Weapon Master 2, Kishin 5, Marksman 2 |
-| 4 | Laurent.Elias-16 | 9 | Franco, Johnny, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
-| 5 | lap_Dung.29 | 9 | Irithel, Edith, Miya, Cici, Fanny, Lolita, Karina, Hilda, Minotaur | Alucard's Power, Breath of Berserk Ⅰ, Divine Execution | Astro Power 4, Marksman 2, Starbelle 5, Defender 2, Swiftblade 2, Dauntless 2 |
-| 6 | saaaaa | 9 | Lancelot, Karrie, Lunox, Karina, Franco, Mathilda, Nana, Fanny, Angela | Alucard's Power, Uncertain Fortune, Shield of Fortune / Fortune+ | Kishin 5, Stargazer 4, Swiftblade 2, Mistbender 1 |
-| 7 | Lhmsyhh | 9 | Melissa, Irithel, Martis, Odette, Karrie, Hilda, Wanwan, Miya, Granger | Aurora's Power, Rogue's Aid, Astro Power's Blessing | Marksman 6, Astro Power 4 |
+| - | TRUEBLUES? | 9 | Nana, Lunox, Franco, Balmond, Eudora, Uranus, Alice, Karina, Mathilda | Lunox's Power, Magic Immersion Ⅰ, Premium Client II | Mistbender 2, Stargazer 5, Kishin 2, Dauntless 4, Dragoncaller 2 |
+| - | tnnnnn | 9 | X.Borg, Melissa, Lunox, Franco, Lancelot, Karrie, Kadita, Harley, Hylos | Nana's Power, Rock Solid, Shield of Fortune / Fortune+ | Chrono Wanderer 1, Dauntless 2, Shadeweaver 3, Marksman 2, Kishin 4, Phasewarper 3 |
+| - | Sunshinev | 9 | Gatotkaca, Thamuz, Karrie, Lunox, Sora, Franco, Dyrroth, Lancelot, Melissa | Nana's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Bruiser 2, Echomancer 2, Weapon Master 2, Kishin 5, Marksman 2 |
+| - | Laurent.Elias-16 | 9 | Franco, Johnny, Dyrroth, Phoveus, Lancelot, Melissa, Karrie, Lunox, Angela | Alice's Power, Jump the Gun+, Kishin's Blessing | Kishin 6, Scavenger 2, Marksman 2 |
+| - | lap_Dung.29 | 9 | Irithel, Edith, Miya, Cici, Fanny, Lolita, Karina, Hilda, Minotaur | Alucard's Power, Breath of Berserk Ⅰ, Divine Execution | Astro Power 4, Marksman 2, Starbelle 5, Defender 2, Swiftblade 2, Dauntless 2 |
+| - | saaaaa | 9 | Lancelot, Karrie, Lunox, Karina, Franco, Mathilda, Nana, Fanny, Angela | Alucard's Power, Uncertain Fortune, Shield of Fortune / Fortune+ | Kishin 5, Stargazer 4, Swiftblade 2, Mistbender 1 |
+| - | Lhmsyhh | 9 | Melissa, Irithel, Martis, Odette, Karrie, Hilda, Wanwan, Miya, Granger | Aurora's Power, Rogue's Aid, Astro Power's Blessing | Marksman 6, Astro Power 4 |
 | 8 | CinCoeg (kamu) | 9 | Layla, Sora, Tigreal, Edith, Natalia, Vale, Cici, Fanny, Thamuz | Fanny's Power, Purest Power Ⅰ, Last Resort | Chrono Wanderer 1, Echomancer 5, Defender 2, Starbelle 3, Swiftblade 2, Weapon Master 2 |
 
 ## Catatan metode
@@ -90,3 +90,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:05_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-2 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

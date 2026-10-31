@@ -1,9 +1,9 @@
 # Analisa Pertandingan — 31 Okt 02-51 PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:21_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:21_
 
 - **Peringkat:** 6
-- **HP akhir:** 12
+- **HP akhir:** 13
 - **Babak terbaca:** I-1 – IV-3 (19 babak), kehilangan HP di 7 babak
 - **Pertandingan:** ID 379934805957338890 · poin -
 - Pemain: CinCoeg
@@ -12,7 +12,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:21_
 
 - Peringkat akhir 6.
 - Rekaman berhenti di IV-3 sebelum pertandingan selesai.
-- HP hilang per fase: Fase I −6, Fase II −15, Fase III −44, Fase IV −23. Terbanyak di Fase III.
+- HP hilang per fase: Fase I −6, Fase II −15, Fase III −44, Fase IV −22. Terbanyak di Fase III.
 - 3 babak beruntun tanpa kehilangan HP (sampai III-5).
 - 2 kekalahan beruntun (sampai III-2).
 - Level 7 pertama terlihat di II-6.
@@ -42,8 +42,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:21_
 | III-4 | 51 | +0 tidak kehilangan HP | 28 | 8 |  |
 | III-5 | 51 | +0 tidak kehilangan HP | 39 | 8 |  |
 | III-6 | 51 | -16 kalah | 50 | 8 | Go Go Box |
-| IV-1 | 35 | -23 kalah | 61 | 9 |  |
-| IV-2 | 12 | - | 16 | 9 |  |
+| IV-1 | 35 | -22 kalah | 61 | 9 |  |
+| IV-2 | 13 | - | 16 | 9 |  |
 | IV-3 | - | - | 1 | 9 |  |
 
 ## HP semua pemain
@@ -52,11 +52,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:21_
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Vannah | 100 | 100 | 100 | 100 | 93 | 93 | 83 | 83 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 54 |  |
 | Hazelluna | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 84 | 76 | 76 | 76 | 76 | 76 | 57 | 41 | 21 |  |
-| CinCoeg | 100 | 100 | 94 | 94 | 94 | 86 | 86 | 86 | 79 | 79 | 79 | 67 | 51 | 51 | 51 | 51 | 35 | 12 |  |
+| CinCoeg | 100 | 100 | 94 | 94 | 94 | 86 | 86 | 86 | 79 | 79 | 79 | 67 | 51 | 51 | 51 | 51 | 35 | 13 |  |
 | Quanxi9s | 100 | 100 | 94 | 89 | 89 | 78 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 56 | 56 | 39 |
 | MullPolly&97 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 84 | 74 | 74 | 63 | 63 | 63 | 48 | 48 | 30 | 11 |  |
+| blackdevil46 | 100 | 100 | 100 | 93 | 85 | 76 | 64 | 64 | 55 | 43 | 33 | 18 | 4 | 4 | 4 | 4 | 4 | 4 |  |
 | PRAMUD969 | 100 | 100 | 100 | 96 | 87 | 87 | 78 | 78 | 78 | 78 | 64 | 52 | 35 | 35 | 35 | 25 | 25 | 25 |  |
-| blackdevil46 | 100 | 100 | 100 | 93 | 85 | 76 | 64 | 64 | 55 | 43 | 33 | 18 |  |  |  |  |  |  |  |
 | Yann_?(^_)?&#@$*% | 100 | 100 | 92 | 84 | 75 | 67 | 67 | 55 | 55 | 55 | 44 | 44 | 30 | 30 | 18 | 3 | 3 | 3 |  |
 
 ## Kejadian

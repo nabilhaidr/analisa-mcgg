@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-24
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:08_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:13_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -52,13 +52,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:08_
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 | IV-3 | IV-4 | IV-5 | IV-6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Assiur | 100 | 100 | 100 | 100 | 100 | 93 | 83 | 83 | 83 | 83 | 73 | 73 | 73 | 73 | 73 | 58 | 58 | 44 | 28 | 28 | 12 |  |
-| CinCoeg | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 86 | 86 | 86 | 70 | 70 | 70 | 53 | 53 | 37 | 37 | 37 | 37 | 15 |  |
 | Laurent.Elias-16 | 100 | 100 | 100 | 95 | 89 | 76 | 64 | 64 | 64 | 53 | 53 | 53 | 53 | 53 | 53 | 53 | 41 | 20 | 20 | 20 | 20 |  |
+| bachtimi | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 92 | 77 | 77 | 67 | 67 | 67 | 67 | 50 | 25 | 2 | 2 | 2 |  |
+| CinCoeg | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 86 | 86 | 86 | 70 | 70 | 70 | 53 | 53 | 37 | 37 | 37 | 37 | 15 |  |
 | Etiya bang | 100 | 100 | 93 | 86 | 80 | 80 | 80 | 80 | 80 | 80 | 80 | 80 | 61 | 61 | 61 | 43 | 28 | 28 | 11 | 11 |  |  |
-| bachtimi | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 92 | 77 | 77 | 67 | 67 | 67 | 67 | 50 | 25 |  | 2 | 2 |  |
-| FET KAT | 100 | 100 | 94 | 87 | 87 | 76 | 76 | 76 | 69 | 69 | 53 | 33 | 17 | 17 | 4 | 4 | 4 | 4 |  | 4 | 4 |  |
+| мαяѕмєℓℓ | 100 | 100 | 94 | 94 | 87 | 75 | 65 | 65 | 57 | 46 | 46 | 28 | 10 | 10 | 10 | 1 | 1 | 1 | 1 | 1 | 1 |  |
+| FET KAT | 100 | 100 | 94 | 87 | 87 | 76 | 76 | 76 | 69 | 69 | 53 | 33 | 17 | 17 | 17 | 4 | 4 | 4 | 4 | 4 | 4 |  |
 | ATENG | 100 | 100 | 93 | 88 | 83 | 83 | 70 | 70 | 57 | 46 | 37 | 26 | 26 | 26 | 7 |  |  |  |  |  |  |  |
-| ![nama baris 2 (tidak terbaca OCR)](match_25_Okt_23_24/nama_2.png) | 100 | 100 | 94 | 94 | 87 | 75 | 65 | 65 | 57 | 46 | 46 | 10 | 10 | 10 | 10 | 1 | 1 | 1 | 1 | 1 | 1 |  |
 
 ## Kejadian
 
@@ -75,10 +75,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:08_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | Assiur | 8 | Johnny, Dyrroth, Zilong, Karrie, Lunox, Franco, Johnny, Dyrroth | Johnson's Power, Pas de Deux, Badge Weapon Master | Kishin 4, Weapon Master 2 |
-| 2 | ![nama baris 2 (tidak terbaca OCR)](match_25_Okt_23_24/nama_2.png) | 9 | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
-| 3 | Laurent.Elias-16 | 8 | Saber, Karina, Yi Sun-shin, Novaria, Gusion, Mathilda, Natalia, Luo Yi, Eudora | Kagura's Power, Echomancer's Badge, Stargazer's Badge | Swiftblade 5, Stargazer 5, Dragon Altar 2, Chrono Wanderer 1, Dragoncaller 2 |
-| 4 | FET KAT | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Hylos, Zhuxin, Karrie | Kalea's Power, Legacy of Valor, Marksman's Badge | SPECTRE 2, Dauntless 2, Starbelle 3, Shadeweaver 3, Marksman 2, Mage 2 |
+| - | Assiur | 8 | Johnny, Dyrroth, Zilong, Karrie, Lunox, Franco, Johnny, Dyrroth | Johnson's Power, Pas de Deux, Badge Weapon Master | Kishin 4, Weapon Master 2 |
+| - | мαяѕмєℓℓ | 9 | Layla, Baxia, Melissa, Karrie, Irithel, Atlas, Tigreal, Edith, Hylos | Nana's Power, Fast Promotion, Payday | Chrono Wanderer 1, Marksman 4, Defender 5, Shadeweaver 2 |
+| - | Laurent.Elias-16 | 8 | Saber, Karina, Yi Sun-shin, Novaria, Gusion, Mathilda, Natalia, Luo Yi, Eudora | Kagura's Power, Echomancer's Badge, Stargazer's Badge | Swiftblade 5, Stargazer 5, Dragon Altar 2, Chrono Wanderer 1, Dragoncaller 2 |
+| - | FET KAT | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Kadita, Hylos, Zhuxin, Karrie | Kalea's Power, Legacy of Valor, Marksman's Badge | SPECTRE 2, Dauntless 2, Starbelle 3, Shadeweaver 3, Marksman 2, Mage 2 |
 | 5 | CinCoeg (kamu) | 9 | Thamuz, X.Borg, Lolita, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin | Fanny's Power, Apex Weapons, Trust Fund | Echomancer 4, Chrono Wanderer 1, Dauntless 2, Starbelle 4, Defender 2 |
 | 6 | bachtimi | 9 | Nana, Gatotkaca, Lolita, Lunox, Karina, Franco, Mathilda, Luo Yi, Eudora | Freya's Power, Emergency Rift, Steel Front | Mistbender 1, Stargazer 6, Chrono Wanderer 1, Dauntless 2, Kishin 2 |
 | 7 | Etiya bang | 9 | Makhluk Suci, Alice, Fanny, Thamuz, X.Borg, Melissa, Lolita, Franco, Edith | Lukas's Power, Reinforcement / Reinforcement+, Glittering Jewels II | Dauntless 4, Starbelle 3, Weapon Master 2, Chrono Wanderer 1 |
@@ -95,3 +95,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:08_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 5: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.
+- Nama yang tidak dikenal OCR (huruf Jepang, huruf hias) dibaca dengan mata dari layar hasil (catatan_nama.json): мαяѕмєℓℓ.

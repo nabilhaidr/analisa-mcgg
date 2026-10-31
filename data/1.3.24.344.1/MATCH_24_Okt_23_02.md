@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 23-02
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:06_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 01:10_
 
 - **Peringkat:** 1
 - **HP akhir:** 52
@@ -54,12 +54,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:06_
 | CinCoeg | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 89 | 89 | 89 | 89 | 89 | 89 | 89 | 69 | 52 | 52 | 52 | 52 |
 | dib | 100 | 100 | 100 | 100 | 92 | 92 | 80 | 80 | 80 | 80 | 70 | 70 | 70 | 70 | 50 | 50 | 50 | 29 | 29 | 29 | 29 | 7 |
 | anomalitop7 | 100 | 100 | 93 | 89 | 89 | 82 | 82 | 82 | 82 | 82 | 82 | 70 | 70 | 70 | 58 | 44 | 24 | 24 | 24 | 24 | 6 |  |
-| Noire | 100 | 100 | 100 | 100 | 94 | 88 | 88 | 88 | 76 | 63 | 53 | 45 | 35 | 35 | 35 | 16 | 16 | 16 |  |  |  |  |
 | MoonLight | 100 | 100 | 94 | 87 | 82 | 71 | 63 | 63 | 54 | 47 | 47 | 31 | 22 | 22 | 22 | 7 | 7 | 7 | 7 | 7 |  |  |
+| Noire | 100 | 100 | 100 | 100 | 94 | 88 | 88 | 88 | 76 | 63 | 53 | 45 | 35 | 35 | 35 | 16 | 16 | 16 |  |  |  |  |
 | IMannn | 100 | 100 | 94 | 88 | 88 | 88 | 78 | 78 | 66 | 58 | 42 | 42 | 31 | 31 | 16 | 16 |  |  |  |  |  |  |
-| BOLL | 100 | 100 | 94 | 88 | 88 | 88 | 82 | 82 | 82 | 72 | 72 | 59 | 44 | 44 | 44 | 28 | 9 |  |  |  |  |  |
-
-Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang dari 3 huruf Latin): peringkat 6 EM.
+| BOLL | 100 | 100 | 94 | 88 | 88 | 88 | 82 | 82 | 82 | 72 | 72 | 59 | 44 | 44 | 28 | 28 | 9 |  |  |  |  |  |
+| EM | 100 | 100 | 100 | 100 | 92 | 84 | 84 | 84 | 76 | 76 | 76 | 76 | 76 | 76 | 76 | 56 | 40 | 18 |  |  |  |  |
 
 ## Kejadian
 
@@ -88,7 +87,7 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 ## Catatan metode
 
 - Tata letak: ponsel; frame tiap 5 detik; OCR: windows.
-- HP dari panjang bar: HP = (panjang − 7.8) / 0.948, dikalibrasi dari 1042 angka HP yang terbaca OCR.
+- HP dari panjang bar: HP = (panjang − 7.9) / 0.947, dikalibrasi dari 1181 angka HP yang terbaca OCR.
 - Angka HP hanya diambil dari teks yang ujung kanannya sejajar dengan ujung kanan bar (angka jumlah unit di samping pedang saat bertarung diabaikan); bila bar terpotong di tepi atau ada shield, bar hanya batas bawah. Tanpa angka OCR, HP = angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama.
 - HP awal babak = nilai terbanyak di 60% awal babak (bila kosong: bacaan pertama di babak itu), lalu dibuat tidak pernah naik (nilai yang melanggar urutan digabung dengan tetangganya, diambil mediannya).
 - Gold awal babak = Gold tertinggi dalam 10 detik sejak Gold pertama terbaca di babak itu (pendapatan babak kadang masuk beberapa detik setelah label babak berganti). Gold hanya dibaca saat penghitung Gold tampil (harga jual unit atau dialog yang menutupinya diabaikan); angka yang terlewat OCR HUD dibaca ulang dari kotak Gold saja (rapid, ambang skor rendah agar angka satu digit ikut terbaca).

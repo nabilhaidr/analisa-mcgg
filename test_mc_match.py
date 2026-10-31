@@ -5,6 +5,7 @@ kotak Gold dengan RapidOCR, dan Gold awal babak. test_data/gold/ = potongan kota
 
 Jalankan dari folder ini: python -m pytest test_mc_match.py   (atau: python -m unittest test_mc_match)
 """
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -277,6 +278,275 @@ class RoundsTableGold(unittest.TestCase):
     def test_income_at_the_end_of_the_round_is_not_start_gold(self):
         # 24 Okt 02-51 III-1: 37 from the first reading on; 47 at the end is the next round's income
         self.assertEqual(mc_match.rounds_table(self.frames([None, 37, 37, 37, None, 47]), [])[0]["gold"], 37)
+
+
+class HandNames(unittest.TestCase):
+    """Names no OCR model reads (kana, ornamental letters), written down by eye per battle ID and row."""
+
+    def rows(self):
+        return [{"row": 1, "name": "CinCoeg"}, {"row": 2, "name": "baris 2", "slot": ("hasil.jpg", (0, 0, 9, 9))},
+                {"row": 3, "name": "마샤 주나어", "ko": 0.73}]
+
+    def named(self, battle):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "catatan_nama.json"
+            path.write_text(json.dumps({"_catatan": "-", "123": {"2": "ブラッカー", "3": "마샤 주니어"}}, ensure_ascii=False), encoding="utf-8")
+            return mc_match.hand_names(self.rows(), battle, path)
+
+    def test_a_noted_row_takes_the_written_name(self):
+        self.assertEqual(self.named("123")[1]["name"], "ブラッカー")
+
+    def test_it_replaces_the_picture(self):
+        self.assertNotIn("slot", self.named("123")[1])
+
+    def test_it_replaces_a_misread_korean_name(self):
+        row = self.named("123")[2]
+        self.assertEqual((row["name"], row.get("ko")), ("마샤 주니어", None))
+
+    def test_a_noted_row_is_marked_as_unread_by_the_hud_too(self):  # unread_player links it to the HUD player
+        self.assertTrue(self.named("123")[1]["hand"])
+
+    def test_rows_without_a_note_stay(self):
+        self.assertEqual(self.named("123")[0], {"row": 1, "name": "CinCoeg"})
+
+    def test_another_battle_stays(self):
+        self.assertEqual(self.named("999"), self.rows())
+
+    def test_no_id_read_stays(self):
+        self.assertEqual(self.named(None), self.rows())
+
+
+class FrameRows(unittest.TestCase):
+    """Player rows of one frame. Values of 31 Okt 02-51 PC, frame 1065 (1600x902): blackdevil46 has HP 4 + Shield 2, so about 3 px
+    of the bar are green and hp_bars finds nothing there, while the name and "02 •4" read fine."""
+    W, H = 1600, 902
+    BARS = [(558.5, 32, False, 1508, False)]
+    NAMES = [("Yann", 530.6, False), ("Plackdevil...", 605.6, False)]
+    NUMS = [(569.6, 18, False, 1510.0), (645.1, 4, True, 1511.0)]
+
+    def rows(self, bars=None, names=None, nums=None, mirrors=()):
+        return mc_match.frame_rows(self.BARS if bars is None else bars, self.NAMES if names is None else names,
+                                   self.NUMS if nums is None else nums, mirrors, self.W, self.H)
+
+    def test_a_bar_under_a_name_is_a_row(self):
+        row = self.rows()[0][0]
+        self.assertEqual((row["name"], row["bar"], row["ocr"]), ("Yann", 32, 18))
+
+    def test_a_name_without_a_bar_takes_the_number_under_it(self):
+        row = self.rows()[0][1]
+        self.assertEqual((row["name"], row["bar"], row["ocr"], row["shield"]), ("Plackdevil...", None, 4, True))
+
+    def test_a_name_without_a_bar_or_number_is_no_row(self):  # an eliminated player: the dimmed row
+        self.assertEqual([r["name"] for r in self.rows(nums=self.NUMS[:1])[0]], ["Yann"])
+
+    def test_the_number_of_the_next_row_is_not_taken(self):  # 114 px under the name = the row below
+        names = [("PRAMUD", 455.6, False), ("Yann", 530.6, False)]
+        self.assertEqual([r["name"] for r in self.rows(names=names, nums=self.NUMS[:1])[0]], ["Yann"])
+
+    def test_a_number_under_a_bar_is_not_used_twice(self):  # 21 Okt 22:15: stray text "ell" took OLORENG's 11
+        names = [("ell", 523.0, False), ("Yann", 530.6, False)]
+        nums = [(569.6, 18, False, 1510.0), (570.6, 18, False, 1510.0)]  # the same number from the panel and panel_text crops
+        self.assertEqual([r["name"] for r in self.rows(names=names, nums=nums)[0]], ["Yann"])
+
+    def test_a_dimmed_zero_is_no_row(self):
+        nums = self.NUMS[:1] + [(645.1, 0, False, 1511.0)]
+        self.assertEqual([r["name"] for r in self.rows(nums=nums)[0]], ["Yann"])
+
+    def test_a_bar_without_a_name_is_kept_apart(self):  # the name is unread: Hangul, symbols
+        rows, unnamed = self.rows(names=[("Plackdevil...", 605.6, False)])
+        self.assertEqual([(u["bar"], u["ocr"]) for u in unnamed], [(32, 18)])
+        self.assertEqual([r["name"] for r in rows], ["Plackdevil..."])
+
+    def test_the_mirror_row_is_no_unnamed_player(self):
+        self.assertEqual(self.rows(names=[], mirrors=[530.6])[1], [])
+
+
+class UnnamedRows(unittest.TestCase):
+    """24 Okt 14:43: the HUD never gives the name "1254" (no letters), so that player's bars come without a name. In a frame where
+    all other players still alive stand by name, the one bar left over is theirs."""
+
+    def row(self, name, bar=80):
+        return {"name": name, "y": 100.0, "bar": bar, "shield": False, "cut": False, "ocr": None}
+
+    def frame(self, names, unnamed=(70,)):
+        return {"rows": [self.row(n) for n in names], "unnamed": [{"y": 200.0, "bar": b, "shield": False, "cut": False, "ocr": None}
+                                                                  for b in unnamed]}
+
+    def clusters(self, *names):
+        return [[n, n.lower(), 10, {n}, set(range(10))] for n in names]
+
+    FINAL = [{"name": n, "row": i} for i, n in enumerate(("Giommy", "1254", "Rapaa"), 1)]
+
+    def linked(self, recs, clusters=None, final=None):
+        clusters = self.clusters("Giommy", "Rapaa") if clusters is None else clusters
+        mc_match.unnamed_rows(recs, clusters, self.FINAL if final is None else final)
+        return [[r["name"] for r in rec["rows"]] for rec in recs]
+
+    def test_the_bar_left_over_is_the_missing_result_row(self):
+        self.assertEqual(self.linked([self.frame(["Giommy", "Rapaa"])]), [["Giommy", "Rapaa", "1254"]])
+
+    def test_the_player_joins_the_clusters(self):
+        clusters = self.clusters("Giommy", "Rapaa")
+        self.linked([self.frame(["Giommy", "Rapaa"])], clusters)
+        self.assertEqual([c[0] for c in clusters], ["Giommy", "Rapaa", "1254"])
+
+    def test_a_bar_a_missing_player_can_have_stays_open(self):  # Rapaa, unread here, later has 80: before that HP was higher
+        recs = [self.frame(["Giommy"], unnamed=(90,)), self.frame(["Giommy", "Rapaa"], unnamed=())]
+        self.assertEqual(self.linked(recs)[0], ["Giommy"])
+
+    def test_a_bar_shorter_than_the_missing_player_has_later_is_not_theirs(self):
+        recs = [self.frame(["Giommy"], unnamed=(60,)), self.frame(["Giommy", "Rapaa"], unnamed=())]
+        self.assertEqual(self.linked(recs)[0], ["Giommy", "1254"])
+
+    def test_the_missing_player_takes_the_bar_that_fits_them(self):  # Rapaa unread at 80, the other bar is left over
+        recs = [self.frame(["Giommy", "Rapaa"], unnamed=()), self.frame(["Giommy"], unnamed=(80, 60)),
+                self.frame(["Giommy", "Rapaa"], unnamed=())]
+        self.assertEqual(self.linked(recs)[1], ["Giommy", "1254"])
+        self.assertEqual(recs[1]["rows"][-1]["bar"], 60)
+
+    def test_two_bars_without_a_name_stay_open(self):
+        self.assertEqual(self.linked([self.frame(["Giommy", "Rapaa"], unnamed=(70, 60))]), [["Giommy", "Rapaa"]])
+
+    def test_a_shielded_bar_stays_open_while_a_player_is_unread(self):  # it shows less green than the HP
+        recs = [self.frame(["Giommy"], unnamed=(60,)), self.frame(["Giommy", "Rapaa"], unnamed=())]
+        recs[0]["unnamed"][0]["shield"] = True
+        self.assertEqual(self.linked(recs)[0], ["Giommy"])
+
+    def test_one_stray_low_bar_does_not_stop_the_rest(self):
+        recs = [self.frame(["Giommy", "Rapaa"], unnamed=(b,)) for b in (80, 80, 20, 80, 80)]
+        self.assertEqual([len(names) for names in self.linked(recs)], [3, 3, 2, 3, 3])
+
+    def test_a_player_who_left_for_good_is_not_waited_for(self):  # Rapaa is out after the first frame
+        recs = [self.frame(["Giommy", "Rapaa"], unnamed=()), self.frame(["Giommy"])]
+        self.assertEqual(self.linked(recs)[1], ["Giommy", "1254"])
+
+    def test_a_bar_that_rises_is_not_that_player(self):  # HP never rises: the Mirror row after the player is out
+        recs = [self.frame(["Giommy", "Rapaa"], unnamed=(40,)), self.frame(["Giommy", "Rapaa"], unnamed=(90,))]
+        self.assertEqual(self.linked(recs)[1], ["Giommy", "Rapaa"])
+
+    def test_every_result_row_taken_changes_nothing(self):
+        clusters = self.clusters("Giommy", "1254", "Rapaa")
+        self.assertEqual(self.linked([self.frame(["Giommy", "1254", "Rapaa"])], clusters), [["Giommy", "1254", "Rapaa"]])
+
+    def test_two_players_without_a_cluster_stay_open(self):
+        self.assertEqual(self.linked([self.frame(["Rapaa"])], self.clusters("Rapaa")), [["Rapaa"]])
+
+    def test_without_a_result_screen_nothing_changes(self):
+        self.assertEqual(self.linked([self.frame(["Giommy", "Rapaa"])], final=[]), [["Giommy", "Rapaa"]])
+
+    def test_an_empty_key_does_not_catch_other_names(self):  # "" starts every name: a Hangul player has no key
+        clusters = self.clusters("Giommy", "Rapaa")
+        final = [{"name": "Giommy", "row": 1}, {"name": "마샤 주니어", "row": 2}, {"name": "Rapaa", "row": 3}]
+        self.linked([self.frame(["Giommy", "Rapaa"])], clusters, final)
+        self.assertIsNone(mc_match.player_of("Zzzzzz", clusters))
+
+    def test_the_own_yellow_row_counts_by_its_colour(self):  # "CirCoeg" read in the yellow row
+        recs = [{"rows": [dict(self.row("CirCoeg"), yellow=True), self.row("Rapaa")],
+                 "unnamed": [{"y": 200.0, "bar": 70, "shield": False, "cut": False, "ocr": None}]}]
+        clusters = self.clusters("CinCoeg", "Rapaa")
+        final = [{"name": "CinCoeg", "row": 1}, {"name": "1254", "row": 2}, {"name": "Rapaa", "row": 3}]
+        mc_match.unnamed_rows(recs, clusters, final, "CinCoeg")
+        self.assertEqual([r["name"] for r in recs[0]["rows"]], ["CirCoeg", "Rapaa", "1254"])
+
+
+class BarlessRows(unittest.TestCase):
+    """A row found from its name and number alone (FrameRows) has no bar to measure."""
+
+    def recs(self):
+        full = [{"name": "Yann", "y": 100.0, "bar": 100, "shield": False, "cut": False, "ocr": 100 - i} for i in range(10)]
+        return [{"t": 5 * i, "round": "IV-1", "gold": None, "level": None, "look": None,
+                 "rows": [full[i], {"name": "blackdevil", "y": 200.0, "bar": None, "shield": True, "cut": False, "ocr": 4}]} for i in range(10)]
+
+    def test_the_number_stands_without_a_bar(self):
+        recs = self.recs()
+        clusters = mc_match.cluster_players(recs)
+        tl = mc_match.timeline(recs, clusters, mc_match.calibrate(recs))
+        self.assertEqual(tl[0]["hp"]["blackdevil"], 4)
+
+    def test_calibration_skips_them(self):
+        self.assertGreater(mc_match.calibrate(self.recs())[0], 0)
+
+
+class NumbersOutvoteTheBar(unittest.TestCase):
+    """31 Okt 02-51 PC IV-2: readings 12, 13, 12, of which only the 13 is a number on the screen; the screen shows 13."""
+
+    def frames(self, values):
+        return [{"t": 5 * i, "round": 18, "gold": None, "level": None, "hp": {"A": v}, "read": ["A"] if number else []}
+                for i, (v, number) in enumerate(values)]
+
+    def test_a_read_number_beats_more_bar_estimates(self):
+        table = mc_match.rounds_table(self.frames([(12, False), (13, True), (12, False), (12, False), (12, False)]), ["A"])
+        self.assertEqual(table[0]["start"]["A"], 13)
+
+    def test_bar_estimates_stand_without_a_number(self):
+        table = mc_match.rounds_table(self.frames([(12, False), (12, False), (11, False)]), ["A"])
+        self.assertEqual(table[0]["start"]["A"], 12)
+
+    def test_the_most_common_number_wins(self):
+        table = mc_match.rounds_table(self.frames([(18, True), (13, True), (13, True), (13, True), (12, False)]), ["A"])
+        self.assertEqual(table[0]["start"]["A"], 13)
+
+    def test_a_later_number_next_to_the_estimate_is_the_same_hp(self):  # the bar wobbles 25-26 px, 13 shows at the end of the round
+        values = [(12, False), (13, False), (12, False), (12, False), (12, False), (13, True)]
+        self.assertEqual(mc_match.rounds_table(self.frames(values), ["A"])[0]["start"]["A"], 13)
+
+    def test_a_later_number_further_off_is_after_the_fight(self):  # a lost fight takes at least 3 HP
+        values = [(40, False), (40, False), (40, False), (40, False), (40, False), (30, True)]
+        self.assertEqual(mc_match.rounds_table(self.frames(values), ["A"])[0]["start"]["A"], 40)
+
+
+class LastReadingAboveTheLine(unittest.TestCase):
+    """21 Okt 22:15: EiRaCantik (rank 8) stood at 15, then a partly read copy of another player's name gave 43 in IV-4. HP never
+    rises, so that reading is not theirs and must not keep them in the table."""
+
+    def table(self, values):
+        return mc_match.rounds_table([{"t": 5 * i, "round": 17 + i, "gold": None, "level": None, "hp": {"A": v} if v else {}, "read": ["A"]}
+                                      for i, v in enumerate(values)], ["A"])
+
+    def test_it_is_dropped(self):
+        self.assertEqual([r["start"].get("A") for r in self.table([30, 15, 43])], [30, 15, None])
+
+    def test_a_high_reading_inside_the_series_is_still_evened_out(self):
+        self.assertEqual([r["start"].get("A") for r in self.table([60, 90, 60, 47])], [60, 60, 60, 47])
+
+    def test_a_series_that_falls_stays(self):
+        self.assertEqual([r["start"].get("A") for r in self.table([30, 15, 4])], [30, 15, 4])
+
+    def test_a_last_reading_seen_in_many_frames_is_not_stray(self):
+        tl = [{"t": 5 * i, "round": n, "gold": None, "level": None, "hp": {"A": v}, "read": ["A"]}
+              for i, (n, v) in enumerate([(17, 30), (18, 15), (19, 43), (19, 43), (19, 43)])]
+        self.assertEqual([r["start"].get("A") for r in mc_match.rounds_table(tl, ["A"])], [30, 15, 15])
+
+
+class HealingFountainRise(unittest.TestCase):
+    """The card gives 3 HP every round, so HP can rise: 22 Okt 06:16 CinCoeg 7, 10, 13 ... 28, YXGC 37, 40, 43 ... The holders
+    went flat in the table (all at 19 from V-1 on) while a misread number must still be evened out."""
+
+    def starts(self, values, heal=None):
+        tl = [{"t": 5 * i, "round": 17 + i, "gold": None, "level": None, "hp": {"A": v}, "read": ["A"]} for i, v in enumerate(values)]
+        return [r["start"].get("A") for r in mc_match.rounds_table(tl, ["A"], {"A": 3} if heal is None else heal)]
+
+    def test_the_rise_stays(self):
+        self.assertEqual(self.starts([7, 10, 13, 16]), [7, 10, 13, 16])
+
+    def test_a_loss_between_rises_stays(self):
+        self.assertEqual(self.starts([40, 43, 30, 33]), [40, 43, 30, 33])
+
+    def test_flat_rounds_before_the_card_stay(self):
+        self.assertEqual(self.starts([50, 50, 50, 53, 56]), [50, 50, 50, 53, 56])
+
+    def test_a_misread_spike_is_still_evened_out(self):
+        self.assertEqual(self.starts([7, 10, 40, 16]), [7, 10, 13, 16])
+
+    def test_without_the_card_hp_does_not_rise(self):
+        got = [v for v in self.starts([30, 15, 20, 18, 12], heal={}) if v is not None]
+        self.assertEqual(got, sorted(got, reverse=True))
+
+
+class HealOf(unittest.TestCase):
+    def test_only_holders_of_the_card_count(self):
+        final = [{"name": "YXGC", "cards": ["Lunox's Power", "Healing Fountain"]}, {"name": "CinCoeg", "cards": ["Fanny's Power"]}]
+        self.assertEqual(mc_match.heal_of(final), {"YXGC": 3})
 
 
 if __name__ == "__main__":

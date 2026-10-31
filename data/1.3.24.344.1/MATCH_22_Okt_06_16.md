@@ -1,9 +1,9 @@
 # Analisa Pertandingan — 22 Okt 06-16
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:53_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-11-01 00:52_
 
 - **Peringkat:** 1
-- **HP akhir:** 19
+- **HP akhir:** 34
 - **Babak terbaca:** I-1 – V-6 (28 babak), kehilangan HP di 11 babak
 - **Pertandingan:** ID 422599761239554491 · poin 2008 (+244)
 - Pemain: CinCoeg
@@ -11,7 +11,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:53_
 ## Catatan otomatis
 
 - Peringkat akhir 1.
-- HP hilang per fase: Fase I −10, Fase II −42, Fase III −14, Fase IV −15. Terbanyak di Fase II.
+- HP hilang per fase: Fase I −10, Fase II −42, Fase III −20, Fase IV −30. Terbanyak di Fase II.
 - 9 babak beruntun tanpa kehilangan HP (sampai V-5).
 - 8 kekalahan beruntun (sampai III-1, babak creep II-3 dilewati).
 - Level 7 pertama terlihat di II-5.
@@ -36,34 +36,34 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:53_
 | II-6 | 56 | -8 kalah | 29 | 7 | Go Go Box |
 | III-1 | 48 | -10 kalah | 39 | 7 |  |
 | III-2 | 38 | +0 tidak kehilangan HP | 49 | 8 |  |
-| III-3 | 38 | +0 tidak kehilangan HP | 27 | 8 | Pilih Go Go Card (pilihan: Healing Fountain) |
-| III-4 | 38 | +0 tidak kehilangan HP | 43 | 8 |  |
-| III-5 | 38 | -4 kalah | 43 | 9 |  |
-| III-6 | 34 | +0 tidak kehilangan HP | 14 | 9 | Go Go Box |
-| IV-1 | 34 | -11 kalah | 18 | 9 |  |
-| IV-2 | 23 | -4 kalah | 20 | 9 |  |
-| IV-3 | 19 | +0 tidak kehilangan HP | 8 | 9 |  |
-| IV-4 | 19 | +0 tidak kehilangan HP | 7 | 9 |  |
-| IV-5 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
-| IV-6 | 19 | +0 tidak kehilangan HP | 9 | 9 | Go Go Box |
-| V-1 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
-| V-2 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
-| V-3 | 19 | +0 tidak kehilangan HP | 8 | 9 |  |
-| V-4 | 19 | +0 tidak kehilangan HP | 7 | 9 |  |
-| V-5 | 19 | +0 tidak kehilangan HP | 12 | 9 |  |
-| V-6 | 19 | - | 12 | 9 | VICTORY |
+| III-3 | 38 | +3 tidak kehilangan HP | 27 | 8 | Pilih Go Go Card (pilihan: Healing Fountain) |
+| III-4 | 41 | +3 tidak kehilangan HP | 43 | 8 |  |
+| III-5 | 44 | -10 kalah | 43 | 9 |  |
+| III-6 | 34 | +3 tidak kehilangan HP | 14 | 9 | Go Go Box |
+| IV-1 | 37 | -14 kalah | 18 | 9 |  |
+| IV-2 | 23 | -16 kalah | 20 | 9 |  |
+| IV-3 | 7 | +3 tidak kehilangan HP | 8 | 9 |  |
+| IV-4 | 10 | +3 tidak kehilangan HP | 7 | 9 |  |
+| IV-5 | 13 | +3 tidak kehilangan HP | 9 | 9 |  |
+| IV-6 | 16 | +3 tidak kehilangan HP | 9 | 9 | Go Go Box |
+| V-1 | 19 | +3 tidak kehilangan HP | 9 | 9 |  |
+| V-2 | 22 | +3 tidak kehilangan HP | 9 | 9 |  |
+| V-3 | 25 | +3 tidak kehilangan HP | 8 | 9 |  |
+| V-4 | 28 | +3 tidak kehilangan HP | 7 | 9 |  |
+| V-5 | 31 | +3 tidak kehilangan HP | 12 | 9 |  |
+| V-6 | 34 | - | 12 | 9 | VICTORY |
 
 ## HP semua pemain
 
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 | IV-3 | IV-4 | IV-5 | IV-6 | V-1 | V-2 | V-3 | V-4 | V-5 | V-6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Lixiaotian | 100 | 100 | 96 | 91 | 87 | 87 | 78 | 78 | 78 | 78 | 78 | 78 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 53 | 53 | 41 | 23 |
-| CinCoeg | 100 | 100 | 100 | 94 | 90 | 79 | 69 | 69 | 63 | 56 | 48 | 38 | 38 | 38 | 38 | 34 | 34 | 23 | 19 | 19 | 19 | 19 | 19 | 19 | 19 | 19 | 19 | 19 |
+| Lixiaotian | 100 | 100 | 96 | 91 | 87 | 87 | 78 | 78 | 78 | 78 | 78 | 78 | 67 | 70 | 73 | 76 | 66 | 69 | 72 | 75 | 78 | 81 | 84 | 87 | 53 | 56 | 41 | 23 |
+| CinCoeg | 100 | 100 | 100 | 94 | 90 | 79 | 69 | 69 | 63 | 56 | 48 | 38 | 38 | 41 | 44 | 34 | 37 | 23 | 7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 | 34 |
 | Overdosiss | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 87 | 64 | 64 | 64 | 45 | 45 | 29 | 29 | 29 |  |  |  |  |  |
-| PERAONE | 100 | 100 | 100 | 100 | 93 | 84 | 84 | 84 | 84 | 84 | 70 | 64 | 64 | 64 | 64 | 64 | 64 | 57 | 57 | 57 | 38 | 19 | 4 |  |  |  |  |  |
-| Giosue.Lauren*g0 | 100 | 100 | 94 | 94 | 87 | 87 | 87 | 87 | 72 | 61 | 61 | 61 | 47 | 47 | 24 | 24 | 24 | 24 | 24 | 24 | 24 |  |  |  |  |  |  |  |
-| SRYIMeremshiki | 100 | 100 | 95 | 95 | 95 | 95 | 95 | 95 | 95 | 87 | 73 | 60 | 54 | 54 | 54 | 54 | 48 | 28 | 14 | 14 |  |  |  |  |  |  |  |  |
-| ULIL | 100 | 100 | 100 | 93 | 93 | 85 | 76 | 76 | 70 | 57 | 50 | 50 | 41 | 41 | 28 | 15 | 15 |  | 1 | 1 |  |  |  |  |  |  |  |  |
+| PERAONE | 100 | 100 | 100 | 100 | 93 | 84 | 84 | 84 | 84 | 84 | 70 | 61 | 61 | 64 | 67 | 70 | 73 | 54 | 57 | 60 | 38 | 19 | 4 |  |  |  |  |  |
+| Giosue.Lauren*g0 | 100 | 100 | 94 | 94 | 87 | 87 | 87 | 87 | 72 | 61 | 61 | 61 | 47 | 47 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 3 |  |  |  |  |  |  |
+| SRYIMeremshiki | 100 | 100 | 95 | 95 | 95 | 95 | 95 | 95 | 95 | 87 | 73 | 60 | 51 | 54 | 57 | 60 | 48 | 28 | 14 | 17 |  |  |  |  |  |  |  |  |
+| ULIL | 100 | 100 | 100 | 93 | 93 | 85 | 76 | 76 | 70 | 57 | 50 | 50 | 41 | 41 | 28 | 15 | 15 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |
 | D%GOATe | 100 | 100 |  | 89 | 89 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 ## Kejadian

@@ -91,6 +91,17 @@ def note_matches(text, want):
     return text == want if len(parts) == 1 else re.fullmatch(".+?".join(map(re.escape, parts)), text) is not None
 
 
+def rises(values, heal):
+    """True when an HP column (None = blank) goes up: not at all, or by what Healing Fountain gives per round for a holder."""
+    last = None
+    for i, v in enumerate(values):
+        if v is not None:
+            if last and v - last[1] > (mc_match.HEAL_HP * (i - last[0]) if heal else 0):
+                return True
+            last = (i, v)
+    return False
+
+
 def check(md_path, seasons):
     """([errors], [warnings], {overview column: text}) of one report; main() prints the overview as one table row."""
     err, warn = [], []
@@ -188,7 +199,8 @@ def check(md_path, seasons):
                 warn.append("babak terlewat di timeline: " + ", ".join(round_label(n) for n in miss))
         hps = [num(r[1]) for r in tl]
         known = [v for v in hps if v is not None]
-        if any(not 0 <= v <= 100 for v in known) or any(b > a for a, b in zip(known, known[1:])):
+        heal = {r[1].removesuffix(" (kamu)") for r in board if mc_match.HEAL_CARD in r[4]}
+        if any(not 0 <= v <= 100 for v in known) or rises(hps, me in heal):
             err.append(f"HP awal di luar 0-100 atau naik: {[r[1] for r in tl]}")
         out_at = None
         for i, r in enumerate(tl):
@@ -205,7 +217,7 @@ def check(md_path, seasons):
                 out_at = i
                 if hps[i] is None or dlt != -hps[i]:
                     err.append(f"{r[0]}: tereliminasi harus -HP awal ({hps[i]}), tertulis {dlt}")
-            elif (dlt < 0) != (res == "kalah") or (dlt == 0) != (res == "tidak kehilangan HP"):
+            elif (dlt < 0) != (res == "kalah"):
                 err.append(f"{r[0]}: perubahan {dlt:+d} tidak cocok dengan '{res}'")
             elif i + 1 < len(tl) and None not in (hps[i], hps[i + 1]) and dlt != hps[i + 1] - hps[i]:
                 err.append(f"{r[0]}: perubahan {dlt:+d} != {hps[i + 1]} - {hps[i]}")
@@ -237,7 +249,7 @@ def check(md_path, seasons):
             vals = [num(c) for c in r[1:]]
             rows[r[0]] = vals
             seen = [v for v in vals if v is not None]
-            if any(not 0 <= v <= 100 for v in seen) or any(b > a for a, b in zip(seen, seen[1:])):
+            if any(not 0 <= v <= 100 for v in seen) or rises(vals, r[0] in heal):
                 err.append(f"tabel HP {r[0]}: nilai di luar 0-100 atau naik")
         if me in rows and rows[me] != hps:
             err.append(f"tabel HP baris {me} beda dengan timeline")

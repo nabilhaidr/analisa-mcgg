@@ -22,6 +22,12 @@ Cara kerja:
   jelas oleh OCR; angka OCR dipakai bila cocok dengan bar (selisih <= 6). Bar pendek (HP rendah) dibedakan dari ikon hati
   lewat bentuknya. Saat bertarung dua baris teratas bergeser ke kiri (bar bisa terpotong) dan di kanannya ada angka jumlah
   unit: angka HP hanya diambil dari teks yang sejajar dengan ujung kanan bar; bar terpotong/ber-shield hanya batas bawah.
+  Bar tanpa angka memakai angka yang paling sering terbaca untuk pemain itu dengan panjang bar yang sama (+-1 px). HP per babak
+  mendahulukan angka di layar daripada perkiraan dari bar, dan seri HP dibuat menurun kecuali pemulihan Healing Fountain (+3 tiap
+  babak). Nama tanpa bar (sekitar 4 HP ke bawah, atau di bawah shield, hijaunya terlalu sedikit) tetap jadi baris bila angkanya
+  terbaca (frame_rows).
+- Pemain yang namanya tidak pernah terbaca di HUD (Hangul, simbol, angka): di frame yang semua pemain lain yang masih hidup
+  terbaca namanya, satu bar sisanya milik pemain itu, yaitu baris layar hasil yang belum punya pasangan (unnamed_rows).
 - Baris sendiri = nama kuning; salinan putih nama sendiri (baris "Mirror") diabaikan. Peringkat > 1 di layar hasil = HP 0
   setelah babak terakhir yang masih menampilkan HP sendiri (angka 0 yang redup tidak terbaca OCR).
 - Kejadian (Go Go Card, Go Go Box, crystal Pilihan, naik level, VICTORY/DEFEAT, panel DMG) dibaca dari OCR frame penuh.
@@ -237,9 +243,39 @@ def event_round(kind, rnd, box_rounds):
 
 # ------------------------------------------------------------------ video timeline
 
+def frame_rows(bars, names, nums, mirrors, W, H):
+    """(rows, unnamed) of one frame from its HP bars [(y, length, shield, right x, cut)], list names [(name, y, yellow)], HP
+    numbers [(y, hp, shield shown, right x)] and the y of its "Mirror" lines. A bar under a name is a player row. A bar under
+    no name goes to `unnamed` (a name in Hangul or symbols gives no line at all, see unnamed_rows), unless that line is
+    Mirror. A name over no bar is a row too when its number shows, with bar None: at about 4 HP and less, or under a shield,
+    too little of the bar is green for hp_bars (31 Okt 02-51 PC: blackdevil46 with HP 4 + Shield 2 left the HP table)."""
+    rows, unnamed, used, taken = [], [], set(), []
+    for y, length, shield, x_end, cut in bars:
+        above = [n for n in names if 0 < y - n[1] < 0.06 * H]
+        # the HP number ends where the bar ends; the unit count of a fight ("11" by the sword) is right of the avatar
+        below = sorted((v for v in nums if 0 <= v[0] - y < 0.05 * H and abs(v[3] - x_end) <= 0.012 * W),
+                       key=lambda v: (not v[2], v[0] - y))
+        row = {"y": y, "bar": length, "shield": shield or bool(below and below[0][2]), "cut": cut, "ocr": below[0][1] if below else None}
+        taken += [v[0] for v in below[:1]]
+        if above:
+            top = max(above, key=lambda n: n[1])
+            used.add(top)
+            rows.append({"name": top[0], "yellow": top[2], **row})
+        elif not any(0 < y - m < 0.06 * H for m in mirrors):
+            unnamed.append(row)
+    right = max((b[3] for b in bars), default=None)
+    free = [v for v in nums if not any(abs(v[0] - y) < 0.02 * H for y in taken)]  # each number shows twice, from two HUD crops
+    for n in names:
+        below = sorted((v for v in free if 0 < v[0] - n[1] < 0.07 * H and right and abs(v[3] - right) <= 0.012 * W and v[1] >= 1),
+                       key=lambda v: (not v[2], v[0] - n[1]))
+        if n not in used and below:  # the number sits 0.044 H under the name, the next row's name 0.083 H
+            rows.append({"name": n[0], "yellow": n[2], "y": n[1], "bar": None, "shield": below[0][2], "cut": False, "ocr": below[0][1]})
+    return rows, unnamed
+
+
 def read_frames(frames, work, layout):
-    """Per frame: round, gold (only while the Gold counter shows, gold_shown), level, player rows [{name, y, bar, ocr}]
-    from the HUD sheets and HP bars."""
+    """Per frame: round, gold (only while the Gold counter shows, gold_shown), level, player rows [{name, y, bar, ocr}] and
+    the rows without a name (frame_rows) from the HUD sheets and HP bars."""
     hud = work / HUD_DIR
     hud.mkdir(exist_ok=True)
     info = {}
@@ -268,24 +304,17 @@ def read_frames(frames, work, layout):
             return bool(bright.sum() > 10 and ((b < 120) & bright).sum() > 0.5 * bright.sum())
         names = [(clean_name(l["t"]), to_frame(l, "panel"), yellow(l)) for l in part("panel")
                  if len(re.findall(r"[A-Za-z]", l["t"])) >= 3 and "Mirror" not in l["t"] and "Level" not in l["t"]]
+        mirrors = [to_frame(l, "panel") for l in part("panel") if "Mirror" in l["t"]]
         nums = []  # (y, hp, shield shown, right end x): "•10 •86" = shield 10 + HP 86
         for name in ("panel", "panel_text"):
             for l in part(name):
                 found = re.findall(r"\d{1,3}", l["t"])
                 if 1 <= len(found) <= 2 and not re.search(r"[A-Za-z]{2}", l["t"]) and int(found[-1]) <= 100:
                     nums.append((to_frame(l, name), int(found[-1]), len(found) == 2, px0 + l["r"] / UPSCALE))
-        rows = []
-        for y, length, shield, x_end, cut in bars:
-            above = [n for n in names if 0 < y - n[1] < 0.06 * H]
-            # the HP number ends where the bar ends; the unit count of a fight ("11" by the sword) is right of the avatar
-            below = sorted((v for v in nums if 0 <= v[0] - y < 0.05 * H and abs(v[3] - x_end) <= 0.012 * W),
-                           key=lambda v: (not v[2], v[0] - y))
-            if above:
-                top = max(above, key=lambda n: n[1])
-                rows.append({"name": top[0], "yellow": top[2], "y": y, "bar": length, "shield": shield or bool(below and below[0][2]),
-                             "cut": cut, "ocr": below[0][1] if below else None})
+        rows, unnamed = frame_rows(bars, names, nums, mirrors, W, H)
         recs.append({"t": int(f.stem[2:]), "round": parse_round(text("round") + " " + text("round_text")), "gold": gold,
-                     "level": int(lv.group(1)) if lv and 1 <= int(lv.group(1)) <= 10 else None, "rows": rows, "look": look})
+                     "level": int(lv.group(1)) if lv and 1 <= int(lv.group(1)) <= 10 else None, "rows": rows, "unnamed": unnamed,
+                     "look": look})
     missing = [(f, rec) for f, rec in zip(frames, recs) if not rec["round"] and hud_shown(rec)]
     if missing:
         labels = round_labels([f for f, _ in missing], work, layout)
@@ -456,7 +485,7 @@ def cluster_players(recs, known=()):
             p[2] += c[2]
             p[3] |= c[3]
             p[4] |= c[4]
-    keys = [(k, name_key(k)) for k in known if name_key(k)]  # a Hangul name has no key
+    keys = [(k, name_key(k)) for k in known if len(name_key(k)) >= 3]  # a name in Hangul or symbols has no usable key: "—X—" = "x"
     used = set()
     for score, i, k in sorted(((name_score(c[1], kk), i, k) for i, c in enumerate(players) for k, kk in keys), reverse=True):
         if score >= 0.6 and i not in used and k not in used:
@@ -465,14 +494,64 @@ def cluster_players(recs, known=()):
     return players
 
 
+BAR_RISE = 3  # px a bar may read longer than before: HP never rises, the bar itself wobbles
+HEAL_CARD, HEAL_HP = "Healing Fountain", 3  # "Memulihkan 3 HP Commander pada setiap babak"; nothing else heals the Commander
+
+
+def unnamed_rows(recs, clusters, final, me=None):
+    """Gives the bars without a name (frame_rows) to the one player the HUD OCR never names: the result row no cluster took
+    ("1254": no letters, "EM": too short, Hangul, symbols). In one frame, a bar may belong to a player alive but unread there
+    when it fits their bars before and after (HP only falls); the one bar that fits nobody is that player's. HP only falls for
+    them too, so bars off a non-increasing line are dropped (a Mirror row after they are out); the check comes after picking,
+    so one stray bar stops nothing. Hiding the name of 48 known players in 6 recordings: 6653 bars right, 0 wrong, 448 in
+    frames without a known answer. The player joins `clusters` with a key no list name can match: an empty key starts every
+    name."""
+    taken = {c[0] for c in clusters}
+    missing = [r for r in final if r["name"] not in taken]
+    if len(missing) != 1 or len(clusters) != len(final) - 1:
+        return
+    owners = [[(me if me and r.get("yellow") else player_of(r["name"], clusters), r) for r in rec["rows"]] for rec in recs]
+    seen = [{p for p, _ in rows} for rows in owners]
+    last = {c[0]: max((i for i, s in enumerate(seen) if c[0] in s), default=-1) for c in clusters}
+    full = lambda r: not (r["shield"] or r["cut"])  # the others show less green than the HP
+    marks = defaultdict(list)  # player -> [(frame, bar)]
+    for i, rows in enumerate(owners):
+        for p, r in rows:
+            if r["bar"] and full(r):
+                marks[p].append((i, r["bar"]))
+
+    def fits(bar, p, i):
+        before = [b for j, b in marks[p] if j < i]
+        after = [b for j, b in marks[p] if j > i]
+        return (after[0] if after else 0) - BAR_RISE <= bar <= (before[-1] if before else 999) + BAR_RISE
+
+    picks = []
+    for i, rec in enumerate(recs):
+        absent = [p for p, end in last.items() if end >= i and p not in seen[i]]
+        bars = rec.get("unnamed", ())
+        left = [b for b in bars if not any(fits(b["bar"], p, i) for p in absent)]
+        if len(left) == 1 and (not absent or all(full(b) for b in bars)):
+            picks.append((i, left[0]))
+    plain = [(i, b) for i, b in picks if full(b)]
+    line = dict(zip((i for i, _ in plain), non_increasing([b["bar"] for _, b in plain])))
+    level, frames = None, set()
+    for i, b in picks:
+        level = line.get(i, level)
+        if level is None or (abs(b["bar"] - level) <= BAR_RISE if i in line else b["bar"] <= level + BAR_RISE):
+            recs[i]["rows"].append({**b, "name": missing[0]["name"], "yellow": False})
+            frames.add(i)
+    if frames:
+        clusters.append([missing[0]["name"], f"\0{missing[0]['name']}", len(frames), {missing[0]["name"]}, frames])
+
+
 def unread_player(tl, players, final):
     """{HUD player: result row} for the one name the page OCR could not read on the result screen (a picture, or read by
     the Korean model), else {}. The HUD OCR turns that name into something else ("마샤 주니어" -> "FL-loi", 21 Okt 22:43),
     so it is the one player that matches no name the page OCR read. A cut-off second reading of another row ("MCG" for
     KeyyMCGG, 24 Okt 02:51) matches none either, but never stands beside that row in a frame; real players share frames
     with every other one (at least 7 in 20 matches)."""
-    pics = [r for r in final if r.get("slot") or r.get("ko")]
-    keys = [name_key(r["name"]) for r in final if not (r.get("slot") or r.get("ko"))]
+    pics = [r for r in final if r.get("slot") or r.get("ko") or r.get("hand")]
+    keys = [name_key(r["name"]) for r in final if r not in pics]
     seen = defaultdict(set)
     for i, x in enumerate(tl):
         for p in x["hp"]:
@@ -485,7 +564,7 @@ def unread_player(tl, players, final):
 def calibrate(recs):
     """(a, b, n): bar = a * HP + b, fitted on rows whose OCR'd HP number is clean; fallback: longest bar = 100 HP."""
     pairs = np.array([(r["bar"], r["ocr"]) for rec in recs for r in rec["rows"]
-                      if r["ocr"] and 5 <= r["ocr"] <= 100 and not r["shield"] and not r.get("cut")], float)
+                      if r["bar"] and r["ocr"] and 5 <= r["ocr"] <= 100 and not r["shield"] and not r.get("cut")], float)
     if len(pairs) >= 8:
         keep = np.ones(len(pairs), bool)
         for _ in range(3):
@@ -493,7 +572,7 @@ def calibrate(recs):
             keep = np.abs(pairs[:, 0] - (a * pairs[:, 1] + b)) < 5
         if a > 0.3 and keep.sum() >= 6:
             return float(a), float(b), int(keep.sum())
-    longest = max((r["bar"] for rec in recs for r in rec["rows"]), default=100)
+    longest = max((r["bar"] or 0 for rec in recs for r in rec["rows"]), default=0) or 100
     return longest / 100, 0.0, 0
 
 
@@ -518,8 +597,10 @@ def accept_rounds(times, numbers):
 def timeline(recs, clusters, cal, me=None):
     """Per frame: round number, gold, level, {player: HP}. HP = OCR number when it agrees with the bar (or is above it when
     the bar is only a lower bound: shield or cut), else from the bar: the number read most often for that player with the
-    same bar length (+-1 px), or the calibrated estimate (off by ~1 HP). Own row = the yellow name; when a frame has one, a
-    white copy of the own name is the "Mirror" row (or the name above another player's unread name) and is skipped.
+    same bar length (+-1 px), or the calibrated estimate (off by ~1 HP). The +-1 px evens out a bar that wobbles between frames:
+    with hidden numbers on 20 recordings it hit 92-99% of the rounds, one table of exact lengths over all players 85-94%. A row
+    without a bar is its number. Own row = the yellow name; when a frame has one, a white copy of the own name is the "Mirror"
+    row (or the name above another player's unread name) and is skipped. `read` = players whose HP in that frame is a number.
     Rounds: labels outside the longest consistent chain are OCR slips (accept_rounds); frames without a label get one by its
     look (rounds_by_look); frames between two kept labels are split evenly (half/half, or thirds when one label in between
     was never read)."""
@@ -536,20 +617,21 @@ def timeline(recs, clusters, cal, me=None):
     sure = defaultdict(Counter)  # (player, bar length) -> HP numbers read on a full bar that agrees
     for rows in owned:
         for p, r in rows.items():
-            if r["ocr"] is not None and not (r["shield"] or r.get("cut")) and abs(r["ocr"] - est(r)) <= 6:
+            if r["bar"] and r["ocr"] is not None and not (r["shield"] or r.get("cut")) and abs(r["ocr"] - est(r)) <= 6:
                 sure[p, r["bar"]][r["ocr"]] += 1
     out, numbers = [], []
     for rec, rows in zip(recs, owned):
-        hp = {}
+        hp, read = {}, []  # read = players whose HP here is a number on the screen, not an estimate from the bar
         for p, r in rows.items():
             lower = r["shield"] or r.get("cut")  # green part shorter than the HP: the bar is only a lower bound
-            if r["ocr"] is not None and (abs(r["ocr"] - est(r)) <= 6 or (lower and r["ocr"] >= est(r) - 6)):
+            if r["ocr"] is not None and (r["bar"] is None or abs(r["ocr"] - est(r)) <= 6 or (lower and r["ocr"] >= est(r) - 6)):
                 hp[p] = r["ocr"]
+                read.append(p)
             elif not lower:
                 votes = sure[p, r["bar"] - 1] + sure[p, r["bar"]] + sure[p, r["bar"] + 1]
                 hp[p] = votes.most_common(1)[0][0] if votes else round(est(r))
         numbers.append(round_number(rec["round"]) if rec["round"] else None)
-        out.append({"t": rec["t"], "round": None, "gold": rec["gold"], "level": rec["level"], "hp": hp})
+        out.append({"t": rec["t"], "round": None, "gold": rec["gold"], "level": rec["level"], "hp": hp, "read": read})
     times = [x["t"] for x in out]
     accepted = accept_rounds(times, rounds_by_look(recs, accept_rounds(times, numbers)))
     idx = [i for i, n in enumerate(accepted) if n]
@@ -579,11 +661,17 @@ def non_increasing(values):
     return [med(b) for b in blocks for _ in b]
 
 
-def rounds_table(tl, players):
-    """Per round: HP at the start (most common reading in the round's first 60%, else its first reading; made non-increasing
-    per player), gold at the start (the highest reading within 10 s of the round's first: the income can come a few seconds
-    after the label changes, Kalea IV-5 19 then 38; later readings are spent Gold or, at the end, the next round's income),
-    level; delta = next start - start."""
+def heal_of(final):
+    """{player: HP healed per round} from the result rows: Healing Fountain gives 3 HP every round."""
+    return {r["name"]: HEAL_HP for r in final if HEAL_CARD in r["cards"]}
+
+
+def rounds_table(tl, players, heal=None):
+    """Per round: HP at the start (most common reading in the round's first 60%, numbers on the screen before estimates from
+    the bar, which can be 1 off at low HP; else its first reading; made non-increasing per player, after taking off what
+    `heal` gives back per round), gold at the start (the highest reading within 10 s of the round's first: the income can come
+    a few seconds after the label changes, Kalea IV-5 19 then 38; later readings are spent Gold or, at the end, the next
+    round's income), level; delta = next start - start."""
     by_round = defaultdict(list)
     for x in tl:
         if x["round"]:
@@ -594,7 +682,12 @@ def rounds_table(tl, players):
         head = xs[:max(1, int(len(xs) * 0.6))]
         start = {}
         for p in players:
-            vals = [x["hp"][p] for x in head if p in x["hp"]] or [x["hp"][p] for x in xs if p in x["hp"]][:1]
+            first = [x["hp"][p] for x in head if p in x["hp"]]
+            numbers = [x["hp"][p] for x in head if p in x.get("read", ())]
+            if first and not numbers:  # a lost fight takes at least 3 HP: a later number 1 off is still this HP
+                near = Counter(first).most_common(1)[0][0]
+                numbers = [x["hp"][p] for x in xs if p in x.get("read", ()) and abs(x["hp"][p] - near) <= 1]
+            vals = numbers or first or [x["hp"][p] for x in xs if p in x["hp"]][:1]
             if vals:
                 start[p] = Counter(vals).most_common(1)[0][0]
         golds = [(x["t"], x["gold"]) for x in xs if x["gold"] is not None]
@@ -604,7 +697,13 @@ def rounds_table(tl, players):
                      "level": max(levels) if levels else None, "delta": {}})
     for p in players:
         have = [r for r in rows if p in r["start"]]
-        for r, v in zip(have, non_increasing([r["start"][p] for r in have])):
+        rise = (heal or {}).get(p, 0)
+        line = [v + rise * r["round"] for r, v in zip(have, non_increasing([r["start"][p] - rise * r["round"] for r in have]))]
+        # a last round above the line, seen in a frame or two, is another row's number: the player is out by now
+        while have and have[-1]["start"][p] > line[-1] and sum(p in x["hp"] for x in by_round[have[-1]["round"]]) <= 2:
+            del have.pop()["start"][p]
+            line.pop()
+        for r, v in zip(have, line):
             r["start"][p] = v
     for cur, nxt in zip(rows, rows[1:]):
         cur["delta"] = {p: nxt["start"][p] - v for p, v in cur["start"].items() if p in nxt["start"]}
@@ -755,7 +854,20 @@ def read_result(paths, d, folder, engine=None):
         r.pop("slots", None)
         if not r["name"].startswith("baris "):
             r.pop("slot", None)  # read on another screenshot of the same screen, or by the Korean model
-    return out, meta
+    return hand_names(out, meta.get("id")), meta
+
+
+def hand_names(rows, battle, path=HERE / "catatan_nama.json"):
+    """rows with the names of catatan_nama.json ({battle ID: {row: name}}), written down by eye from the result screen. These
+    are names no OCR model here can read: RapidOCR's Chinese model knows 5 kana, the Korean one none, and ornamental letters
+    come out as noise. A noted name replaces the picture or the reading; `hand` keeps the HUD link of unread_player."""
+    noted = json.loads(path.read_text(encoding="utf-8")).get(battle, {}) if battle and path.exists() else {}
+    out = []
+    for r in rows:
+        if str(r["row"]) in noted:
+            r = {**{k: v for k, v in r.items() if k not in ("slot", "ko")}, "name": noted[str(r["row"])], "hand": True}
+        out.append(r)
+    return out
 
 
 HANGUL = re.compile(r"[가-힣]")
@@ -1068,10 +1180,12 @@ def main():
         players = [c[0] for c in clusters]
         if args.player and me not in players:
             me = next((p for p in players if same_player(norm(p), norm(args.player))), me)
+        unnamed_rows(recs, clusters, final, me)
+        players = [c[0] for c in clusters]
         cal = calibrate(recs)
         tl = timeline(recs, clusters, cal, me if me in players else None)
         (work / "timeline.json").write_text(json.dumps(tl, ensure_ascii=False), encoding="utf-8")
-        rounds = rounds_table(tl, players)
+        rounds = rounds_table(tl, players, heal_of(final))
         if not args.no_events:
             log("OCR frame penuh untuk kejadian ...")
             events = read_events(frames, d, {x["t"]: x["round"] for x in tl})
@@ -1225,6 +1339,10 @@ def main():
                       "mereka belum ada dan papan mereka bukan papan akhir.")
     if args.classic:
         method.append("Mode Classic: layar hasilnya memang tanpa poin.")
+    hand = [r["name"] for r in final if r.get("hand")]
+    if hand:
+        method.append("Nama yang tidak dikenal OCR (huruf Jepang, huruf hias) dibaca dengan mata dari layar hasil (catatan_nama.json): "
+                      + ", ".join(hand) + ".")
     ko = [r for r in final if r.get("ko")]
     if ko:
         method.append("Nama Hangul dibaca dengan model OCR Korea (RapidOCR PP-OCRv5; dipakai bila skor >= 0,6, satu huruf "
