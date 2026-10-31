@@ -161,8 +161,8 @@ PATCH_IMPACT_2810 = [
     ("Lukas", "Commander", [], "good", "Buff commander ekonomi", changes_2810("Lukas") + " Gold dari altar naik, Makhluk Suci ★2 sedikit melemah."),
     ("Dyrroth", "Commander", [], "good", "Buff commander", changes_2810("Dyrroth")),
     ("Lunox", "Commander", [], "bad", "Nerf commander",
-     changes_2810("Lunox") + " Angka 3 Hero di file game ada di Power of Order (3 Hero acak dari Sinergi yang diberikan skill-nya), bukan di "
-     "Power of Chaos; belum dicek in-game. Lineup SPECTRE + Starbelle dengan commander Lunox ikut melemah."),
+     changes_2810("Lunox") + " Patch note menulis 3 → 2 di Power of Chaos, tapi layar Commander Lunox 31 Okt menunjukkan yang berubah Power of "
+     "Order (kini 2 Hero acak dari Sinergi yang diberikan skill-nya). Lineup SPECTRE + Starbelle dengan commander Lunox ikut melemah."),
 ]
 PATCH_LEAD_2810 = ("Patch note server 28 Oktober (dicatat di server_patch.json; angka di bawah dibaca dari S7.json). Peringkat tidak berubah: "
                    "5 lineup ini tidak memakai commander Lukas, Dyrroth, atau Lunox, dan hanya lineup Kalea yang memakai Yin.")

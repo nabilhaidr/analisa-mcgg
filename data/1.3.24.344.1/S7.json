@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.24.344.1",
  "season": 7,
- "generated_at": "2026-10-31T04:58:18",
+ "generated_at": "2026-10-31T21:18:58",
  "info": {
   "name": "Chrono Echoes",
   "levels": [
@@ -6318,13 +6318,7 @@
       "attributes": [],
       "cooldown_ms": null,
       "icon": "img/Atlas_Commander_Skill3_MC/S452200.png"
-     },
-     "server": [
-      {
-       "patch": "28/10",
-       "text": "Jumlah Hero dengan Blessing: 3 → 2 (Angka 3 tidak ada di teks Power of Chaos (1 Hero, 1 kali). Satu-satunya '3 Hero' di skill Lunox ada di Power of Order (3 Hero acak dari Sinergi yang diberikan skill-nya), jadi kemungkinan itu yang berubah; belum dicek in-game.)"
-      }
-     ]
+     }
     },
     {
      "from_level": 2,
@@ -6336,12 +6330,12 @@
       "attributes": [],
       "cooldown_ms": null,
       "icon": "img/Atlas_Commander_Skill3_MC/S452210.png",
-      "description_server": "Setelah Lunox menggunakan skill, mendapatkan 3 Hero acak dari Sinergi yang diberikan skill-nya (dipengaruhi oleh peluang refresh Toko saat ini) dan 4 Gold."
+      "description_server": "Setelah Lunox menggunakan skill, mendapatkan 2 Hero acak dari Sinergi yang diberikan skill-nya (dipengaruhi oleh peluang refresh Toko saat ini) dan 4 Gold."
      },
      "server": [
       {
        "patch": "28/10",
-       "text": "Perolehan Gold: 6 → 4"
+       "text": "Hero acak yang didapat: 3 → 2; Perolehan Gold: 6 → 4 (Patch note menulis 3 >> 2 di Power of Chaos sebagai 'Jumlah Hero dengan Blessing'; layar Commander Lunox 31 Okt: teks Power of Chaos tetap, yang berubah Power of Order.)"
       }
      ]
     }
@@ -6780,7 +6774,7 @@
      "server": [
       {
        "patch": "20/10",
-       "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold) (Aktif sejak Commander bintang 1 (Lv 1). Teks in-game 31 Okt menaruhnya di skill ini; rekaman 31 Okt (Vexana ★★): +10 Gold di I-4, II-6, III-6.)"
+       "text": "13 Gold di babak Go Go Box pertama → 10 Gold di tiap 3 babak Go Go Box pertama (total 30 Gold) (Aktif sejak Commander bintang 1 (Lv 1). Teks in-game 31 Okt menaruhnya di skill ini; rekaman 31 Okt (Vexana ★★): +10 Gold di I-4, II-6, III-6; Go Go Box keempat tidak lagi memberi 10 Gold (pengujian pengguna 31 Okt).)"
       }
      ]
     },
@@ -17491,14 +17485,8 @@
     },
     {
      "kind": "Commander",
-     "target": "Lunox / Power of Chaos",
-     "text": "Jumlah Hero dengan Blessing: 3 → 2",
-     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
-    },
-    {
-     "kind": "Commander",
      "target": "Lunox / Power of Order",
-     "text": "Perolehan Gold: 6 → 4",
+     "text": "Hero acak yang didapat: 3 → 2; Perolehan Gold: 6 → 4",
      "status": "diterapkan server"
     },
     {
