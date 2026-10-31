@@ -85,10 +85,60 @@ Semua 11 item terlihat dan harganya cocok dengan `special_store`. Kenaikan baris
 
 Harga merah 1 Equipment Acak yang Diperkuat (80) tidak terbaca OCR dan dicek langsung di screenshot ponsel 03-38-09.
 
+## Hero panggilan (31 Okt, panel unit dalam pertandingan di `match/`)
+
+Layar Detail Hero toko tidak menampilkan hero panggilan, jadi dicek dari panel unit saat bertanding, dengan mata (OCR tidak membaca
+angka HP di atas bar; `mc_validate.py` tetap menulisnya "Tanpa screenshot"). Semua cocok dengan S7.json + `server_patch.json`.
+
+| Hero | Bintang | HP | Mana awal | Hybrid ATK | DEF | ATK Speed | Jangkauan | Bukti |
+|---|---|---|---|---|---|---|---|---|
+| Alpha | ★1 | 5400 (server) | 40 | 295 | 48 | 0,75 | 2 | 04-45-54 |
+| Alpha | ★2 | 10260 (server) | 40 | ada bonus equipment | ada bonus | ada bonus | 2 | 04-53-39 |
+| Novaria | ★1 | 3565 | 30 | 195 (server) | 24 | 0,75 | 4 | 13-44-08 |
+| Novaria | ★2 | 7059 (6417 + bonus 10%) | 30 | 413 = 295 × 1,4 | 24 | 0,75 | 4 | 13-53-51 |
+| Gatotkaca | ★1 | 4335 | 80 | 250 (server) | 48 | 0,65 | 1 | 15-27-41 |
+| Gatotkaca | ★2 | 7805 | 80 | 488 = 375 × 1,3 | 48 | 0,65 | 1 | 15-32-16 |
+| X.Borg | ★1 | 4075 | 80 | 260 (server) | 42 | 0,75 | 1 | 15-57-21 |
+| X.Borg | ★2 | 7335 | 80 | 395 (server) | 42 | 0,75 | 1 | 16-04-06 |
+| Layla | ★1 | 3565 | 30 | 300 (server) | 24 | 0,80 | 4 | 16-14-34 |
+| Layla | ★2 | 6417 | 30 | 562 = 450 × 1,25 | 24 | 0,80 | 4 | 16-26-00 |
+| Moskov | ★1 | 3565 | 60 | 275 = 220 × 1,25 | 24 | 0,95 dengan bonus (Layla sama di 16-40-22) | 4 | 19-31-00 |
+| Moskov | ★2 | 6417 | 60 | 412 = 330 × 1,25 | 24 | 0,95 dengan bonus | 4 | 19-35-46 |
+
+Panel menampilkan "mana/Batas Mana Awal" (0/30, 0/80), jadi angkanya sama dengan kolom Batas Mana Awal. Hero panggilan ★3 belum pernah tampil.
+
+Tooltip skill menampilkan nilai mutlak (dibulatkan ke bawah), jadi persentase data terbukti lewat hitungan:
+
+| Hero | Layar | Tooltip | Hitungan dari data |
+|---|---|---|---|
+| Layla ★1 | 19-56-51 | (+405), (+585), (+480) | 135%, 195%, 160% × ATK 300 |
+| Layla ★2 | 20-04-23 | (+912), (+1276), (+1094) | 150%, 210%, 180% × ATK 608 |
+| Alpha ★1 | 04-48-35 | (+398), teks ★3 (+4779) | 135%, 1620% × ATK 295 |
+| Alpha ★1 | 04-52-19 | (+866), teks ★3 (+11696) | 120%, 1620% × ATK 722 |
+| Moskov ★2 | 19-35-51 | (+1314), teks ★3 (+4780) | 275%, 1000% × ATK 478 |
+
+Teks skill Alpha, Layla, Moskov sama dengan data, selain salah baca OCR. Layla ★3 "3600% Physical ATK" juga cocok. Tooltip skill Novaria,
+Gatotkaca, X.Borg belum ada, jadi X.Borg ★3 "total 2000% ATK" tetap belum terbukti.
+
+**Sinergi Chrono Wanderer** (13-46-02, 13-46-07): "Hero 5 Gold yang dipanggil oleh Echomancer." sama dengan `explain`; efek in-game
+"Dapatkan bonus Sinergi Echomancer", data "Mendapatkan bonus atribut dari Sinergi Echomancer." (kalimat ini juga tampil di panel kecil 13-46-02).
+
+## Go Go Box (31 Okt, layar Pilih Hadiah 17-05-38 sampai 17-05-48)
+
+Layar sisa 20 detik: 8 orb utuh = 6 equipment + Dapatkan Sinergi Dragoncaller + Kapasitas +1, ditambah 3 hero. `mc_validate.py` memeriksanya
+otomatis sejak 31 Okt: layar tidak punya label babak, jadi babaknya dikenali dari susunan orb, dan hasilnya hanya cocok dengan II-6. Dua layar
+berikutnya menampilkan orb tersisa setelah pemain lain memilih, tanpa selisih.
+
+## Commander Lukas, Dyrroth, Lunox (31 Okt, layar Commander ponsel)
+
+Teks skill di ponsel sudah memuat Penyesuaian 28/10: Lukas Sacred Gift "3 hingga 4 kali lipat", Dyrroth "Mulai Babak I-3", "4 EXP Commander",
+"Setelah setiap 1 kali melahap", Lunox Power of Order "2 Hero acak ... dan 4 Gold". Teks Power of Chaos tidak berubah. Jadi baris Patch Note
+"Power of Chaos: Jumlah Hero dengan Blessing 3 >> 2" sebenarnya mengubah jumlah Hero acak di Power of Order.
+
 ## Catatan
 
 - Aturan equipment aktif (`m_DropState`) disimpulkan dari data + screenshot (cocok 67/67), bukan dibaca dari kode game.
   Aturan kartu aktif (`m_Value1–3`) dibaca dari kode galeri in-game.
 - X.Borg Bintang 3 kini "total 2000% ATK … sebanyak 10 serangan" (rumus `N*10` yang sama dengan Rising Fury); belum bisa
-  dicek karena tidak ada screenshot X.Borg.
+  dicek karena belum ada X.Borg ★3 atau tooltip skill-nya.
 - "Jangkauan ATK" hero tidak dibandingkan karena tidak tersimpan sebagai kolom tabel.
