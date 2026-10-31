@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 03-18
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:49_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:05_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -77,9 +77,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:49_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | GoldenBrown | 9 | Alice, Odette, Gord, Vexana, Irithel, Karina, Vale, Hilda, Martis | Minotaur's Power, Reinforcement / Reinforcement+, Astro Power's Blessing | SPECTRE 2, Dauntless 2, Astro Power 5, Mage 4 |
-| 2 | SirHannn! | 8 | Saber, Karina, Gusion, Natalia, Yi Sun-shin, Fanny, Irithel, Gusion, Phoveus | Kagura's Power, Shrouded Blade, Last Resort | SPECTRE 2, Swiftblade 6, Astro Power 2 |
-| 3 | Ariesboyy27 | 9 | Baxia, Novaria, Vexana, Atlas, Tigreal, Hylos, Nana, Mathilda, Edith | Nana's Power, Badge Defender, Premium Client II | Defender 5, Chrono Wanderer 1, Stargazer 3, Enchanted Tales 3, Mistbender 1 |
+| - | GoldenBrown | 9 | Alice, Odette, Gord, Vexana, Irithel, Karina, Vale, Hilda, Martis | Minotaur's Power, Reinforcement / Reinforcement+, Astro Power's Blessing | SPECTRE 2, Dauntless 2, Astro Power 5, Mage 4 |
+| - | SirHannn! | 8 | Saber, Karina, Gusion, Natalia, Yi Sun-shin, Fanny, Irithel, Gusion, Phoveus | Kagura's Power, Shrouded Blade, Last Resort | SPECTRE 2, Swiftblade 6, Astro Power 2 |
+| - | Ariesboyy27 | 9 | Baxia, Novaria, Vexana, Atlas, Tigreal, Hylos, Nana, Mathilda, Edith | Nana's Power, Badge Defender, Premium Client II | Defender 5, Chrono Wanderer 1, Stargazer 3, Enchanted Tales 3, Mistbender 1 |
 | 4 | CinCoeg (kamu) | 9 | Nana, Novaria, Lunox, Sora, Tigreal, Karina, Mathilda, Natalia, Harley, Luo Yi, Lancelot, Thamuz | Fanny's Power, Meltdown Armor Ⅰ / Ⅱ / Ⅲ, Divine Execution | Mistbender 1, Stargazer 6, Chrono Wanderer 1, Kishin 2, Echomancer 5, Swiftblade 2, Phasewarper 2 |
 | 5 | PRIMEONLY | 10 | Layla, Lancelot, Melissa, Karrie, Lunox, Alice, Irithel, Sora, Franco | Nana's Power, Purest Power Ⅱ, The More, the Merrier | Chrono Wanderer 1, Marksman 4, Kishin 4, Dauntless 2 |
 | 6 | PEGELLINU | 9 | Alice, Gord, Franco, Angela, Granger, Phoveus, Alpha, Layla, Thamuz | Nana's Power, Fast Promotion, Breath of Berserk Ⅲ | SPECTRE 5, Dauntless 2, Kishin 2, Weapon Master 2, Scavenger 2, Marksman 2, Chrono Wanderer 1 |
@@ -97,3 +97,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:49_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah V-1 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 04-55
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:51_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:09_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -74,9 +74,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:51_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | Naylla08 | 9 | Johnny, Gusion, Suyou, Karina, Wanwan, Yi Sun-shin, Fanny, Baxia, Zilong | Gusion's Power, Shrouded Blade, Glittering Jewels II | Dragoncaller 2, Swiftblade 4, Dragon Altar 4, Weapon Master 2 |
-| 2 | Schnee | 9 | Lancelot, Melissa, Karrie, Franco, Hylos, Baxia, Zilong, Clint, Kadita | Kagura's Power, Fast Promotion, Kishin Unbound | Kishin 3, Phasewarper 3, Shadeweaver 3, Marksman 2, Weapon Master 2, Defender 2, Dragoncaller 2 |
-| 3 | Bg mingg | 9 | Irithel, Fanny, Odette, Karina, Lolita, Hilda, Edith, Miya, Zhuxin | Chou's Power, Premium Client I, Fateful Dice | Astro Power 4, Marksman 2, Starbelle 5, Swiftblade 2, Mage 2, Dauntless 2 |
+| - | Naylla08 | 9 | Johnny, Gusion, Suyou, Karina, Wanwan, Yi Sun-shin, Fanny, Baxia, Zilong | Gusion's Power, Shrouded Blade, Glittering Jewels II | Dragoncaller 2, Swiftblade 4, Dragon Altar 4, Weapon Master 2 |
+| - | Schnee | 9 | Lancelot, Melissa, Karrie, Franco, Hylos, Baxia, Zilong, Clint, Kadita | Kagura's Power, Fast Promotion, Kishin Unbound | Kishin 3, Phasewarper 3, Shadeweaver 3, Marksman 2, Weapon Master 2, Defender 2, Dragoncaller 2 |
+| - | Bg mingg | 9 | Irithel, Fanny, Odette, Karina, Lolita, Hilda, Edith, Miya, Zhuxin | Chou's Power, Premium Client I, Fateful Dice | Astro Power 4, Marksman 2, Starbelle 5, Swiftblade 2, Mage 2, Dauntless 2 |
 | 4 | CinCoeg (kamu) | 9 | Fanny, Layla, Thamuz, Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Cici, Alice, Lolita | Fanny's Power, Glittering Jewels II, Steel Front | Starbelle 6, Swiftblade 2, Chrono Wanderer 1, Marksman 2, Echomancer 4, Weapon Master 2, Defender 2, Dauntless 2 |
 | 5 | H4bboy | 9 | Alpha, Alice, Odette, Gord, Vexana, Hilda, Zhuxin, Phoveus | Nana's Power, Frontier Blitz, Magic Surge | SPECTRE 4, Dauntless 2, Astro Power 2, Mage 4 |
 | 6 | G@makici | 9 | Melissa, Karrie, Lunox, Dyrroth, Lancelot, Franco, Clint, Kadita, Hylos | Alucard's Power, Fully Loaded, Fortified Defense | Shadeweaver 3, Marksman 2, Kishin 5, Phasewarper 3 |
@@ -94,3 +94,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:51_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

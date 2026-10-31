@@ -1,16 +1,17 @@
 # Analisa Pertandingan — 31 Okt 02-51 PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:32_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:21_
 
-- **Peringkat:** -
+- **Peringkat:** 6
 - **HP akhir:** 12
 - **Babak terbaca:** I-1 – IV-3 (19 babak), kehilangan HP di 7 babak
-- **Pertandingan:** ID - · poin -
+- **Pertandingan:** ID 379934805957338890 · poin -
 - Pemain: CinCoeg
 
 ## Catatan otomatis
 
-- Rekaman berhenti di IV-3 tanpa layar hasil: peringkat akhir tidak diketahui.
+- Peringkat akhir 6.
+- Rekaman berhenti di IV-3 sebelum pertandingan selesai.
 - HP hilang per fase: Fase I −6, Fase II −15, Fase III −44, Fase IV −23. Terbanyak di Fase III.
 - 3 babak beruntun tanpa kehilangan HP (sampai III-5).
 - 2 kekalahan beruntun (sampai III-2).
@@ -52,11 +53,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:32_
 | Vannah | 100 | 100 | 100 | 100 | 93 | 93 | 83 | 83 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 73 | 54 |  |
 | Hazelluna | 100 | 100 | 94 | 94 | 94 | 94 | 94 | 94 | 94 | 84 | 76 | 76 | 76 | 76 | 76 | 57 | 41 | 21 |  |
 | CinCoeg | 100 | 100 | 94 | 94 | 94 | 86 | 86 | 86 | 79 | 79 | 79 | 67 | 51 | 51 | 51 | 51 | 35 | 12 |  |
-| Quan xi | 100 | 100 | 94 | 89 | 89 | 78 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 56 | 56 | 39 |
-| Mull Polly | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 84 | 74 | 74 | 63 | 63 | 63 | 48 | 48 | 30 | 11 |  |
-| PRAMIJD | 100 | 100 | 100 | 96 | 87 | 87 | 78 | 78 | 78 | 78 | 64 | 52 | 35 | 35 | 35 | 25 | 25 | 25 |  |
-| blackdevil | 100 | 100 | 100 | 93 | 85 | 76 | 64 | 64 | 55 | 43 | 33 | 18 |  |  |  |  |  |  |  |
-| Yann | 100 | 100 | 92 | 84 | 75 | 67 | 67 | 55 | 55 | 55 | 44 | 44 | 30 | 30 | 18 | 3 | 3 | 3 |  |
+| Quanxi9s | 100 | 100 | 94 | 89 | 89 | 78 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 70 | 56 | 56 | 39 |
+| MullPolly&97 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 84 | 74 | 74 | 63 | 63 | 63 | 48 | 48 | 30 | 11 |  |
+| PRAMUD969 | 100 | 100 | 100 | 96 | 87 | 87 | 78 | 78 | 78 | 78 | 64 | 52 | 35 | 35 | 35 | 25 | 25 | 25 |  |
+| blackdevil46 | 100 | 100 | 100 | 93 | 85 | 76 | 64 | 64 | 55 | 43 | 33 | 18 |  |  |  |  |  |  |  |
+| Yann_?(^_)?&#@$*% | 100 | 100 | 92 | 84 | 75 | 67 | 67 | 55 | 55 | 55 | 44 | 44 | 30 | 30 | 18 | 3 | 3 | 3 |  |
 
 ## Kejadian
 
@@ -72,6 +73,19 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:32_
 | 19:50 | III-6 | Panel DMG | Nana 15.136, Aldous 3.632, Balmond 3.632 |
 | 20:40 | III-6 | Go Go Box |  |
 
+## Papan akhir (layar hasil)
+
+| # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
+|---|---|---|---|---|---|
+| 1 | Yann_?(^_)?&#@$*% | 10 | Alice, Nana, Lolita, Uranus, Alpha, Lunox, Karina, Franco, Hilda | Aamon's Power, Blazing Valor, Meltdown Armor Ⅰ / Ⅱ / Ⅲ | SPECTRE 2, Dauntless 5, Mistbender 2, Stargazer 3, Kishin 2, Astro Power 2 |
+| 2 | Vannah | 9 | Irithel, Melissa, Karrie, Franco, Hilda, Wanwan, Miya, Lolita, Lunox | Brody's Power, Fast Promotion, Glittering Jewels Ⅰ | Astro Power 2, Marksman 5, Kishin 3, Dauntless 3, Starbelle 2 |
+| 3 | Quanxi9s | 8 | Nana, Baxia, Zilong, Gusion, Atlas, Clint, Balmond, Suyou | Aamon's Power, Legacy of Valor, Uncertain Fortune | Mistbender 1, Dragon Altar 2, Defender 2, Dragoncaller 4, Weapon Master 2 |
+| 4 | MullPolly&97 | 8 | Saber, Karina, Hilda, Balmond, Alice, Odette, Lolita, Franco, Martis | Kagura's Power, Synergy Constellation, Prime Selection | SPECTRE 2, Swiftblade 2, Astro Power 4, Dauntless 5, Weapon Master 2 |
+| 5 | PRAMUD969 | 9 | Lancelot, Thamuz, Karrie, Lunox, Harley, Uranus, Badang, Franco, Angela | Lunox's Power, Legacy of Valor, Rock Solid | Kishin 5, Phasewarper 2, Echomancer 2, Weapon Master 2, Mistbender 1, Dauntless 2 |
+| 6 | CinCoeg (kamu) | 9 | Uranus, Franco, Nana, Fanny, Lolita, Karina, Hilda, Aldous, Balmond | Aamon's Power, Badge Dauntless, Rock Solid | Mistbender 3, Dauntless 5, Stargazer 2, Starbelle 2, Swiftblade 2, Astro Power 2 |
+| 7 | blackdevil46 | 7 | Aldous, Nana, Mathilda, Uranus, Lunox, Karina, Franco, Hilda | Aamon's Power, Fateful Dice, Rock Solid | Mistbender 3, Stargazer 4, Dauntless 3, Kishin 2, Astro Power 2 |
+| 8 | Hazelluna | 9 | Cici, Gord, Paquito, Granger, Phoveus, Alice, Edith, Martis, Zhuxin | Miya's Power, Yo-yo Virtuoso, Healing Fountain | Starbelle 3, Weapon Master 2, SPECTRE 5, Mage 2 |
+
 ## Catatan metode
 
 - Tata letak: pc; frame tiap 5 detik; OCR: windows.
@@ -82,3 +96,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:32_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.
+- Mode Classic: layar hasilnya memang tanpa poin.

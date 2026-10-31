@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-17
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:03_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:16_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -75,11 +75,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:03_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | ZedSmurf | 8 | Lolita, Lunox, Karina, Franco, Hilda, Aldous, Martis, Uranus, Nana | Lunox's Power, Fateful Dice, Rising Fury Ⅰ / Ⅱ / Ⅲ | Dauntless 4, Kishin 2, Stargazer 3, Astro Power 3, Weapon Master 2, Mistbender 3 |
-| 2 | azonkkk | 9 | Layla, Gusion, Tigreal, Natalia, Vale, Fanny, Odette, Thamuz, Lolita | Lunox's Power, Swiftblade's Badge, Prime Selection | Chrono Wanderer 1, Swiftblade 3, Echomancer 4, Mage 2, Starbelle 2 |
-| 3 | PRIA-SOLO | 8 | Zilong, Suyou, Luo Yi, Yi Sun-shin, Cici, Thamuz, Melissa, Yin, Franco | Fanny's Power, Payday, Purest Power Ⅰ | Weapon Master 5, Dragon Altar 4 |
-| 4 | NelfiGusrianti | 8 | Minotaur, Irithel, Atlas, Tigreal, Tigreal, Edith, Miya, Hylos | Layla's Power, Aftershock | Astro Power 2, Defender 5, Marksman 2, Starbelle 2 |
-| 5 | KingCremona? | 8 | Makhluk Suci, Lolita, Lunox, Franco, Hilda, Balmond, Uranus, Nana, Odette | Lukas's Power, Talisman Unleashed, Prime Selection | Dauntless 5, Kishin 2, Stargazer 2, Astro Power 2, Mistbender 2 |
+| - | ZedSmurf | 8 | Lolita, Lunox, Karina, Franco, Hilda, Aldous, Martis, Uranus, Nana | Lunox's Power, Fateful Dice, Rising Fury Ⅰ / Ⅱ / Ⅲ | Dauntless 4, Kishin 2, Stargazer 3, Astro Power 3, Weapon Master 2, Mistbender 3 |
+| - | azonkkk | 9 | Layla, Gusion, Tigreal, Natalia, Vale, Fanny, Odette, Thamuz, Lolita | Lunox's Power, Swiftblade's Badge, Prime Selection | Chrono Wanderer 1, Swiftblade 3, Echomancer 4, Mage 2, Starbelle 2 |
+| - | PRIA-SOLO | 8 | Zilong, Suyou, Luo Yi, Yi Sun-shin, Cici, Thamuz, Melissa, Yin, Franco | Fanny's Power, Payday, Purest Power Ⅰ | Weapon Master 5, Dragon Altar 4 |
+| - | NelfiGusrianti | 8 | Minotaur, Irithel, Atlas, Tigreal, Tigreal, Edith, Miya, Hylos | Layla's Power, Aftershock | Astro Power 2, Defender 5, Marksman 2, Starbelle 2 |
+| - | KingCremona? | 8 | Makhluk Suci, Lolita, Lunox, Franco, Hilda, Balmond, Uranus, Nana, Odette | Lukas's Power, Talisman Unleashed, Prime Selection | Dauntless 5, Kishin 2, Stargazer 2, Astro Power 2, Mistbender 2 |
 | 6 | dikz magnus | 9 | Gatotkaca, Karrie, Lunox, Franco, Lancelot, Thamuz, Melissa, Melissa, Kadita | Fanny's Power, Experienced Shuffle, Rock Solid | Chrono Wanderer 1, Kishin 4, Marksman 2, Weapon Master 2, Phasewarper 2, Shadeweaver 2 |
 | 7 | CinCoeg (kamu) | 9 | X.Borg, Miya, Natalia, Zhuxin, Vale, Fanny, Thamuz, Lolita, Sora, Tigreal, Edith, Cici | Fanny's Power, Payday, Prime Selection | Chrono Wanderer 1, Dauntless 2, Starbelle 6, Echomancer 5, Swiftblade 2, Mage 2, Weapon Master 2, Defender 2 |
 | 8 | OlgaXFANLEE | 9 | Alice, Gord, Gusion, Yi Sun-shin, Alpha, Baxia, Suyou, Wanwan, Luo Yi | Kalea's Power, Trust Fund, Healing Fountain | SPECTRE 3, Swiftblade 2, Dragon Altar 5 |
@@ -95,3 +95,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:03_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah IV-1 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

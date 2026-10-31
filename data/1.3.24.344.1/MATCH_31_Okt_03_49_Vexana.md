@@ -1,16 +1,17 @@
 # Analisa Pertandingan — 31 Okt 03-49 Vexana
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:33_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:26_
 
-- **Peringkat:** -
+- **Peringkat:** 3
 - **HP akhir:** 3
 - **Babak terbaca:** I-1 – IV-5 (21 babak), kehilangan HP di 7 babak
-- **Pertandingan:** ID - · poin -
+- **Pertandingan:** ID 383721206175823055 · poin -
 - Pemain: CinCoeg
 
 ## Catatan otomatis
 
-- Rekaman berhenti di IV-5 tanpa layar hasil: peringkat akhir tidak diketahui.
+- Peringkat akhir 3.
+- Rekaman berhenti di IV-5 sebelum pertandingan selesai.
 - HP hilang per fase: Fase I −14, Fase II −19, Fase III −15, Fase IV −49. Terbanyak di Fase IV.
 - 6 babak beruntun tanpa kehilangan HP (sampai IV-1).
 - 2 kekalahan beruntun (sampai III-1).
@@ -50,13 +51,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:33_
 
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 | IV-2 | IV-3 | IV-4 | IV-5 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| PT gmpon | 100 | 100 | 94 | 87 | 87 | 87 | 87 | 87 | 87 | 87 | 79 | 62 | 62 | 62 | 62 | 43 | 26 | 7 | 7 | 7 | 7 |
+| PTgmpongjeulekat | 100 | 100 | 94 | 87 | 87 | 87 | 87 | 87 | 87 | 87 | 79 | 62 | 62 | 62 | 62 | 43 | 26 | 7 | 7 | 7 | 7 |
 | ndory:v | 100 | 100 | 100 | 100 | 100 | 92 | 92 | 92 | 78 | 68 | 68 | 68 | 49 | 49 | 49 | 49 | 32 | 32 | 32 | 32 |  |
 | CinCoeg | 100 | 100 | 94 | 94 | 86 | 86 | 86 | 86 | 79 | 79 | 67 | 52 | 52 | 52 | 52 | 52 | 52 | 52 | 30 | 30 | 3 |
 | Chapeloco | 100 | 100 | 100 | 93 | 93 | 85 | 85 | 85 | 85 | 67 | 67 | 67 | 55 | 55 | 55 | 37 | 11 | 11 |  |  |  |
 | Adamwba | 100 | 100 | 100 | 100 | 100 | 90 |  | 83 | 83 | 83 | 83 | 83 | 83 | 83 | 67 | 67 | 67 | 45 |  | 21 | 21 |
-| Mya vasqu | 100 | 100 | 100 | 95 | 89 | 89 | 82 | 82 | 82 | 70 | 57 | 42 | 30 | 30 | 15 |  |  |  |  |  |  |
-| BtackMo | 100 | 100 | 94 | 94 | 88 | 88 | 79 | 79 | 66 | 66 | 47 | 35 | 19 | 19 | 19 |  |  |  |  |  |  |
+| Myavasques | 100 | 100 | 100 | 95 | 89 | 89 | 82 | 82 | 82 | 70 | 57 | 42 | 30 | 30 | 15 |  |  |  |  |  |  |
+| BiackMon+* | 100 | 100 | 94 | 94 | 88 | 88 | 79 | 79 | 66 | 66 | 47 | 35 | 19 | 19 | 19 |  |  |  |  |  |  |
 | Cinnamon | 100 | 100 | 93 | 86 | 77 | 67 | 55 | 55 | 40 | 29 | 29 | 29 | 29 | 29 | 14 |  |  |  |  |  |  |
 
 ## Kejadian
@@ -71,6 +72,19 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:33_
 | 14:11 | III-3 | Pilih Go Go Card | pilihan: Fateful Dice |
 | 19:01 | III-6 | Go Go Box |  |
 
+## Papan akhir (layar hasil)
+
+| # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
+|---|---|---|---|---|---|
+| 1 | Adamwba | 10 | Makhluk Suci, Odette, Thamuz, X.Borg, Vexana, Vexana, Atlas, Vale, Gord | Lukas's Power, Uncertain Fortune, Echomancer's Badge | Mage 4, Echomancer 2, Chrono Wanderer 1, Enchanted Tales 2 |
+| 2 | PTgmpongjeulekat | 9 | Fanny, Thamuz, Zilong, Suyou, Edith, Miya, Zhuxin, Cici, Lolita | Cyclops' Power, Dimensional Shot Ⅰ / Ⅱ, Bright Sunshine | Starbelle 6, Weapon Master 4 |
+| 3 | CinCoeg (kamu) | 9 | Alice, Fanny, Lolita, Gusion, Karina, Edith, Zhuxin, Miya, Natalia | Vexana's Power, Uncertain Fortune, Tactical Airdrop | Dauntless 2, Starbelle 5, Swiftblade 4 |
+| 4 | ndory:v | 9 | Minotaur, Baxia, Suyou, Wanwan, Hylos, Luo Yi, Yi Sun-shin, Atlas, Yin | Brody's Power, Cyclical Support, Rising Fury Ⅰ / Ⅱ / Ⅲ | Defender 4, Dragon Altar 6 |
+| 5 | Chapeloco | 8 | Yin, Aldous, Paquito, Belerick, Uranus, Dyrroth, Alice, Nana, Badang | Yu Zhong's Power, Blessing Dauntless, Ethereal Essence | Bruiser 6, Mistbender 3, SPECTRE 2, Dauntless 2 |
+| 6 | Cinnamon | 7 | X.Borg, Tigreal, Clint, Natalia, Harley, Vale, Thamuz, Sora | Chou's Power, Barrier's Seal Ⅰ, Purest Power Ⅱ | Chrono Wanderer 1, Echomancer 6, Phasewarper 2 |
+| 7 | Myavasques | 7 | Clint, Aldous, Paquito, Balmond, Belerick, Dyrroth, Yin | Karina's Power, Magic Immersion Ⅰ, Rising Fury Ⅰ / Ⅱ / Ⅲ | Dragoncaller 2, Mistbender 1, Bruiser 5 |
+| 8 | BiackMon+* | 7 | Tigreal, Karina, Hilda, Edith, Martis, Minotaur, Irithel, Atlas | Vale's Power, Cyclical Support, Payday | Defender 4, Astro Power 5 |
+
 ## Catatan metode
 
 - Tata letak: ponsel; frame tiap 5 detik; OCR: windows.
@@ -81,3 +95,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:33_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris.
+- Mode Classic: layar hasilnya memang tanpa poin.

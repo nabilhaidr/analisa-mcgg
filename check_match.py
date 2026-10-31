@@ -126,6 +126,7 @@ def check(md_path, seasons):
     rank = num(boxes.get("Peringkat"))
     row = {"pkt": boxes.get("Peringkat", "-"), "HP": boxes.get("HP akhir", "-")}
     no_result = "tanpa layar hasil" in txt  # a recording that stopped early says so: no rank, ID, points or final board to read
+    cut = "sebelum pertandingan selesai" in txt  # same, but Riwayat gave the result: the last round read is not the way out
 
     # md and html carry the same tables and lists
     def same_table(title, cols_html=None):
@@ -209,11 +210,11 @@ def check(md_path, seasons):
             elif i + 1 < len(tl) and None not in (hps[i], hps[i + 1]) and dlt != hps[i + 1] - hps[i]:
                 err.append(f"{r[0]}: perubahan {dlt:+d} != {hps[i + 1]} - {hps[i]}")
         empty = [r[0] for i, (r, v) in enumerate(zip(tl, hps)) if v is None and (out_at is None or i < out_at)
-                 and not (no_result and i == len(tl) - 1)]
+                 and not ((no_result or cut) and i == len(tl) - 1)]
         if empty:  # after the elimination round, or in the round where the recording stopped, there is no own HP to read
             warn.append("HP sendiri kosong di timeline: " + ", ".join(empty))
         mine = [i for i, v in enumerate(hps) if v is not None]
-        if rank and rank > 1 and mine and out_at != mine[-1]:
+        if rank and rank > 1 and mine and out_at != mine[-1] and not cut:
             err.append(f"peringkat {rank} tapi tidak tereliminasi di babak terakhir dengan HP sendiri ({tl[mine[-1]][0]})")
         if (rank == 1 or not rank) and out_at is not None:
             err.append(f"tertulis tereliminasi di {tl[out_at][0]} padahal peringkat {rank}")
@@ -246,7 +247,7 @@ def check(md_path, seasons):
                            "delta": {}})
         for cur, nxt in zip(rounds, rounds[1:]):
             cur["delta"] = {p: nxt["start"][p] - v for p, v in cur["start"].items() if p in nxt["start"]}
-        if rank and rank > 1 and me:  # as in mc_match.main: eliminated after the last round with own HP
+        if rank and rank > 1 and me and not cut:  # as in mc_match.main: eliminated after the last round with own HP
             last = next((r for r in reversed(rounds) if me in r["start"]), None)
             if last and me not in last["delta"]:
                 last["delta"][me] = -last["start"][me]
@@ -254,10 +255,8 @@ def check(md_path, seasons):
     # final board
     board_names = []
     match = boxes.get("Pertandingan", "")
-    unranked = [r for r in board if r[0] == "-"]  # still playing when the own run ended: crossed swords, no points line
-    if unranked and not match.endswith("poin -"):
-        err.append(f"{len(unranked)} baris papan akhir tanpa peringkat padahal layar hasil punya poin: {match}")
-    if not (no_result or unranked or re.search(r"ID \d{15,20} · poin \d+ \([+-]\d+\)", match)):
+    id_points = r"ID \d{15,20}" if "Mode Classic" in txt else r"ID \d{15,20} · poin \d+ \([+-]\d+\)"  # Classic has no points
+    if not (no_result or re.search(id_points, match)):
         warn.append(f"ID/poin pertandingan tidak terbaca: {match}")
     if board:
         ranks = [num(r[0]) or i for i, r in enumerate(board, 1)]
@@ -266,6 +265,8 @@ def check(md_path, seasons):
         own = [r for r in board if r[1].endswith(" (kamu)")]
         if me and rank and (len(own) != 1 or num(own[0][0]) != rank):
             err.append(f"baris (kamu) di papan akhir: {[r[0] for r in own]}, kotak Peringkat {rank}")
+        if own and any(r[0] == "-" for r in board[board.index(own[0]) + 1:]):  # only players still fighting have no rank (swords)
+            err.append(f"baris tanpa peringkat di bawah baris (kamu): {[r[0] for r in board]}")
         hrows = html_rows(secs.get("Papan akhir (layar hasil)"))[1]
         for r, h in zip(board, hrows):
             name = r[1].removesuffix(" (kamu)")
@@ -330,7 +331,7 @@ def check(md_path, seasons):
             err.append(f"babak kejadian tidak dikenal: {r[1]}")
             rnd = None
         ev.append({"t": None, "round": rnd, "kind": r[2], "detail": r[3]})
-    want = mc_match.insights(rounds, me, ev, rank) if (rounds or rank) else []
+    want = mc_match.insights(rounds, me, ev, rank, cut) if (rounds or rank) else []
     if len(want) != len(hnotes) or not all(c == wc and note_matches(t, wt) for (c, t), (wc, wt) in zip(hnotes, want)):
         diff = [f"{t!r} -> {wt!r}" for (_, t), (_, wt) in zip(hnotes, want) if t != wt][:3]
         err.append(f"Catatan otomatis != mc_match.insights() ({len(hnotes)} vs {len(want)} baris) {'; '.join(diff)}")

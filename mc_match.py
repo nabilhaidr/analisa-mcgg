@@ -4,7 +4,8 @@ Pemakaian (Python sistem: av, opencv-python, numpy, pillow; OCR lewat mc_ocr.py 
   python mc_match.py --video "screenshot\\season 7\\match\\rekaman.mp4" --result hasil1.jpg hasil2.jpg --player CinCoeg --name "21 Okt 15-38"
   python mc_match.py --result hasil.jpg --player CinCoeg            hanya layar hasil
 Opsi: --step 5 (detik per frame), --frames <folder> (pakai frame yang sudah diambil), --no-events (lewati OCR frame penuh =
-tanpa daftar kejadian), --ocr auto|windows|rapid, --season, --version.
+tanpa daftar kejadian), --classic (mode Classic: tidak ada poin Rank), --cut (rekaman berhenti sebelum pertandingan selesai,
+layar hasil dari Riwayat), --ocr auto|windows|rapid, --season, --version.
 OCR: --ocr auto = OCR Windows untuk frame rekaman (di luar Windows: RapidOCR), dan RapidOCR untuk layar hasil serta label
 babak yang tidak terbaca bila terpasang (di screenshot hasil 21 Okt RapidOCR membaca 8/8 nama pemain, OCR Windows 3/8; label
 pendek seperti IV-4, IV-6, V-1 sering terlewat OCR Windows).
@@ -25,7 +26,8 @@ Cara kerja:
   setelah babak terakhir yang masih menampilkan HP sendiri (angka 0 yang redup tidak terbaca OCR).
 - Kejadian (Go Go Card, Go Go Box, crystal Pilihan, naik level, VICTORY/DEFEAT, panel DMG) dibaca dari OCR frame penuh.
 - Layar hasil: hero dan Go Go Card tiap pemain dikenali dari ikon (mc_vision), nama/level dari OCR, sinergi dihitung dari
-  hero (crystal tidak terlihat di layar hasil).
+  hero (crystal tidak terlihat di layar hasil). Baris berikon pedang (rank_swords.png) = pemain itu masih bertanding saat layar
+  dibuka: tanpa peringkat, papannya bukan papan akhir.
 Hasil per babak memakai perubahan HP: HP turun = kalah; tetap = menang (lawan pemain atau creep). Babak creep (I-1 dan
 babak ke-3 tiap fase berikutnya) tidak memutus kekalahan beruntun; teks Win/Lose Streak di layar tidak dipakai (bisa milik
 lawan). Angka adalah perkiraan dari gambar; lihat bagian "Catatan metode" di laporan.
@@ -705,7 +707,9 @@ def read_result(paths, d, folder, engine=None):
             meta.setdefault("points", f"{pts.group(1)} ({pts.group(2)})")
         lv_lines = [l for l in lines if NOT_NAME.match(l["t"])]
         col_x = statistics.median(l["x"] for l in lv_lines) if lv_lines else None  # names start where "Level N" starts
-        for i, r, y in grid_ranks(heroes, [(l["y"] + l["b"]) / 2 for l in lv_lines]):
+        grid = grid_ranks(heroes, [(l["y"] + l["b"]) / 2 for l in lv_lines])
+        swords = sword_rows(p, grid)
+        for i, r, y in grid:
             size = r[0]["size"]
             x_first = min(f["x"] for f in r)
             near = [l for l in lines if abs((l["y"] + l["b"]) / 2 - y) < size * 0.9 and l["r"] < x_first - size]
@@ -713,6 +717,8 @@ def read_result(paths, d, folder, engine=None):
             lv = next((v for l in near if (v := result_level(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
             cur = rows.setdefault(i, {"rank": i, "row": i, "name": name or f"baris {i}", "level": lv, "heroes": [], "cards": []})
+            if i in swords:
+                cur["fighting"] = True
             if name and (cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"]))):
                 cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
             if not name and col_x is not None:
@@ -753,6 +759,9 @@ def read_result(paths, d, folder, engine=None):
 
 
 HANGUL = re.compile(r"[가-힣]")
+SWORDS = HERE / "rank_swords.png"  # crossed swords cut from a phone result screen whose rows are SWORDS_PITCH pixels apart
+SWORDS_PITCH = 106
+SWORDS_SCORE = 0.8  # the icon scores 0.97-1.00 on phone, PC and video frames, a rank badge at most 0.47 (60 result screens)
 
 
 def merge_heroes(a, b):
@@ -862,14 +871,41 @@ def grid_ranks(rows, levels=()):
     return out
 
 
-def interim_ranks(final, meta, me):
-    """A player who is out sees the result screen while the others still play (31 Okt 03-23, rank 8): no points line, and
-    crossed swords instead of a rank on the rows above the own row, so those players have no rank yet. Rows below the own
-    row were out earlier and keep theirs."""
-    own = next((i for i, r in enumerate(final) if me and norm(r["name"]) == norm(me)), None)
-    if meta.get("points") or own is None:
-        return final
-    return [{**r, "rank": None} if i < own else r for i, r in enumerate(final)]
+def grid_pitch(grid):
+    """Pixels between two result rows, from the (rank, hero row, y) of grid_ranks, or None with fewer than two rows."""
+    steps = [(b[2] - a[2]) / (b[0] - a[0]) for a, b in zip(grid, grid[1:]) if b[0] > a[0]]
+    return statistics.median(steps) if steps else None
+
+
+def sword_ys(img, pitch):
+    """Middle y of each crossed-swords icon in `img` (BGR, left part of a result screen), top to bottom. Rows are `pitch`
+    pixels apart, which sets the icon size on any screen (phone, PC, video frame)."""
+    scale = pitch / SWORDS_PITCH
+    icon = cv2.resize(mc_vision.to_bgr(SWORDS), None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+    score = cv2.matchTemplate(img, icon, cv2.TM_CCOEFF_NORMED)
+    ys = []
+    while score.max() >= SWORDS_SCORE:
+        y = int(np.unravel_index(score.argmax(), score.shape)[0])
+        ys.append(y + icon.shape[0] / 2)
+        score[max(0, y - int(pitch / 2)):y + int(pitch / 2)] = -1
+    return sorted(ys)
+
+
+def sword_rows(path, grid):
+    """Ranks of the grid_ranks rows that show crossed swords. The rank column stands in the left 30% of every result screen."""
+    pitch = grid_pitch(grid)
+    if not pitch:
+        return set()
+    img = mc_vision.to_bgr(path)
+    ys = sword_ys(img[:, :img.shape[1] * 3 // 10], pitch)
+    return {i for i, _, y in grid if any(abs(s - y) < pitch / 2 for s in ys)}
+
+
+def interim_ranks(final):
+    """A player who is out sees the result screen while the others still play: crossed swords instead of a rank on their
+    rows, so they have no rank yet and their board is not final. The points line says nothing about this: 31 Okt 20:13 shows
+    points above three rows of swords, and Classic on Riwayat has no points although every rank is final."""
+    return [{**r, "rank": None} if r.get("fighting") else r for r in final]
 
 
 def result_frames(frames, work):
@@ -907,11 +943,13 @@ def own_name(names, player):
 
 # ------------------------------------------------------------------ insights
 
-def insights(rounds, me, events, final_rank):
+def insights(rounds, me, events, final_rank, cut=False):
     out = []
     if final_rank:
         out.append(("good" if final_rank <= 3 else "warn", f"Peringkat akhir {final_rank}."))
-    elif rounds:
+    if cut:
+        out.append(("warn", f"Rekaman berhenti di {rounds[-1]['label']} sebelum pertandingan selesai."))
+    elif rounds and not final_rank:
         out.append(("warn", f"Rekaman berhenti di {rounds[-1]['label']} tanpa layar hasil: peringkat akhir tidak diketahui."))
     phases = {}
     for r in rounds:
@@ -985,6 +1023,8 @@ def main():
     ap.add_argument("--step", type=float, default=5)
     ap.add_argument("--frames", type=Path, help="folder frame f_<detik>.jpg yang sudah ada")
     ap.add_argument("--no-events", action="store_true")
+    ap.add_argument("--classic", action="store_true", help="pertandingan mode Classic: tidak ada poin Rank")
+    ap.add_argument("--cut", action="store_true", help="rekaman berhenti sebelum pertandingan selesai, layar hasil dari Riwayat")
     ap.add_argument("--ocr", default="auto", choices=mc_ocr.ENGINES, help="mesin OCR (lihat mc_ocr.py)")
     ap.add_argument("--season", type=int)
     ap.add_argument("--version")
@@ -1035,10 +1075,10 @@ def main():
         if not args.no_events:
             log("OCR frame penuh untuk kejadian ...")
             events = read_events(frames, d, {x["t"]: x["round"] for x in tl})
-    final = interim_ranks(final, meta, me)
-    final_rank = next((r["rank"] for r in final if me and norm(r["name"]) == norm(me)), None)
+    final = interim_ranks(final)
+    final_rank =next((r["rank"] for r in final if me and norm(r["name"]) == norm(me)), None)
     out_round = None
-    if final_rank and final_rank > 1:  # eliminated: HP 0 after the last round with own HP (the dimmed "0" is not read)
+    if final_rank and final_rank > 1 and not args.cut:  # eliminated: HP 0 after the last round with own HP (the dimmed "0" is not read)
         out_round = next((r for r in reversed(rounds) if me in r["start"]), None)
         if out_round and me not in out_round["delta"]:
             out_round["delta"][me] = -out_round["start"][me]
@@ -1059,7 +1099,7 @@ def main():
                 f'</div><p class="muted small">Pemain: {esc(me or "-")}' + (f" · tata letak {esc(layout)}" if layout else "") + "</p></section>")
     md += [f"- **{k}:** {v}" for k, v in boxes] + [f"- Pemain: {me or '-'}", ""]
 
-    notes = insights(rounds, me, events, final_rank) if (rounds or final_rank) else []
+    notes = insights(rounds, me, events, final_rank, args.cut) if (rounds or final_rank) else []
     if notes:
         body.append("<section><h2>Catatan otomatis</h2><ul>" + "".join(
             f'<li class="{c}">{esc(t)}</li>' if c else f"<li>{esc(t)}</li>" for c, t in notes) + "</ul></section>")
@@ -1181,8 +1221,10 @@ def main():
                       "gambar dari layar hasil; peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
                                                      "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))
     if any(r["rank"] is None for r in final):
-        method.append("Layar hasil ini tampil saat kamu sudah tersingkir: pemain di atas barismu masih bertanding (ikon pedang, tanpa "
-                      "poin), jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.")
+        method.append("Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat "
+                      "mereka belum ada dan papan mereka bukan papan akhir.")
+    if args.classic:
+        method.append("Mode Classic: layar hasilnya memang tanpa poin.")
     ko = [r for r in final if r.get("ko")]
     if ko:
         method.append("Nama Hangul dibaca dengan model OCR Korea (RapidOCR PP-OCRv5; dipakai bila skor >= 0,6, satu huruf "

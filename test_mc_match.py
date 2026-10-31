@@ -14,9 +14,11 @@ from PIL import Image
 
 import mc_match
 import mc_ocr
+import mc_vision
 import video_frames
 
 GOLD =Path(__file__).resolve().parent / "test_data" / "gold"
+RANK = GOLD.parent / "rank"
 
 
 def look(seed):
@@ -112,28 +114,52 @@ class GoGoBoxTitle(unittest.TestCase):
         self.assertEqual(mc_match.event_kinds("Box, kamu bisa memilih 1 hadiah | tambahan dari hadiah yang"), [])
 
 
-def result_rows():
-    return [{"rank": i, "name": n} for i, n in enumerate(("Shalnark", "Cleon", "CinCoeg", "Vuizen"), 1)]
+def result_rows(fighting=()):
+    return [{"rank": i, "name": n, **({"fighting": True} if i in fighting else {})}
+            for i, n in enumerate(("Shalnark", "Cleon", "CinCoeg", "Vuizen"), 1)]
 
 
 class InterimRanks(unittest.TestCase):
-    """A player who is out sees the result screen while the others still play: crossed swords instead of ranks, no points."""
+    """A player who is out sees the result screen while the others still play: crossed swords instead of their ranks."""
 
-    def test_rows_above_own_row_have_no_rank_without_points(self):
-        ranks = [r["rank"] for r in mc_match.interim_ranks(result_rows(), {"id": "382152087118868124"}, "CinCoeg")]
-        self.assertEqual(ranks[:3], [None, None, 3])
+    def test_rows_with_swords_have_no_rank(self):
+        rows = mc_match.interim_ranks(result_rows(fighting=(1, 2)))
+        self.assertEqual([r["rank"] for r in rows], [None, None, 3, 4])
 
-    def test_rows_below_own_row_were_out_earlier_and_keep_their_rank(self):
-        ranks = [r["rank"] for r in mc_match.interim_ranks(result_rows(), {"id": "382152087118868124"}, "CinCoeg")]
-        self.assertEqual(ranks[3], 4)
+    def test_screen_without_swords_keeps_every_rank(self):  # Classic on Riwayat: no points line, yet the ranks are final
+        self.assertEqual([r["rank"] for r in mc_match.interim_ranks(result_rows())], [1, 2, 3, 4])
 
-    def test_ranks_stay_with_points(self):
-        rows = mc_match.interim_ranks(result_rows(), {"id": "1", "points": "2925 (+193)"}, "CinCoeg")
-        self.assertEqual([r["rank"] for r in rows], [1, 2, 3, 4])
 
-    def test_ranks_stay_without_own_row(self):
-        rows = mc_match.interim_ranks(result_rows(), {"id": "1"}, "Orang Lain")
-        self.assertEqual([r["rank"] for r in rows], [1, 2, 3, 4])
+class RankSwords(unittest.TestCase):
+    """test_data/rank/ = left 30% of real result screens; the swords were counted by eye."""
+
+    def middles(self, name, pitch):
+        return mc_match.sword_ys(mc_vision.to_bgr(RANK / name), pitch)
+
+    def assert_near(self, ys, want):
+        self.assertEqual(len(ys), len(want), ys)
+        for y, w in zip(ys, want):
+            self.assertAlmostEqual(y, w, delta=6)
+
+    def test_points_on_screen_do_not_hide_the_swords(self):  # 31 Okt 20:13: "4791 +28", own rank 4, 3 still playing
+        self.assert_near(self.middles("swords_phone.jpg", 106), [152, 259, 366])
+
+    def test_swords_at_pc_scale(self):  # 21 Okt 02:25 Kalea: 1366x768, rows 76 px apart
+        self.assert_near(self.middles("swords_pc.jpg", 76), [109, 184])
+
+    def test_no_swords_on_a_final_screen(self):
+        self.assertEqual(self.middles("final_phone.jpg", 106), [])
+
+    def test_no_swords_on_a_classic_riwayat_screen(self):  # 31 Okt 03:23: no points line, every rank is final
+        self.assertEqual(self.middles("riwayat_classic.jpg", 106), [])
+
+
+class GridPitch(unittest.TestCase):
+    def test_a_missing_row_counts_as_a_step(self):  # rank 3 has no hero row
+        self.assertEqual(mc_match.grid_pitch([(1, [], 150.0), (2, [], 256.0), (4, [], 468.0)]), 106.0)
+
+    def test_one_row_has_no_pitch(self):
+        self.assertIsNone(mc_match.grid_pitch([(1, [], 150.0)]))
 
 
 def round_row(label, hp=100):
@@ -148,6 +174,23 @@ class NoResultScreen(unittest.TestCase):
     def test_known_rank_needs_no_such_note(self):
         notes = [t for _, t in mc_match.insights([round_row("IV-5")], "CinCoeg", [], 4)]
         self.assertFalse([t for t in notes if "tanpa layar hasil" in t])
+
+
+class CutRecording(unittest.TestCase):
+    """31 Okt 03-49: the recording stops at IV-5 with HP 3, Riwayat later shows rank 3, so IV-5 is not where the player went out."""
+
+    def notes(self):
+        return [t for _, t in mc_match.insights([round_row("IV-4"), round_row("IV-5", 3)], "CinCoeg", [], 3, cut=True)]
+
+    def test_note_says_where_the_recording_stopped(self):
+        self.assertIn("Rekaman berhenti di IV-5 sebelum pertandingan selesai.", self.notes())
+
+    def test_rank_from_riwayat_is_still_reported(self):
+        self.assertIn("Peringkat akhir 3.", self.notes())
+
+    def test_full_recording_has_no_such_note(self):
+        notes = [t for _, t in mc_match.insights([round_row("IV-5")], "CinCoeg", [], 3)]
+        self.assertFalse([t for t in notes if "sebelum pertandingan selesai" in t])
 
 
 class ReopenedPicks(unittest.TestCase):

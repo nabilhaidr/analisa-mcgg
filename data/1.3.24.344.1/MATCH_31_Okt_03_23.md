@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 31 Okt 03-23
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:31_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:23_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -45,13 +45,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:31_
 
 | Pemain | I-1 | I-2 | I-3 | I-4 | II-1 | II-2 | II-3 | II-4 | II-5 | II-6 | III-1 | III-2 | III-3 | III-4 | III-5 | III-6 | IV-1 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ig cihuahua | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 85 | 85 | 85 | 69 | 50 | 50 |
+| iq cihuahua | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 85 | 85 | 85 | 69 | 50 | 50 |
 | Vuizen | 100 | 100 | 100 | 100 | 96 | 96 | 96 | 96 | 85 | 75 | 60 | 60 | 47 | 47 | 47 | 35 | 35 |
-| Cleon Eternity | 100 | 100 | 93 | 85 | 73 | 63 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 13 | 13 |
-| MiHawk? | 100 | 100 | 95 | 87 | 83 | 83 | 83 | 83 | 83 | 83 | 69 | 60 | 45 | 45 | 29 | 10 | 10 |
+| CleonEternity | 100 | 100 | 93 | 85 | 73 | 63 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 50 | 13 | 13 |
+| TMMiHawkTM | 100 | 100 | 95 | 87 | 83 | 83 | 83 | 83 | 83 | 83 | 69 | 60 | 45 | 45 | 29 | 10 | 10 |
 | CinCoeg | 100 | 100 | 94 | 89 | 89 | 89 | 78 | 78 | 78 | 71 | 71 | 71 | 62 | 62 | 48 | 29 | 15 |
-| nasihuyxbjorbun | 100 | 100 | 100 | 95 | 95 | 85 | 75 | 75 | 69 | 69 | 69 | 60 | 50 | 50 | 37 | 37 | 37 |
-| XOxO00 | 100 | 100 | 95 | 95 | 95 | 86 | 86 | 86 | 74 | 60 | 50 | 50 | 50 | 50 | 50 | 38 | 38 |
+| nasihuyXbjorbun | 100 | 100 | 100 | 95 | 95 | 85 | 75 | 75 | 69 | 69 | 69 | 60 | 50 | 50 | 37 | 37 | 37 |
+| Xoxooo | 100 | 100 | 95 | 95 | 95 | 86 | 86 | 86 | 74 | 60 | 50 | 50 | 50 | 50 | 50 | 38 | 38 |
 | Shalnark | 100 | 100 | 100 | 100 | 94 | 84 | 72 | 72 | 61 | 52 | 44 | 29 | 29 | 29 | 29 | 29 | 29 |
 
 ## Kejadian
@@ -69,13 +69,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:31_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| - | Shalnark | 9 | Badang, Zilong, Yin, Gord, Vexana, Suyou, Franco, Aldous, Paquito | Gusion's Power, Apex Weapons, Trust Fund | Dragoncaller 2, Bruiser 4, Weapon Master 3, Dragon Altar 2, SPECTRE 2, Mage 2, Mistbender 1 |
-| - | Cleon Eternity | 10 | Lolita, Alice, Odette, Gord, Vexana, Franco, Hilda, Kadita, Zhuxin | Kalea's Power, Glittering Jewels II, Talisman Unleashed | Starbelle 2, Dauntless 4, SPECTRE 2, Astro Power 2, Mage 5 |
-| - | ig cihuahua | 9 | Paquito, Miya, Granger, Alice, Odette, Gord, Saber, Zhuxin, Vale | Aamon's Power, Tactical Airdrop, Fateful Dice | SPECTRE 5, Starbelle 2, Marksman 2, Mage 4 |
-| - | Vuizen | 9 | Lancelot, Thamuz, Melissa, Dyrroth, Layla, Lunox, Sora, Franco, Clint | Dyrroth's Power, Tactical Airdrop | Kishin 4, Phasewarper 2, Echomancer 2, Weapon Master 2, Marksman 2, Chrono Wanderer 1 |
-| - | MiHawk? | 9 | Lancelot, Karrie, Lunox, Uranus, Alice, Alice, Nana, Lolita, Franco | Lunox's Power, Fully Loaded, Badge Dauntless | Kishin 4, Stargazer 2, Mistbender 2, Dauntless 4 |
-| - | XOxO00 | 8 | Fanny, Edith, Miya, Zhuxin, Cici, Baxia, Melissa, Hylos | Dyrroth's Power, Meltdown Armor Ⅰ / Ⅱ / Ⅲ, Blood Claw | Starbelle 5, Defender 3, Marksman 2, Shadeweaver 2 |
-| - | nasihuyxbjorbun | 9 | Alice, Gord, Saber, Angela, Alpha, Fanny, Melissa, Lolita, Miya | Chou's Power, Rogue Mercenary, Breath of Berserk Ⅱ | SPECTRE 4, Dauntless 2, Swiftblade 2, Starbelle 3, Marksman 2 |
+| 1 | iq cihuahua | 9 | Odette, Alice, Gord, Alpha, Saber, Karina, Hilda, Miya, Vale | Aamon's Power, Tactical Airdrop, Fateful Dice | Astro Power 3, Mage 3, SPECTRE 4, Dauntless 2, Swiftblade 2 |
+| 2 | nasihuyXbjorbun | 9 | Alpha, Alice, Fanny, Melissa, Lolita, Edith, Miya, Hylos, Cici | Chou's Power, Rogue Mercenary, Breath of Berserk Ⅱ | SPECTRE 2, Dauntless 2, Starbelle 5, Shadeweaver 2, Marksman 2, Defender 2 |
+| 3 | Shalnark | 9 | Zilong, Badang, Yin, Gord, Vexana, Suyou, Franco, Aldous, Paquito | Gusion's Power, Apex Weapons, Trust Fund | Dragoncaller 2, Weapon Master 3, Bruiser 4, Dragon Altar 2, SPECTRE 2, Mage 2, Mistbender 1 |
+| 4 | Vuizen | 9 | Lancelot, Thamuz, Melissa, Lunox, Dyrroth, Layla, Sora, Franco, Clint | Dyrroth's Power, Fateful Dice, Tactical Airdrop | Kishin 4, Phasewarper 2, Echomancer 2, Weapon Master 2, Marksman 2, Chrono Wanderer 1 |
+| 5 | Xoxooo | 9 | Fanny, Edith, Miya, Zhuxin, Cici, Badang, Baxia, Melissa, Atlas | Dyrroth's Power, Meltdown Armor Ⅰ / Ⅱ / Ⅲ, Blood Claw | Starbelle 5, Defender 3, Marksman 2 |
+| 6 | TMMiHawkTM | 9 | Lancelot, Karrie, Lunox, Uranus, Alice, Alice, Nana, Lolita, Franco | Lunox's Power, Fully Loaded, Badge Dauntless | Kishin 4, Stargazer 2, Mistbender 2, Dauntless 4 |
+| 7 | CleonEternity | 10 | Lolita, Alice, Odette, Gord, Vexana, Franco, Hilda, Kadita, Zhuxin | Kalea's Power, Glittering Jewels II, Talisman Unleashed | Starbelle 2, Dauntless 4, SPECTRE 2, Astro Power 2, Mage 5 |
 | 8 | CinCoeg (kamu) | 9 | Nana, Nana, Uranus, Alice, Nana, Lunox, Hilda, Luo Yi | Aamon's Power, Steel Front, Bright Sunshine | Mistbender 2, Stargazer 3, Dauntless 3 |
 
 ## Catatan metode
@@ -88,5 +88,5 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:31_
 - Label babak: OCR HUD; bila kosong, OCR potongan label saja (rapid); bila masih kosong, label yang tampilannya paling mirip (skor >= 0,93, unggul >= 0,03). Label dipakai bila termasuk rantai terpanjang yang tidak pernah mundur (maks. 2 babak + 1 per 40 detik ke depan); frame di antara dua label dibagi rata.
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
-- Layar hasil (frame akhir rekaman, tanpa screenshot): hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-1 (babak terakhir yang masih menampilkan HP sendiri).
-- Layar hasil ini tampil saat kamu sudah tersingkir: pemain di atas barismu masih bertanding (ikon pedang, tanpa poin), jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.
+- Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 8: HP sendiri dianggap 0 setelah IV-1 (babak terakhir yang masih menampilkan HP sendiri).
+- Mode Classic: layar hasilnya memang tanpa poin.

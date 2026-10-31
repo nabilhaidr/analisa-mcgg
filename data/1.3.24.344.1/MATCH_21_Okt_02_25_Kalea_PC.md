@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 02-25 Kalea PC
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:15_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:34_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -75,8 +75,8 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:15_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | theprince_cryyyc | 9 | Gord, Alpha, Alice, Fanny, Lolita, Saber, Edith, Paquito, Zhuxin | Cyclops' Power, Rock Solid, Neon Zenith | SPECTRE 5, Mage 2, Dauntless 2, Starbelle 4, Swiftblade 2 |
-| 2 | Abahhh | 9 | Uranus, Fanny, Karrie, Lunox, Suyou, Zilong, Franco, Dyrroth, Cici | Freya's Power, Glittering Jewels Ⅰ, Badge Weapon Master | Mistbender 1, Dauntless 2, Starbelle 2, Kishin 4, Weapon Master 4 |
+| - | theprince_cryyyc | 9 | Gord, Alpha, Alice, Fanny, Lolita, Saber, Edith, Paquito, Zhuxin | Cyclops' Power, Rock Solid, Neon Zenith | SPECTRE 5, Mage 2, Dauntless 2, Starbelle 4, Swiftblade 2 |
+| - | Abahhh | 9 | Uranus, Fanny, Karrie, Lunox, Suyou, Zilong, Franco, Dyrroth, Cici | Freya's Power, Glittering Jewels Ⅰ, Badge Weapon Master | Mistbender 1, Dauntless 2, Starbelle 2, Kishin 4, Weapon Master 4 |
 | 3 | adikagacor | 9 | Badang, Baxia, Zilong, Gusion, Yin, Suyou, Yi Sun-shin, Belerick, Eudora | Chou's Power, Rising Fury Ⅰ / Ⅱ / Ⅲ, Badge Dragon Altar | Dragoncaller 4, Bruiser 3, Dragon Altar 4, Weapon Master 2, Swiftblade 2 |
 | 4 | CinCoeg (kamu) | 9 | Badang, Baxia, Zilong, Gusion, Yin, Suyou, Clint, Luo Yi, Eudora, Yi Sun-shin | Kalea's Power, Cyclical Support, Payday | Dragoncaller 5, Bruiser 2, Dragon Altar 5, Weapon Master 2, Swiftblade 2, Stargazer 2 |
 | 5 | aespa | 9 | Odette, Irithel, Karina, Hilda, Edith, Nana, Fanny, Lolita, Zhuxin | Moskov's Power, Rock Solid, Tactical Airdrop | Astro Power 4, Mage 2, Swiftblade 2, Stargazer 2, Dauntless 2, Starbelle 4, Mistbender 1 |
@@ -95,3 +95,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:15_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 4: HP sendiri dianggap 0 setelah IV-5 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.

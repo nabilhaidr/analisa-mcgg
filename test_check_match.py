@@ -73,13 +73,37 @@ class TanpaPapanAkhir(unittest.TestCase):
 
 
 class TanpaLayarHasil(unittest.TestCase):
-    """Rekaman yang berhenti sebelum layar hasil menyatakannya sendiri di Catatan otomatis."""
+    """Rekaman yang berhenti sebelum layar hasil menyatakannya sendiri di Catatan otomatis. Laporan uji = 24 Okt 02-51 yang
+    ditulis ulang seperti itu: tanpa papan akhir, peringkat, ID, dan poin."""
+
+    NOTE = "Rekaman berhenti di IV-5 tanpa layar hasil: peringkat akhir tidak diketahui."
+
+    def test_keterbatasan_yang_tertulis_tidak_diperingatkan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            md = copy_report("24_Okt_02_51", Path(tmp),
+                             md_edits=[(r"^## Papan akhir \(layar hasil\)\n.*?(?=^## )", ""),
+                                       (r"^- \*\*Peringkat:\*\* 4$", "- **Peringkat:** -"),
+                                       (r"ID 428663718190758496 · poin 2277 \(\+84\)", "ID - · poin -"),
+                                       (r"^- Peringkat akhir 4\.$", f"- {self.NOTE}")],
+                             html_edits=[(r"<section><h2>Papan akhir \(layar hasil\)</h2>.*?</section>", ""),
+                                         (r"<h4>Peringkat</h4><p>4</p>", "<h4>Peringkat</h4><p>-</p>"),
+                                         (r"ID 428663718190758496 · poin 2277 \(\+84\)", "ID - · poin -"),
+                                         (r"<li class=\"warn\">Peringkat akhir 4\.</li>", f'<li class="warn">{self.NOTE}</li>')])
+            warn = warnings_of(md)
+        self.assertEqual(warn, [])
+
+
+class RekamanTerpotong(unittest.TestCase):
+    """Rekaman berhenti lebih awal, tapi Riwayat memberi hasil akhirnya (31 Okt 03-49: HP 3 di IV-5, akhirnya peringkat 3)."""
+
+    def test_babak_terakhir_rekaman_bukan_babak_tersingkir(self):
+        self.assertEqual(check_match.check(DATA / "MATCH_31_Okt_03_49_Vexana.md", SEASONS)[0], [])
 
     def test_keterbatasan_yang_tertulis_tidak_diperingatkan(self):
         self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_03_49_Vexana.md"), [])
 
     def test_hp_kosong_di_babak_terakhir_rekaman_tidak_diperingatkan(self):
-        self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_02_51_PC.md"), [])
+        self.assertEqual(hp_empty(warnings_of(DATA / "MATCH_31_Okt_02_51_PC.md")), [])
 
     def test_hp_kosong_sebelum_babak_terakhir_tetap_diperingatkan(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -91,21 +115,51 @@ class TanpaLayarHasil(unittest.TestCase):
 
 
 class LayarHasilSementara(unittest.TestCase):
-    """Saat tersingkir lebih dulu, baris di atas barismu masih berikon pedang: tanpa peringkat dan tanpa poin."""
+    """Saat tersingkir lebih dulu, baris pemain yang masih bertanding berikon pedang: tanpa peringkat. Poin sendiri bisa tampil."""
 
     def test_baris_tanpa_peringkat_tidak_diperingatkan(self):
-        self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_03_23.md"), [])
+        self.assertEqual(warnings_of(DATA / "MATCH_25_Okt_23_49.md"), [])
 
     def test_baris_tanpa_peringkat_bukan_kesalahan(self):
-        self.assertEqual(check_match.check(DATA / "MATCH_31_Okt_03_23.md", SEASONS)[0], [])
+        self.assertEqual(check_match.check(DATA / "MATCH_25_Okt_23_49.md", SEASONS)[0], [])
 
-    def test_baris_tanpa_peringkat_padahal_ada_poin_jadi_kesalahan(self):
+    def test_baris_di_atas_baris_sendiri_boleh_tanpa_peringkat_walau_ada_poin(self):  # 31 Okt 20:13: pedang + "4791 +28"
         with tempfile.TemporaryDirectory() as tmp:
-            md = copy_report("31_Okt_03_23", Path(tmp),
-                             md_edits=[(r"· poin -", "· poin 4000 (+10)")],
-                             html_edits=[(r"· poin -", "· poin 4000 (+10)")])
+            md = copy_report("24_Okt_02_51", Path(tmp),
+                             md_edits=[(r"^\| 1 \| nagita", "| - | nagita")],
+                             html_edits=[(r"<td><b>1</b></td><td>nagita", "<td><b>-</b></td><td>nagita")])
+            errors = check_match.check(md, SEASONS)[0]
+        self.assertEqual([e for e in errors if "tanpa peringkat" in e], [])
+
+    def test_baris_di_bawah_baris_sendiri_tanpa_peringkat_jadi_kesalahan(self):  # dia tersingkir lebih dulu, jadi berperingkat
+        with tempfile.TemporaryDirectory() as tmp:
+            md = copy_report("24_Okt_02_51", Path(tmp),
+                             md_edits=[(r"^\| 5 \| LordIFathir", "| - | LordIFathir")],
+                             html_edits=[(r"<td><b>5</b></td><td>LordIFathir", "<td><b>-</b></td><td>LordIFathir")])
             errors = check_match.check(md, SEASONS)[0]
         self.assertTrue([e for e in errors if "tanpa peringkat" in e], errors)
+
+
+class ModeClassic(unittest.TestCase):
+    """Mode Classic tidak punya poin Rank; laporannya menyatakannya sendiri di Catatan metode."""
+
+    NOTE = "Mode Classic: layar hasilnya memang tanpa poin."
+
+    def poin_warnings(self, note):
+        md_edits = [(r"· poin 2277 \(\+84\)", "· poin -")]
+        html_edits = [(r"· poin 2277 \(\+84\)", "· poin -")]
+        if note:
+            md_edits.append((r"^## Catatan metode\n\n", f"## Catatan metode\n\n- {self.NOTE}\n"))
+            html_edits.append((r"<h2>Catatan metode</h2><ul>", f"<h2>Catatan metode</h2><ul><li>{self.NOTE}</li>"))
+        with tempfile.TemporaryDirectory() as tmp:
+            md = copy_report("24_Okt_02_51", Path(tmp), md_edits=md_edits, html_edits=html_edits)
+            return [w for w in warnings_of(md) if "ID/poin" in w]
+
+    def test_classic_tanpa_poin_tidak_diperingatkan(self):
+        self.assertEqual(self.poin_warnings(note=True), [])
+
+    def test_poin_hilang_di_luar_classic_tetap_diperingatkan(self):
+        self.assertEqual(len(self.poin_warnings(note=False)), 1)
 
 
 class BarisRingkasan(unittest.TestCase):

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-49
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:10_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 21:18_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -68,12 +68,12 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:10_
 
 | # | Pemain | Level | Hero | Go Go Card | Sinergi dari hero |
 |---|---|---|---|---|---|
-| 1 | A4ACLAN YUKA | 8 | Johnny, Karina, Luo Yi, Eudora, Gusion, Yin, Suyou, Yi Sun-shin | Johnson's Power, Jump the Gun+, Swiftblade's Badge | Swiftblade 3, Stargazer 3, Dragon Altar 4, Dragoncaller 2 |
-| 2 | Aria wigianto | 9 | X.Borg, Franco, Miya, Granger, Uranus, Thamuz, Melissa, Lolita, Karrie | Nana's Power, Jump the Gun+, Glittering Jewels II | Chrono Wanderer 1, Dauntless 4, Kishin 2, Weapon Master 2, Starbelle 2, Marksman 4, Mistbender 1 |
-| 3 | Kibooo | 9 | X.Borg, Novaria, Karrie, Lancelot, Melissa, Lunox, Sora, Franco, Kadita | Nana's Power, Jump the Gun+, Emergency Rift | Chrono Wanderer 2, Dauntless 2, Stargazer 2, Kishin 4, Marksman 2, Phasewarper 2, Shadeweaver 2 |
-| 4 | kones | 9 | Alice, Lolita, Gord, Saber, Paquito, Fanny, Melissa, Edith, Miya | Chou's Power, Breath of Berserk Ⅰ, Payday | SPECTRE 4, Dauntless 2, Starbelle 4, Swiftblade 2, Marksman 2 |
-| 5 | JLeo | 9 | Alice, Gord, Granger, Alpha, Fanny, Lolita, Saber, Miya, Zhuxin | Nana's Power, Cyclical Support, Trust Fund | SPECTRE 5, Dauntless 2, Mage 2, Marksman 2, Starbelle 4, Swiftblade 2 |
-| 6 | TUANTAKUR? | 9 | Gatotkaca, Thamuz, Tigreal, Edith, Natalia, Cici, Fanny, Lolita, Zhuxin | Lunox's Power, Uncertain Fortune, Fully Loaded | Chrono Wanderer 1, Echomancer 3, Weapon Master 2, Defender 2, Starbelle 5, Swiftblade 2 |
+| - | A4ACLAN YUKA | 8 | Johnny, Karina, Luo Yi, Eudora, Gusion, Yin, Suyou, Yi Sun-shin | Johnson's Power, Jump the Gun+, Swiftblade's Badge | Swiftblade 3, Stargazer 3, Dragon Altar 4, Dragoncaller 2 |
+| - | Aria wigianto | 9 | X.Borg, Franco, Miya, Granger, Uranus, Thamuz, Melissa, Lolita, Karrie | Nana's Power, Jump the Gun+, Glittering Jewels II | Chrono Wanderer 1, Dauntless 4, Kishin 2, Weapon Master 2, Starbelle 2, Marksman 4, Mistbender 1 |
+| - | Kibooo | 9 | X.Borg, Novaria, Karrie, Lancelot, Melissa, Lunox, Sora, Franco, Kadita | Nana's Power, Jump the Gun+, Emergency Rift | Chrono Wanderer 2, Dauntless 2, Stargazer 2, Kishin 4, Marksman 2, Phasewarper 2, Shadeweaver 2 |
+| - | kones | 9 | Alice, Lolita, Gord, Saber, Paquito, Fanny, Melissa, Edith, Miya | Chou's Power, Breath of Berserk Ⅰ, Payday | SPECTRE 4, Dauntless 2, Starbelle 4, Swiftblade 2, Marksman 2 |
+| - | JLeo | 9 | Alice, Gord, Granger, Alpha, Fanny, Lolita, Saber, Miya, Zhuxin | Nana's Power, Cyclical Support, Trust Fund | SPECTRE 5, Dauntless 2, Mage 2, Marksman 2, Starbelle 4, Swiftblade 2 |
+| - | TUANTAKUR? | 9 | Gatotkaca, Thamuz, Tigreal, Edith, Natalia, Cici, Fanny, Lolita, Zhuxin | Lunox's Power, Uncertain Fortune, Fully Loaded | Chrono Wanderer 1, Echomancer 3, Weapon Master 2, Defender 2, Starbelle 5, Swiftblade 2 |
 | 7 | CinCoeg (kamu) | 8 | X.Borg, Suyou, Tigreal, Franco, Natalia, Harley, Martis, Zilong, Sora, Vale, Cici | Fanny's Power, Purest Power Ⅰ, Echomancer's Badge | Chrono Wanderer 1, Dauntless 2, Weapon Master 5, Echomancer 5 |
 | 8 | BROKOHAN | 9 | Nana, Lunox, Karina, Mathilda, Luo Yi, Uranus, Alice, Lolita, Franco | Lunox's Power, Cyclical Support, Magic Surge | Mistbender 2, Stargazer 5, Kishin 2, Dauntless 4 |
 
@@ -88,3 +88,4 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:10_
 - Pilihan Go Go Card = kartu yang tampil di layar pilihan; kartu yang akhirnya diambil terlihat di layar hasil. Pilihan bisa ditunda (layar disembunyikan lalu dibuka lagi): layar yang memuat kartu dari pilihan sebelumnya (sama, atau sebagian setelah Refresh) ditandai "dibuka lagi", bukan pilihan baru.
 - Teks Win/Lose Streak di layar tidak dicatat: OCR frame penuh tidak bisa membedakan streak sendiri dari streak lawan yang sedang tampil. Menang/kalah beruntun di Catatan otomatis dihitung dari HP; babak creep (I-1, lalu babak ke-3 tiap fase: II-3, III-3, IV-3, V-3) tidak memutus kekalahan beruntun.
 - Layar hasil: hero dan Go Go Card dari ikon (mc_vision), nama dan level dari OCR (rapid); nama = teks di kolom nama (sejajar "Level N", huruf apa saja atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan gambar dari layar hasil; peringkat = urutan baris. Peringkat 7: HP sendiri dianggap 0 setelah III-6 (babak terakhir yang masih menampilkan HP sendiri).
+- Layar hasil ini tampil saat kamu sudah tersingkir: pemain berikon pedang masih bertanding, jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.
