@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-10-31)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-11-01)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (31 Okt): riwayat 43–46. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (31 Okt – 1 Nov): riwayat 46–48. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -671,6 +671,9 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       pemegang Healing Fountain timeline berubah, mis. 22 Okt 06-16 juara dengan HP 34, bukan 19, dan kekalahannya kini terlihat lebih besar karena tidak lagi
       tertutup pemulihan. 5 gambar `nama_*.png` dihapus. Semua tabel HP 8 baris. 159 tes (+24 subtes) lolos, `check_match.py` 0 kesalahan, 0 peringatan,
       `mc_validate.py` 0 selisih. Skrip bantu `regen_all.py`, `eval_rounds.py`, `eval_est.py`, `eval_unnamed.py` di scratchpad sesi 31 Okt (bisa hilang).
+48. (2026-11-01) Pemeriksaan tugas dan ringkasan untuk chat baru. Riwayat 46–47 di-push (`25fe1d4`). Diulang: 159 tes (+24 subtes) lolos, `check_match.py`
+    0 kesalahan, 0 peringatan; client tetap 1.3.24.344.1 (manifest 20 Okt); tidak ada screenshot baru sejak 31 Okt 20:13, dan 715 gambar semuanya sudah
+    ada di `ocr.json`. Tidak ada pekerjaan kode yang tersisa: tugas terbuka menunggu screenshot in-game, update game, atau keputusan pengguna.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
