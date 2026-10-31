@@ -40,6 +40,7 @@ UNIT_WORDS = {"Gold", "Physical", "Magic", "Hybrid", "True", "Total", "Mana", "S
               "Detik", "Babak", "Stack", "Basic"}  # capitalised words that follow a number inside one statement
 KIND_OF_SECTION = {"commander": "Commander", "sinergi": "Sinergi", "hero": "Hero", "go go card": "Go Go Card", "kartu": "Go Go Card",
                    "equipment": "Equipment"}
+FIELD_OF_KIND = {"Hero": "heroes", "Commander": "commanders", "Sinergi": "synergies", "Go Go Card": "cards"}  # S<n>.json lists with "icon"
 
 
 # ------------------------------------------------------------------ input
@@ -432,8 +433,9 @@ def build_rows(d, entries):
 
 
 def entity_chip(d, r):
-    for items in (d["heroes"], d["commanders"], d["synergies"], d["cards"]):
-        for x in items:
+    """Icon from the list of the row's own kind first: 21 names are both a hero and a commander."""
+    for field in [FIELD_OF_KIND.get(r["kind"]), *FIELD_OF_KIND.values()]:
+        for x in d.get(field, ()):
             if x["name"] == r["data_name"] and x.get("icon"):
                 return chip(r["data_name"], x["icon"])
     return chip(r["data_name"])
