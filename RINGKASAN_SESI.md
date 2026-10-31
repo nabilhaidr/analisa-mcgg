@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (31 Okt): riwayat 43–44. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (31 Okt): riwayat 43–45. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -612,6 +612,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - **Rekaman tanpa layar hasil** menyebutnya di catatan otomatis, dan `check_match.py` tidak lagi memperingatkan keterbatasan yang
       sudah tertulis itu. **`video_frames.py`** memotong kanvas potret otomatis (03-23: 1080x2400, game 1080x486).
     - RapidOCR sempat "bad allocation" di "27 Okt 13-35" (4 gambar) saat commit bebas sempit; diulang dengan `OMP_NUM_THREADS=1`, berhasil.
+45. (2026-10-31) Pemeriksaan tugas dan ringkasan untuk chat baru. Riwayat 43–44 di-push (`14fd987`, `2ed7ffa`, `0a3a90f`). Diulang:
+    83 tes (+24 subtes) lolos, `check_match.py` 0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih; client tetap 1.3.24.344.1
+    (manifest 20 Okt), tidak ada screenshot baru sejak 31 Okt 04:20. Ditambahkan ke Ide lanjutan: screenshot Riwayat 3 pertandingan
+    31 Okt, nama Jepang.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -668,6 +672,9 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Screenshot dan cek in-game S7 di bawah harus sebelum itu.
 - **Screenshot layar Commander Lukas, Dyrroth, Lunox** (detail skill, semoga ponsel menampilkan teks baru seperti Vexana): pastikan
   arti Power of Chaos 3 → 2 dan Sacred Gift 3X–4X, lalu ganti catatan Power of Chaos jadi `replace` bila teksnya jelas.
+- **Screenshot Riwayat in-game untuk 3 pertandingan 31 Okt**, bila masih tampil: layar hasil 02-51 PC dan 03-49 Vexana (belum ada
+  peringkat, ID, poin, papan), dan layar hasil final 03-23 (7 pemain lain belum berperingkat). Laporan lalu dibuat ulang dengan
+  `--frames` + `--result`, papannya masuk sampel. Daftar Riwayat juga bisa memberi jam main 5 laporan "Riwayat 28 Okt poin ...".
 - **Keputusan commit screenshot**: 132 screenshot belum di git (52 di `match/`, 5 di `update patch/`, 57 di `match/spirit sand/`,
   18 di `match/commander vexana/`); screenshot patch note sebelumnya (1881–1885) ada di git. `ocr.json` sudah memuat teksnya.
 - Screenshot yang belum ada: Detail Hero panggilan Alpha, Gatotkaca, Layla, Moskov, Novaria, X.Borg (termasuk X.Borg ★3 "total 2000%
@@ -684,5 +691,5 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - `mc_match.py` tabel HP: pemain yang namanya tidak terbaca di daftar HUD (카일라 잘라, "—X—", "1254", "EM") tidak masuk
   tabel; bar HP tanpa nama ada 1-4 per frame dari berbagai sebab, jadi perlu pelacakan bar (posisi/HP) untuk menautkannya
   (lihat 31). Cek SABRINA 21 Okt 22-43 (1 hero di papan akhir).
-- `mc_match.py`: nama huruf hias/simbol ("ᴍᴀʀsᴍᴇℓℓ", "—X—") masih tampil sebagai gambar; model Korea membaca "카일라 잘라"
-  sebagai "카일라 장라" (lihat 30).
+- `mc_match.py`: nama huruf hias/simbol ("ᴍᴀʀsᴍᴇℓℓ", "—X—") dan huruf Jepang ("シンデレラ", 30 Okt 04-12 baris 8) masih tampil
+  sebagai gambar; model Korea membaca "카일라 잘라" sebagai "카일라 장라" (lihat 30).
