@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 03-18
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:20_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:49_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -39,7 +39,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:20_
 | III-3 | 84 | +0 tidak kehilangan HP | 33 | 8 | Pilih Go Go Card |
 | III-4 | 84 | -15 kalah | 46 | 8 |  |
 | III-5 | 69 | +0 tidak kehilangan HP | 46 | 8 |  |
-| III-6 | 69 | +0 tidak kehilangan HP | 60 | 9 |  |
+| III-6 | 69 | +0 tidak kehilangan HP | 60 | 9 | Go Go Box |
 | IV-1 | 69 | -20 kalah | 31 | 9 |  |
 | IV-2 | 49 | -17 kalah | 20 | 9 |  |
 | IV-3 | 32 | +0 tidak kehilangan HP | 15 | 9 |  |
@@ -67,8 +67,9 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:20_
 |---|---|---|---|
 | 04:45 | I-4 | Go Go Box |  |
 | 07:05 | II-3 | Pilih Go Go Card |  |
-| 11:30 | II-6 | Go Go Box |  |
+| 11:15 | II-6 | Go Go Box |  |
 | 13:30 | III-3 | Pilih Go Go Card |  |
+| 17:55 | III-6 | Go Go Box |  |
 | 24:50 | IV-6 | Go Go Box |  |
 | 26:05 | V-1 | VICTORY |  |
 

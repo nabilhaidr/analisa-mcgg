@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 23-02
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:40_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:06_
 
 - **Peringkat:** 1
 - **HP akhir:** 52
@@ -27,19 +27,19 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:40_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 7 | 3 |  |
 | I-3 | 100 | +0 tidak kehilangan HP | 18 | 4 |  |
-| I-4 | 100 | +0 tidak kehilangan HP | 22 | 5 |  |
+| I-4 | 100 | +0 tidak kehilangan HP | 22 | 5 | Go Go Box |
 | II-1 | 100 | +0 tidak kehilangan HP | 30 | 5 |  |
 | II-2 | 100 | +0 tidak kehilangan HP | 25 | 6 |  |
 | II-3 | 100 | +0 tidak kehilangan HP | 35 | 6 | Pilih Go Go Card (pilihan: Apex Weapons, Manic Slam) |
 | II-4 | 100 | +0 tidak kehilangan HP | 58 | 7 |  |
 | II-5 | 100 | +0 tidak kehilangan HP | 36 | 7 |  |
-| II-6 | 100 | -11 kalah | 49 | 8 |  |
+| II-6 | 100 | -11 kalah | 49 | 8 | Go Go Box |
 | III-1 | 89 | +0 tidak kehilangan HP | 21 | 8 |  |
 | III-2 | 89 | +0 tidak kehilangan HP | 30 | 8 |  |
 | III-3 | 89 | +0 tidak kehilangan HP | 40 | 8 | Pilih Go Go Card (pilihan: Fully Loaded, Steel Front) |
 | III-4 | 89 | +0 tidak kehilangan HP | 52 | 8 |  |
 | III-5 | 89 | +0 tidak kehilangan HP | 53 | 8 |  |
-| III-6 | 89 | +0 tidak kehilangan HP | 30 | 9 |  |
+| III-6 | 89 | +0 tidak kehilangan HP | 30 | 9 | Go Go Box |
 | IV-1 | 89 | -20 kalah | 21 | 9 |  |
 | IV-2 | 69 | -17 kalah | 18 | 9 |  |
 | IV-3 | 52 | +0 tidak kehilangan HP | 18 | 9 |  |
@@ -65,8 +65,11 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 04:35 | I-4 | Go Go Box |  |
 | 07:05 | II-3 | Pilih Go Go Card | pilihan: Apex Weapons, Manic Slam |
+| 11:00 | II-6 | Go Go Box |  |
 | 13:35 | III-3 | Pilih Go Go Card | pilihan: Fully Loaded, Steel Front |
+| 18:00 | III-6 | Go Go Box |  |
 | 24:20 | IV-6 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

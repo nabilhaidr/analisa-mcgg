@@ -65,7 +65,7 @@ LEVEL_RE = re.compile(r"Leve[l1I|]\s*(\d{1,2})")
 EVENTS = [  # (regex on a frame's OCR text, kind)
     (r"Pilih Kartu Commander Power", "Pilih Kartu Power"),
     (r"ilih 1 Go Go Card", "Pilih Go Go Card"),  # OCR may cut the p (24 Okt 15-06 825 s: "Silakan | sh | ilih 1 Go Go Card.")
-    (r"Pilih Hadiah", "Go Go Box"),
+    (r"ih Hadiah", "Go Go Box"),  # OCR reads "Pilih" as "Piiih" (141 of 197 titles), "P/lih", or cuts it: "ih Hadiah"
     (r"Magic Crystal pilihan aktif", "Crystal Pilihan"),
     (r"Kapasitas Hero \+1|Level Commander ditingkatkan", "Naik level"),
     (r"V[I1l]CTORY", "VICTORY"),
@@ -712,7 +712,7 @@ def read_result(paths, d, folder, engine=None):
             name = row_name(near, col_x, y, size)
             lv = next((v for l in near if (v := result_level(l["t"]))), None)
             row_cards = next((c for c in cards if abs(sum(f["y"] for f in c) / len(c) - y) < size * 0.6), [])
-            cur = rows.setdefault(i, {"rank": i, "name": name or f"baris {i}", "level": lv, "heroes": [], "cards": []})
+            cur = rows.setdefault(i, {"rank": i, "row": i, "name": name or f"baris {i}", "level": lv, "heroes": [], "cards": []})
             if name and (cur["name"].startswith("baris ") or (norm(name) == norm(cur["name"]) and len(name) > len(cur["name"]))):
                 cur["name"] = name  # the fullest reading over the screenshots ("TT:jawirGG", not "TTjawirGG")
             if not name and col_x is not None:
@@ -829,9 +829,9 @@ def name_pic(r, assets, folder):
     from the result screen to match_<name>/nama_<rank>.png."""
     src, box = r["slot"]
     assets.mkdir(exist_ok=True)
-    pic = assets / f"nama_{r['rank']}.png"
+    pic = assets / f"nama_{r['row']}.png"
     Image.open(src).crop(box).save(pic)
-    alt = f"nama baris {r['rank']} (tidak terbaca OCR)"
+    alt = f"nama baris {r['row']} (tidak terbaca OCR)"
     return (alt, f'<img src="{esc(rel_src(pic, folder))}" alt="{esc(alt)}" title="{esc(alt)}" style="height:2.2em;vertical-align:middle">',
             f"![{alt}]({rel_src(pic, folder)})")
 
@@ -860,6 +860,16 @@ def grid_ranks(rows, levels=()):
         if -0.15 < step < 7.5 and (len(r) >= 2 or abs(step - round(step)) < 0.15):
             out.append((1 + round(step), r, y_of(r)))
     return out
+
+
+def interim_ranks(final, meta, me):
+    """A player who is out sees the result screen while the others still play (31 Okt 03-23, rank 8): no points line, and
+    crossed swords instead of a rank on the rows above the own row, so those players have no rank yet. Rows below the own
+    row were out earlier and keep theirs."""
+    own = next((i for i, r in enumerate(final) if me and norm(r["name"]) == norm(me)), None)
+    if meta.get("points") or own is None:
+        return final
+    return [{**r, "rank": None} if i < own else r for i, r in enumerate(final)]
 
 
 def result_frames(frames, work):
@@ -901,6 +911,8 @@ def insights(rounds, me, events, final_rank):
     out = []
     if final_rank:
         out.append(("good" if final_rank <= 3 else "warn", f"Peringkat akhir {final_rank}."))
+    elif rounds:
+        out.append(("warn", f"Rekaman berhenti di {rounds[-1]['label']} tanpa layar hasil: peringkat akhir tidak diketahui."))
     phases = {}
     for r in rounds:
         d = r["delta"].get(me)
@@ -1023,6 +1035,7 @@ def main():
         if not args.no_events:
             log("OCR frame penuh untuk kejadian ...")
             events = read_events(frames, d, {x["t"]: x["round"] for x in tl})
+    final = interim_ranks(final, meta, me)
     final_rank = next((r["rank"] for r in final if me and norm(r["name"]) == norm(me)), None)
     out_round = None
     if final_rank and final_rank > 1:  # eliminated: HP 0 after the last round with own HP (the dimmed "0" is not read)
@@ -1058,7 +1071,7 @@ def main():
                 for p, r in linked.items()}
         gone = [r for r in final if r["name"] not in players and r not in linked.values()] if len(players) < len(final) else []
         gone_note = ("Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Korea, simbol, atau kurang "
-                     "dari 3 huruf Latin): " + ", ".join(f"peringkat {r['rank']} " + ("(nama berupa gambar)" if r.get("slot")
+                     "dari 3 huruf Latin): " + ", ".join(f"peringkat {r['rank'] or '-'} " + ("(nama berupa gambar)" if r.get("slot")
                                                                                        else r["name"]) for r in gone) + ".")
         label = {p: pics[p][0] if p in pics else p for p in players}
         series = {label[p]: [r["start"].get(p) for r in rounds] for p in players}
@@ -1107,13 +1120,13 @@ def main():
             shown, md_name = esc(r["name"]), r["name"]
             if r.get("slot"):
                 _, shown, md_name = name_pic(r, assets, folder)
-            rows.append([f"<b>{r['rank']}</b>", shown + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
+            rows.append([f"<b>{r['rank'] or '-'}</b>", shown + (" <b>(kamu)</b>" if mine else ""), esc(r["level"] or "-"),
                          " ".join(chip(h, game.H[h].get("icon"), f"c{game.H[h]['cost']}") if h in game.H
                                   else chip(h, summons[h].get("icon"), title="unit panggilan: sinergi acak, tidak dihitung")
                                   for h in units),
                          " ".join(chip(c) for c in r["cards"]),
                          " ".join(chip(f"{s} {counts[s]}", game.S[s].get("icon")) for s in active)])
-            md_rows.append([r["rank"], md_name + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(units),
+            md_rows.append([r["rank"] or "-", md_name + (" (kamu)" if mine else ""), r["level"] or "-", ", ".join(units),
                             ", ".join(r["cards"]), ", ".join(f"{s} {counts[s]}" for s in active)])
         heads = ["#", "Pemain", "Level", "Hero", "Go Go Card", "Sinergi dari hero"]
         body.append(f'<section><h2>Papan akhir (layar hasil)</h2>{table(heads, rows)}'
@@ -1167,6 +1180,9 @@ def main():
                       "atau angka); nama yang tidak dikenal OCR (huruf Korea, huruf hias) ditampilkan sebagai potongan "
                       "gambar dari layar hasil; peringkat = urutan baris." + (f" Peringkat {final_rank}: HP sendiri dianggap 0 setelah {out_round['label']} "
                                                      "(babak terakhir yang masih menampilkan HP sendiri)." if out_round else ""))
+    if any(r["rank"] is None for r in final):
+        method.append("Layar hasil ini tampil saat kamu sudah tersingkir: pemain di atas barismu masih bertanding (ikon pedang, tanpa "
+                      "poin), jadi peringkat mereka belum ada dan papan mereka bukan papan akhir.")
     ko = [r for r in final if r.get("ko")]
     if ko:
         method.append("Nama Hangul dibaca dengan model OCR Korea (RapidOCR PP-OCRv5; dipakai bila skor >= 0,6, satu huruf "

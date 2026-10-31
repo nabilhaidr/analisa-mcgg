@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 23 Okt 22-08
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:28_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:56_
 
 - **Peringkat:** 1
 - **HP akhir:** 62
@@ -27,19 +27,19 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:28_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | -7 kalah | 10 | 3 |  |
 | I-3 | 93 | -5 kalah | 15 | 4 |  |
-| I-4 | 88 | -5 kalah | 22 | 5 |  |
+| I-4 | 88 | -5 kalah | 22 | 5 | Go Go Box |
 | II-1 | 83 | +0 tidak kehilangan HP | 22 | 5 |  |
 | II-2 | 83 | +0 tidak kehilangan HP | 30 | 6 |  |
 | II-3 | 83 | +0 tidak kehilangan HP | 21 | 6 | Pilih Go Go Card |
 | II-4 | 83 | +0 tidak kehilangan HP | 33 | 6 |  |
 | II-5 | 83 | +0 tidak kehilangan HP | 44 | 6 |  |
-| II-6 | 83 | +0 tidak kehilangan HP | 28 | 7 |  |
+| II-6 | 83 | +0 tidak kehilangan HP | 28 | 7 | Go Go Box |
 | III-1 | 83 | +0 tidak kehilangan HP | 39 | 7 |  |
 | III-2 | 83 | +0 tidak kehilangan HP | 29 | 8 |  |
 | III-3 | 83 | +0 tidak kehilangan HP | 43 | 8 | Pilih Go Go Card (pilihan: Emergency Rift, Manic Slam) |
 | III-4 | 83 | +0 tidak kehilangan HP | 51 | 8 |  |
 | III-5 | 83 | +0 tidak kehilangan HP | 51 | 9 |  |
-| III-6 | 83 | +0 tidak kehilangan HP | 27 | 9 |  |
+| III-6 | 83 | +0 tidak kehilangan HP | 27 | 9 | Go Go Box |
 | IV-1 | 83 | -21 kalah | 22 | 9 |  |
 | IV-2 | 62 | +0 tidak kehilangan HP | 19 | 9 |  |
 | IV-3 | 62 | +0 tidak kehilangan HP | 18 | 9 |  |
@@ -63,9 +63,12 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:28_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 04:35 | I-4 | Go Go Box |  |
 | 07:00 | II-3 | Pilih Go Go Card |  |
 | 07:00 | II-3 | Panel DMG |  |
+| 10:50 | II-6 | Go Go Box |  |
 | 13:25 | III-3 | Pilih Go Go Card | pilihan: Emergency Rift, Manic Slam |
+| 17:45 | III-6 | Go Go Box |  |
 | 23:00 | IV-5 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

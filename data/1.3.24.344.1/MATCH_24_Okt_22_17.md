@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 22-17
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:37_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:03_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -28,13 +28,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:37_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 8 | 4 | Pilih Kartu Power (pilihan: Minotaur's Power) |
 | I-3 | 100 | +0 tidak kehilangan HP | 14 | 4 |  |
-| I-4 | 100 | +0 tidak kehilangan HP | 20 | 5 | VICTORY (Gold +10) |
+| I-4 | 100 | +0 tidak kehilangan HP | 20 | 5 | VICTORY (Gold +10); Go Go Box |
 | II-1 | 100 | -9 kalah | 25 | 5 |  |
 | II-2 | 91 | -6 kalah | 29 | 5 |  |
 | II-3 | 85 | +0 tidak kehilangan HP | 24 | 6 | Pilih Go Go Card (pilihan: Forbidden Power); Naik level; Crystal Pilihan (Echomancer) |
 | II-4 | 85 | -11 kalah | 39 | 7 |  |
 | II-5 | 74 | +0 tidak kehilangan HP | 28 | 7 |  |
-| II-6 | 74 | +0 tidak kehilangan HP | 33 | 7 |  |
+| II-6 | 74 | +0 tidak kehilangan HP | 33 | 7 | Go Go Box |
 | III-1 | 74 | -11 kalah | 40 | 7 |  |
 | III-2 | 63 | -8 kalah | 52 | 7 |  |
 | III-3 | 55 | +0 tidak kehilangan HP | 57 | 8 | Pilih Go Go Card |
@@ -62,12 +62,14 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:37_
 |---|---|---|---|
 | 01:35 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power |
 | 04:40 | I-4 | VICTORY | Gold +10 |
+| 04:50 | I-4 | Go Go Box |  |
 | 07:15 | II-3 | Pilih Go Go Card | pilihan: Forbidden Power |
 | 07:25 | II-3 | Naik level |  |
 | 07:35 | II-3 | Crystal Pilihan | Echomancer |
+| 11:15 | II-6 | Go Go Box |  |
 | 14:35 | III-3 | Pilih Go Go Card |  |
 | 17:30 | III-6 | Naik level |  |
-| 18:55 | III-6 | Go Go Box |  |
+| 18:50 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)
 

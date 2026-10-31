@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 14-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:33_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:00_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -27,7 +27,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:33_
 | I-1 | 100 | +0 tidak kehilangan HP | 3 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 6 | 4 |  |
 | I-3 | 100 | +0 tidak kehilangan HP | 7 | 4 |  |
-| I-4 | 100 | +0 tidak kehilangan HP | 11 | 4 |  |
+| I-4 | 100 | +0 tidak kehilangan HP | 11 | 4 | Go Go Box |
 | II-1 | 100 | -10 kalah | 17 | 4 |  |
 | II-2 | 90 | +0 tidak kehilangan HP | 21 | 5 |  |
 | II-3 | 90 | +0 tidak kehilangan HP | 29 | 6 | Pilih Go Go Card (pilihan: Forbidden Power) |
@@ -61,11 +61,12 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 04:45 | I-4 | Go Go Box |  |
 | 07:15 | II-3 | Pilih Go Go Card | pilihan: Forbidden Power |
 | 10:45 | II-6 | Crystal Pilihan | Echomancer |
-| 12:05 | II-6 | Go Go Box |  |
+| 11:45 | II-6 | Go Go Box |  |
 | 14:25 | III-3 | Pilih Go Go Card |  |
-| 19:00 | III-6 | Go Go Box |  |
+| 18:50 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)
 

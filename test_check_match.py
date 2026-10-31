@@ -72,6 +72,42 @@ class TanpaPapanAkhir(unittest.TestCase):
         self.assertEqual([w for w in warnings_of(DATA / "MATCH_24_Okt_02_51.md") if "tanpa papan akhir" in w], [])
 
 
+class TanpaLayarHasil(unittest.TestCase):
+    """Rekaman yang berhenti sebelum layar hasil menyatakannya sendiri di Catatan otomatis."""
+
+    def test_keterbatasan_yang_tertulis_tidak_diperingatkan(self):
+        self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_03_49_Vexana.md"), [])
+
+    def test_hp_kosong_di_babak_terakhir_rekaman_tidak_diperingatkan(self):
+        self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_02_51_PC.md"), [])
+
+    def test_hp_kosong_sebelum_babak_terakhir_tetap_diperingatkan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            md = copy_report("31_Okt_03_49_Vexana", Path(tmp),
+                             md_edits=[(r"^\| IV-4 \| 30 \|", "| IV-4 | - |")],
+                             html_edits=[(r"<td><b>IV-4</b></td><td>30</td>", "<td><b>IV-4</b></td><td>-</td>")])
+            warn = warnings_of(md)
+        self.assertTrue([w for w in warn if "HP sendiri kosong" in w], warn)
+
+
+class LayarHasilSementara(unittest.TestCase):
+    """Saat tersingkir lebih dulu, baris di atas barismu masih berikon pedang: tanpa peringkat dan tanpa poin."""
+
+    def test_baris_tanpa_peringkat_tidak_diperingatkan(self):
+        self.assertEqual(warnings_of(DATA / "MATCH_31_Okt_03_23.md"), [])
+
+    def test_baris_tanpa_peringkat_bukan_kesalahan(self):
+        self.assertEqual(check_match.check(DATA / "MATCH_31_Okt_03_23.md", SEASONS)[0], [])
+
+    def test_baris_tanpa_peringkat_padahal_ada_poin_jadi_kesalahan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            md = copy_report("31_Okt_03_23", Path(tmp),
+                             md_edits=[(r"· poin -", "· poin 4000 (+10)")],
+                             html_edits=[(r"· poin -", "· poin 4000 (+10)")])
+            errors = check_match.check(md, SEASONS)[0]
+        self.assertTrue([e for e in errors if "tanpa peringkat" in e], errors)
+
+
 class BarisRingkasan(unittest.TestCase):
     # dibaca tangan dari laporannya: kotak Peringkat, HP akhir, Babak terbaca, dan nama di papan akhir
     WANT = {

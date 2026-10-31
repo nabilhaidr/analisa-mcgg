@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-24
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:42_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:08_
 
 - **Peringkat:** 5
 - **HP akhir:** 0
@@ -27,19 +27,19 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:42_
 | I-1 | 100 | +0 tidak kehilangan HP | 1 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 10 | 4 | Pilih Kartu Power |
 | I-3 | 100 | +0 tidak kehilangan HP | 16 | 4 |  |
-| I-4 | 100 | +0 tidak kehilangan HP | 23 | 5 |  |
+| I-4 | 100 | +0 tidak kehilangan HP | 23 | 5 | Go Go Box |
 | II-1 | 100 | +0 tidak kehilangan HP | 30 | 5 |  |
 | II-2 | 100 | +0 tidak kehilangan HP | 20 | 6 |  |
 | II-3 | 100 | +0 tidak kehilangan HP | 30 | 6 | Pilih Go Go Card (pilihan: Apex Weapons) |
 | II-4 | 100 | -14 kalah | 20 | 7 |  |
 | II-5 | 86 | +0 tidak kehilangan HP | 29 | 7 |  |
-| II-6 | 86 | +0 tidak kehilangan HP | 35 | 7 |  |
+| II-6 | 86 | +0 tidak kehilangan HP | 35 | 7 | Go Go Box |
 | III-1 | 86 | -16 kalah | 41 | 7 |  |
 | III-2 | 70 | +0 tidak kehilangan HP | 30 | 8 |  |
 | III-3 | 70 | +0 tidak kehilangan HP | 47 | 8 | Pilih Go Go Card (pilihan: Steel Front) |
 | III-4 | 70 | -17 kalah | 52 | 8 |  |
 | III-5 | 53 | +0 tidak kehilangan HP | 52 | 9 |  |
-| III-6 | 53 | -16 kalah | 19 | 9 |  |
+| III-6 | 53 | -16 kalah | 19 | 9 | Go Go Box |
 | IV-1 | 37 | +0 tidak kehilangan HP | 22 | 9 |  |
 | IV-2 | 37 | +0 tidak kehilangan HP | 12 | 9 |  |
 | IV-3 | 37 | +0 tidak kehilangan HP | 17 | 9 |  |
@@ -65,8 +65,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:42_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 00:05 | I-2 | Pilih Kartu Power |  |
+| 03:20 | I-4 | Go Go Box |  |
 | 05:50 | II-3 | Pilih Go Go Card | pilihan: Apex Weapons |
+| 09:55 | II-6 | Go Go Box |  |
 | 12:15 | III-3 | Pilih Go Go Card | pilihan: Steel Front |
+| 17:00 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)
 

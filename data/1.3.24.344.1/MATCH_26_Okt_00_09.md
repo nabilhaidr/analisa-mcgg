@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 26 Okt 00-09
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:46_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:11_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -39,7 +39,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:46_
 | III-3 | 22 | +0 tidak kehilangan HP | 32 | 9 | Pilih Go Go Card |
 | III-4 | 22 | +0 tidak kehilangan HP | 21 | 9 |  |
 | III-5 | 22 | -17 kalah | 9 | 9 |  |
-| III-6 | 5 | +0 tidak kehilangan HP | 4 | 9 |  |
+| III-6 | 5 | +0 tidak kehilangan HP | 4 | 9 | Go Go Box |
 | IV-1 | 5 | +0 tidak kehilangan HP | 3 | 9 |  |
 | IV-2 | 5 | +0 tidak kehilangan HP | 8 | 9 |  |
 | IV-3 | 5 | +0 tidak kehilangan HP | 6 | 9 |  |
@@ -62,12 +62,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:46_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
-| 04:55 | I-4 | Go Go Box |  |
+| 04:50 | I-4 | Go Go Box |  |
 | 07:15 | II-3 | Pilih Go Go Card | pilihan: Rising Fury Ⅱ, Apex Weapons |
 | 10:15 | II-6 | Naik level |  |
-| 11:35 | II-6 | Go Go Box |  |
+| 11:30 | II-6 | Go Go Box |  |
 | 13:00 | III-2 | Crystal Pilihan | Astro Power |
 | 13:55 | III-3 | Pilih Go Go Card |  |
+| 18:10 | III-6 | Go Go Box |  |
 | 22:35 | IV-4 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

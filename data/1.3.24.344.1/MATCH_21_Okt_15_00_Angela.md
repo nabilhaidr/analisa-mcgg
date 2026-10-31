@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-00 Angela
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:13_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:41_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -25,13 +25,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:13_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 3 | 4 |  |
 | I-3 | 100 | -6 kalah | 9 | 4 |  |
-| I-4 | 94 | -7 kalah | 14 | 4 |  |
+| I-4 | 94 | -7 kalah | 14 | 4 | Go Go Box |
 | II-1 | 87 | -7 kalah | 20 | 5 |  |
 | II-2 | 80 | -10 kalah | 21 | 5 |  |
 | II-3 | 70 | +0 tidak kehilangan HP | 34 | 6 | Pilih Go Go Card (pilihan: Glorious Rogue, Fateful Dice); Naik level |
 | II-4 | 70 | -6 kalah | 28 | 6 |  |
 | II-5 | 64 | -10 kalah | 37 | 6 |  |
-| II-6 | 54 | +0 tidak kehilangan HP | 23 | 7 |  |
+| II-6 | 54 | +0 tidak kehilangan HP | 23 | 7 | Go Go Box |
 | III-1 | 54 | +0 tidak kehilangan HP | 33 | 7 |  |
 | III-2 | 54 | -17 kalah | 41 | 8 |  |
 | III-3 | 37 | +0 tidak kehilangan HP | 29 | 8 | Pilih Go Go Card |
@@ -56,8 +56,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:13_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 05:30 | I-4 | Go Go Box |  |
 | 08:10 | II-3 | Pilih Go Go Card | pilihan: Glorious Rogue, Fateful Dice |
 | 08:25 | II-3 | Naik level |  |
+| 12:25 | II-6 | Go Go Box |  |
 | 15:10 | III-3 | Pilih Go Go Card |  |
 
 ## Papan akhir (layar hasil)

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 24 Okt 15-06
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:35_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:01_
 
 - **Peringkat:** 4
 - **HP akhir:** 0
@@ -33,13 +33,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:35_
 | II-3 | 94 | +0 tidak kehilangan HP | 26 | 6 | Pilih Go Go Card |
 | II-4 | 94 | +0 tidak kehilangan HP | 35 | 6 |  |
 | II-5 | 94 | +0 tidak kehilangan HP | 42 | 6 |  |
-| II-6 | 94 | +0 tidak kehilangan HP | 27 | 7 |  |
+| II-6 | 94 | +0 tidak kehilangan HP | 27 | 7 | Go Go Box |
 | III-1 | 94 | +0 tidak kehilangan HP | 34 | 7 |  |
 | III-2 | 94 | -12 kalah | 42 | 7 |  |
 | III-3 | 82 | +0 tidak kehilangan HP | 49 | 8 | Pilih Go Go Card (pilihan: Bright Sunshine) |
 | III-4 | 82 | +0 tidak kehilangan HP | 26 | 8 |  |
 | III-5 | 82 | -13 kalah | 27 | 8 |  |
-| III-6 | 69 | -16 kalah | 44 | 8 |  |
+| III-6 | 69 | -16 kalah | 44 | 8 | Go Go Box |
 | IV-1 | 53 | -21 kalah | 52 | 8 |  |
 | IV-2 | 32 | +0 tidak kehilangan HP | 64 | 9 |  |
 | IV-3 | 32 | +0 tidak kehilangan HP | 13 | 9 |  |
@@ -67,7 +67,9 @@ Tidak ada di tabel karena namanya tidak terbaca di daftar pemain HUD (huruf Kore
 | 04:50 | I-4 | Go Go Box |  |
 | 07:10 | II-3 | Pilih Go Go Card |  |
 | 07:10 | II-3 | Panel DMG |  |
+| 11:15 | II-6 | Go Go Box |  |
 | 13:45 | III-3 | Pilih Go Go Card | pilihan: Bright Sunshine |
+| 18:30 | III-6 | Go Go Box |  |
 | 24:00 | IV-5 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

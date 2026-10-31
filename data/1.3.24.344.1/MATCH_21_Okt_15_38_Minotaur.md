@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 15-38 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:49_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:14_
 
 - **Peringkat:** 1
 - **HP akhir:** 32
@@ -39,13 +39,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:49_
 | III-3 | 60 | +0 tidak kehilangan HP | 36 | 8 | Pilih Go Go Card (pilihan: The More, the Merrier, Disco Fever) |
 | III-4 | 60 | +0 tidak kehilangan HP | 50 | 8 |  |
 | III-5 | 60 | -13 kalah | 50 | 9 |  |
-| III-6 | 47 | +0 tidak kehilangan HP | 22 | 9 |  |
+| III-6 | 47 | +0 tidak kehilangan HP | 22 | 9 | Go Go Box |
 | IV-1 | 47 | -15 kalah | 13 | 9 |  |
 | IV-2 | 32 | +0 tidak kehilangan HP | 10 | 9 |  |
 | IV-3 | 32 | +0 tidak kehilangan HP | 18 | 9 |  |
 | IV-4 | 32 | +0 tidak kehilangan HP | 19 | 9 |  |
 | IV-5 | 32 | +0 tidak kehilangan HP | 20 | 9 |  |
-| IV-6 | 32 | +0 tidak kehilangan HP | 13 | 9 |  |
+| IV-6 | 32 | +0 tidak kehilangan HP | 13 | 9 | Go Go Box |
 | V-1 | 32 | - | 23 | 9 | VICTORY |
 
 ## HP semua pemain
@@ -70,9 +70,11 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:49_
 | 05:20 | I-4 | Go Go Box |  |
 | 08:00 | II-3 | Pilih Go Go Card | pilihan: Dark Blade |
 | 08:00 | II-3 | Panel DMG |  |
-| 12:35 | II-6 | Go Go Box |  |
+| 12:25 | II-6 | Go Go Box |  |
 | 13:15 | III-1 | Crystal Pilihan | Astro Power |
 | 15:05 | III-3 | Pilih Go Go Card | pilihan: The More, the Merrier, Disco Fever |
+| 19:35 | III-6 | Go Go Box |  |
+| 26:45 | IV-6 | Go Go Box |  |
 | 27:55 | V-1 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

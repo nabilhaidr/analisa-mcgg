@@ -14,6 +14,17 @@ from pathlib import Path
 import av
 
 
+def game_area(img):
+    """A recording started with the phone upright has a portrait canvas with the landscape game across its middle and black
+    above and below (31 Okt 03-23: 1080x2400, game 1080x486): keep that band. The game has the screen's own shape, turned."""
+    w, h = img.size
+    if h <= w:
+        return img
+    band = round(w * w / h)
+    top = (h - band) // 2
+    return img.crop((0, top, w, top + band))
+
+
 def extract(video, out, step=5, width=1600, log=print):
     """Save one frame every `step` seconds as <out>/f_<second>.jpg; returns the number of new frames."""
     out = Path(out)
@@ -31,7 +42,7 @@ def extract(video, out, step=5, width=1600, log=print):
                 continue
             path = out / f"f_{int(nxt):05d}.jpg"
             if not path.exists() or path.stat().st_size == 0:
-                img = frame.to_image()
+                img = game_area(frame.to_image())
                 img.resize((width, round(width * img.height / img.width))).save(path, quality=88)
                 n += 1
             while nxt <= frame.time:

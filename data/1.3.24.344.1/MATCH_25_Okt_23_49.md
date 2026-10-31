@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 25 Okt 23-49
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:44_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 07:10_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -26,7 +26,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:44_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | -7 kalah | 9 | 3 |  |
 | I-3 | 93 | -7 kalah | 16 | 4 |  |
-| I-4 | 86 | +0 tidak kehilangan HP | 22 | 5 |  |
+| I-4 | 86 | +0 tidak kehilangan HP | 22 | 5 | Go Go Box |
 | II-1 | 86 | -9 kalah | 27 | 5 | Crystal Pilihan (Echomancer) |
 | II-2 | 77 | +0 tidak kehilangan HP | 31 | 5 |  |
 | II-3 | 77 | +0 tidak kehilangan HP | 34 | 6 | Pilih Go Go Card (pilihan: Glittering Jewels Ⅰ) |
@@ -57,9 +57,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:44_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 04:25 | I-4 | Go Go Box |  |
 | 05:00 | II-1 | Crystal Pilihan | Echomancer |
 | 06:50 | II-3 | Pilih Go Go Card | pilihan: Glittering Jewels Ⅰ |
-| 11:05 | II-6 | Go Go Box |  |
+| 10:55 | II-6 | Go Go Box |  |
 | 13:30 | III-3 | Pilih Go Go Card | pilihan: Echomancer's Badge |
 | 14:55 | III-4 | Crystal Pilihan | Weapon Master |
 

@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 22 Okt 06-16
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:25_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:53_
 
 - **Peringkat:** 1
 - **HP akhir:** 19
@@ -27,13 +27,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:25_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | +0 tidak kehilangan HP | 10 | 4 |  |
 | I-3 | 100 | -6 kalah | 18 | 4 |  |
-| I-4 | 94 | -4 kalah | 21 | 4 |  |
+| I-4 | 94 | -4 kalah | 21 | 4 | Go Go Box |
 | II-1 | 90 | -11 kalah | 27 | 5 |  |
 | II-2 | 79 | -10 kalah | 31 | 5 |  |
 | II-3 | 69 | +0 tidak kehilangan HP | 29 | 6 | Pilih Go Go Card |
 | II-4 | 69 | -6 kalah | 36 | 6 |  |
 | II-5 | 63 | -7 kalah | 45 | 7 |  |
-| II-6 | 56 | -8 kalah | 29 | 7 |  |
+| II-6 | 56 | -8 kalah | 29 | 7 | Go Go Box |
 | III-1 | 48 | -10 kalah | 39 | 7 |  |
 | III-2 | 38 | +0 tidak kehilangan HP | 49 | 8 |  |
 | III-3 | 38 | +0 tidak kehilangan HP | 27 | 8 | Pilih Go Go Card (pilihan: Healing Fountain) |
@@ -45,7 +45,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:25_
 | IV-3 | 19 | +0 tidak kehilangan HP | 8 | 9 |  |
 | IV-4 | 19 | +0 tidak kehilangan HP | 7 | 9 |  |
 | IV-5 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
-| IV-6 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
+| IV-6 | 19 | +0 tidak kehilangan HP | 9 | 9 | Go Go Box |
 | V-1 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
 | V-2 | 19 | +0 tidak kehilangan HP | 9 | 9 |  |
 | V-3 | 19 | +0 tidak kehilangan HP | 8 | 9 |  |
@@ -70,9 +70,12 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:25_
 
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
+| 04:55 | I-4 | Go Go Box |  |
 | 07:15 | II-3 | Pilih Go Go Card |  |
+| 11:10 | II-6 | Go Go Box |  |
 | 13:30 | III-3 | Pilih Go Go Card | pilihan: Healing Fountain |
-| 18:05 | III-6 | Go Go Box |  |
+| 17:55 | III-6 | Go Go Box |  |
+| 24:50 | IV-6 | Go Go Box |  |
 | 30:25 | V-6 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

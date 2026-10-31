@@ -125,8 +125,7 @@ def check(md_path, seasons):
         err.append("baris Pemain md/html beda atau tidak ada")
     rank = num(boxes.get("Peringkat"))
     row = {"pkt": boxes.get("Peringkat", "-"), "HP": boxes.get("HP akhir", "-")}
-    if not re.search(r"ID \d{15,20} · poin \d+ \([+-]\d+\)", boxes.get("Pertandingan", "")):
-        warn.append(f"ID/poin pertandingan tidak terbaca: {boxes.get('Pertandingan')}")
+    no_result = "tanpa layar hasil" in txt  # a recording that stopped early says so: no rank, ID, points or final board to read
 
     # md and html carry the same tables and lists
     def same_table(title, cols_html=None):
@@ -209,8 +208,9 @@ def check(md_path, seasons):
                 err.append(f"{r[0]}: perubahan {dlt:+d} tidak cocok dengan '{res}'")
             elif i + 1 < len(tl) and None not in (hps[i], hps[i + 1]) and dlt != hps[i + 1] - hps[i]:
                 err.append(f"{r[0]}: perubahan {dlt:+d} != {hps[i + 1]} - {hps[i]}")
-        empty = [r[0] for i, (r, v) in enumerate(zip(tl, hps)) if v is None and (out_at is None or i < out_at)]
-        if empty:  # after the elimination round there is no own HP to read
+        empty = [r[0] for i, (r, v) in enumerate(zip(tl, hps)) if v is None and (out_at is None or i < out_at)
+                 and not (no_result and i == len(tl) - 1)]
+        if empty:  # after the elimination round, or in the round where the recording stopped, there is no own HP to read
             warn.append("HP sendiri kosong di timeline: " + ", ".join(empty))
         mine = [i for i, v in enumerate(hps) if v is not None]
         if rank and rank > 1 and mine and out_at != mine[-1]:
@@ -253,8 +253,14 @@ def check(md_path, seasons):
 
     # final board
     board_names = []
+    match = boxes.get("Pertandingan", "")
+    unranked = [r for r in board if r[0] == "-"]  # still playing when the own run ended: crossed swords, no points line
+    if unranked and not match.endswith("poin -"):
+        err.append(f"{len(unranked)} baris papan akhir tanpa peringkat padahal layar hasil punya poin: {match}")
+    if not (no_result or unranked or re.search(r"ID \d{15,20} · poin \d+ \([+-]\d+\)", match)):
+        warn.append(f"ID/poin pertandingan tidak terbaca: {match}")
     if board:
-        ranks = [num(r[0]) for r in board]
+        ranks = [num(r[0]) or i for i, r in enumerate(board, 1)]
         if ranks != list(range(1, len(board) + 1)) or len(board) > 8:
             err.append(f"peringkat papan akhir bukan 1..N: {[r[0] for r in board]}")
         own = [r for r in board if r[1].endswith(" (kamu)")]
@@ -283,7 +289,7 @@ def check(md_path, seasons):
                 err.append(f"papan akhir peringkat {r[0]} ({name}): sinergi {r[5]!r} != dihitung ulang {want!r}")
         read = [n for _, n in board_names if not n.startswith("[img ") and not re.fullmatch(r"baris \d+", n)]
         row["nama"] = f"{len(read)}/{len(board)}"
-    else:
+    elif not no_result:
         warn.append("tanpa papan akhir: tidak ada layar hasil yang terbaca")
 
     # HP table names against the result screen
@@ -294,12 +300,12 @@ def check(md_path, seasons):
                 err.append(f"tabel HP: {p!r} tidak ada di papan akhir")
         missing = [(rk, n) for rk, n in board_names if n not in {r[0] for r in hp}]
         if missing:
-            want = ", ".join(f"peringkat {rk} " + ("(nama berupa gambar)" if n.startswith("[img ") else n) for rk, n in missing)
+            want = ", ".join(f"peringkat {rk or '-'} " + ("(nama berupa gambar)" if n.startswith("[img ") else n) for rk, n in missing)
             if not gone_md or not gone_md.endswith(f": {want}."):
                 err.append(f"catatan 'Tidak ada di tabel' harus menyebut: {want}")
         elif gone_md:
             err.append("catatan 'Tidak ada di tabel' padahal semua baris layar hasil ada di tabel")
-        rank_of = {n: rk for rk, n in board_names}
+        rank_of = {n: rk for rk, n in board_names if rk}
         alive = {r[0]: max((i for i, c in enumerate(r[1:-1]) if (num(c) or 0) > 0), default=-1) for r in hp}
         for a in alive:
             for b in alive:

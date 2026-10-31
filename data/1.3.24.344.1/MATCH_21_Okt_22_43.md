@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 22-43
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:17_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:47_
 
 - **Peringkat:** 1
 - **HP akhir:** 16
@@ -26,7 +26,7 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:17_
 | I-1 | 100 | +0 tidak kehilangan HP | 2 | 3 |  |
 | I-2 | 100 | -6 kalah | 10 | 4 | Pilih Kartu Power (pilihan: Angela's Power) |
 | I-3 | 94 | +0 tidak kehilangan HP | 14 | 4 |  |
-| I-4 | 94 | +0 tidak kehilangan HP | 17 | 4 |  |
+| I-4 | 94 | +0 tidak kehilangan HP | 17 | 4 | Go Go Box |
 | II-1 | 94 | +0 tidak kehilangan HP | 21 | 4 |  |
 | II-2 | 94 | +0 tidak kehilangan HP | 31 | 5 | Crystal Pilihan (Echomancer) |
 | II-3 | 94 | +0 tidak kehilangan HP | 36 | 5 | Pilih Go Go Card |
@@ -38,13 +38,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:17_
 | III-3 | 81 | +0 tidak kehilangan HP | 43 | 8 | Pilih Go Go Card (pilihan: Glittering Jewels Ⅰ) |
 | III-4 | 81 | +0 tidak kehilangan HP | 48 | 8 |  |
 | III-5 | 81 | -13 kalah | 49 | 8 |  |
-| III-6 | 68 | +0 tidak kehilangan HP | 37 | 9 |  |
+| III-6 | 68 | +0 tidak kehilangan HP | 37 | 9 | Go Go Box |
 | IV-1 | 68 | +0 tidak kehilangan HP | 17 | 9 |  |
 | IV-2 | 68 | -15 kalah | 28 | 9 |  |
 | IV-3 | 53 | +0 tidak kehilangan HP | 20 | 9 |  |
 | IV-4 | 53 | +0 tidak kehilangan HP | 20 | 9 |  |
 | IV-5 | 53 | -20 kalah | 20 | 9 |  |
-| IV-6 | 33 | +0 tidak kehilangan HP | 20 | 9 |  |
+| IV-6 | 33 | +0 tidak kehilangan HP | 20 | 9 | Go Go Box |
 | V-1 | 33 | -17 kalah | 4 | 9 |  |
 | V-2 | 16 | +0 tidak kehilangan HP | 8 | 9 |  |
 | V-3 | 16 | +0 tidak kehilangan HP | 9 | 9 |  |
@@ -68,10 +68,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:17_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 01:20 | I-2 | Pilih Kartu Power | pilihan: Angela's Power |
+| 04:25 | I-4 | Go Go Box |  |
 | 06:10 | II-2 | Crystal Pilihan | Echomancer |
 | 07:00 | II-3 | Pilih Go Go Card |  |
-| 11:20 | II-6 | Go Go Box |  |
+| 11:10 | II-6 | Go Go Box |  |
 | 13:40 | III-3 | Pilih Go Go Card | pilihan: Glittering Jewels Ⅰ |
+| 18:10 | III-6 | Go Go Box |  |
+| 25:20 | IV-6 | Go Go Box |  |
 | 29:20 | V-4 | VICTORY |  |
 
 ## Papan akhir (layar hasil)

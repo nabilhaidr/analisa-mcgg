@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 21 Okt 14-42 Minotaur
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:12_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:39_
 
 - **Peringkat:** 8
 - **HP akhir:** 0
@@ -58,10 +58,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:12_
 | Waktu | Babak | Kejadian | Detail |
 |---|---|---|---|
 | 02:05 | I-2 | Pilih Kartu Power | pilihan: Minotaur's Power, Valir's Power |
-| 05:15 | I-4 | Go Go Box |  |
+| 05:00 | I-4 | Go Go Box |  |
 | 07:20 | II-3 | Pilih Go Go Card | pilihan: Fully Loaded |
 | 08:15 | II-4 | Naik level |  |
-| 11:30 | II-6 | Go Go Box |  |
+| 11:25 | II-6 | Go Go Box |  |
 | 13:25 | III-2 | Crystal Pilihan | Marksman |
 | 14:05 | III-3 | Pilih Go Go Card | pilihan: Dark Blade |
 | 14:05 | III-3 | Panel DMG |  |

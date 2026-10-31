@@ -1,6 +1,6 @@
 # Analisa Pertandingan — 23 Okt 21-47
 
-_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:26_
+_Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-31 06:54_
 
 - **Peringkat:** 7
 - **HP akhir:** 0
@@ -33,13 +33,13 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:26_
 | II-3 | 86 | +0 tidak kehilangan HP | 20 | 6 | Pilih Go Go Card (pilihan: Premium Client I, Fast Promotion) |
 | II-4 | 86 | +0 tidak kehilangan HP | 26 | 6 |  |
 | II-5 | 86 | -11 kalah | 35 | 6 |  |
-| II-6 | 75 | +0 tidak kehilangan HP | 44 | 7 | Pilih Go Go Card (dibuka lagi, pilihan II-3: Fast Promotion) |
+| II-6 | 75 | +0 tidak kehilangan HP | 44 | 7 | Pilih Go Go Card (dibuka lagi, pilihan II-3: Fast Promotion); Go Go Box |
 | III-1 | 75 | -13 kalah | 25 | 7 |  |
 | III-2 | 62 | -15 kalah | 33 | 7 | Pilih Go Go Card (dibuka lagi, pilihan II-3: Starbelle's Badge, Premium Client I) |
 | III-3 | 47 | +0 tidak kehilangan HP | 44 | 8 | Pilih Go Go Card (pilihan: Echomancer's Badge, Total Domination) |
 | III-4 | 47 | +0 tidak kehilangan HP | 22 | 8 |  |
 | III-5 | 47 | -14 kalah | 22 | 8 |  |
-| III-6 | 33 | -21 kalah | 43 | 8 |  |
+| III-6 | 33 | -21 kalah | 43 | 8 | Go Go Box |
 | IV-1 | 12 | -12 kalah, tereliminasi | 51 | 9 |  |
 | IV-2 | - | - | - | - |  |
 
@@ -65,8 +65,10 @@ _Data game 1.3.24.344.1, Season 7 "Chrono Echoes" · dibuat 2026-10-30 15:26_
 | 04:45 | II-1 | Crystal Pilihan | Echomancer |
 | 06:15 | II-3 | Pilih Go Go Card | pilihan: Premium Client I, Fast Promotion |
 | 09:05 | II-6 | Pilih Go Go Card | dibuka lagi, pilihan II-3: Fast Promotion |
+| 10:20 | II-6 | Go Go Box |  |
 | 11:55 | III-2 | Pilih Go Go Card | dibuka lagi, pilihan II-3: Starbelle's Badge, Premium Client I |
 | 13:00 | III-3 | Pilih Go Go Card | pilihan: Echomancer's Badge, Total Domination |
+| 17:40 | III-6 | Go Go Box |  |
 
 ## Papan akhir (layar hasil)
 

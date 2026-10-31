@@ -14,8 +14,9 @@ from PIL import Image
 
 import mc_match
 import mc_ocr
+import video_frames
 
-GOLD = Path(__file__).resolve().parent / "test_data" / "gold"
+GOLD =Path(__file__).resolve().parent / "test_data" / "gold"
 
 
 def look(seed):
@@ -74,6 +75,79 @@ class EventKinds(unittest.TestCase):
     def test_go_go_card_panel_is_no_pick(self):
         # the board info panel (24 Okt 15-06 535 s)
         self.assertNotIn("Pilih Go Go Card", mc_match.event_kinds("Go Go Card | Hero yang Ditempatkan | O.Ne | 014"))
+
+
+class GameArea(unittest.TestCase):
+    def test_portrait_canvas_keeps_the_landscape_game_across_its_middle(self):  # 31 Okt 03-23: 1080x2400, game 1080x486
+        canvas = Image.new("RGB", (1080, 2400))
+        canvas.paste((255, 255, 255), (0, 957, 1080, 1443))
+        game = video_frames.game_area(canvas)
+        self.assertEqual(game.size, (1080, 486))
+        self.assertEqual(game.getextrema(), ((255, 255), (255, 255), (255, 255)))
+
+    def test_landscape_recording_stays_as_it_is(self):
+        frame = Image.new("RGB", (2400, 1080))
+        self.assertIs(video_frames.game_area(frame), frame)
+
+
+class GoGoBoxTitle(unittest.TestCase):
+    """OCR rarely reads the title as written: "Piiih Hadiah" 141 times against "Pilih Hadiah" 21 times in 20 recordings."""
+
+    def test_title_with_the_l_read_as_i(self):  # 31 Okt 03-49: every box frame of the match reads like this
+        self.assertEqual(mc_match.event_kinds("17 Piiih Hadiah"), ["Go Go Box"])
+
+    def test_title_with_the_l_read_as_a_slash(self):
+        self.assertEqual(mc_match.event_kinds("P/lih Hadiah"), ["Go Go Box"])
+
+    def test_title_with_the_start_cut_off(self):
+        self.assertEqual(mc_match.event_kinds("ih Hadiah"), ["Go Go Box"])
+
+    def test_title_without_a_space(self):
+        self.assertEqual(mc_match.event_kinds("ihHadiah"), ["Go Go Box"])
+
+    def test_round_income_is_no_box(self):
+        self.assertEqual(mc_match.event_kinds("Gold: +5 | Hadiah Dasar | Keuntungan"), [])
+
+    def test_card_text_about_a_reward_is_no_box(self):  # Vexana's Power on the card pick screen
+        self.assertEqual(mc_match.event_kinds("Box, kamu bisa memilih 1 hadiah | tambahan dari hadiah yang"), [])
+
+
+def result_rows():
+    return [{"rank": i, "name": n} for i, n in enumerate(("Shalnark", "Cleon", "CinCoeg", "Vuizen"), 1)]
+
+
+class InterimRanks(unittest.TestCase):
+    """A player who is out sees the result screen while the others still play: crossed swords instead of ranks, no points."""
+
+    def test_rows_above_own_row_have_no_rank_without_points(self):
+        ranks = [r["rank"] for r in mc_match.interim_ranks(result_rows(), {"id": "382152087118868124"}, "CinCoeg")]
+        self.assertEqual(ranks[:3], [None, None, 3])
+
+    def test_rows_below_own_row_were_out_earlier_and_keep_their_rank(self):
+        ranks = [r["rank"] for r in mc_match.interim_ranks(result_rows(), {"id": "382152087118868124"}, "CinCoeg")]
+        self.assertEqual(ranks[3], 4)
+
+    def test_ranks_stay_with_points(self):
+        rows = mc_match.interim_ranks(result_rows(), {"id": "1", "points": "2925 (+193)"}, "CinCoeg")
+        self.assertEqual([r["rank"] for r in rows], [1, 2, 3, 4])
+
+    def test_ranks_stay_without_own_row(self):
+        rows = mc_match.interim_ranks(result_rows(), {"id": "1"}, "Orang Lain")
+        self.assertEqual([r["rank"] for r in rows], [1, 2, 3, 4])
+
+
+def round_row(label, hp=100):
+    return {"label": label, "start": {"CinCoeg": hp}, "delta": {}, "level": 9, "gold": 10}
+
+
+class NoResultScreen(unittest.TestCase):
+    def test_recording_without_a_result_screen_says_where_it_stopped(self):
+        notes = [t for _, t in mc_match.insights([round_row("IV-4"), round_row("IV-5", 3)], "CinCoeg", [], None)]
+        self.assertIn("Rekaman berhenti di IV-5 tanpa layar hasil: peringkat akhir tidak diketahui.", notes)
+
+    def test_known_rank_needs_no_such_note(self):
+        notes = [t for _, t in mc_match.insights([round_row("IV-5")], "CinCoeg", [], 4)]
+        self.assertFalse([t for t in notes if "tanpa layar hasil" in t])
 
 
 class ReopenedPicks(unittest.TestCase):
