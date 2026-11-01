@@ -30,8 +30,8 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   ekstraksi ulang. Dua hotfix 31 Okt (efek bingkai avatar, Lua UI Auction) tidak menyentuh data, lihat Temuan teknis.
 - **Toko Spirit Sand S7 terverifikasi** ke 54 layar toko (`STORE_VERIFIED = {7}`); isi Go Go Box cocok dengan rekaman 31 Okt, dan
   `mc_validate.py` memeriksa layar Pilih Hadiah dan hitung mundurnya otomatis (I-4, II-6, III-6, IV-6 terverifikasi).
-- Laporan pertandingan: 39 laporan MATCH 21 Okt – 1 Nov (`data/1.3.24.344.1/MATCH_*`): 20 dari rekaman 21–26 Okt, 8 dari layar hasil
-  27–30 Okt, 3 dari rekaman 31 Okt + layar Riwayat (2 rekamannya berhenti lebih awal, `--cut`), 8 dari layar hasil 31 Okt – 1 Nov (1 di
+- Laporan pertandingan: 42 laporan MATCH 21 Okt – 1 Nov (`data/1.3.24.344.1/MATCH_*`): 20 dari rekaman 21–26 Okt, 8 dari layar hasil
+  27–30 Okt, 3 dari rekaman 31 Okt + layar Riwayat (2 rekamannya berhenti lebih awal, `--cut`), 11 dari layar hasil 31 Okt – 1 Nov (1 di
   antaranya mode Custom lawan komputer, `--custom`, tidak ikut statistik). Per 1 Nov: 200 tes (+24 subtes) lolos, `check_match.py`
   0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih.
 - **Hero panggilan terbukti penuh** (1 Nov): tooltip Novaria ★1–★3, Gatotkaca ★1–★2, X.Borg ★1–★2 cocok, X.Borg ★3 "2000%" terbukti lewat tooltip dan editor lineup.
@@ -228,25 +228,26 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Topuplist Juli 2026 (S6). loadoutgg.com dan kitakuji.id tidak bisa dibuka dari sesi cloud (jaringan dibatasi). Dicek lagi
   2026-10-28 (sesi yang sama, kueri lain): tetap belum ada; playgroup.gg ("Data-Backed · Win Rates") ternyata untuk Commander
   Magic: The Gathering, bukan MCGG.
-- **Data sendiri setelah 7.2** (layar hasil 38 laporan MATCH berperingkat 21 Okt – 1 Nov; 207 papan pemain lain, 77 di peringkat 1–4 dan 130 di 5–8; papan sendiri,
-  59 baris berikon pedang, karena pemain itu masih bertanding, dan laporan Custom lawan komputer tidak dihitung; sinergi dengan >= 4 hero terlihat, crystal tidak terlihat): Starbelle di
-  25% papan peringkat 1–4 vs 12% papan 5–8 (juara 1 dari 10), Dauntless 17% vs 14% (juara 3), Stargazer 8% vs 9%; Kishin paling
-  populer tapi tidak unggul (17% vs 24%), SPECTRE 10% vs 15%, Astro Power 10% vs 4%, Dragoncaller 12% vs 8% (0 juara). Arah Starbelle dan
+- **Data sendiri setelah 7.2** (layar hasil 41 laporan MATCH berperingkat 21 Okt – 1 Nov; 220 papan pemain lain, 82 di peringkat 1–4 dan 138 di 5–8; papan sendiri,
+  67 baris berikon pedang, karena pemain itu masih bertanding, dan laporan Custom lawan komputer tidak dihitung; sinergi dengan >= 4 hero terlihat, crystal tidak terlihat): Starbelle di
+  23% papan peringkat 1–4 vs 12% papan 5–8 (juara 1 dari 11), Dauntless 18% vs 13% (juara 3), Stargazer 9% vs 9%; Kishin paling
+  populer tapi tidak unggul (16% vs 25%), SPECTRE 10% vs 14%, Astro Power 10% vs 4%, Dragoncaller 11% vs 8% (0 juara). Arah Starbelle dan
   Dauntless sama dengan hitungan lama (196 papan yang keliru memuat baris berpedang sebagai papan berperingkat), tapi jumlah juaranya turun jauh,
-  jadi jangan membaca "juara" dari angka lama. Sampel juara kini hanya 10 papan. Fisher: Starbelle p=0,03 (sebelumnya 0,11), Astro Power 0,08, Dauntless 0,55, SPECTRE 0,40. Starbelle
-  tetap belum terbukti: penurunannya datang dari 3 papan satu lobi (31 Okt 23-32, peringkat 2–4), dan dengan 8 sinergi yang diuji ambang setelah koreksi ±0,006; satu rentang rank.
-  **Papan sendiri** (38 pertandingan berperingkat): juara 13, peringkat 2 ×1, 3 ×1, 4 ×8, 5 ×6, 6 ×1, 7 ×5, 8 ×3. **Fanny + Starbelle 6 +
-  Echomancer** paling berhasil: 16 papan Starbelle >= 4 + Echomancer >= 4 sendiri = juara 8, peringkat 2 ×1, 4 ×4, 5 ×2, 7 ×1; commander
-  Fanny 28 pertandingan, juara 11, rata-rata peringkat 3,5. Papan yang menang biasanya Fanny's Power + Fanny, Layla, Thamuz, Lolita,
+  jadi jangan membaca "juara" dari angka lama. Sampel juara kini hanya 11 papan. Fisher: Starbelle p=0,04 (0,11 pada 35 laporan), Astro Power 0,08, Kishin 0,13, Dauntless 0,33, SPECTRE 0,40.
+  Starbelle tetap belum terbukti: turunnya p datang dari 3 papan satu lobi (31 Okt 23-32, peringkat 2–4), dan dengan 8 sinergi yang diuji ambang setelah koreksi ±0,006; satu rentang rank.
+  **Papan sendiri** (41 pertandingan berperingkat): juara 13, peringkat 2 ×1, 3 ×2, 4 ×8, 5 ×6, 6 ×1, 7 ×6, 8 ×4. **Fanny + Starbelle 6 +
+  Echomancer** paling berhasil: 17 papan Starbelle >= 4 + Echomancer >= 4 sendiri = juara 8, peringkat 2 ×1, 3 ×1, 4 ×4, 5 ×2, 7 ×1; commander
+  Fanny 30 pertandingan, juara 11, rata-rata peringkat 3,6. Papan yang menang biasanya Fanny's Power + Fanny, Layla, Thamuz, Lolita,
   Sora, Tigreal, Edith, Miya, Natalia, Zhuxin, Vale, Cici (level 9–10, 12–14 unit; poin Fanny 2549 sebelum laporan poin 2732 → 4421 di
-  30 Okt → 4679 sebelum 13-59 → 4791 di 31 Okt 20:13 → 4733 sebelum 23-32, ada pertandingan lain di antaranya yang tidak terekam; lalu 4847 → 4833 → 4818 di 1 Nov 02:36, berurutan tanpa celah). Hanya 9 dari 207 papan
+  30 Okt → 4679 sebelum 13-59 → 4791 di 31 Okt 20:13 → 4733 sebelum 23-32, ada pertandingan lain di antaranya yang tidak terekam; lalu 4847 → 4833 → 4818 → 4879 → 4836 di 1 Nov 18:57, berurutan tanpa celah). Hanya 9 dari 220 papan
   pemain lain punya Echomancer >= 4, jadi resep ini belum ramai dipakai di sampel ini.
   **31 Okt** (uji hero panggilan): Fanny + Kishin 6 + Echomancer 4–5 juara (15-19, +128) dan peringkat 7 (13-59, −44), Fanny + Starbelle 6
   + Echomancer 5 peringkat 4 (20-13, +28), Lukas + Kishin 5 peringkat 5 (13-36, +2), Vexana + Starbelle 5 + Swiftblade 4 peringkat 3 (Classic
   03-49). Aamon + Mistbender (uji toko) belum berhasil: 03-23 peringkat 8, 02-51 PC peringkat 6. Daftar Riwayat juga mencatat Classic 04:27
   Lukas juara (SPECTRE 6 + Starbelle 6), tapi layar hasilnya tidak ada, jadi tidak ada laporannya.
   **31 Okt malam – 1 Nov**: Fanny + Kishin 5–6 + Echomancer 5 juara (23-32, +114), lalu peringkat 5 dua kali (02-13 −14, 02-36 −15). Susunan serupa juara di Custom 03-08
-  lawan 7 komputer, tapi itu tidak ikut statistik.
+  lawan 7 komputer, tapi itu tidak ikut statistik. Fanny + Starbelle 6 + Echomancer 5 peringkat 3 (17-03, +61), Fanny + Echomancer 5 + Kishin 4 peringkat 7 (18-57, −43). Dyrroth + Starbelle 5 + SPECTRE 4
+  peringkat 8 (dari Riwayat, poin Dyrroth 1140, −59; jam mainnya tidak diketahui).
 - **5 lineup favorit pengguna** (screenshot Rekomendasi Lineup), peringkat tanpa ultra:
   1. Aamon: Dauntless 6 + Stargazer 4 + Mistbender 3 (Nana ★3 lewat Mirror Device/Spirit Sand; butuh level 10).
   2. Luo Yi: Starbelle 6 + Astro 4. Build pengguna: **Odette ★2 Fan** dengan Winter Crown + Lightstick + Essence Core dari
@@ -731,6 +732,12 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - **Cek kata per kata**: ke-16 tooltip (Alpha, Lunox, Nana, Mathilda, Luo Yi, Eudora, Zilong, Yin, Yi Sun-shin, Gusion, Badang, Baxia, Suyou) sama dengan S7.json. Selain `ATK` Alpha, selisihnya hanya salah baca OCR atau
       kalimat terpotong layar. Tidak ada lagi rasio `X% ATK` polos di teks hero; sisanya `X% ATK Speed`, teks asli game. Bukti label: 10100 29 dari 35, 10101 14 dari 19, 10502 5 dari 5.
     - 200 tes (+24 subtes) lolos, `check_match.py` 39 laporan, 0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih pada 843 gambar.
+55. (2026-11-01) 3 laporan MATCH baru dari layar hasil (`--result` saja, 2 layar per pertandingan, satu per satu). Riwayat 54 di-push (`135c220`).
+    - **Hasil**: 1 Nov 17-03 peringkat 3, 4879 +61, 2 baris berpedang; 1 Nov 18-57 peringkat 7, 4836 −43, 6 baris berpedang; Riwayat 1 Nov poin 1140 peringkat 8, −59, commander Dyrroth, 8 baris final. Poin dihitung per
+      commander, jadi 1140 tidak berarti pertandingan lama (poin Fanny saat itu ±4800); jam mainnya tidak diketahui. Peringkat, level, dan jumlah unit tiap baris dicocokkan dengan gambar (unit sendiri 14, 12, 9); identitas hero dan kartu mengikuti ikon.
+      Poin Fanny tetap berurutan: 4818 + 61 = 4879, 4879 − 43 = 4836. Nama RapidOCR kadang beda spasi atau tanda dari layar ("I am me" jadi Iamme, "<dark*~*god>" jadi dark*~*god>, "Phát • Đạt ^ • ^" jadi Phat·Dat^.^). Tidak dikoreksi.
+    - **Statistik papan** dihitung ulang: baseline 38 laporan sama persis dengan catatan, lalu 13 papan baru masuk (220 papan). Laporan Custom tetap tidak dihitung.
+    - 200 tes (+24 subtes) lolos, `check_match.py` 42 laporan, 0 kesalahan, 0 peringatan.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -784,10 +791,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   dipakai); 28 Okt 11-18 `28-11-18-33-412`, `28-11-18-39-968`; 30 Okt 04-12 `30-04-12-09-213`; 31 Okt 13-36 Lukas `31-15-48-20-781`,
   `31-15-48-29-300`; 31 Okt 13-59 `31-15-48-09-910`, `31-15-48-15-090`; 31 Okt 15-19 `31-15-47-21-997`, `31-15-47-29-646` (ketiganya
   jam mulai dari Riwayat); 31 Okt 20-13 `31-20-13-33-028`, `31-20-13-37-113`; 31 Okt 23-32 `31-23-32-54-804`, `31-23-33-00-802` (keduanya jam layar hasil); `Screenshot_2026-11-<cap>`: 1 Nov 02-13 `01-02-13-41-641`,
-  `01-02-13-46-144`; 1 Nov 02-36 `01-02-36-56-638`, `01-02-37-00-866`; 1 Nov 03-08 Custom `practice bot/01-03-08-58-686`, `practice bot/01-03-09-02-654` (`--custom`); dari Riwayat, nama = poin akhir
+  `01-02-13-46-144`; 1 Nov 02-36 `01-02-36-56-638`, `01-02-37-00-866`; 1 Nov 03-08 Custom `practice bot/01-03-08-58-686`, `practice bot/01-03-09-02-654` (`--custom`); 1 Nov 17-03 `01-17-03-49-177`, `01-17-03-59-239`; 1 Nov 18-57 `01-18-57-14-082`, `01-18-57-17-322`; dari Riwayat, nama = poin akhir
   karena jam mainnya tidak diketahui: Riwayat 28 Okt poin 2732 `28-01-25-16-383`, `28-01-25-38-164`, `28-01-25-44-384`; poin 3068
   `28-01-24-47-123`, `28-01-26-54-295`; poin 3231 `28-01-24-55-252`, `28-01-27-02-244`; poin 3289 `28-01-25-01-746`,
-  `28-01-27-09-799`; poin 3469 `28-01-25-06-599`, `28-01-27-16-169`. Skrip bantu sesi 29–31 Okt di folder sementara (bisa hilang):
+  `28-01-27-09-799`; poin 3469 `28-01-25-06-599`, `28-01-27-16-169`; Riwayat 1 Nov poin 1140 `Screenshot_2026-11-01-18-57-48-416`, `Screenshot_2026-11-01-18-57-55-725`. Skrip bantu sesi 29–31 Okt di folder sementara (bisa hilang):
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\b8d2060a-3172-46b4-a0d6-e3d603e3fc1c\scratchpad\` — `regen.py`
   (daftar di atas; `--lowmem` = satu per satu dengan `OPENBLAS_NUM_THREADS=1` dan menunggu memori; `--check` = cek input)
   dan `compare.py` (bandingkan per bagian dengan git HEAD; `--restore` mengembalikan laporan yang hanya beda waktu dibuat).
@@ -799,8 +806,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 
 ## Ide lanjutan (belum dikerjakan)
 - **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Tidak ada lagi screenshot S7 yang wajib diambil. Screenshot S8 diambil setelah S8 mulai.
-- 3 layar hasil baru belum jadi laporan MATCH (tanpa rekaman): 1 Nov 17:03 ID 373419787246041597 peringkat 3, 4879 +61, 2 baris berpedang (`match/` 17-03-49, 17-03-59); 18:57 ID 387382738810246911
-  peringkat 7, 4836 −43, 6 baris berpedang (18-57-14, 18-57-17); ID 385086090948055644 pertandingan lama dari Riwayat, peringkat 8, 1140 −59 (18-57-48, 18-57-55).
 - Jalankan diff sungguhan (`patch_tracker.py` + `mc_diff.py`) setelah update game berikutnya.
 - S8: Kartu Power ada di level 3 (beda dengan S7); pengelompokan tab galeri S8 baru bisa dicek setelah ada screenshot S8.
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
