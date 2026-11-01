@@ -228,6 +228,9 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   Topuplist Juli 2026 (S6). loadoutgg.com dan kitakuji.id tidak bisa dibuka dari sesi cloud (jaringan dibatasi). Dicek lagi
   2026-10-28 (sesi yang sama, kueri lain): tetap belum ada; playgroup.gg ("Data-Backed · Win Rates") ternyata untuk Commander
   Magic: The Gathering, bukan MCGG.
+  **Dicari lagi 2026-11-01** (7 pencarian, 3 halaman dibuka): tetap belum ada tier list tertulis setelah 7.2. loadoutgg berjudul "October 2026" tapi isinya Season 7.1, tiers 27 Sep (commander S Brody, Minotaur, Nana;
+  Fanny B; Lukas belum diberi peringkat), tanpa menyebut 7.2, 20/10, atau 28/10. Artikel kitakuji "Update Terbaru Season 7" terbit 22 Agt. Setelah 7.2 tetap hanya judul video kreator, belum diverifikasi: YouTube ±16 Okt
+  Guinevere + Alpha Astro Power + 6 SPECTRE. Dibanding data sendiri: Fanny dinilai B, padahal papan sendiri juara 11 dari 30 (ini gaya main satu pemain, bukan sampel umum); Stargazer, bagian comp S loadoutgg, 9% vs 9% dengan 0 juara.
 - **Data sendiri setelah 7.2** (layar hasil 41 laporan MATCH berperingkat 21 Okt – 1 Nov; 220 papan pemain lain, 82 di peringkat 1–4 dan 138 di 5–8; papan sendiri,
   67 baris berikon pedang, karena pemain itu masih bertanding, dan laporan Custom lawan komputer tidak dihitung; sinergi dengan >= 4 hero terlihat, crystal tidak terlihat): Starbelle di
   23% papan peringkat 1–4 vs 12% papan 5–8 (juara 1 dari 11), Dauntless 18% vs 13% (juara 3), Stargazer 9% vs 9%; Kishin paling
@@ -738,6 +741,7 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       Poin Fanny tetap berurutan: 4818 + 61 = 4879, 4879 − 43 = 4836. Nama RapidOCR kadang beda spasi atau tanda dari layar ("I am me" jadi Iamme, "<dark*~*god>" jadi dark*~*god>, "Phát • Đạt ^ • ^" jadi Phat·Dat^.^). Tidak dikoreksi.
     - **Statistik papan** dihitung ulang: baseline 38 laporan sama persis dengan catatan, lalu 13 papan baru masuk (220 papan). Laporan Custom tetap tidak dihitung.
     - 200 tes (+24 subtes) lolos, `check_match.py` 42 laporan, 0 kesalahan, 0 peringatan.
+56. (2026-11-01) Tier list dicari lagi atas permintaan pengguna: belum ada yang tertulis setelah Patch 7.2 (rincian di Analisis gameplay). Riwayat 55 di-push (`f772c79`). Tugas tier list S7 ditutup dan dialihkan ke S8.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -809,7 +813,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Jalankan diff sungguhan (`patch_tracker.py` + `mc_diff.py`) setelah update game berikutnya.
 - S8: Kartu Power ada di level 3 (beda dengan S7); pengelompokan tab galeri S8 baru bisa dicek setelah ada screenshot S8.
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
-- Cek lagi tier list setelah Patch 7.2 / Penyesuaian 20/10 / 28/10 (dicari 2026-10-28, dua kali: belum ada tier list
-  tertulis, lihat Analisis gameplay).
+- Cari tier list S8 setelah S8 mulai. Tier list S7 setelah Patch 7.2 tidak ditemukan sampai 2026-11-01 (dicari tiga kali, lihat Analisis gameplay), dan S7 berakhir 15 Nov, jadi tidak perlu dicari lagi.
 - Nama pemain baru dalam huruf hias tampil sebagai gambar sampai ditambahkan ke `catatan_nama.json` (dibaca mata). Nama Jepang kini dibaca otomatis, tapi kana kecil bisa
   terbaca besar (ュ jadi ユ): nama dari model tercantum di Catatan metode laporan, koreksi lewat `catatan_nama.json` bila beda dengan layar.
