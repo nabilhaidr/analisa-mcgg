@@ -10,6 +10,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import mc_validate as V
 
@@ -217,6 +218,67 @@ class CocokkanGoGoBox(unittest.TestCase):
 
     def test_layar_sebagian_tidak_diklaim_cocok_babak(self):
         self.assertNotIn("cocok babak", " ".join(run_box([BOX_PICKED]).notes["go_go_box"]))
+
+
+BOX_COUNTDOWN = "Go Go Box 3 (setelah III-6).png"  # rekaman 21 Okt dijeda di VLC: hitungan 1, sebelum ada yang memilih
+BOX_NO_LABEL = "Go Go Box setelah III-6.jpg"  # hitungan 3: orb sudah tampil, labelnya belum
+RAPID = json.loads((ROOT / "test_data" / "go_go_box_rapid.json").read_text(encoding="utf-8"))["images"]  # RapidOCR asli
+
+
+class LayarHitungMundur(unittest.TestCase):
+    def test_layar_dikenali(self):
+        for name in (BOX_COUNTDOWN, BOX_NO_LABEL):
+            self.assertEqual(V.classify(store_shot(name)), "go_go_box", name)
+
+    def test_tulisan_mirip_bukan_go_go_box(self):  # panel hero dalam pertandingan, menu pilih mode
+        for text in ("Pertarungan Dimulai", "Segera Hadir"):
+            self.assertNotEqual(V.classify([{"t": text, "x": 500, "y": 10, "r": 600, "b": 30}]), "go_go_box")
+
+    def test_delapan_label_rapidocr_cocok_babaknya(self):
+        for name, label, counts in (("Go Go Box 1 (setelah I-4).png", "I-4", (8, 0, 0)),
+                                    ("Go Go Box 2 (setelah II-6) (2).png", "II-6", (5, 2, 1)),
+                                    ("Go Go Box setelah II-6 (2).jpg", "II-6", (6, 1, 1)),
+                                    ("Go Go Box 3 (setelah III-6).png", "III-6", (4, 2, 2)),
+                                    ("Go Go Box 4 (setelah IV-6).png", "IV-6", (4, 3, 1))):
+            orbs = V.box_orbs(V.scale_lines(RAPID)[name], S7["go_go_box"])
+            self.assertEqual(tuple(len(orbs[k]) for k in ("equipment", "crystals", "special")), counts, name)
+            self.assertEqual(V.box_rounds(orbs, S7["go_go_box"])[0], label, name)
+
+    def test_orb_tanpa_label_bukan_selisih_dan_bukan_layar_utuh(self):
+        rep = run_box([BOX_NO_LABEL])
+        self.assertEqual(rep.items["go_go_box"]["selisih"], [])
+        self.assertNotIn("cocok babak", " ".join(rep.notes["go_go_box"]))
+
+
+class BacaUlangRapid(unittest.TestCase):
+    NAME = "Go Go Box setelah II-6 (2).jpg"
+    KEY = "sub\\" + NAME  # kunci ocr.json memakai \ di semua OS
+
+    def reread(self, available=True, image=True):
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(V.mc_ocr, "rapid_available", return_value=available), \
+                mock.patch.object(V.mc_ocr, "run_rapid", return_value={self.KEY: RAPID[self.NAME]}) as run:
+            if image:
+                (Path(tmp) / "sub").mkdir()
+                (Path(tmp) / "sub" / self.NAME).write_bytes(b"")
+            return V.reread_box_screens(Path(tmp), [(self.KEY, ["baris windows"])]), run
+
+    def test_baris_rapid_menggantikan_baris_windows_dalam_skala_1366(self):
+        ((key, lines),), run = self.reread()
+        self.assertEqual(key, self.KEY)
+        self.assertEqual(run.call_args.args[1][0].name, self.NAME)
+        self.assertEqual(sum(map(len, V.box_orbs(lines, S7["go_go_box"]).values())), 8)
+        self.assertLess(max(l["r"] for l in lines), V.BASE_W)
+
+    def test_tanpa_gambar_tetap_baris_windows(self):  # sesi cloud: gambar tidak ikut git
+        screens, run = self.reread(image=False)
+        self.assertEqual(screens, [(self.KEY, ["baris windows"])])
+        run.assert_not_called()
+
+    def test_tanpa_rapidocr_tetap_baris_windows(self):
+        screens, run = self.reread(available=False)
+        self.assertEqual(screens, [(self.KEY, ["baris windows"])])
+        run.assert_not_called()
 
 
 if __name__ == "__main__":

@@ -9,7 +9,8 @@ Pemakaian (Python biasa, tidak butuh .venv):
 Hasil: ringkasan di terminal + data/<versi>/VALIDASI_S<n>_auto.md.
 
 Jenis layar dikenali dari isinya (Detail Hero, Panduan Sinergi, Commander, Equipment, Go Go Card, Ensiklopedia,
-Patch Note), jadi pembagian subfolder bebas. Koordinat dinormalkan ke layar 1366x768.
+Patch Note), jadi pembagian subfolder bebas. Koordinat dinormalkan ke layar 1366x768. Layar Go Go Box dibaca ulang dengan
+RapidOCR bila terpasang (cache ocr_rapid.json), yang lain dari ocr.json.
 Temuan dibagi dua:
   Selisih     teks/angka terbaca jelas tapi berbeda dengan data -> kemungkinan data perlu diperbaiki
   Cek manual  kemungkinan salah baca OCR, teks terpotong, atau panel di-scroll -> lihat screenshot-nya
@@ -24,6 +25,8 @@ import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
+
+import mc_ocr
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -154,8 +157,8 @@ def classify(lines):
         return "commander"
     if any(t.strip() == "Toko Spirit Sand" for t in texts) or has("rekan meningkat sebesar"):
         return "store"
-    if has("ih Hadiah"):  # "Pilih Hadiah"; the OCR often misreads the l ("Piiih", "P/lih")
-        return "go_go_box"
+    if has("ih Hadiah") or has("Segera Dimulai"):  # "Pilih Hadiah"; the OCR often misreads the l ("Piiih", "P/lih").
+        return "go_go_box"  # "Segera Dimulai" = the countdown before it: nobody has picked yet, so all 8 orbs are there
     return "other"
 
 
@@ -784,6 +787,16 @@ def stacked_text(lines):
     return out
 
 
+def reread_box_screens(folder, screens):
+    """Go Go Box screens with the lines of RapidOCR, which reads all 8 orb labels where OCR Windows finds 5-7 (10 countdown
+    screens, 1 Nov). Without RapidOCR or the image (cloud session: screenshots are not in git) a screen keeps its lines."""
+    files = [f for f in (folder / name.replace("\\", "/") for name, _ in screens) if f.exists()]
+    if not files or not mc_ocr.rapid_available():
+        return screens
+    rapid = scale_lines(mc_ocr.run_rapid(folder, files))
+    return [(name, rapid.get(name, lines)) for name, lines in screens]
+
+
 def box_orbs(lines, box):
     """Orb labels of a Pilih Hadiah screen per kind, sorted. `box` = go_go_box of S<n>.json; text that matches no label of
     its pools (player names, a notice) is left out."""
@@ -918,7 +931,7 @@ def main():
     check_cards(d, groups["card"], rep)
     check_book(d, groups["book"], rep)
     check_store(d, groups["store"], rep)
-    check_go_go_box(d, groups["go_go_box"], rep)
+    check_go_go_box(d, reread_box_screens(folder, groups["go_go_box"]), rep)
     check_patch(d, groups["patch"], rep)
 
     out = DATA / version / f"VALIDASI_S{args.season}_auto.md"

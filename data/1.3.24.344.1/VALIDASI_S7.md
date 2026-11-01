@@ -105,7 +105,7 @@ angka HP di atas bar; `mc_validate.py` tetap menulisnya "Tanpa screenshot"). Sem
 | Moskov | ★1 | 3565 | 60 | 275 = 220 × 1,25 | 24 | 0,95 dengan bonus (Layla sama di 16-40-22) | 4 | 19-31-00 |
 | Moskov | ★2 | 6417 | 60 | 412 = 330 × 1,25 | 24 | 0,95 dengan bonus | 4 | 19-35-46 |
 
-Panel menampilkan "mana/Batas Mana Awal" (0/30, 0/80), jadi angkanya sama dengan kolom Batas Mana Awal. Hero panggilan ★3 belum pernah tampil.
+Panel menampilkan "mana/Batas Mana Awal" (0/30, 0/80), jadi angkanya sama dengan kolom Batas Mana Awal. Hero panggilan ★3 pertama: Novaria, 31 Okt 23:31 (tabel berikutnya).
 
 Tooltip skill menampilkan nilai mutlak (dibulatkan ke bawah), jadi persentase data terbukti lewat hitungan:
 
@@ -117,8 +117,34 @@ Tooltip skill menampilkan nilai mutlak (dibulatkan ke bawah), jadi persentase da
 | Alpha ★1 | 04-52-19 | (+866), teks ★3 (+11696) | 120%, 1620% × ATK 722 |
 | Moskov ★2 | 19-35-51 | (+1314), teks ★3 (+4780) | 275%, 1000% × ATK 478 |
 
-Teks skill Alpha, Layla, Moskov sama dengan data, selain salah baca OCR. Layla ★3 "3600% Physical ATK" juga cocok. Tooltip skill Novaria,
-Gatotkaca, X.Borg belum ada, jadi X.Borg ★3 "total 2000% ATK" tetap belum terbukti.
+Teks skill Alpha, Layla, Moskov sama dengan data, selain salah baca OCR. Layla ★3 "3600% Physical ATK" juga cocok.
+
+### Tooltip Novaria, Gatotkaca, X.Borg (31 Okt 22:54 – 1 Nov 03:10, `match/` dan `match/practice bot/`)
+
+Semua angka (+N) tooltip baru dihitung balik dari persentase S7.json: tiap layar hanya pas dengan satu pasang bintang dan ATK. Kalimat skill, tabel
+Atribut Skill, Shield 10%/12%, pulih 700/1200 HP, airborne 1,2 detik, dan ATK Speed Moskov 20%/25% juga sama dengan data.
+
+| Hero | Layar | Tooltip | Hitungan dari data |
+|---|---|---|---|
+| Novaria ★1 | 23-15-03 | (+1521), (+105) | 650%, 45% × Magic ATK 234 |
+| Novaria ★1 | 23-15-17 | (+1651), (+114) | 650%, 45% × Magic ATK 254 |
+| Novaria ★2 | 23-29-56 | (+2996), (+214) | 700%, 50% × Magic ATK 428, bukan Physical ATK 324 |
+| Novaria ★3 | 23-31-45 | (+32760), (+16380) | 4000%, 2000% × Magic ATK 819 |
+| X.Borg ★1 | 23-21-17, 02-09-25 | (+65), (+1040), teks ★3 (+5200) | 25%, 400%, 2000% × ATK 260 |
+| X.Borg ★2 | 23-23-19 | (+94), (+1705), teks ★3 (+7580) | 25%, 450%, 2000% × ATK 379 (panel 395 di 23-23-15, sudah 363 saat tooltip dibuka; ketiga angka hanya pas dengan 379) |
+| X.Borg ★2 | 02-11-30 | (+98), (+1777), teks ★3 (+7900) | 25%, 450%, 2000% × ATK 395 |
+| Gatotkaca ★1 | 02-48-18 | (+462), (+625), (+412), teks ★3 (+437) | 185%, 250%, 165%, 175% × Magic ATK 250 |
+| Gatotkaca ★1 | 02-49-48 | (+555), (+750), (+495), teks ★3 (+525) | persentase sama × Magic ATK 300 |
+| Gatotkaca ★2 | 02-55-38 | (+1094), (+1032), (+681), teks ★3 (+722) | 265%, 250%, 165%, 175% × Magic ATK 413 |
+| Gatotkaca ★2 | 02-56-14 | (+1340), (+1265), (+834), teks ★3 (+885) | persentase sama × Magic ATK 506, bukan Physical ATK 413 |
+| Moskov ★1 | 22-54-23, 02-04-25 | (+572), (+2200); (+772), (+2970) | 260%, teks ★3 1000% × ATK 220 dan 297 |
+| Moskov ★2 | 02-09-06 | (+1226), teks ★3 (+4460) | 275%, 1000% × ATK 446 |
+| Layla ★1 | 02-25-43, 02-31-09 | (+567), (+819), (+672) | 135%, 195%, 160% × ATK 420 |
+
+**X.Borg ★3 terbukti tanpa harus punya X.Borg ★3.** Tooltip dalam pertandingan menulis (+7580)/(+7900) = 2000% × ATK dan tabelnya "Bonus Physical
+2000% 2000% 2000%". Editor lineup (`practice bot/` 03-10-03) menulis rumusnya: "memberikan total (+2000% Total Physical ATK) Physical DMG sebanyak 10
+serangan dalam 2 detik". S7.json menulis "2000% ATK": nilainya benar, labelnya lebih pendek. Label umum itu datang dari `FORMULA_KINDS` dan dipakai 30 skill
+hero; dibiarkan karena baru X.Borg yang terlihat di editor lineup. Gatotkaca "175% ATK" ternyata Magic ATK, bukti (+885) dengan Physical ATK 413.
 
 **Sinergi Chrono Wanderer** (13-46-02, 13-46-07): "Hero 5 Gold yang dipanggil oleh Echomancer." sama dengan `explain`; efek in-game
 "Dapatkan bonus Sinergi Echomancer", data "Mendapatkan bonus atribut dari Sinergi Echomancer." (kalimat ini juga tampil di panel kecil 13-46-02).
@@ -128,6 +154,26 @@ Gatotkaca, X.Borg belum ada, jadi X.Borg ★3 "total 2000% ATK" tetap belum terb
 Layar sisa 20 detik: 8 orb utuh = 6 equipment + Dapatkan Sinergi Dragoncaller + Kapasitas +1, ditambah 3 hero. `mc_validate.py` memeriksanya
 otomatis sejak 31 Okt: layar tidak punya label babak, jadi babaknya dikenali dari susunan orb, dan hasilnya hanya cocok dengan II-6. Dua layar
 berikutnya menampilkan orb tersisa setelah pemain lain memilih, tanpa selisih.
+
+## Go Go Box (1 Nov, layar hitung mundur "Segera Dimulai", 16 gambar)
+
+Layar sebelum Pilih Hadiah, jadi semua orb masih ada: 8 frame rekaman 21 Okt yang dijeda di VLC (`match/Go Go Box <n> …`), 5 layar pertandingan 1 Nov
+(`match/Go Go Box setelah …`), 3 layar lawan bot (`match/practice bot/`). `mc_validate.py` mengenalinya sejak 1 Nov. OCR Windows hanya membaca 5–7 dari 8
+label, jadi layar Go Go Box dibaca ulang dengan RapidOCR: 8 dari 8, sama dengan bacaan mata. Label baru memudar masuk di hitungan 2; di hitungan 3 belum ada.
+
+| Babak | Data (equipment + crystal + Kapasitas) | Label terbaca RapidOCR | Tanpa label utuh (mata, sebagian dikonfirmasi ikon) |
+|---|---|---|---|
+| I-4 | 8 + 0 + 0 | 2 frame VLC: 8 + 0 + 0 | `setelah I-4`, `setelah I-4 (2)`, bot: 8 + 0 + 0 |
+| II-6 | 5–6 + 1–2 + 1 | frame VLC 6 + 1 + 1 dan 5 + 2 + 1, `setelah II-6 (2)` dan bot 6 + 1 + 1 | `setelah II-6`: 6 + 1 + 1 |
+| III-6 | 4 + 2 + 2 | 2 frame VLC: 4 + 2 + 2 | `setelah III-6`, bot: 4 + 2 + 2 |
+| IV-6 | 3–4 + 3–4 + 1 | 2 frame VLC: 4 + 3 + 1 | – |
+
+- Semua label ada di pool babaknya. Orb merah muda bergambar kucing = Feline Blade "CC Tunggal", orb teal di `setelah III-6` = Magic Crystal Echomancer.
+- Pencocokan ikon (`mc_vision`, 3–7 dari 8 orb per layar) tidak bertentangan dengan bacaan mata di 6 layar tanpa label utuh. Jumlah per jenisnya tetap bacaan mata.
+  Satu orb di `setelah III-6` tertutup crystal: bagian yang terlihat bergambar equipment, bukan koin crystal, tapi namanya tidak bisa dipastikan.
+- Hero III-6 dan IV-6 di 4 frame VLC (12 slot, dibaca dari lencana sinergi): Odette, Badang, Baxia, Alice, Thamuz, Fanny, Nana. Semua 5 Gold, sesuai data.
+  Hero I-4 dan II-6 tidak dicek ulang di sini.
+- V-6 dst. punya jumlah yang sama dengan IV-6 dan layarnya tanpa label babak, jadi catatan otomatis ikut menyebut babak itu. Pertandingan terekam baru sampai IV-6.
 
 ## Commander Lukas, Dyrroth, Lunox (31 Okt, layar Commander ponsel)
 
@@ -139,6 +185,5 @@ Teks skill di ponsel sudah memuat Penyesuaian 28/10: Lukas Sacred Gift "3 hingga
 
 - Aturan equipment aktif (`m_DropState`) disimpulkan dari data + screenshot (cocok 67/67), bukan dibaca dari kode game.
   Aturan kartu aktif (`m_Value1–3`) dibaca dari kode galeri in-game.
-- X.Borg Bintang 3 kini "total 2000% ATK … sebanyak 10 serangan" (rumus `N*10` yang sama dengan Rising Fury); belum bisa
-  dicek karena belum ada X.Borg ★3 atau tooltip skill-nya.
+- X.Borg Bintang 3 "total 2000% ATK … sebanyak 10 serangan" (rumus `N*10` yang sama dengan Rising Fury) terbukti 1 Nov, lihat bagian Hero panggilan.
 - "Jangkauan ATK" hero tidak dibandingkan karena tidak tersimpan sebagai kolom tabel.
