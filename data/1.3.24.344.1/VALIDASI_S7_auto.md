@@ -1,6 +1,6 @@
 # Validasi otomatis Season 7 (data 1.3.24.344.1)
 
-- Dibuat 2026-11-01T16:09:47 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
+- Dibuat 2026-11-01T19:22:13 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
 - **Selisih** = terbaca jelas tapi beda dengan data. **Cek manual** = kemungkinan salah baca OCR / panel di-scroll; lihat screenshot-nya.
 
 | Bagian | Layar | Selisih | Cek manual | Cakupan |

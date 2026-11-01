@@ -143,8 +143,8 @@ Atribut Skill, Shield 10%/12%, pulih 700/1200 HP, airborne 1,2 detik, dan ATK Sp
 
 **X.Borg ★3 terbukti tanpa harus punya X.Borg ★3.** Tooltip dalam pertandingan menulis (+7580)/(+7900) = 2000% × ATK dan tabelnya "Bonus Physical
 2000% 2000% 2000%". Editor lineup (`practice bot/` 03-10-03) menulis rumusnya: "memberikan total (+2000% Total Physical ATK) Physical DMG sebanyak 10
-serangan dalam 2 detik". S7.json menulis "2000% ATK": nilainya benar, labelnya lebih pendek. Label umum itu datang dari `FORMULA_KINDS` dan dipakai 30 skill
-hero; dibiarkan karena baru X.Borg yang terlihat di editor lineup. Gatotkaca "175% ATK" ternyata Magic ATK, bukti (+885) dengan Physical ATK 413.
+serangan dalam 2 detik". S7.json kini memakai label yang sama, lihat bagian Label rasio damage. Gatotkaca "175%" ternyata Magic ATK, bukti (+885) dengan
+Physical ATK 413.
 
 **Sinergi Chrono Wanderer** (13-46-02, 13-46-07): "Hero 5 Gold yang dipanggil oleh Echomancer." sama dengan `explain`; efek in-game
 "Dapatkan bonus Sinergi Echomancer", data "Mendapatkan bonus atribut dari Sinergi Echomancer." (kalimat ini juga tampil di panel kecil 13-46-02).
@@ -181,9 +181,47 @@ Teks skill di ponsel sudah memuat Penyesuaian 28/10: Lukas Sacred Gift "3 hingga
 "Setelah setiap 1 kali melahap", Lunox Power of Order "2 Hero acak ... dan 4 Gold". Teks Power of Chaos tidak berubah. Jadi baris Patch Note
 "Power of Chaos: Jumlah Hero dengan Blessing 3 >> 2" sebenarnya mengubah jumlah Hero acak di Power of Order.
 
+**Client PC, 1 Nov** (`commander/` 1935–1937, dicek dengan mata): teks yang sama. Dyrroth "Mulai Babak I-3", "4 EXP Commander", "Setelah setiap 1 kali melahap";
+Lukas "3 hingga 4 kali lipat"; Lunox "2 Hero acak ... dan 4 Gold". `manifest.json` dan `ResCheckConf.xml` tidak berubah sejak 20 Okt, dan hotfix 31 Okt hanya efek
+bingkai avatar dan UI Auction, jadi teks ini tidak datang dari file client. PC dan ponsel sama-sama menerimanya dari server.
+
+## Label rasio damage (1 Nov)
+
+S7.json dulu menulis `X% ATK` untuk rasio skill jenis 10100, 10101, dan 10502 (`FORMULA_KINDS`), padahal layar Detail Hero menulis `(+X% Total Physical ATK)` atau
+`(+X% Total Magic ATK)`. Tiap rasio di teks hero ditandai jenisnya, lalu dicocokkan dengan OCR layar Detail Hero dari skill yang sama:
+
+| Jenis | Rasio di teks hero | Terlihat di layar | Tanpa layar atau tak terbaca OCR |
+|---|---|---|---|
+| 10100 | 35 | 29, semuanya Total Physical ATK | 6 |
+| 10101 | 19 | 13, semuanya Total Magic ATK | 6 |
+| 10502 | 5 | 0 | 5, semuanya Alpha |
+
+Label 10100 dan 10101 kini mengikuti layar. 10502 tetap `X% ATK` karena Alpha tidak punya layar Detail Hero. `X% ATK Speed` adalah teks asli game. Selain label, S7.json dan
+S8.json sama persis dengan versi sebelumnya (hanya `generated_at`). Di teks S7, 52 label Physical diikuti Physical DMG dan 29 label Magic diikuti Magic DMG, tidak ada yang
+tertukar. Hasilnya juga sesuai tooltip hero panggilan: Novaria dan Gatotkaca Magic; X.Borg, Moskov, dan Layla Physical. S8 mengikuti jenis yang sama, tapi belum ada screenshot S8.
+
+Panel skill dalam pertandingan 1 Nov 18:25–18:51 (`match/`) menulis nilai mutlak, jadi tidak menunjukkan label itu. Panel ini tetap menguji persentase dan jenis damage 13 hero:
+jenis di S7.json sama dengan warna dan kata DMG di layar, dan tiap (+N) pas dihitung balik.
+
+| Hero | Baris tabel | (+N) = persen × ATK di panel |
+|---|---|---|
+| Zhuxin | Magic Bonus | 162 = 180% × 90 |
+| Saber | Bonus Physical | 209 = 135% × 155 |
+| Fanny | Bonus Physical | 178, 255, 688 = 70%, 100%, 270% × 255 |
+| Paquito | Bonus Physical | 565 = 390% × 145 |
+| Gord | Magic Bonus | 156 = 120% × 130 |
+| Natalia | Bonus Physical | 468 = 390% × 120 |
+| Eudora | Magic Bonus | 344 = 430% × 80 |
+| Vale | Magic Bonus | 186 = 155% × 120 |
+| Harley | Magic Bonus | 81 = 90% × 90 |
+| Angela | Magic Bonus, Bonus Magic saat Pemulihan | 513, 216 = 570%, 240% × 90 |
+| Franco | Bonus Physical | 74, 310 = 55%, 230% × 135 |
+| Karina | Magic Bonus | 638 = 440% × 145 |
+| Tigreal | Bonus Physical | 425 = 315% × 135 |
+
 ## Catatan
 
 - Aturan equipment aktif (`m_DropState`) disimpulkan dari data + screenshot (cocok 67/67), bukan dibaca dari kode game.
   Aturan kartu aktif (`m_Value1–3`) dibaca dari kode galeri in-game.
-- X.Borg Bintang 3 "total 2000% ATK … sebanyak 10 serangan" (rumus `N*10` yang sama dengan Rising Fury) terbukti 1 Nov, lihat bagian Hero panggilan.
+- X.Borg Bintang 3 "total 2000% Total Physical ATK … sebanyak 10 serangan" (rumus `N*10` yang sama dengan Rising Fury) terbukti 1 Nov, lihat bagian Hero panggilan.
 - "Jangkauan ATK" hero tidak dibandingkan karena tidak tersimpan sebagai kolom tabel.
