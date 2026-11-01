@@ -37,9 +37,9 @@ FORMULA = re.compile(r"^(?:\[C\d)?\[(\d{5,})\|(\d+)\|([^|\]]*)(?:\|([^|\]]*))?(?
 SPEC_LABEL = re.compile(r"\[\d+\|-?\d+\|[^|\]]*\|[^|\]]*\|[^|\]]*\|(\d+)")
 # Runtime formula kinds seen in skill text: kind -> (default effect field, renderer)
 FORMULA_KINDS = {
-    10100: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% ATK"),   # Physical DMG ratio
-    10101: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% ATK"),   # Magic DMG ratio
-    10502: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% ATK"),   # adaptive DMG ratio
+    10100: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% Total Physical ATK"),  # Physical DMG ratio, labelled as on Detail Hero
+    10101: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% Total Magic ATK"),     # Magic DMG ratio
+    10502: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}% ATK"),   # adaptive DMG ratio: Alpha only, no screen shows its label
     10107: ("m_FPara0", lambda v: f"{fmt_num(v * 100)}%"),       # heal, % Max HP
     10500: ("m_Para1", lambda v: fmt_num(v / 1000)),             # duration ms -> s
     101420: ("m_FPara1", lambda v: f"{fmt_num(v * 100)}%"),      # shield, % Max HP
@@ -936,8 +936,8 @@ def to_markdown(d, rank):
               f"{len(d['commanders'])} commander · "
               f"{len(active_cards)} Go Go Card aktif ({len(d['cards']) - len(active_cards)} nonaktif) · "
               f"{len(active_equip)} equipment aktif ({len(d['equipment']) - len(active_equip)} nonaktif)",
-              "- Angka `a/b/c` = nilai di ★1/★2/★3. `X% ATK` = rasio damage dari parameter efek;"
-              " `(dinamis)` = nilai yang hanya dihitung saat battle.",
+              "- Angka `a/b/c` = nilai di ★1/★2/★3. `X% Total Physical ATK` dan `X% Total Magic ATK` = rasio damage dari parameter"
+              " efek, seperti di layar Detail Hero; `X% ATK` = rasio adaptif Alpha; `(dinamis)` = nilai yang hanya dihitung saat battle.",
               "- `*` = hero panggilan: tidak dijual di Toko, hanya dipanggil oleh sinergi (Chrono Wanderer dari Echomancer,"
               " Alpha dari SPECTRE).",
               ("- Angka **tebal** dan catatan _Patch x (server)_ = perubahan Patch Note yang diterapkan server, bukan dari file game"

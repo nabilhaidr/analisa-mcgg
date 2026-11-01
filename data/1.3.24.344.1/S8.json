@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.24.344.1",
  "season": 8,
- "generated_at": "2026-10-27T22:43:22",
+ "generated_at": "2026-11-01T19:19:52",
  "info": {
   "name": "Arena Para Penyihir",
   "levels": [
@@ -851,7 +851,7 @@
     {
      "id": 5510,
      "name": "Little Puppet",
-     "description": "Angela melepaskan Love Energy ke arah targetnya saat ini, memberikan 300% ATK/300% ATK/450% ATK Magic DMG ke lawan. Rekan yang terkena skill ini memulihkan 100% ATK/100% ATK/150% ATK HP.",
+     "description": "Angela melepaskan Love Energy ke arah targetnya saat ini, memberikan 300% Total Magic ATK/300% Total Magic ATK/450% Total Magic ATK Magic DMG ke lawan. Rekan yang terkena skill ini memulihkan 100% Total Magic ATK/100% Total Magic ATK/150% Total Magic ATK HP.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -983,7 +983,7 @@
     {
      "id": 4470,
      "name": "Bastion of Stone",
-     "description": "Grock menyerang targetnya saat ini, memberikan 325% ATK/320% ATK/440% ATK Physical DMG, menyebabkan stun selama 0.6 detik, dan mendapatkan Shield sebesar 10%/10%/15% dari Max HP-nya selama 4 detik.\nPasif: Saat pertarungan dimulai, memberikan 6/12/24 Hybrid DEF ke diri sendiri serta rekan di kiri dan kanannya.\nEfek Atribut Titan: Saat ada lawan di sekitar, Grock memanggil Ghost Ship setiap 4 detik untuk menyebabkan airborne ke semua lawan di sekitar selama 1.5 detik.",
+     "description": "Grock menyerang targetnya saat ini, memberikan 325% Total Physical ATK/320% Total Physical ATK/440% Total Physical ATK Physical DMG, menyebabkan stun selama 0.6 detik, dan mendapatkan Shield sebesar 10%/10%/15% dari Max HP-nya selama 4 detik.\nPasif: Saat pertarungan dimulai, memberikan 6/12/24 Hybrid DEF ke diri sendiri serta rekan di kiri dan kanannya.\nEfek Atribut Titan: Saat ada lawan di sekitar, Grock memanggil Ghost Ship setiap 4 detik untuk menyebabkan airborne ke semua lawan di sekitar selama 1.5 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1061,7 +1061,7 @@
     {
      "id": 5420,
      "name": "Ejector",
-     "description": "Jawhead memperkuat Basic ATK berikutnya, memberikan 185% ATK/185% ATK/245% ATK Physical DMG ke target dan menyebabkan airborne selama 0.6 detik.\nPasif: Ketika pertarungan dimulai, memberikan 300/500/850 Shield ke diri sendiri dan rekan di kiri dan kanannya.",
+     "description": "Jawhead memperkuat Basic ATK berikutnya, memberikan 185% Total Physical ATK/185% Total Physical ATK/245% Total Physical ATK Physical DMG ke target dan menyebabkan airborne selama 0.6 detik.\nPasif: Ketika pertarungan dimulai, memberikan 300/500/850 Shield ke diri sendiri dan rekan di kiri dan kanannya.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1131,7 +1131,7 @@
     {
      "id": 18110,
      "name": "Fang Fortress",
-     "description": "Leo menggigit target saat ini, memberikan 465% ATK/465% ATK/625% ATK Physical DMG dan mendapatkan Shield sebesar 12%/12%/15% HP-nya selama 4 detik.",
+     "description": "Leo menggigit target saat ini, memberikan 465% Total Physical ATK/465% Total Physical ATK/625% Total Physical ATK Physical DMG dan mendapatkan Shield sebesar 12%/12%/15% HP-nya selama 4 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1325,7 +1325,7 @@
     {
      "id": 1820,
      "name": "Sky Dragon's Roar",
-     "description": "Wendy menembakkan Wind Blast ke target, memberikan 365% ATK/365% ATK/580% ATK Physical DMG dan menyebabkan stun selama 0.5/1/1.5 detik.\nEfek Elemental - Wind: Ketika Sinergi FAIRY TAIL aktif, serangan skill mengurangi Mana target sebesar -1 / -1 / -1 / -1 / -1 / -1 berdasarkan jumlah Elemental Mark pada target.",
+     "description": "Wendy menembakkan Wind Blast ke target, memberikan 365% Total Physical ATK/365% Total Physical ATK/580% Total Physical ATK Physical DMG dan menyebabkan stun selama 0.5/1/1.5 detik.\nEfek Elemental - Wind: Ketika Sinergi FAIRY TAIL aktif, serangan skill mengurangi Mana target sebesar -1 / -1 / -1 / -1 / -1 / -1 berdasarkan jumlah Elemental Mark pada target.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -1387,7 +1387,7 @@
     {
      "id": 18210,
      "name": "Quaking Stomp",
-     "description": "Barbiel menginjak-injak tanah, memberikan 330% ATK/330% ATK/460% ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan stun ke lawan di sekitar selama 1.5 detik.",
+     "description": "Barbiel menginjak-injak tanah, memberikan 330% Total Physical ATK/330% Total Physical ATK/460% Total Physical ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan stun ke lawan di sekitar selama 1.5 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1449,7 +1449,7 @@
     {
      "id": 1210,
      "name": "Volley Shot",
-     "description": "Bruno menyalurkan kekuatan ke Mecha Leg-nya. Basic ATK berikutnya menendang bola energi (memicu Efek Basic ATK), memberikan 455% ATK/455% ATK/670% ATK Physical DMG dan menyebabkan 30% slow ke target selama 3 detik.\nEfek Atribut Titan: Setiap kali Bruno menggunakan skill-nya, dia menembakkan bola energi tambahan ke targetnya saat ini, memberikan 150% DMG. DMG ini dihitung berdasarkan nilai Hybrid ATK-nya yang lebih tinggi.",
+     "description": "Bruno menyalurkan kekuatan ke Mecha Leg-nya. Basic ATK berikutnya menendang bola energi (memicu Efek Basic ATK), memberikan 455% Total Physical ATK/455% Total Physical ATK/670% Total Physical ATK Physical DMG dan menyebabkan 30% slow ke target selama 3 detik.\nEfek Atribut Titan: Setiap kali Bruno menggunakan skill-nya, dia menembakkan bola energi tambahan ke targetnya saat ini, memberikan 150% DMG. DMG ini dihitung berdasarkan nilai Hybrid ATK-nya yang lebih tinggi.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1706,7 +1706,7 @@
     {
      "id": 3710,
      "name": "Justice Blades",
-     "description": "Lapu-Lapu melepaskan dua bumerang ke arah target, setiap bumerang memberikan 145% ATK/145% ATK/200% ATK Physical DMG ke lawan yang terkena saat bumerang meluncur dan kembali.",
+     "description": "Lapu-Lapu melepaskan dua bumerang ke arah target, setiap bumerang memberikan 145% Total Physical ATK/145% Total Physical ATK/200% Total Physical ATK Physical DMG ke lawan yang terkena saat bumerang meluncur dan kembali.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -1768,7 +1768,7 @@
     {
      "id": 8830,
      "name": "Thunderclap",
-     "description": "Masha memberikan 395% ATK/400% ATK/550% ATK Physical DMG Basic ATK ke target saat ini dan lawan yang bersebelahan (DMG berkurang seiring dengan jumlah lawan yang terkena), mendapatkan 65% ATK Speed dan 5% Lifesteal selama 3 detik.",
+     "description": "Masha memberikan 395% Total Physical ATK/400% Total Physical ATK/550% Total Physical ATK Physical DMG Basic ATK ke target saat ini dan lawan yang bersebelahan (DMG berkurang seiring dengan jumlah lawan yang terkena), mendapatkan 65% ATK Speed dan 5% Lifesteal selama 3 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2078,7 +2078,7 @@
     {
      "id": 6410,
      "name": "Contract: Transform",
-     "description": "Aldous melepaskan energi dari dalam dirinya untuk memperkuat Basic ATK berikutnya, memberikan 130% ATK/150% ATK/200% ATK Physical DMG ke target dan mendapatkan 100% ATK/100% ATK/150% ATK Shield selama 4 detik. Penggunaan ketiga dan seterusnya akan makin diperkuat, memberikan 170% ATK/180% ATK/295% ATK Physical DMG Area ke target dan lawan di sekitar. (DMG berkurang seiring dengan jumlah lawan yang terkena.)",
+     "description": "Aldous melepaskan energi dari dalam dirinya untuk memperkuat Basic ATK berikutnya, memberikan 130% Total Physical ATK/150% Total Physical ATK/200% Total Physical ATK Physical DMG ke target dan mendapatkan 100% Total Physical ATK/100% Total Physical ATK/150% Total Physical ATK Shield selama 4 detik. Penggunaan ketiga dan seterusnya akan makin diperkuat, memberikan 170% Total Physical ATK/180% Total Physical ATK/295% Total Physical ATK Physical DMG Area ke target dan lawan di sekitar. (DMG berkurang seiring dengan jumlah lawan yang terkena.)",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2156,7 +2156,7 @@
     {
      "id": 11110,
      "name": "Onward",
-     "description": "Edith menyebabkan airborne ke lawan di area yang luas di depannya selama 0.8 detik, memberikan 500% ATK/500% ATK/890% ATK Physical DMG (DMG berkurang seiring jumlah lawan yang terkena). Dia juga mendapatkan Shield sebesar 8%/8%/10% Max HP-nya selama 4 detik.",
+     "description": "Edith menyebabkan airborne ke lawan di area yang luas di depannya selama 0.8 detik, memberikan 500% Total Physical ATK/500% Total Physical ATK/890% Total Physical ATK Physical DMG (DMG berkurang seiring jumlah lawan yang terkena). Dia juga mendapatkan Shield sebesar 8%/8%/10% Max HP-nya selama 4 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2374,7 +2374,7 @@
     {
      "id": 3530,
      "name": "Power of Wildness",
-     "description": "Hilda menebas dengan kuat, memberikan 285% ATK/285% ATK/350% ATK Physical DMG ke target dan lawan di sekitarnya (DMG berkurang seiring dengan jumlah lawan yang terkena), serta mendapatkan Shield sebesar 10%/10%/12% Max HP selama 4 detik.",
+     "description": "Hilda menebas dengan kuat, memberikan 285% Total Physical ATK/285% Total Physical ATK/350% Total Physical ATK Physical DMG ke target dan lawan di sekitarnya (DMG berkurang seiring dengan jumlah lawan yang terkena), serta mendapatkan Shield sebesar 10%/10%/12% Max HP selama 4 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2444,7 +2444,7 @@
     {
      "id": 4330,
      "name": "Heavy Crossbow",
-     "description": "Irithel mengganti senjatanya menjadi Heavy Crossbow, memberikan 390% ATK/390% ATK/560% ATK Physical DMG dengan Basic ATK-nya selama 5 detik.\nPasif: Basic ATK-nya memberikan 35% ATK Physical DMG sebanyak 3 kali.",
+     "description": "Irithel mengganti senjatanya menjadi Heavy Crossbow, memberikan 390% Total Physical ATK/390% Total Physical ATK/560% Total Physical ATK Physical DMG dengan Basic ATK-nya selama 5 detik.\nPasif: Basic ATK-nya memberikan 35% Total Physical ATK Physical DMG sebanyak 3 kali.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2506,7 +2506,7 @@
     {
      "id": 3210,
      "name": "Impact Wrench",
-     "description": "Johnson melemparkan Impact Wrench ke targetnya saat ini, memberikan 405% ATK/405% ATK/615% ATK Magic DMG dan mendapatkan Shield sebesar 15%/15%/18% Max HP-nya selama 4 detik.",
+     "description": "Johnson melemparkan Impact Wrench ke targetnya saat ini, memberikan 405% Total Magic ATK/405% Total Magic ATK/615% Total Magic ATK Magic DMG dan mendapatkan Shield sebesar 15%/15%/18% Max HP-nya selama 4 detik.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -2701,7 +2701,7 @@
     {
      "id": 18310,
      "name": "Rending Bite",
-     "description": "Kupa menggigit target saat ini, memberikan 525% ATK/535% ATK/870% ATK Physical DMG dan mendapatkan 50% ATK Speed selama 5 detik.",
+     "description": "Kupa menggigit target saat ini, memberikan 525% Total Physical ATK/535% Total Physical ATK/870% Total Physical ATK Physical DMG dan mendapatkan 50% ATK Speed selama 5 detik.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -2833,7 +2833,7 @@
     {
      "id": 5710,
      "name": "Burst Fireball",
-     "description": "Valir menembakkan Burst Fireball ke lawan dengan target paling banyak di sekitarnya, memberikan 145% ATK/150% ATK/220% ATK Magic DMG Area dan meninggalkan api di belakangnya. Api memberikan 100% ATK/105% ATK/155% ATK Magic DMG sebanyak 3 kali selama 1 detik, lalu meledak dan memberikan 290% ATK/300% ATK/440% ATK Magic DMG. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Saat pertarungan dimulai, memberikan 10% Hybrid ATK ke diri sendiri dan rekan dalam 2 petak di kiri dan kanannya.",
+     "description": "Valir menembakkan Burst Fireball ke lawan dengan target paling banyak di sekitarnya, memberikan 145% Total Magic ATK/150% Total Magic ATK/220% Total Magic ATK Magic DMG Area dan meninggalkan api di belakangnya. Api memberikan 100% Total Magic ATK/105% Total Magic ATK/155% Total Magic ATK Magic DMG sebanyak 3 kali selama 1 detik, lalu meledak dan memberikan 290% Total Magic ATK/300% Total Magic ATK/440% Total Magic ATK Magic DMG. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Saat pertarungan dimulai, memberikan 10% Hybrid ATK ke diri sendiri dan rekan dalam 2 petak di kiri dan kanannya.",
      "attributes": [
       {
        "label": "DMG Detonasi",
@@ -2989,7 +2989,7 @@
     {
      "id": 9310,
      "name": "Annihilate",
-     "description": "Atlas melompat dan menghantam tanah, memberikan 700% ATK/700% ATK/1750% ATK Magic DMG ke lawan di area yang luas (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan stun ke mereka selama 0.8 detik. Dia juga mendapatkan 20 Hybrid DEF selama 10 detik.",
+     "description": "Atlas melompat dan menghantam tanah, memberikan 700% Total Magic ATK/700% Total Magic ATK/1750% Total Magic ATK Magic DMG ke lawan di area yang luas (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan stun ke mereka selama 0.8 detik. Dia juga mendapatkan 20 Hybrid DEF selama 10 detik.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -3051,7 +3051,7 @@
     {
      "id": 1530,
      "name": "Thunder's Wrath",
-     "description": "Eudora memanggil ledakan petir ke area target, memberikan 350% ATK/350% ATK/910% ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan memberikan efek Superconductor ke lawan yang terkena. Ketika Thunder's Wrath mengenai target dengan efek Superconductor, memberikan 150% ATK/150% ATK/390% ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke target dan lawan di sekitar setelah jeda singkat.",
+     "description": "Eudora memanggil ledakan petir ke area target, memberikan 350% Total Magic ATK/350% Total Magic ATK/910% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan memberikan efek Superconductor ke lawan yang terkena. Ketika Thunder's Wrath mengenai target dengan efek Superconductor, memberikan 150% Total Magic ATK/150% Total Magic ATK/390% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke target dan lawan di sekitar setelah jeda singkat.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -3121,7 +3121,7 @@
     {
      "id": 10030,
      "name": "Ice-Make: Sword",
-     "description": "Gray mengunci semua target dalam Jangkauan ATK-nya, memberikan 450% ATK/450% ATK/1360% ATK Physical DMG ke mereka (DMG berkurang seiring dengan jumlah lawan yang terkena).\nEfek Elemental - Ice: Ketika Sinergi FAIRY TAIL aktif, serangan skill menyebabkan Freeze ke target selama 0 / 0 / 0 / 0 / 0 / 0 detik berdasarkan jumlah Elemental Mark pada target.",
+     "description": "Gray mengunci semua target dalam Jangkauan ATK-nya, memberikan 450% Total Physical ATK/450% Total Physical ATK/1360% Total Physical ATK Physical DMG ke mereka (DMG berkurang seiring dengan jumlah lawan yang terkena).\nEfek Elemental - Ice: Ketika Sinergi FAIRY TAIL aktif, serangan skill menyebabkan Freeze ke target selama 0 / 0 / 0 / 0 / 0 / 0 detik berdasarkan jumlah Elemental Mark pada target.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3183,7 +3183,7 @@
     {
      "id": 7130,
      "name": "Traction Pulse",
-     "description": "Kimmy mengumpulkan kekuatan dan menembakkan Traction Pulse yang meledak saat mengenai lawan atau mencapai jangkauan maksimumnya, memberikan 500% ATK/500% ATK/1520% ATK Magic DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena) dan meninggalkan medan gaya. Setelah 1 detik, medan gaya tersebut menyusut, menyebabkan stun ke lawan selama 1/1/2 detik dan memberikan 215% ATK/215% ATK/650% ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nPasif: Basic ATK Kimmy menembakkan Chemical Bolt, masing-masing memberikan 20% ATK Magic DMG. ATK Speed Kimmy tetap konstan dan setiap 1% ATK Speed dikonversi menjadi 1 Magic ATK.",
+     "description": "Kimmy mengumpulkan kekuatan dan menembakkan Traction Pulse yang meledak saat mengenai lawan atau mencapai jangkauan maksimumnya, memberikan 500% Total Magic ATK/500% Total Magic ATK/1520% Total Magic ATK Magic DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena) dan meninggalkan medan gaya. Setelah 1 detik, medan gaya tersebut menyusut, menyebabkan stun ke lawan selama 1/1/2 detik dan memberikan 215% Total Magic ATK/215% Total Magic ATK/650% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nPasif: Basic ATK Kimmy menembakkan Chemical Bolt, masing-masing memberikan 20% Total Magic ATK Magic DMG. ATK Speed Kimmy tetap konstan dan setiap 1% ATK Speed dikonversi menjadi 1 Magic ATK.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -3253,7 +3253,7 @@
     {
      "id": 6710,
      "name": "Momentum",
-     "description": "Leomord mengayunkan pedangnya dalam serangan melingkar, memberikan 275% ATK/275% ATK/820% ATK DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena; memicu Efek Basic ATK). Dia juga mendapatkan Shield sebesar 9%/9%/15% dari Max HP-nya. Pasif: Saat menunggang, Basic ATK Leomord menjadi ATK Area.",
+     "description": "Leomord mengayunkan pedangnya dalam serangan melingkar, memberikan 275% Total Physical ATK/275% Total Physical ATK/820% Total Physical ATK DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena; memicu Efek Basic ATK). Dia juga mendapatkan Shield sebesar 9%/9%/15% dari Max HP-nya. Pasif: Saat menunggang, Basic ATK Leomord menjadi ATK Area.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3323,7 +3323,7 @@
     {
      "id": 8430,
      "name": "Tempest of Blades",
-     "description": "Ling melompat, mengeluarkan keahlian pedangnya dan menjadi kebal serangan. Kemudian, dia mendarat dan memberikan 490% ATK/490% ATK/1465% ATK DMG ke lawan di area (DMG berkurang seiring dengan jumlah lawan yang terkena).",
+     "description": "Ling melompat, mengeluarkan keahlian pedangnya dan menjadi kebal serangan. Kemudian, dia mendarat dan memberikan 490% Total Physical ATK/490% Total Physical ATK/1465% Total Physical ATK DMG ke lawan di area (DMG berkurang seiring dengan jumlah lawan yang terkena).",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3479,7 +3479,7 @@
     {
      "id": 3830,
      "name": "Taurus Impact",
-     "description": "Vexana mengunci target dengan lawan terbanyak di sekitarnya dan memanggil Taurus ke chessboard, memberikan 210% ATK/210% ATK/545% ATK Magic DMG ke lawan dalam jangkauan (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan airborne selama 0.6 detik. Basic ATK Taurus memberikan 195% ATK/210% ATK/595% ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nEfek Elemental - Celestial Spirit: Ketika Sinergi FAIRY TAIL aktif, serangan skill mengurangi Hybrid ATK target sebesar -0.01% / -0.01% / -0.01% / -0.01% / -0.01% / -0.01% berdasarkan jumlah Elemental Mark pada target.",
+     "description": "Vexana mengunci target dengan lawan terbanyak di sekitarnya dan memanggil Taurus ke chessboard, memberikan 210% Total Magic ATK/210% Total Magic ATK/545% Total Magic ATK Magic DMG ke lawan dalam jangkauan (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan airborne selama 0.6 detik. Basic ATK Taurus memberikan 195% Total Magic ATK/210% Total Magic ATK/595% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nEfek Elemental - Celestial Spirit: Ketika Sinergi FAIRY TAIL aktif, serangan skill mengurangi Hybrid ATK target sebesar -0.01% / -0.01% / -0.01% / -0.01% / -0.01% / -0.01% berdasarkan jumlah Elemental Mark pada target.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -3573,7 +3573,7 @@
     {
      "id": 5230,
      "name": "Feathered Air Strike",
-     "description": "Pharsa melayang ke udara. Selama 4 detik berikutnya, dia melancarkan hingga 4 serangan yang memprioritaskan lokasi dengan lawan terbanyak, masing-masing memberikan 370% ATK/370% ATK/870% ATK Magic DMG ke lawan dalam jangkauan. (DMG berkurang sesuai dengan jumlah lawan yang terkena.)\nEfek Atribut Titan: Setiap 6 detik, Pharsa mengirimkan burung gagak untuk memberikan 150% DMG dan menyebabkan stun ke target selama 1.5 detik. DMG ini dihitung berdasarkan nilai Hybrid ATK-nya yang lebih tinggi.",
+     "description": "Pharsa melayang ke udara. Selama 4 detik berikutnya, dia melancarkan hingga 4 serangan yang memprioritaskan lokasi dengan lawan terbanyak, masing-masing memberikan 370% Total Magic ATK/370% Total Magic ATK/870% Total Magic ATK Magic DMG ke lawan dalam jangkauan. (DMG berkurang sesuai dengan jumlah lawan yang terkena.)\nEfek Atribut Titan: Setiap 6 detik, Pharsa mengirimkan burung gagak untuk memberikan 150% DMG dan menyebabkan stun ke target selama 1.5 detik. DMG ini dihitung berdasarkan nilai Hybrid ATK-nya yang lebih tinggi.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -3697,7 +3697,7 @@
     {
      "id": 9540,
      "name": "Soul Grip",
-     "description": "Yu Zhong melepaskan 3 ATK Dragon Soul. 2 ATK pertama memberikan 210% ATK/210% ATK/580% ATK Physical DMG ke lawan di depan. ATK ke-3 memiliki jangkauan yang diperluas dan memberikan 290% ATK/290% ATK/720% ATK Physical DMG. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: ATK Dragon Soul dihitung sebagai Basic ATK dan berpeluang memicu efek Bruiser untuk melakukan serangan tambahan 1 kali.",
+     "description": "Yu Zhong melepaskan 3 ATK Dragon Soul. 2 ATK pertama memberikan 210% Total Physical ATK/210% Total Physical ATK/580% Total Physical ATK Physical DMG ke lawan di depan. ATK ke-3 memiliki jangkauan yang diperluas dan memberikan 290% Total Physical ATK/290% Total Physical ATK/720% Total Physical ATK Physical DMG. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: ATK Dragon Soul dihitung sebagai Basic ATK dan berpeluang memicu efek Bruiser untuk melakukan serangan tambahan 1 kali.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3767,7 +3767,7 @@
     {
      "id": 230,
      "name": "Lethal Counter",
-     "description": "Balmond menghantam ke depan, memberikan 380% ATK/410% ATK/1200% ATK Physical DMG ke lawan di area yang luas. Untuk setiap target yang terkena, dia mendapatkan Shield sebesar 5%/6%/9% dari Max HP-nya selama 4 detik. Saat mencapai Bintang 3, Balmond meninggalkan chessboard dan melancarkan hantaman kuat yang memberikan DMG ke semua lawan. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Ketika tidak ada lawan di sekitar, Balmond langsung menerjang ke arah targetnya saat ini, memberikan DMG Basic ATK satu kali ke lawan di sepanjang jalurnya. Jika ada 2 lawan atau lebih di sekitar, Balmond menggunakan Cyclone Sweep sebagai gantinya, memberikan 90% ATK/90% ATK/165% ATK Physical DMG setiap detik ke lawan di sekitar. DMG yang diberikan selama Cyclone Sweep dihitung sebagai DMG Skill dan memulihkan Mana.\nEfek Atribut Titan: Ketika Balmond memberikan DMG ke lawan dengan HP di bawah 18%, dia akan mengeliminasi target tersebut dan memberikan 200% Adaptive DMG ke lawan di sekitar. DMG ini dihitung berdasarkan nilai Hybrid ATK yang lebih tinggi.",
+     "description": "Balmond menghantam ke depan, memberikan 380% Total Physical ATK/410% Total Physical ATK/1200% Total Physical ATK Physical DMG ke lawan di area yang luas. Untuk setiap target yang terkena, dia mendapatkan Shield sebesar 5%/6%/9% dari Max HP-nya selama 4 detik. Saat mencapai Bintang 3, Balmond meninggalkan chessboard dan melancarkan hantaman kuat yang memberikan DMG ke semua lawan. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Ketika tidak ada lawan di sekitar, Balmond langsung menerjang ke arah targetnya saat ini, memberikan DMG Basic ATK satu kali ke lawan di sepanjang jalurnya. Jika ada 2 lawan atau lebih di sekitar, Balmond menggunakan Cyclone Sweep sebagai gantinya, memberikan 90% Total Physical ATK/90% Total Physical ATK/165% Total Physical ATK Physical DMG setiap detik ke lawan di sekitar. DMG yang diberikan selama Cyclone Sweep dihitung sebagai DMG Skill dan memulihkan Mana.\nEfek Atribut Titan: Ketika Balmond memberikan DMG ke lawan dengan HP di bawah 18%, dia akan mengeliminasi target tersebut dan memberikan 200% Adaptive DMG ke lawan di sekitar. DMG ini dihitung berdasarkan nilai Hybrid ATK yang lebih tinggi.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3915,7 +3915,7 @@
     {
      "id": 1720,
      "name": "Steel Cable",
-     "description": "Fanny menembakkan kabel yang menariknya ke arah target. Jika dia mengenai lawan saat terbang, dia akan mengaktifkan Tornado Strike, memberikan 70% ATK/75% ATK/160% ATK Physical DMG (DMG berkurang seiring jumlah lawan yang terkena). Dia juga menembakkan Tornado Bullet ke 4 arah, memberikan 100% ATK/100% ATK/400% ATK Physical DMG ke lawan yang terkena. Setelah terbang 5 kali, Fanny menebas lawan terdekat, memberikan 270% ATK/270% ATK/670% ATK Physical DMG.\nSaat mencapai Bintang 3, skill Fanny menciptakan Sonic Wall di sekitar Chessboard. Tornado Bullet memantul setelah mengenai dinding. Sonic Wall bertahan selama 8 detik, menghilang bersama dengan semua Tornado Bullet.",
+     "description": "Fanny menembakkan kabel yang menariknya ke arah target. Jika dia mengenai lawan saat terbang, dia akan mengaktifkan Tornado Strike, memberikan 70% Total Physical ATK/75% Total Physical ATK/160% Total Physical ATK Physical DMG (DMG berkurang seiring jumlah lawan yang terkena). Dia juga menembakkan Tornado Bullet ke 4 arah, memberikan 100% Total Physical ATK/100% Total Physical ATK/400% Total Physical ATK Physical DMG ke lawan yang terkena. Setelah terbang 5 kali, Fanny menebas lawan terdekat, memberikan 270% Total Physical ATK/270% Total Physical ATK/670% Total Physical ATK Physical DMG.\nSaat mencapai Bintang 3, skill Fanny menciptakan Sonic Wall di sekitar Chessboard. Tornado Bullet memantul setelah mengenai dinding. Sonic Wall bertahan selama 8 detik, menghilang bersama dengan semua Tornado Bullet.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -3993,7 +3993,7 @@
     {
      "id": 4130,
      "name": "Avatar of the Guardian",
-     "description": "Gatotkaca melompat ke udara, kemudian menghantam tanah, memberikan 185% ATK/265% ATK/1135% ATK Magic DMG ke lawan dalam jangkauan medium dan menyebabkan airborne ke mereka selama 1.2/1.2/1.32 detik. Dia lalu menyerang dengan Basic ATK yang diperkuat, memulihkan 700/1200/6000 HP dan memberikan 0% ATK Magic DMG. Basic ATK yang Diperkuat ini juga memberikan 165% ATK/165% ATK/600% ATK Magic DMG tambahan ke target dan lawan di sekitar. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nSkill Bintang 3: Setelah menyebabkan airborne ke lawan, Gatotkaca menjadi tidak bisa ditargetkan dalam waktu singkat, lalu memberikan 0% ATK DMG tambahan ke unit acak dalam jangkauan sebanyak 7 kali. DMG tambahan ini bisa memicu peluang Sinergi Bruiser untuk menyerang dua kali.",
+     "description": "Gatotkaca melompat ke udara, kemudian menghantam tanah, memberikan 185% Total Magic ATK/265% Total Magic ATK/1135% Total Magic ATK Magic DMG ke lawan dalam jangkauan medium dan menyebabkan airborne ke mereka selama 1.2/1.2/1.32 detik. Dia lalu menyerang dengan Basic ATK yang diperkuat, memulihkan 700/1200/6000 HP dan memberikan 0% Total Magic ATK Magic DMG. Basic ATK yang Diperkuat ini juga memberikan 165% Total Magic ATK/165% Total Magic ATK/600% Total Magic ATK Magic DMG tambahan ke target dan lawan di sekitar. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nSkill Bintang 3: Setelah menyebabkan airborne ke lawan, Gatotkaca menjadi tidak bisa ditargetkan dalam waktu singkat, lalu memberikan 0% Total Magic ATK DMG tambahan ke unit acak dalam jangkauan sebanyak 7 kali. DMG tambahan ini bisa memicu peluang Sinergi Bruiser untuk menyerang dua kali.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -4071,7 +4071,7 @@
     {
      "id": 11420,
      "name": "Eyes on You!",
-     "description": "\"Ini rencananya: Saat aku menggunakan skill-ku, aku akan memanggil 1/2/3 Muddles! Aku hanya membawa 1/2/5, jadi hanya itu yang aku punya! Selama 5 detik berikutnya, aku akan melempar boneka dengan Basic ATK-ku. Lihat ini!\"\n(Melempar boneka memberikan 160% ATK/160% ATK/205% ATK Basic ATK Physical DMG Area saat mengenai target. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: Melissa mendapatkan 20%/20%/100% ATK Speed saat pertarungan dimulai. Muddles bertahan selama 6 detik. Ketika Melissa mengenai lawan dengan Basic ATK, mereka meluncurkan Basic ATK terkoordinasi ke target yang sama, memberikan 30% ATK/30% ATK/125% ATK Physical DMG (bisa memicu Critical). Saat mencapai Bintang 3, memanggil 1 Muddles tambahan setiap detik saat skill aktif hingga semuanya terpanggil.)",
+     "description": "\"Ini rencananya: Saat aku menggunakan skill-ku, aku akan memanggil 1/2/3 Muddles! Aku hanya membawa 1/2/5, jadi hanya itu yang aku punya! Selama 5 detik berikutnya, aku akan melempar boneka dengan Basic ATK-ku. Lihat ini!\"\n(Melempar boneka memberikan 160% Total Physical ATK/160% Total Physical ATK/205% Total Physical ATK Basic ATK Physical DMG Area saat mengenai target. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: Melissa mendapatkan 20%/20%/100% ATK Speed saat pertarungan dimulai. Muddles bertahan selama 6 detik. Ketika Melissa mengenai lawan dengan Basic ATK, mereka meluncurkan Basic ATK terkoordinasi ke target yang sama, memberikan 30% Total Physical ATK/30% Total Physical ATK/125% Total Physical ATK Physical DMG (bisa memicu Critical). Saat mencapai Bintang 3, memanggil 1 Muddles tambahan setiap detik saat skill aktif hingga semuanya terpanggil.)",
      "attributes": [
       {
        "label": "Unit Panggilan setiap Penggunaan",
@@ -4157,7 +4157,7 @@
     {
      "id": 3130,
      "name": "Spear of Destruction",
-     "description": "Moskov melemparkan Spear of Destruction ke arah lokasi dengan lawan terbanyak. Tombak tersebut memberikan 260% ATK/275% ATK// Physical DMG ke lawan di jalurnya, dan ATK Speed miliknya meningkat sebesar 20%/25%/40% selama 6 detik.\nSaat mencapai Bintang 3, Moskov melesat keluar dari chessboard, lalu melemparkan Spear of Destruction 4 kali berturut-turut, masing-masing memberikan 1000% ATK Physical DMG.",
+     "description": "Moskov melemparkan Spear of Destruction ke arah lokasi dengan lawan terbanyak. Tombak tersebut memberikan 260% Total Physical ATK/275% Total Physical ATK// Physical DMG ke lawan di jalurnya, dan ATK Speed miliknya meningkat sebesar 20%/25%/40% selama 6 detik.\nSaat mencapai Bintang 3, Moskov melesat keluar dari chessboard, lalu melemparkan Spear of Destruction 4 kali berturut-turut, masing-masing memberikan 1000% Total Physical ATK Physical DMG.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -4227,7 +4227,7 @@
     {
      "id": 510,
      "name": "Magic Boomerang",
-     "description": "Nana melemparkan Magic Boomerang, memberikan 300% ATK/300% ATK/2000% ATK Magic DMG ke lawan yang terkena saat dilemparkan dan kembali. Saat mengenai lawan pertama, Nana memberikan 330% ATK/330% ATK/1100% ATK Magic DMG ke target dan lawan di sekitar. (DMG berkurang seiring jumlah lawan yang terkena.) Saat mencapai Bintang 3, Nana memanggil Kirin setelah mengeluarkan skill-nya untuk pertama kali. Kirin melompat ke area dengan lawan terbanyak setiap 0.9 detik, memberikan 600% ATK Magic DMG dan menyebabkan airborne selama 0.2 detik ke lawan di sekitar. Kirin menghilang saat Nana tereliminasi atau saat babak berakhir.",
+     "description": "Nana melemparkan Magic Boomerang, memberikan 300% Total Magic ATK/300% Total Magic ATK/2000% Total Magic ATK Magic DMG ke lawan yang terkena saat dilemparkan dan kembali. Saat mengenai lawan pertama, Nana memberikan 330% Total Magic ATK/330% Total Magic ATK/1100% Total Magic ATK Magic DMG ke target dan lawan di sekitar. (DMG berkurang seiring jumlah lawan yang terkena.) Saat mencapai Bintang 3, Nana memanggil Kirin setelah mengeluarkan skill-nya untuk pertama kali. Kirin melompat ke area dengan lawan terbanyak setiap 0.9 detik, memberikan 600% Total Magic ATK Magic DMG dan menyebabkan airborne selama 0.2 detik ke lawan di sekitar. Kirin menghilang saat Nana tereliminasi atau saat babak berakhir.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -4305,7 +4305,7 @@
     {
      "id": 8530,
      "name": "Fire Dragon's Roar",
-     "description": "Natsu melepaskan \"Fire Dragon's Roar\" ke depan, memberikan 165% ATK/170% ATK/1465% ATK + 20% dari HP target yang hilang sebagai Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke target lawan, dan memasuki mode Enhanced: mengurangi Basic ATK yang dibutuhkan untuk memicu Circle Strike sebanyak 1/1/3.\nPasif: Natsu mendapatkan 25%/30%/45% Hybrid Lifesteal. Setelah setiap 4 Basic ATK, Basic ATK Natsu berikutnya akan mengaktifkan Circle Strike, memberikan 65% ATK/70% ATK/1265% ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke lawan di area.\nSaat mencapai Bintang 3, Natsu melepaskan \"Fire Dragon's Roar\" yang lebih kuat dengan peningkatan drastis DMG dan Jangkauan ATK.\nEfek Elemental - Fire: Ketika Sinergi FAIRY TAIL aktif, serangan skill memberikan 100% / 100% / 100% / 100% / 100% / 100% True DMG tambahan berdasarkan jumlah Elemental Mark pada target.",
+     "description": "Natsu melepaskan \"Fire Dragon's Roar\" ke depan, memberikan 165% Total Physical ATK/170% Total Physical ATK/1465% Total Physical ATK + 20% dari HP target yang hilang sebagai Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke target lawan, dan memasuki mode Enhanced: mengurangi Basic ATK yang dibutuhkan untuk memicu Circle Strike sebanyak 1/1/3.\nPasif: Natsu mendapatkan 25%/30%/45% Hybrid Lifesteal. Setelah setiap 4 Basic ATK, Basic ATK Natsu berikutnya akan mengaktifkan Circle Strike, memberikan 65% Total Physical ATK/70% Total Physical ATK/1265% Total Physical ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) ke lawan di area.\nSaat mencapai Bintang 3, Natsu melepaskan \"Fire Dragon's Roar\" yang lebih kuat dengan peningkatan drastis DMG dan Jangkauan ATK.\nEfek Elemental - Fire: Ketika Sinergi FAIRY TAIL aktif, serangan skill memberikan 100% / 100% / 100% / 100% / 100% / 100% True DMG tambahan berdasarkan jumlah Elemental Mark pada target.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -4391,7 +4391,7 @@
     {
      "id": 9450,
      "name": "Icefield Strike",
-     "description": "Popol melempar tombak ke target di sekitar sebanyak 5 kali (melempar 1 kali lagi untuk setiap 80% ATK Speed yang didapatkan; bisa memicu Efek Basic ATK), memberikan 140% ATK/160% ATK/400% ATK Physical DMG dan menyebabkan freeze ke target selama 1 detik. Saat lawan yang terkena freeze menerima DMG, efek Freeze akan langsung hilang dan lawan tersebut menerima 45% ATK/55% ATK/155% ATK Physical DMG.",
+     "description": "Popol melempar tombak ke target di sekitar sebanyak 5 kali (melempar 1 kali lagi untuk setiap 80% ATK Speed yang didapatkan; bisa memicu Efek Basic ATK), memberikan 140% Total Physical ATK/160% Total Physical ATK/400% Total Physical ATK Physical DMG dan menyebabkan freeze ke target selama 1 detik. Saat lawan yang terkena freeze menerima DMG, efek Freeze akan langsung hilang dan lawan tersebut menerima 45% Total Physical ATK/55% Total Physical ATK/155% Total Physical ATK Physical DMG.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -4469,7 +4469,7 @@
     {
      "id": 8230,
      "name": "Penalty Zone",
-     "description": "Terizla melompat dan menghantam ke area dengan lawan terbanyak dalam 3 petak. Dia mendapatkan Shield sebesar 10%/15%/25% Max HP selama 4 detik, sekaligus memberikan 85% ATK/90% ATK/660% ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan airborne ke lawan selama 0.6 detik di area yang luas. Dia kemudian meninggalkan Scaffold yang mengikat target yang terkena damage.\nPasif: Scaffold memberikan 60% ATK/60% ATK/450% ATK Physical DMG ke lawan di sekitar sebanyak 3 kali, menyebabkan stun singkat pada setiap serangan. Lawan yang diikat akan tetap menerima DMG dan terkena stun, meskipun sudah keluar dari area. Saat mencapai Bintang 3, Terizla selalu melompat tinggi dan menghantam ke bagian tengah chessboard, mendapatkan 40% Pengurangan DMG selama durasi ini. Dia memberikan DMG ke semua lawan dan meninggalkan Scaffold raksasa yang menyerang 5 kali.",
+     "description": "Terizla melompat dan menghantam ke area dengan lawan terbanyak dalam 3 petak. Dia mendapatkan Shield sebesar 10%/15%/25% Max HP selama 4 detik, sekaligus memberikan 85% Total Physical ATK/90% Total Physical ATK/660% Total Physical ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan airborne ke lawan selama 0.6 detik di area yang luas. Dia kemudian meninggalkan Scaffold yang mengikat target yang terkena damage.\nPasif: Scaffold memberikan 60% Total Physical ATK/60% Total Physical ATK/450% Total Physical ATK Physical DMG ke lawan di sekitar sebanyak 3 kali, menyebabkan stun singkat pada setiap serangan. Lawan yang diikat akan tetap menerima DMG dan terkena stun, meskipun sudah keluar dari area. Saat mencapai Bintang 3, Terizla selalu melompat tinggi dan menghantam ke bagian tengah chessboard, mendapatkan 40% Pengurangan DMG selama durasi ini. Dia memberikan DMG ke semua lawan dan meninggalkan Scaffold raksasa yang menyerang 5 kali.",
      "attributes": [
       {
        "label": "Bonus Physical",
@@ -4547,7 +4547,7 @@
     {
      "id": 7220,
      "name": "Cauterant Inferno",
-     "description": "Thamuz melompat ke area dengan lawan terbanyak dalam area 7×7 yang berpusat pada dirinya, memberikan 50% ATK/50% ATK/1650% ATK Physical DMG ke lawan di sekitar. Dia kemudian meledakkan Lava Energy-nya, memasuki mode yang diperkuat selama 4 detik. Selama mode ini, dia mendapatkan 90%/90%/200% ATK Speed dan memberikan 55% ATK/60% ATK/235% ATK Physical DMG ke lawan di sekitar setiap 0,5 detik. Saat mencapai Bintang 3, dia melompat ke tengah chessboard sebagai gantinya, melepaskan gelombang serangan yang menyerang semua lawan. Dia juga melepaskan 4 ledakan energi skala besar tambahan, masing-masing memberikan 300% ATK Physical DMG tambahan.\nPasif: Setiap 3 Basic ATK, Thamuz menghasilkan Lava Energy di lokasi target, yang akan meledak setelah jeda singkat, memberikan 65% ATK/75% ATK/1500% ATK Physical DMG. (Semua DMG berkurang seiring dengan jumlah lawan yang terkena.)",
+     "description": "Thamuz melompat ke area dengan lawan terbanyak dalam area 7×7 yang berpusat pada dirinya, memberikan 50% Total Physical ATK/50% Total Physical ATK/1650% Total Physical ATK Physical DMG ke lawan di sekitar. Dia kemudian meledakkan Lava Energy-nya, memasuki mode yang diperkuat selama 4 detik. Selama mode ini, dia mendapatkan 90%/90%/200% ATK Speed dan memberikan 55% Total Physical ATK/60% Total Physical ATK/235% Total Physical ATK Physical DMG ke lawan di sekitar setiap 0,5 detik. Saat mencapai Bintang 3, dia melompat ke tengah chessboard sebagai gantinya, melepaskan gelombang serangan yang menyerang semua lawan. Dia juga melepaskan 4 ledakan energi skala besar tambahan, masing-masing memberikan 300% Total Physical ATK Physical DMG tambahan.\nPasif: Setiap 3 Basic ATK, Thamuz menghasilkan Lava Energy di lokasi target, yang akan meledak setelah jeda singkat, memberikan 65% Total Physical ATK/75% Total Physical ATK/1500% Total Physical ATK Physical DMG. (Semua DMG berkurang seiring dengan jumlah lawan yang terkena.)",
      "attributes": [
       {
        "label": "DMG Menghantam",
@@ -4633,7 +4633,7 @@
     {
      "id": 11020,
      "name": "Arcane Shade",
-     "description": "Valentina melesat ke posisi aman dalam Jangkauan ATK dan meninggalkan salinan dirinya (Maks Salinan: 3). Kemudian, dia menembakkan 6 misil ke lawan di sekitar dengan memprioritaskan target yang berbeda. Setiap serangan memberikan 100% ATK/100% ATK/470% ATK Magic DMG dan menerapkan Mark ke target selama 2 detik. Menerima DMG akan memicu Mark dan menyebabkan terrify ke target selama 0.5 detik. Saat mencapai Bintang 3, Valentina langsung menciptakan 3 salinan pada awal pertarungan dan menembakkan misil bersama salinannya.\nPasif: Salinan tersebut mewarisi atribut dasar dan sisa HP Valentina (dibatasi hingga Max HP dasarnya) serta menerima 201% DMG. Basic ATK dan skill mereka memberikan -49%/-39%/-19% DMG. Saat menggunakan skill, salinan tidak melesat, menciptakan salinan baru, atau menerapkan Mark.",
+     "description": "Valentina melesat ke posisi aman dalam Jangkauan ATK dan meninggalkan salinan dirinya (Maks Salinan: 3). Kemudian, dia menembakkan 6 misil ke lawan di sekitar dengan memprioritaskan target yang berbeda. Setiap serangan memberikan 100% Total Magic ATK/100% Total Magic ATK/470% Total Magic ATK Magic DMG dan menerapkan Mark ke target selama 2 detik. Menerima DMG akan memicu Mark dan menyebabkan terrify ke target selama 0.5 detik. Saat mencapai Bintang 3, Valentina langsung menciptakan 3 salinan pada awal pertarungan dan menembakkan misil bersama salinannya.\nPasif: Salinan tersebut mewarisi atribut dasar dan sisa HP Valentina (dibatasi hingga Max HP dasarnya) serta menerima 201% DMG. Basic ATK dan skill mereka memberikan -49%/-39%/-19% DMG. Saat menggunakan skill, salinan tidak melesat, menciptakan salinan baru, atau menerapkan Mark.",
      "attributes": [
       {
        "label": "Magic Bonus",
@@ -12009,7 +12009,7 @@
      ],
      "unique": [],
      "passives": [
-      "Supreme: Saat pertarungan dimulai, penggunanya membangkitkan kekuatan petir dan berubah menjadi Lightning Sphere yang tidak bisa ditargetkan selama 3 detik. Selama durasi ini, Lightning Sphere memberikan 200% ATK Magic DMG ke lawan di area setiap 1 detik, dan memberikan 500% ATK Magic DMG saat durasi berakhir. Penggunanya mendapatkan 150% Peningkatan DMG."
+      "Supreme: Saat pertarungan dimulai, penggunanya membangkitkan kekuatan petir dan berubah menjadi Lightning Sphere yang tidak bisa ditargetkan selama 3 detik. Selama durasi ini, Lightning Sphere memberikan 200% Total Magic ATK Magic DMG ke lawan di area setiap 1 detik, dan memberikan 500% Total Magic ATK Magic DMG saat durasi berakhir. Penggunanya mendapatkan 150% Peningkatan DMG."
      ],
      "icon": "img/Atlas_EquipIcon2_MC/4057.png"
     },
@@ -12023,7 +12023,7 @@
      ],
      "unique": [],
      "passives": [
-      "Supreme: Saat pertarungan dimulai, penggunanya membangkitkan kekuatan petir dan berubah menjadi Lightning Sphere yang tidak bisa ditargetkan selama 3 detik. Selama durasi ini, Lightning Sphere memberikan 200% ATK Magic DMG ke lawan di area setiap 1 detik, dan memberikan 500% ATK Magic DMG saat durasi berakhir. Penggunanya mendapatkan 150% Peningkatan DMG."
+      "Supreme: Saat pertarungan dimulai, penggunanya membangkitkan kekuatan petir dan berubah menjadi Lightning Sphere yang tidak bisa ditargetkan selama 3 detik. Selama durasi ini, Lightning Sphere memberikan 200% Total Magic ATK Magic DMG ke lawan di area setiap 1 detik, dan memberikan 500% Total Magic ATK Magic DMG saat durasi berakhir. Penggunanya mendapatkan 150% Peningkatan DMG."
      ],
      "icon": "img/Atlas_EquipIcon2_MC/4057.png"
     }

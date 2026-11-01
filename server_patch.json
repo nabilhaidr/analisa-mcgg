@@ -54,7 +54,7 @@
       ],
       "hero_skills": [
         {"name": "Badang", "skill": "Fist Crack",
-         "replace": [["memiliki 50% peluang", "memiliki 25% peluang"], ["85% ATK/90% ATK/420% ATK", "85% ATK/90% ATK/800% ATK"]],
+         "replace": [["memiliki 50% peluang", "memiliki 25% peluang"], ["85% Total Physical ATK/90% Total Physical ATK/420% Total Physical ATK", "85% Total Physical ATK/90% Total Physical ATK/800% Total Physical ATK"]],
          "attributes": [["Peningkatan DMG", 3, "800%"]],
          "text": "Peluang meninju balik saat menerima DMG 50% → 25%; Pengali DMG Serangan Balik ★3 420% → 800%",
          "note": "Pengali DMG per Fist Wind 50%/50%/225% juga dicantumkan di patch note, tanpa perubahan."}

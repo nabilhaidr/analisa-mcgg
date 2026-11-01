@@ -34,6 +34,36 @@ def favor_entry(d):
     return d["commanders"][0]["skills"][0]
 
 
+class LabelRasioDamage(unittest.TestCase):
+    """Detail Hero menulis (+150% Total Physical ATK) dan (+350% Total Magic ATK): 29 rasio jenis 10100 dan 13 rasio jenis 10101
+    terlihat di screenshot, semuanya sesuai jenisnya (1 Nov). Jenis 10502 hanya dipakai Alpha, yang tidak punya layar Detail Hero."""
+
+    def render(self, kind, value):
+        return mc_data.FORMULA_KINDS[kind][1](value)
+
+    def s7_skill(self, hero, skill):
+        data = json.loads((Path(__file__).resolve().parent / "data" / "1.3.24.344.1" / "S7.json").read_text(encoding="utf-8"))
+        return next(s for h in data["heroes"] if h["name"] == hero for s in h["skills"] if s["name"] == skill)
+
+    def test_physical(self):
+        self.assertEqual(self.render(10100, 1.5), "150% Total Physical ATK")
+
+    def test_magic(self):
+        self.assertEqual(self.render(10101, 3.5), "350% Total Magic ATK")
+
+    def test_adaptif_tetap_tanpa_jenis_sampai_ada_buktinya(self):
+        self.assertEqual(self.render(10502, 0.5), "50% ATK")
+
+    def test_data_memakai_label_physical(self):  # X.Borg, bukti pertama: editor lineup 1 Nov
+        self.assertIn("2000% Total Physical ATK", self.s7_skill("X.Borg", "Last Insanity")["description"])
+
+    def test_data_memakai_label_magic(self):  # Eudora: skill jenis 10101
+        self.assertIn("430% Total Magic ATK", self.s7_skill("Eudora", "Forked Lightning")["description"])
+
+    def test_patch_badang_tetap_masuk(self):  # server_patch.json mencari teks persis: 420% -> 800% hilang bila labelnya beda
+        self.assertIn("800% Total Physical ATK", self.s7_skill("Badang", "Fist Crack")["description_server"])
+
+
 class DuaPatchPadaSkillYangSama(unittest.TestCase):
     """Patch 7.2 dan 28/10 sama-sama mengubah Abyssal Favor."""
 
