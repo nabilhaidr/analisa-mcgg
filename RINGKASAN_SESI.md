@@ -26,8 +26,8 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   Penyesuaian Keseimbangan 20/10, dan 28/10 yang diterapkan server; ketiganya dicatat di `server_patch.json` dan tampil di
   S7.html sebagai catatan oranye "Patch <x> (server)".
 - **Penyesuaian Keseimbangan (28/10) sudah diproses** (lihat Perubahan dari server). Client PC tetap 1.3.24.344.1
-  (`manifest.json` tidak berubah sejak 20 Okt, dicek 31 Okt), jadi perubahannya dari server → `server_patch.json`, bukan
-  ekstraksi ulang.
+  (`manifest.json` dan `ResCheckConf.xml` tidak berubah sejak 20 Okt, dicek 1 Nov lewat snapshot), jadi perubahannya dari server → `server_patch.json`, bukan
+  ekstraksi ulang. Dua hotfix 31 Okt (efek bingkai avatar, Lua UI Auction) tidak menyentuh data, lihat Temuan teknis.
 - **Toko Spirit Sand S7 terverifikasi** ke 54 layar toko (`STORE_VERIFIED = {7}`); isi Go Go Box cocok dengan rekaman 31 Okt, dan
   `mc_validate.py` memeriksa layar Pilih Hadiah dan hitung mundurnya otomatis (I-4, II-6, III-6, IV-6 terverifikasi).
 - Laporan pertandingan: 39 laporan MATCH 21 Okt – 1 Nov (`data/1.3.24.344.1/MATCH_*`): 20 dari rekaman 21–26 Okt, 8 dari layar hasil
@@ -80,7 +80,8 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 - Mekanisme patch di disk: `manifest.json` (md5 semua file), `StreamingAssets/Document/windows/ResCheckConf.xml` (md5 per
   bundle), `MagicChessGoGo_Data/dragon2017/mini_patch/` (hotfix aset), `dragon2017/assets/LuaRepair/4031` (hotfix Lua UI,
   AES-256-CBC, key `e1QXm+D7H8uN1IysfAjH9HmipSavvrqWwLzQtynmWK8=`, IV `0dGLZ7oDyjUJg0jT+rHgZQ==` dari metadata
-  `ClientLuaCodeRepair`; isinya hanya fix UI Auction).
+  `ClientLuaCodeRepair`; hasil dekripsi = BinaryFormatter .NET berisi teks Lua; per 31 Okt 18,8 KB, 16 fungsi: UI mode Auction dan popup siaran "Pailian Live" AllPlayerMatch).
+  **Hotfix datang tanpa update client** dan `manifest.json` tidak berubah, jadi periksa dengan `patch_tracker.py snapshot` + `diff`, bukan tanggal manifest (riwayat 51).
 - Tabel data = TextAsset di `Document/windows/*.unity3d`, format `$mulonggame_table_1`: flag `0` baris biasa, `1` bitmask
   per baris, `2` tanpa kolom key + indeks. Tabel dasar + tabel season (`_S7`, `_extra_all_S7`) digabung.
 - Teks: `AllLanguage*`/`AddLanguage*`, kunci = hash Java (`h*31+c`) dari `"<Tabel>_<field>_<key>"`. Teks skill/kartu di
@@ -702,6 +703,11 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - **Statistik papan** dihitung ulang dari tabel Papan akhir. Skripnya lebih dulu mereproduksi semua angka lama dari 35 laporan (194 papan, persentase, Fisher, papan sendiri, 16 papan Starbelle >= 4 +
       Echomancer >= 4). 13 papan baru masuk, papan komputer tidak.
     - 170 tes (+24 subtes) lolos, `check_match.py` 39 laporan, 0 kesalahan, 0 peringatan.
+51. (2026-11-01) Pemeriksaan tugas dan 2 hotfix yang terlewat. Riwayat 50 di-push (`2623c0c`). Pemeriksaan versi di 42–45 hanya melihat `manifest.json`, jadi hotfix yang terpasang 31 Okt 02:44–02:45 tidak tercatat.
+    - `snapshots/1.3.24.344.1_20261101-175308.json` + `reports/diff_…`: manifest dan ResCheckConf 0 berubah. mini_patch +4 file `fix_hot_resource_261029_Icc`: `_load_res.bytes` hanya memuat `FX_UI_HeadFrame329` (2,6 KB, efek bingkai
+      avatar). LuaRepair `4031` 11,1 → 18,8 KB; versi 20 Okt tidak tersimpan, hanya md5-nya, jadi yang dilihat isi versi baru: 16 fungsi, semuanya UI mode Auction (`UI_BattleEnd_Auction_View`, `UI_BattleUI_Auction_View`,
+      `UI_Maininterface_Auction_View`, `UI_TreasureInfoBattleItem`, dll.) dan popup siaran AllPlayerMatch. Bukan data hero, skill, kartu, atau equipment, jadi `S7.json` tidak diekstrak ulang.
+    - Catatan riwayat 29 ditutup: SABRINA (21 Okt 22-43) memang hanya 1 hero di gambar; nama HUD terpotong ("AJII", "ENQ", "GÖAT", "RRIO") tidak ada lagi di tabel laporan.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
