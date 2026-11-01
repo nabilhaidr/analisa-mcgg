@@ -9,6 +9,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 from PIL import Image
@@ -20,6 +21,7 @@ import video_frames
 
 GOLD =Path(__file__).resolve().parent / "test_data" / "gold"
 RANK = GOLD.parent / "rank"
+NAME = GOLD.parent / "nama"
 
 
 def look(seed):
@@ -285,12 +287,13 @@ class HandNames(unittest.TestCase):
 
     def rows(self):
         return [{"row": 1, "name": "CinCoeg"}, {"row": 2, "name": "baris 2", "slot": ("hasil.jpg", (0, 0, 9, 9))},
-                {"row": 3, "name": "마샤 주나어", "ko": 0.73}]
+                {"row": 3, "name": "마샤 주나어", "ko": 0.73}, {"row": 4, "name": "ワヒユ", "ja": 0.7}]
 
     def named(self, battle):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "catatan_nama.json"
-            path.write_text(json.dumps({"_catatan": "-", "123": {"2": "ブラッカー", "3": "마샤 주니어"}}, ensure_ascii=False), encoding="utf-8")
+            notes = {"_catatan": "-", "123": {"2": "ブラッカー", "3": "마샤 주니어", "4": "ワヒュ"}}
+            path.write_text(json.dumps(notes, ensure_ascii=False), encoding="utf-8")
             return mc_match.hand_names(self.rows(), battle, path)
 
     def test_a_noted_row_takes_the_written_name(self):
@@ -303,6 +306,10 @@ class HandNames(unittest.TestCase):
         row = self.named("123")[2]
         self.assertEqual((row["name"], row.get("ko")), ("마샤 주니어", None))
 
+    def test_it_replaces_a_misread_japanese_name(self):  # small kana read large
+        row = self.named("123")[3]
+        self.assertEqual((row["name"], row.get("ja")), ("ワヒュ", None))
+
     def test_a_noted_row_is_marked_as_unread_by_the_hud_too(self):  # unread_player links it to the HUD player
         self.assertTrue(self.named("123")[1]["hand"])
 
@@ -314,6 +321,123 @@ class HandNames(unittest.TestCase):
 
     def test_no_id_read_stays(self):
         self.assertEqual(self.named(None), self.rows())
+
+
+needs_japanese_model = unittest.skipUnless(mc_ocr.JAPANESE_REC.exists(), "model Jepang tidak ada (cache/ tidak di git)")
+
+
+class JapaneseNames(unittest.TestCase):
+    """test_data/nama/ = name slots read_result cut from real result screens: three Japanese names, the two Hangul ones, —X— and
+    мαяѕмєℓℓ. A slot runs to the first Go Go Card and its lower edge holds the tops of the heart and thumb icons."""
+
+    def strip(self, name):
+        return mc_match.text_strip(Image.open(NAME / name).convert("RGB"))
+
+    def read(self, name):
+        return mc_ocr.read_japanese([self.strip(name)])[0]
+
+    def test_strip_drops_the_empty_side(self):
+        self.assertLess(self.strip("jp_wahyu.png").width, 100)  # of 231
+
+    def test_strip_keeps_the_whole_name(self):
+        self.assertGreater(self.strip("jp_burakka.png").width, 130)
+
+    def test_strip_drops_the_icons_under_the_name(self):
+        self.assertLess(self.strip("jp_wahyu.png").height, 40)  # of 52
+
+    def test_a_slot_without_text_stays(self):
+        empty = Image.new("RGB", (231, 52), (40, 40, 120))
+        self.assertEqual(mc_match.text_strip(empty).size, (231, 52))
+
+    def test_kana_with_a_good_score_is_a_name(self):
+        self.assertTrue(mc_match.japanese_name("シンデレラ", 0.77))
+
+    def test_a_low_score_is_not(self):  # 카일라 장라 as kanji
+        self.assertFalse(mc_match.japanese_name("外引", 0.34))
+
+    def test_latin_letters_are_not(self):  # мαяѕмєℓℓ
+        self.assertFalse(mc_match.japanese_name("MOASMCPE", 0.72))
+
+    def test_the_long_vowel_mark_is_no_letter(self):  # —X—: a dash looks like the kanji for one and the mark
+        self.assertFalse(mc_match.japanese_name("一Xー", 0.7))
+
+    @needs_japanese_model
+    def test_shinderera_is_read(self):
+        self.assertEqual(self.read("jp_shinderera.png")[0], "シンデレラ")  # シンデレラーの from the whole slot
+
+    @needs_japanese_model
+    def test_burakka_is_read(self):
+        self.assertEqual(self.read("jp_burakka.png")[0], "ブラッカー")
+
+    @needs_japanese_model
+    def test_small_kana_reads_large(self):  # ワヒュ on screen: the limit a note in catatan_nama.json corrects
+        self.assertEqual(self.read("jp_wahyu.png")[0], "ワヒユ")
+
+    @needs_japanese_model
+    def test_japanese_names_pass(self):
+        for name in ("jp_shinderera.png", "jp_burakka.png", "jp_wahyu.png"):
+            self.assertTrue(mc_match.japanese_name(*self.read(name)), name)
+
+    @needs_japanese_model
+    def test_other_scripts_do_not_pass(self):
+        for name in ("ko_masha.png", "ko_kaila.png", "simbol_x.png", "hias_marsmell.png"):
+            self.assertFalse(mc_match.japanese_name(*self.read(name)), name)
+
+
+class UnreadNames(unittest.TestCase):
+    """Rows the page OCR left without a name: the Korean model first, the Japanese one on what is left."""
+
+    def row(self, *files):
+        return {"name": "baris 8", "slots": [(NAME / f, (0, 0, 231, 52)) for f in files]}
+
+    def run_on(self, rows, korean, japanese):
+        with mock.patch.object(mc_ocr, "read_korean", return_value=korean), \
+                mock.patch.object(mc_ocr, "read_japanese", return_value=japanese) as jp:
+            mc_match.read_unread_names(rows)
+        return jp
+
+    def test_the_japanese_model_reads_what_the_korean_one_left(self):
+        row = self.row("jp_burakka.png")
+        self.run_on([row], [("—", 0.07)], [("ブラッカー", 0.8)])
+        self.assertEqual((row["name"], row["ja"]), ("ブラッカー", 0.8))
+
+    def test_it_gets_the_name_without_the_rest_of_the_slot(self):
+        jp = self.run_on([self.row("jp_wahyu.png")], [("그", 0.19)], [("ワヒユ", 0.7)])
+        self.assertLess(jp.call_args[0][0][0].width, 100)
+
+    def test_a_hangul_name_never_reaches_the_japanese_model(self):
+        row = self.row("ko_masha.png")
+        jp = self.run_on([row], [("마샤 주니어", 0.84)], [("x", 0.1)])
+        self.assertEqual((row["name"], row["ko"]), ("마샤 주니어", 0.84))
+        jp.assert_not_called()
+
+    def test_the_best_screenshot_counts(self):
+        row = self.row("jp_wahyu.png", "jp_wahyu.png")
+        self.run_on([row], [("그", 0.19), ("그", 0.19)], [("ワヒユ", 0.62), ("ワヒユ", 0.7)])
+        self.assertEqual(row["ja"], 0.7)
+
+    def test_a_name_that_fails_stays_a_picture(self):
+        row = self.row("simbol_x.png")
+        self.run_on([row], [("−× ×", 0.38)], [("一Xー", 0.48)])
+        self.assertEqual(row["name"], "baris 8")
+
+    def test_without_the_models_the_row_stays(self):
+        row = self.row("jp_wahyu.png")
+        self.run_on([row], None, None)
+        self.assertEqual(row["name"], "baris 8")
+
+    def test_a_row_with_a_name_is_left_alone(self):
+        row = {"name": "CinCoeg"}
+        jp = self.run_on([row], None, None)
+        self.assertEqual(row, {"name": "CinCoeg"})
+        jp.assert_not_called()
+
+
+class UnreadPlayer(unittest.TestCase):
+    def test_a_name_from_the_japanese_model_is_the_one_the_hud_misread(self):
+        final = [{"name": "CinCoeg"}, {"name": "ブラッカー", "ja": 0.8}]
+        tl = [{"hp": {"CinCoeg": 90, "BLK": 80}}] * 3
+        self.assertEqual(mc_match.unread_player(tl, ["CinCoeg", "BLK"], final), {"BLK": final[1]})
 
 
 class FrameRows(unittest.TestCase):

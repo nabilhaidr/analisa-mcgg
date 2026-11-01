@@ -102,26 +102,38 @@ def run_rapid(folder, files, log=print, text_score=RAPID_SCORE):
 
 
 KOREAN_REC = HERE / "cache" / "models" / "korean" / "korean_PP-OCRv5_rec_mobile.onnx"
-_korean = None
+JAPANESE_REC = HERE / "cache" / "models" / "japan" / "japan_PP-OCRv4_rec_mobile.onnx"
+_recognizers = {}
 
 
-def read_korean(images):
-    """[(text, score)] for one-line text pictures (PIL) read by RapidOCR's Korean recognizer (PP-OCRv5 mobile: Hangul and
-    Latin), or None without the model file or RapidOCR 1.2. The page OCR has only Chinese and English models, so a Hangul
-    name gives no text at all. The model is onnx/PP-OCRv5/rec/korean_PP-OCRv5_rec_mobile.onnx of ModelScope
-    RapidAI/RapidOCR v3.10.0 (13.5 MB); cache/ is not in git, so download it again after a clone."""
-    global _korean
-    if _korean is None:
+def read_lines(model, images):
+    """[(text, score)] for one-line text pictures (PIL) read by a RapidOCR recognizer, or None without the model file or
+    RapidOCR 1.2. cache/ is not in git, so download the models again after a clone."""
+    if model not in _recognizers:
         try:
             from rapidocr_onnxruntime.ch_ppocr_v3_rec.text_recognize import TextRecognizer
         except ImportError:
             return None
-        if not KOREAN_REC.exists():
+        if not model.exists():
             return None
-        _korean = TextRecognizer({"model_path": str(KOREAN_REC), "rec_img_shape": [3, 48, 320], "rec_batch_num": 6,
-                                  "use_cuda": False})
-    result, _ = _korean([np.ascontiguousarray(np.asarray(im.convert("RGB"))[..., ::-1]) for im in images])  # BGR
+        _recognizers[model] = TextRecognizer({"model_path": str(model), "rec_img_shape": [3, 48, 320], "rec_batch_num": 6,
+                                              "use_cuda": False})
+    result, _ = _recognizers[model]([np.ascontiguousarray(np.asarray(im.convert("RGB"))[..., ::-1]) for im in images])  # BGR
     return [(text, float(score)) for text, score in result]
+
+
+def read_korean(images):
+    """read_lines with RapidOCR's Korean recognizer (PP-OCRv5 mobile: Hangul and Latin). The page OCR has only Chinese and
+    English models, so a Hangul name gives no text at all. The model is onnx/PP-OCRv5/rec/korean_PP-OCRv5_rec_mobile.onnx
+    of ModelScope RapidAI/RapidOCR v3.10.0 (13.5 MB)."""
+    return read_lines(KOREAN_REC, images)
+
+
+def read_japanese(images):
+    """read_lines with RapidOCR's Japanese recognizer (PP-OCRv4 mobile: kana, 3955 kanji, Latin). The Chinese model of the
+    page OCR knows 5 kana. The model is onnx/PP-OCRv4/rec/japan_PP-OCRv4_rec_mobile.onnx of ModelScope RapidAI/RapidOCR
+    v3.10.0 (9.3 MB)."""
+    return read_lines(JAPANESE_REC, images)
 
 
 def ocr_folder(folder, engine="auto", files=None, log=print, text_score=RAPID_SCORE):

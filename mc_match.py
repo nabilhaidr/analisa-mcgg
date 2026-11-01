@@ -546,11 +546,11 @@ def unnamed_rows(recs, clusters, final, me=None):
 
 def unread_player(tl, players, final):
     """{HUD player: result row} for the one name the page OCR could not read on the result screen (a picture, or read by
-    the Korean model), else {}. The HUD OCR turns that name into something else ("마샤 주니어" -> "FL-loi", 21 Okt 22:43),
+    the Korean or Japanese model), else {}. The HUD OCR turns that name into something else ("마샤 주니어" -> "FL-loi", 21 Okt 22:43),
     so it is the one player that matches no name the page OCR read. A cut-off second reading of another row ("MCG" for
     KeyyMCGG, 24 Okt 02:51) matches none either, but never stands beside that row in a frame; real players share frames
     with every other one (at least 7 in 20 matches)."""
-    pics = [r for r in final if r.get("slot") or r.get("ko") or r.get("hand")]
+    pics = [r for r in final if r.get("slot") or r.get("ko") or r.get("ja") or r.get("hand")]
     keys = [name_key(r["name"]) for r in final if r not in pics]
     seen = defaultdict(set)
     for i, x in enumerate(tl):
@@ -841,14 +841,7 @@ def read_result(paths, d, folder, engine=None):
         crop_ocr = run_ocr(crops, engine, list(files.values()))
         for r in redo:
             r["level"] = result_level(" ".join(l["t"] for l in crop_ocr.get(files[id(r)].name, {}).get("lines", [])))
-    unread = [r for r in out if r["name"].startswith("baris ") and r.get("slots")]
-    reads = mc_ocr.read_korean([Image.open(p).crop(box) for r in unread for p, box in r["slots"]]) if unread else None
-    if reads:  # Hangul names: best reading of the Korean model over the screenshots ("마샤 주니어" 0.84; a name in small
-        it = iter(reads)  # capitals or symbols comes out without Hangul and low, "Masmee" 0.29, and stays a picture)
-        for r in unread:
-            text, score = max((next(it) for _ in r["slots"]), key=lambda x: x[1])
-            if len(HANGUL.findall(text)) >= 2 and score >= 0.6:
-                r["name"], r["ko"] = clean_name(text), round(score, 2)
+    read_unread_names(out)
     for r in out:
         r.pop("level_box", None)
         r.pop("slots", None)
@@ -857,20 +850,70 @@ def read_result(paths, d, folder, engine=None):
     return hand_names(out, meta.get("id")), meta
 
 
+def best_readings(rows, read, prepare=lambda im: im):
+    """[(text, score)] per row, the best reading of its name slots over the screenshots; [] without the model."""
+    reads = read([prepare(Image.open(p).crop(box)) for r in rows for p, box in r["slots"]]) if rows else None
+    if not reads:
+        return []
+    it = iter(reads)
+    return [max((next(it) for _ in r["slots"]), key=lambda x: x[1]) for r in rows]
+
+
+def read_unread_names(rows):
+    """Names the page OCR left out, in place. The Korean model goes first: "마샤 주니어" 0.84, while small capitals or symbols come
+    out without Hangul and low ("Masmee" 0.29). The Japanese model reads what is left; what fails both stays a picture."""
+    unread = [r for r in rows if r["name"].startswith("baris ") and r.get("slots")]
+    for r, (text, score) in zip(unread, best_readings(unread, mc_ocr.read_korean)):
+        if len(HANGUL.findall(text)) >= 2 and score >= 0.6:
+            r["name"], r["ko"] = clean_name(text), round(score, 2)
+    unread = [r for r in unread if not r.get("ko")]
+    for r, (text, score) in zip(unread, best_readings(unread, mc_ocr.read_japanese, text_strip)):
+        if japanese_name(text, score):
+            r["name"], r["ja"] = clean_name(text), round(score, 2)
+
+
+def text_strip(im):
+    """The name alone, cut out of its slot (name_box): the tallest band of bright rows, then its columns up to a gap of two text
+    heights. The slot runs to the first Go Go Card and its lower edge holds the tops of the heart and thumb icons, which the
+    Japanese model reads as text: シンデレラーの and ワヒューの from the whole slot, シンデレラ and ワヒユ from this."""
+    mask = np.asarray(text_only(im))[..., 0] > 0
+    rows = bands(mask, 1)
+    if not rows:
+        return im
+    y0, y1 = max(rows, key=lambda b: b[1] - b[0])
+    h = y1 - y0 + 1
+    cols = bands(mask[y0:y1 + 1].T, 1)
+    x0, x1 = cols[0]
+    for a, b in cols[1:]:
+        if a - x1 - 1 > 2 * h:
+            break
+        x1 = b
+    pad = max(2, h // 3)
+    return im.crop((max(0, x0 - pad), max(0, y0 - pad), min(im.width, x1 + 1 + pad), min(im.height, y1 + 1 + pad)))
+
+
+def japanese_name(text, score):
+    """True for a reading of the Japanese model that is a name. The 3 Japanese names of the 39 reports score 0.70-0.81 with >= 3
+    letters; Hangul, —X— and мαяѕмєℓℓ give Latin, one letter, or two kanji at 0.34."""
+    return len(JAPANESE.findall(text)) >= 2 and score >= 0.6
+
+
 def hand_names(rows, battle, path=HERE / "catatan_nama.json"):
     """rows with the names of catatan_nama.json ({battle ID: {row: name}}), written down by eye from the result screen. These
-    are names no OCR model here can read: RapidOCR's Chinese model knows 5 kana, the Korean one none, and ornamental letters
-    come out as noise. A noted name replaces the picture or the reading; `hand` keeps the HUD link of unread_player."""
+    are names no OCR model here reads right: ornamental letters come out as noise, and the Japanese model takes small kana
+    for large ones (ワヒュ as ワヒユ). A noted name replaces the picture or the reading; `hand` keeps the HUD link of
+    unread_player."""
     noted = json.loads(path.read_text(encoding="utf-8")).get(battle, {}) if battle and path.exists() else {}
     out = []
     for r in rows:
         if str(r["row"]) in noted:
-            r = {**{k: v for k, v in r.items() if k not in ("slot", "ko")}, "name": noted[str(r["row"])], "hand": True}
+            r = {**{k: v for k, v in r.items() if k not in ("slot", "ko", "ja")}, "name": noted[str(r["row"])], "hand": True}
         out.append(r)
     return out
 
 
 HANGUL = re.compile(r"[가-힣]")
+JAPANESE = re.compile(r"[ぁ-ゖァ-ヺ一-鿿]")  # kana and kanji; the long-vowel mark ー is no letter: —X— reads 一Xー
 SWORDS = HERE / "rank_swords.png"  # crossed swords cut from a phone result screen whose rows are SWORDS_PITCH pixels apart
 SWORDS_PITCH = 106
 SWORDS_SCORE = 0.8  # the icon scores 0.97-1.00 on phone, PC and video frames, a rank badge at most 0.47 (60 result screens)
@@ -1353,6 +1396,10 @@ def main():
     if ko:
         method.append("Nama Hangul dibaca dengan model OCR Korea (RapidOCR PP-OCRv5; dipakai bila skor >= 0,6, satu huruf "
                       "bisa meleset): " + ", ".join(f"{r['name']} ({r['ko']:.2f})" for r in ko) + ".")
+    ja = [r for r in final if r.get("ja")]
+    if ja:
+        method.append("Nama Jepang dibaca dengan model OCR Jepang (RapidOCR PP-OCRv4; dipakai bila >= 2 kana/kanji dan skor >= 0,6, kana "
+                      "kecil bisa terbaca besar): " + ", ".join(f"{r['name']} ({r['ja']:.2f})" for r in ja) + ".")
     body.append(f'<section><h2>Catatan metode</h2><ul>{"".join(f"<li>{esc(m)}</li>" for m in method)}</ul></section>')
     md += ["## Catatan metode", ""] + [f"- {m}" for m in method]
     out_html, out_md = write_report(folder, f"MATCH_{slug(name)}", page(title, "".join(body), stamp(d)), md)
