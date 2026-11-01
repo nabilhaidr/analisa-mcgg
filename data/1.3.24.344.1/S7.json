@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.24.344.1",
  "season": 7,
- "generated_at": "2026-11-01T19:19:44",
+ "generated_at": "2026-11-01T19:43:20",
  "info": {
   "name": "Chrono Echoes",
   "levels": [
@@ -5259,7 +5259,7 @@
     {
      "id": 2830,
      "name": "Alpha, Charge!",
-     "description": "Alpha melompat dan menghantam ke area dengan lawan terbanyak (Kebal Crowd Control selama menggunakan skill), memberikan 50% ATK/70% ATK Adaptive DMG Area dan menyebabkan stun ke lawan selama 1 detik. Hantaman tersebut meretakkan tanah dan menyebabkan ledakan, dengan setiap retakan memberikan 135% ATK/160% ATK Adaptive DMG Area. Alpha kemudian memanggil Beta untuk mengejar lawan di sepanjang retakan, memberikan 135% ATK/160% ATK Adaptive DMG Area.\nPasif: Basic ATK menembakkan Force Wave tambahan ke depan, memberikan 120% ATK/145% ATK Adaptive DMG Area. DMG Alpha berkurang seiring dengan jumlah lawan yang terkena dan didasarkan pada nilai Hybrid ATK-nya yang lebih tinggi.\nSaat mencapai Bintang 3, skill berubah menjadi: Alpha menjadi tidak bisa ditargetkan secara singkat dan menghantam bagian tengah chessboard, melepaskan 3 gelombang partikel yang meluas, masing-masing memberikan 1620% ATK True DMG. Menggunakan skill satu kali saat pertarungan dimulai.",
+     "description": "Alpha melompat dan menghantam ke area dengan lawan terbanyak (Kebal Crowd Control selama menggunakan skill), memberikan 50%/70% Adaptive DMG Area dan menyebabkan stun ke lawan selama 1 detik. Hantaman tersebut meretakkan tanah dan menyebabkan ledakan, dengan setiap retakan memberikan 135%/160% Adaptive DMG Area. Alpha kemudian memanggil Beta untuk mengejar lawan di sepanjang retakan, memberikan 135%/160% Adaptive DMG Area.\nPasif: Basic ATK menembakkan Force Wave tambahan ke depan, memberikan 120%/145% Adaptive DMG Area. DMG Alpha berkurang seiring dengan jumlah lawan yang terkena dan didasarkan pada nilai Hybrid ATK-nya yang lebih tinggi.\nSaat mencapai Bintang 3, skill berubah menjadi: Alpha menjadi tidak bisa ditargetkan secara singkat dan menghantam bagian tengah chessboard, melepaskan 3 gelombang partikel yang meluas, masing-masing memberikan 1620% True DMG. Menggunakan skill satu kali saat pertarungan dimulai.",
      "attributes": [
       {
        "label": "DMG Hantaman",

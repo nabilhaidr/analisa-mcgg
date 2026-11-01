@@ -4,6 +4,7 @@ Data uji = potongan teks asli Abyssal Favor (Dyrroth, S7).
 Jalankan dari folder ini: python -m pytest test_mc_data.py   (atau: python -m unittest test_mc_data)
 """
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -35,8 +36,8 @@ def favor_entry(d):
 
 
 class LabelRasioDamage(unittest.TestCase):
-    """Detail Hero menulis (+150% Total Physical ATK) dan (+350% Total Magic ATK): 29 rasio jenis 10100 dan 13 rasio jenis 10101
-    terlihat di screenshot, semuanya sesuai jenisnya (1 Nov). Jenis 10502 hanya dipakai Alpha, yang tidak punya layar Detail Hero."""
+    """Detail Hero dan editor lineup menulis (+150% Total Physical ATK) dan (+350% Total Magic ATK); jenis 10100 dan 10101 selalu
+    sesuai labelnya di screenshot. Jenis 10502 (Alpha) tertulis (+50% ) Adaptive DMG: tanpa label sama sekali (editor lineup 1 Nov)."""
 
     def render(self, kind, value):
         return mc_data.FORMULA_KINDS[kind][1](value)
@@ -51,8 +52,16 @@ class LabelRasioDamage(unittest.TestCase):
     def test_magic(self):
         self.assertEqual(self.render(10101, 3.5), "350% Total Magic ATK")
 
-    def test_adaptif_tetap_tanpa_jenis_sampai_ada_buktinya(self):
-        self.assertEqual(self.render(10502, 0.5), "50% ATK")
+    def test_adaptif_tanpa_label(self):
+        self.assertEqual(self.render(10502, 0.5), "50%")
+
+    def test_data_alpha_tanpa_label(self):
+        self.assertIn("50%/70% Adaptive DMG Area", self.s7_skill("Alpha", "Alpha, Charge!")["description"])
+
+    def test_data_tidak_punya_rasio_atk_polos(self):  # "120% ATK Speed" adalah teks asli game
+        data = json.loads((Path(__file__).resolve().parent / "data" / "1.3.24.344.1" / "S7.json").read_text(encoding="utf-8"))
+        texts = [s.get("description_server") or s["description"] for h in data["heroes"] for s in h["skills"]]
+        self.assertEqual([t for t in texts if re.search(r"\d% ATK(?! Speed)", t)], [])
 
     def test_data_memakai_label_physical(self):  # X.Borg, bukti pertama: editor lineup 1 Nov
         self.assertIn("2000% Total Physical ATK", self.s7_skill("X.Borg", "Last Insanity")["description"])
