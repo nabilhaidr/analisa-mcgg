@@ -193,12 +193,17 @@ S7.json dulu menulis `X% ATK` untuk rasio skill jenis 10100, 10101, dan 10502 (`
 | Jenis | Rasio di teks hero | Terlihat di layar | Tanpa layar atau tak terbaca OCR |
 |---|---|---|---|
 | 10100 | 35 | 29, semuanya Total Physical ATK | 6 |
-| 10101 | 19 | 13, semuanya Total Magic ATK | 6 |
-| 10502 | 5 | 0 | 5, semuanya Alpha |
+| 10101 | 19 | 14, semuanya Total Magic ATK | 5 |
+| 10502 | 5 | 5, Alpha di editor lineup, dicek mata: `(+50% ) Adaptive DMG`, tanpa label | 0 |
 
-Label 10100 dan 10101 kini mengikuti layar. 10502 tetap `X% ATK` karena Alpha tidak punya layar Detail Hero. `X% ATK Speed` adalah teks asli game. Selain label, S7.json dan
-S8.json sama persis dengan versi sebelumnya (hanya `generated_at`). Di teks S7, 52 label Physical diikuti Physical DMG dan 29 label Magic diikuti Magic DMG, tidak ada yang
-tertukar. Hasilnya juga sesuai tooltip hero panggilan: Novaria dan Gatotkaca Magic; X.Borg, Moskov, dan Layla Physical. S8 mengikuti jenis yang sama, tapi belum ada screenshot S8.
+Ketiga jenis kini mengikuti layar, jadi jenis 10502 ditulis tanpa label: `50%/70% Adaptive DMG Area`. `X% ATK Speed` adalah teks asli game dan tidak berubah. Tidak ada lagi rasio
+`X% ATK` polos di teks hero. Selain label, S7.json dan S8.json sama persis dengan versi sebelumnya (hanya `generated_at`). Di teks S7, 52 label Physical diikuti Physical DMG dan
+29 label Magic diikuti Magic DMG, tidak ada yang tertukar. Hasilnya juga sesuai tooltip hero panggilan: Novaria dan Gatotkaca Magic; X.Borg, Moskov, dan Layla Physical. S8 mengikuti
+jenis yang sama, tapi belum ada screenshot S8; Alpha S8 tertulis `Physical DMG` di file, jadi tanpa-labelnya belum terbukti di layar.
+
+16 tooltip editor lineup 1 Nov 19:30–19:32 (`hero and synergies/`) dibandingkan kata per kata dengan S7.json: Alpha ★1 ★2, Lunox ★2, Nana ★3, Mathilda ★2, Luo Yi ★1, Eudora ★1, Zilong ★1,
+Yin ★2, Yi Sun-shin ★1, Gusion ★1, Badang ★1 ★2, Baxia ★1 ★2, Suyou ★3. Selain kata `ATK` Alpha yang kini dihapus, selisihnya hanya salah baca OCR (`+4096` untuk +40%, `akif`, `mbahan`) atau
+kalimat yang terpotong di layar. Termasuk peluang Badang 25%, jadi nilai server ikut tampil di editor lineup.
 
 Panel skill dalam pertandingan 1 Nov 18:25–18:51 (`match/`) menulis nilai mutlak, jadi tidak menunjukkan label itu. Panel ini tetap menguji persentase dan jenis damage 13 hero:
 jenis di S7.json sama dengan warna dan kata DMG di layar, dan tiap (+N) pas dihitung balik.

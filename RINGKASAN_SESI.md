@@ -22,7 +22,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   2026-08-11 s/d 2026-11-15 17:59:59 waktu server global); **S8 "Arena Para Penyihir"** sudah ada di file (mulai 2026-11-15,
   28 hero baru, faksi baru FAIRY TAIL, Dawnbringer, Dragonslayer, Frostrider, Titan; role Deadeye, Weapons Master).
 - Laporan terbaru: `data/1.3.24.344.1/S7.html|md|json` dan `S8.*`.
-- **S7.html sudah divalidasi ke 827 screenshot: semua cocok** (0 selisih). Satu-satunya beda = angka balance Patch 7.2,
+- **S7.html sudah divalidasi ke 843 screenshot: semua cocok** (0 selisih). Satu-satunya beda = angka balance Patch 7.2,
   Penyesuaian Keseimbangan 20/10, dan 28/10 yang diterapkan server; ketiganya dicatat di `server_patch.json` dan tampil di
   S7.html sebagai catatan oranye "Patch <x> (server)".
 - **Penyesuaian Keseimbangan (28/10) sudah diproses** (lihat Perubahan dari server). Client PC tetap 1.3.24.344.1
@@ -32,7 +32,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   `mc_validate.py` memeriksa layar Pilih Hadiah dan hitung mundurnya otomatis (I-4, II-6, III-6, IV-6 terverifikasi).
 - Laporan pertandingan: 39 laporan MATCH 21 Okt – 1 Nov (`data/1.3.24.344.1/MATCH_*`): 20 dari rekaman 21–26 Okt, 8 dari layar hasil
   27–30 Okt, 3 dari rekaman 31 Okt + layar Riwayat (2 rekamannya berhenti lebih awal, `--cut`), 8 dari layar hasil 31 Okt – 1 Nov (1 di
-  antaranya mode Custom lawan komputer, `--custom`, tidak ikut statistik). Per 1 Nov: 198 tes (+24 subtes) lolos, `check_match.py`
+  antaranya mode Custom lawan komputer, `--custom`, tidak ikut statistik). Per 1 Nov: 200 tes (+24 subtes) lolos, `check_match.py`
   0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih.
 - **Hero panggilan terbukti penuh** (1 Nov): tooltip Novaria ★1–★3, Gatotkaca ★1–★2, X.Borg ★1–★2 cocok, X.Borg ★3 "2000%" terbukti lewat tooltip dan editor lineup.
 
@@ -61,7 +61,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR. `run_rapid`/`ocr_folder` menerima `text_score` (ambang skor RapidOCR, bawaan 0,5, ikut di stamp cache). `read_korean` dan `read_japanese` membaca gambar satu baris dengan model bahasa di `cache/models/` (`read_lines`). Tes: `test_mc_ocr.py` | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` · `python -m pytest test_mc_ocr.py` |
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
 | `data/1.3.24.344.1/VALIDASI_S7.md` | Laporan validasi manual (perbaikan yang dibuat + daftar beda karena server) | — |
-| `screenshot/season 7/` | 827 gambar + `ocr.json` (semua gambar season ini; 389 gambar, 549 MB, sengaja tidak di git atas pilihan pengguna): hero & sinergi 138, commander 66 (termasuk layar Lukas, Dyrroth, Lunox ponsel 31 Okt dan PC 1935–1937), equipment 134, go go card 58, ensiklopedia 18, update patch 27 (Penyesuaian 28/10: PC 1893–1895, ponsel 29 Okt); subfolder `match/` = 20 rekaman pertandingan 21–26 Okt (MP4, di-`.gitignore`) + 286 gambar: layar hasil, 7 Rekomendasi Lineup 20/10, daftar Riwayat, 1 Toko Spirit Sand, 19 layar hasil 8 pertandingan 27–30 Okt, dan 138 gambar 31 Okt (panel unit hero panggilan, Chrono Wanderer, 3 Pilih Hadiah, Riwayat, layar hasil; **pengguna menaruh Detail Hero panggilan di sini, bukan di `hero and synergies`**, jadi kenali isi folder dari OCR, bukan dari nama folder), 43 gambar 31 Okt 22:54 – 1 Nov 02:37 (tooltip hero panggilan, layar hasil 3 pertandingan), 13 `Go Go Box …` hitung mundur (8 frame rekaman 21 Okt yang dijeda di VLC, 5 layar 1 Nov), 32 gambar 1 Nov 17:03–18:57 (panel skill 13 hero dalam pertandingan, layar hasil 3 pertandingan); `match/practice bot/` = 21 gambar mode Custom lawan komputer 1 Nov (3 Go Go Box, tooltip Gatotkaca, layar hasil, tooltip X.Borg di editor lineup); `match/spirit sand/` = 59 gambar (Toko Spirit Sand PC 1896–1926, ponsel 31 Okt, 2 layar Riwayat) + 2 rekaman 2 pertandingan; `match/commander vexana/` = 20 gambar (daftar Riwayat, layar Riwayat, panel Fan yang Bersorak, tooltip Alpha) + 2 rekaman 1 pertandingan (Vexana ★★) | — |
+| `screenshot/season 7/` | 843 gambar + `ocr.json` (semua gambar season ini; 405 gambar, 565 MB, sengaja tidak di git atas pilihan pengguna): hero & sinergi 154 (termasuk 16 tooltip editor lineup 1 Nov), commander 66 (termasuk layar Lukas, Dyrroth, Lunox ponsel 31 Okt dan PC 1935–1937), equipment 134, go go card 58, ensiklopedia 18, update patch 27 (Penyesuaian 28/10: PC 1893–1895, ponsel 29 Okt); subfolder `match/` = 20 rekaman pertandingan 21–26 Okt (MP4, di-`.gitignore`) + 286 gambar: layar hasil, 7 Rekomendasi Lineup 20/10, daftar Riwayat, 1 Toko Spirit Sand, 19 layar hasil 8 pertandingan 27–30 Okt, dan 138 gambar 31 Okt (panel unit hero panggilan, Chrono Wanderer, 3 Pilih Hadiah, Riwayat, layar hasil; **pengguna menaruh Detail Hero panggilan di sini, bukan di `hero and synergies`**, jadi kenali isi folder dari OCR, bukan dari nama folder), 43 gambar 31 Okt 22:54 – 1 Nov 02:37 (tooltip hero panggilan, layar hasil 3 pertandingan), 13 `Go Go Box …` hitung mundur (8 frame rekaman 21 Okt yang dijeda di VLC, 5 layar 1 Nov), 32 gambar 1 Nov 17:03–18:57 (panel skill 13 hero dalam pertandingan, layar hasil 3 pertandingan); `match/practice bot/` = 21 gambar mode Custom lawan komputer 1 Nov (3 Go Go Box, tooltip Gatotkaca, layar hasil, tooltip X.Borg di editor lineup); `match/spirit sand/` = 59 gambar (Toko Spirit Sand PC 1896–1926, ponsel 31 Okt, 2 layar Riwayat) + 2 rekaman 2 pertandingan; `match/commander vexana/` = 20 gambar (daftar Riwayat, layar Riwayat, panel Fan yang Bersorak, tooltip Alpha) + 2 rekaman 1 pertandingan (Vexana ★★) | — |
 
 `.venv` berisi UnityPy, capstone, pycryptodome, pillow. Skrip lain cukup Python sistem (3.13) + `requirements.txt`.
 
@@ -150,7 +150,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | Go Go Box (tab Info Season, field `go_go_box`) | `MCRoundRandomEquip_S<n>` (baris `m_RoundConfigId` 0): babak `m_Round` (label dari `AMCRoundStage`), equipment biasa `m_NormalEquipMin–Max` dari `m_NormalEquip`, crystal = `m_EquipTotal` − equipment biasa dari `m_CrystallEquip`, Kapasitas +1 = 8 − `m_EquipTotal` (8 orb = pengamatan, `GO_GO_BOX_ORBS`), hero `m_HeroListNumber` dengan harga diundi bobot `m_HeroList`/`m_HeroListRate` (harga sama dijumlahkan). Teks orb in-game = `summary` item. ID yang tidak ada di tabel equipment → `notes`. S7 cocok dengan rekaman 21 Okt (I-4, II-6, III-6, IV-6) |
 | Toko Spirit Sand (Mistbender) | `SpecialStore` (tanpa varian `_S<n>`; harga `m_ChipNum`, bobot acak `m_Probability`, batas beli `m_MaximumPurchase`, 999 = tanpa batas) + `MCSpecialCardPool` (nama `mName`, teks `mSpecialDes`, `m_SkillID`). Efek dari `MCSkill`/`MCEffect` skill item: `OperEnum 20` ke efek `4590200` = bayar Spirit Sand, `OperEnum 1` + `OperEnum 20` = stack buff permanen, bonus per stack dari efek `m_Calculate 10021` (stack × `FPara3`), `OperEnum 50/20009` = equipment tetap/acak. Ditautkan ke sinergi lewat keluarga ID (skill 45900/45901 ↔ buff 4590200). Nama mata uang = `DescriptionIconShow` 27. S7 terverifikasi ke screenshot 31 Okt (`STORE_VERIFIED`: 11 item, harga, stack); S8 belum (belum ada screenshot S8) |
 
-## Hasil validasi S7 (827 screenshot)
+## Hasil validasi S7 (843 screenshot)
 - `VALIDASI_S7_auto.md`: **0 selisih**, 21 cek manual (semua sudah dicek: salah baca OCR, 3 kolom toko yang namanya tidak
   terbaca, 1 tooltip Alpha menutupi panel SPECTRE). Cakupan: 52/52 hero toko, 20/22 sinergi, 40/40 commander, 110/110 level
   equipment aktif, 199/199 kartu aktif, 8 tab Ensiklopedia, Toko Spirit Sand 54 layar: 10/11 harga terbaca OCR (harga merah
@@ -725,6 +725,12 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - **Panel 13 hero** (Zhuxin, Saber, Fanny, Paquito, Gord, Natalia, Eudora, Vale, Harley, Angela, Franco, Karina, Tigreal): jenis DMG sama dengan S7.json, tabel Bonus sama, semua (+N) pas dihitung balik. Tabel di `VALIDASI_S7.md`.
     - **Client PC** (`commander/` 1935–1937, 1 Nov): Dyrroth 4 EXP dan 1 kali melahap, Lukas 3–4 kali lipat, Lunox 2 Hero dan 4 Gold, semua angka 28/10, sama dengan S7.json. File client tidak berubah, jadi teksnya dari server.
     - 198 tes (+24 subtes) lolos, `check_match.py` 39 laporan, 0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih pada 827 gambar.
+54. (2026-11-01) Label Alpha, dari 16 tooltip editor lineup baru di `hero and synergies/` (19:30–19:32, `ocr.json` 843 gambar, 0 gagal). Riwayat 53 di-push (`d2b6feb`).
+    - **Alpha** (TDD, `test_mc_data.py`): game menulis `(+50% ) Adaptive DMG`, tanpa label sama sekali, jadi kata `ATK` di data salah. Jenis 10502 kini tanpa label: `50%/70% Adaptive DMG Area`. Dibanding versi sebelumnya,
+      S7 dan S8 hanya berbeda di 9 kata ATK pada teks Alpha, plus `generated_at`. Alpha S8 tertulis `Physical DMG` di file; tanpa-labelnya belum terbukti di layar S8.
+    - **Cek kata per kata**: ke-16 tooltip (Alpha, Lunox, Nana, Mathilda, Luo Yi, Eudora, Zilong, Yin, Yi Sun-shin, Gusion, Badang, Baxia, Suyou) sama dengan S7.json. Selain `ATK` Alpha, selisihnya hanya salah baca OCR atau
+      kalimat terpotong layar. Tidak ada lagi rasio `X% ATK` polos di teks hero; sisanya `X% ATK Speed`, teks asli game. Bukti label: 10100 29 dari 35, 10101 14 dari 19, 10502 5 dari 5.
+    - 200 tes (+24 subtes) lolos, `check_match.py` 39 laporan, 0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih pada 843 gambar.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -795,7 +801,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Tidak ada lagi screenshot S7 yang wajib diambil. Screenshot S8 diambil setelah S8 mulai.
 - 3 layar hasil baru belum jadi laporan MATCH (tanpa rekaman): 1 Nov 17:03 ID 373419787246041597 peringkat 3, 4879 +61, 2 baris berpedang (`match/` 17-03-49, 17-03-59); 18:57 ID 387382738810246911
   peringkat 7, 4836 −43, 6 baris berpedang (18-57-14, 18-57-17); ID 385086090948055644 pertandingan lama dari Riwayat, peringkat 8, 1140 −59 (18-57-48, 18-57-55).
-- Label rasio Alpha (jenis 10502, adaptif) tetap `X% ATK`: Alpha tidak punya Detail Hero, jadi labelnya baru bisa dipastikan dari tooltip Alpha di editor lineup.
 - Jalankan diff sungguhan (`patch_tracker.py` + `mc_diff.py`) setelah update game berikutnya.
 - S8: Kartu Power ada di level 3 (beda dengan S7); pengelompokan tab galeri S8 baru bisa dicek setelah ada screenshot S8.
 - Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
