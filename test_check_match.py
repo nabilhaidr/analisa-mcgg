@@ -13,8 +13,9 @@ import unittest
 from pathlib import Path
 
 import check_match
+import mc_match
 
-ROOT = Path(__file__).resolve().parent
+ROOT =Path(__file__).resolve().parent
 DATA = ROOT / "data" / "1.3.24.344.1"
 SEASONS = {}  # data season dimuat sekali untuk semua tes
 
@@ -145,17 +146,23 @@ class ModeClassic(unittest.TestCase):
         md_edits = [(r"· poin 2277 \(\+84\)", "· poin -")]
         html_edits = [(r"· poin 2277 \(\+84\)", "· poin -")]
         if note:
-            md_edits.append((r"^## Catatan metode\n\n", f"## Catatan metode\n\n- {self.NOTE}\n"))
-            html_edits.append((r"<h2>Catatan metode</h2><ul>", f"<h2>Catatan metode</h2><ul><li>{self.NOTE}</li>"))
+            md_edits.append((r"^## Catatan metode\n\n", f"## Catatan metode\n\n- {note}\n"))
+            html_edits.append((r"<h2>Catatan metode</h2><ul>", f"<h2>Catatan metode</h2><ul><li>{note}</li>"))
         with tempfile.TemporaryDirectory() as tmp:
             md = copy_report("24_Okt_02_51", Path(tmp), md_edits=md_edits, html_edits=html_edits)
             return [w for w in warnings_of(md) if "ID/poin" in w]
 
     def test_classic_tanpa_poin_tidak_diperingatkan(self):
-        self.assertEqual(self.poin_warnings(note=True), [])
+        self.assertEqual(self.poin_warnings(self.NOTE), [])
+
+    def test_custom_tanpa_poin_tidak_diperingatkan(self):  # 1 Nov 03:08 lawan komputer: bukan Classic, sama-sama tanpa poin
+        self.assertEqual(self.poin_warnings(mc_match.CUSTOM_NOTE), [])
+
+    def test_laporan_custom_asli_menyatakan_modenya(self):  # dibuat dengan --custom
+        self.assertEqual(warnings_of(DATA / "MATCH_1_Nov_03_08_Custom.md"), [])
 
     def test_poin_hilang_di_luar_classic_tetap_diperingatkan(self):
-        self.assertEqual(len(self.poin_warnings(note=False)), 1)
+        self.assertEqual(len(self.poin_warnings(None)), 1)
 
 
 class HealingFountain(unittest.TestCase):

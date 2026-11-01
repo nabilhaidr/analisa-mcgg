@@ -267,7 +267,8 @@ def check(md_path, seasons):
     # final board
     board_names = []
     match = boxes.get("Pertandingan", "")
-    id_points = r"ID \d{15,20}" if "Mode Classic" in txt else r"ID \d{15,20} · poin \d+ \([+-]\d+\)"  # Classic has no points
+    no_points = re.search(r"Mode (Classic|Custom)", txt)  # these modes have no Rank points
+    id_points = r"ID \d{15,20}" if no_points else r"ID \d{15,20} · poin \d+ \([+-]\d+\)"
     if not (no_result or re.search(id_points, match)):
         warn.append(f"ID/poin pertandingan tidak terbaca: {match}")
     if board:

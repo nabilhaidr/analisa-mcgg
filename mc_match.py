@@ -4,8 +4,8 @@ Pemakaian (Python sistem: av, opencv-python, numpy, pillow; OCR lewat mc_ocr.py 
   python mc_match.py --video "screenshot\\season 7\\match\\rekaman.mp4" --result hasil1.jpg hasil2.jpg --player CinCoeg --name "21 Okt 15-38"
   python mc_match.py --result hasil.jpg --player CinCoeg            hanya layar hasil
 Opsi: --step 5 (detik per frame), --frames <folder> (pakai frame yang sudah diambil), --no-events (lewati OCR frame penuh =
-tanpa daftar kejadian), --classic (mode Classic: tidak ada poin Rank), --cut (rekaman berhenti sebelum pertandingan selesai,
-layar hasil dari Riwayat), --ocr auto|windows|rapid, --season, --version.
+tanpa daftar kejadian), --classic (mode Classic: tidak ada poin Rank), --custom (mode Custom lawan komputer: juga tanpa poin),
+--cut (rekaman berhenti sebelum pertandingan selesai, layar hasil dari Riwayat), --ocr auto|windows|rapid, --season, --version.
 OCR: --ocr auto = OCR Windows untuk frame rekaman (di luar Windows: RapidOCR), dan RapidOCR untuk layar hasil serta label
 babak yang tidak terbaca bila terpasang (di screenshot hasil 21 Okt RapidOCR membaca 8/8 nama pemain, OCR Windows 3/8; label
 pendek seperti IV-4, IV-6, V-1 sering terlewat OCR Windows).
@@ -1124,6 +1124,9 @@ def insights(rounds, me, events, final_rank, cut=False):
 
 # ------------------------------------------------------------------ main
 
+CUSTOM_NOTE = "Mode Custom lawan komputer: layar hasilnya memang tanpa poin, dan papan komputer bukan sampel papan pemain."
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -1136,6 +1139,7 @@ def main():
     ap.add_argument("--frames", type=Path, help="folder frame f_<detik>.jpg yang sudah ada")
     ap.add_argument("--no-events", action="store_true")
     ap.add_argument("--classic", action="store_true", help="pertandingan mode Classic: tidak ada poin Rank")
+    ap.add_argument("--custom", action="store_true", help="pertandingan mode Custom lawan komputer: tidak ada poin Rank")
     ap.add_argument("--cut", action="store_true", help="rekaman berhenti sebelum pertandingan selesai, layar hasil dari Riwayat")
     ap.add_argument("--ocr", default="auto", choices=mc_ocr.ENGINES, help="mesin OCR (lihat mc_ocr.py)")
     ap.add_argument("--season", type=int)
@@ -1339,6 +1343,8 @@ def main():
                       "mereka belum ada dan papan mereka bukan papan akhir.")
     if args.classic:
         method.append("Mode Classic: layar hasilnya memang tanpa poin.")
+    if args.custom:
+        method.append(CUSTOM_NOTE)
     hand = [r["name"] for r in final if r.get("hand")]
     if hand:
         method.append("Nama yang tidak dikenal OCR (huruf Jepang, huruf hias) dibaca dengan mata dari layar hasil (catatan_nama.json): "
