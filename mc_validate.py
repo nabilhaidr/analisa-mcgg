@@ -147,14 +147,19 @@ def classify(lines):
         return "synergy"
     if has("Peraturan") and (has("Babak") or has("Informasi")):
         return "book"
-    if has("Kartu Power") and (has("Kartu Biru") or has("Kartu Ungu") or has("Kartu Oranye")):
+    tiers = sum(has(t) for t in ("Kartu Biru", "Kartu Ungu", "Kartu Oranye"))
+    if (has("Kartu Power") and tiers) or tiers == 3:  # the S8 gallery has no Kartu Power tab (Semua/Oranye/Ungu/Biru)
         return "card"
     if has("Eksklusif Sinergi") and has("Reguler"):
         return "equipment"
     if has("Persiapan") and (has("Didapatkan") or has("Chessboard")):
         return "commander_list"
-    if any(l["t"].startswith("Comman") and l["y"] < 60 and l["x"] < 320 for l in lines):
+    # phone screens read the title as "+ Commander"
+    if any(re.sub(r"^[^A-Za-z]+", "", l["t"]).startswith("Comman") and l["y"] < 60 and l["x"] < 320 for l in lines):
         return "commander"
+    if has("Naikkan Bintang") and any(l["t"].strip() in ("Aktif", "Pasif") and 700 <= l["x"] < 860 for l in lines) \
+            and any(l["t"].strip() == "Level" and l["y"] < 140 and l["x"] > 950 for l in lines):
+        return "commander"  # title misread (Nana S8: "Cc uma de"): skill labels + Level of the detail layout
     if any(t.strip() == "Toko Spirit Sand" for t in texts) or has("rekan meningkat sebesar"):
         return "store"
     if has("ih Hadiah") or has("Segera Dimulai"):  # "Pilih Hadiah"; the OCR often misreads the l ("Piiih", "P/lih").
@@ -282,10 +287,99 @@ def strip_tier(text, counts):
     return re.sub(r"^[\[|]\S{0,3}\]\s*", "", text)
 
 
+TABLE_PCT = re.compile(r"^(\d+?)0/0")  # '%' read as '0/0': 50/0 = 5%, 1200/0 = 120%
+TABLE_CUT = re.compile(r"^(\d+?)0/\D")  # '%' half read: 250/Ä = 25% (or 250)
+
+
+def table_values(text):
+    """Values one OCR'd table cell can stand for: '15%' {15%}, '300/0X+' {30%}, '250/Ä' {25%, 250}, '7' {7, 7%}.
+    The stat icon behind a flat value is often read as one more digit: '80' may be 8 (FAIRY TAIL "8 [Hybrid DEF
+    icon]"), '128' may be 12 (Stargazer), '25.4' may be 25 (Swiftblade)."""
+    t = text.strip().replace(",", ".")
+    m = re.match(r"(\d+(?:\.\d+)?)%", t) or TABLE_PCT.match(t)
+    if m:
+        return {m.group(1) + "%"}
+    m = TABLE_CUT.match(t)
+    if m:
+        return {m.group(1) + "%", re.match(r"\d+", t).group(0)}
+    m = re.match(r"(\d+(?:\.\d+)?)(?![\d/])", t)
+    if not m:
+        return set()
+    n = m.group(1)
+    icon = [n.split(".")[0]] if "." in n else [n[:-1]] if len(n) > 1 else []
+    return {v + p for v in [n] + icon for p in ("", "%")}
+
+
+def words(text):
+    return len(re.findall(r"[A-Za-z]{4,}", text))
+
+
+def fuzzy_cover(ocr_text, ref_text):
+    """word_cover forgiving OCR typos ('Hvbrid', 'Liqhtstick') and words cut by a tooltip ('Penin katan' = Peningkatan)."""
+    found = re.findall(r"[a-z]{4,}", ocr_text.lower())
+    ref = set(re.findall(r"[a-z]{4,}", plain(ref_text).lower()))
+    ok = lambda w: w in ref or any(w in r for r in ref) or difflib.get_close_matches(w, list(ref), n=1, cutoff=0.8)
+    return sum(bool(ok(w)) for w in found) / len(found) if found else 1.0
+
+
+def check_synergy_table(s, name, lines, rep, unmatched):
+    """S8 Panduan Sinergi (client 1.3.32.354.1): explanation (Lite or Penuh) + one table row per tier. The tier labels
+    are not read by OCR, so each row is matched to the data row holding its numbers. Returns the rows that matched."""
+    table = s["table"]
+    bottom = min((l["y"] for l in lines if l["t"].strip() in ("Lite", "Penuh") and l["y"] > 550), default=700) - 5
+    body = [l for l in lines if 190 < l["y"] < bottom and l["x"] >= 100]
+    heads = [l for l in body if l["x"] >= 160 and not re.search(r"\d", l["t"])
+             and word_cover(l["t"], " ".join(table["header"])) >= 0.6]
+    cells = [l for l in body if l["x"] >= 180 and table_values(l["t"]) and words(l["t"]) < 3]
+    top = min([l["y"] for l in heads] or [min((l["y"] for l in cells), default=bottom) - 60])
+    head_end = max([l["y"] for l in heads] or [top])
+    # a text across the table (Titan 10) is wider than a column; text cells (SPECTRE "Terima Hero 2 Gold...") are not
+    column = 1070 / max(1, len(table["header"]))
+    long = [l for l in body if l["x"] >= 180 and l["y"] > head_end and words(l["t"]) >= 3 and l["r"] - l["x"] > 1.2 * column]
+    span_top = min((l["y"] for l in long), default=bottom) - 2  # it comes after the cells
+    cells = [l for l in cells if head_end < l["y"] < span_top]
+    # explanation left of the table (tooltips sit further right; hero portraits above y 250 read as "eeoe"):
+    # Lite = explain_lite, Penuh = explain_full; the old mRelationExplain is not on this screen
+    explain = " ".join(l["t"] for l in body if l["x"] < 160 and 250 < l["y"] < top)
+    explain = re.sub(r"(?<=[A-Za-z_])\d+(?=[A-Za-z_])", " ", explain)  # digits inside OCR junk ("Eg.nguæg22_QM.g")
+    if explain:
+        refs = [r for r in (s.get("explain_lite"), s.get("explain_full")) if r] or [s.get("explain", "")]
+        best = max(refs, key=lambda r: fuzzy_cover(explain, r), default="")
+        if best and fuzzy_cover(explain, best) >= 0.8:
+            rep.numbers_check("synergy", name, f"{s['name']} penjelasan", explain, best, sure=False)
+        else:  # e.g. a text the server replaced (Titan Lite, Dawnbringer): reported once per synergy
+            unmatched[s["name"]].append((name, explain))
+    rows = []
+    for l in sorted(cells, key=lambda l: l["y"]):
+        if rows and l["y"] - rows[-1][0]["y"] <= 12:
+            rows[-1].append(l)
+        else:
+            rows.append([l])
+    data_rows = [(r, {v for c in r["cells"] for v in numbers(c, keep_single=True)}) for r in table["rows"] if "cells" in r]
+    matched = 0
+    for row in rows if data_rows else []:
+        vals = [(l["t"], table_values(l["t"])) for l in sorted(row, key=lambda l: l["x"])]
+        best, ref = max(data_rows, key=lambda dr: sum(bool(v & dr[1]) for _, v in vals))
+        bad = [t for t, v in vals if not v & ref]
+        if not bad:
+            matched += 1
+            continue
+        clear = all(re.match(r"\d+(?:[.,]\d+)?%|\d+?0/0", t.strip()) for t in bad)  # a whole percentage was read
+        elsewhere = any(v & r for t, v in vals if t in bad for _, r in data_rows)
+        rep.add("synergy", "selisih" if clear and not elsewhere else "manual", name,
+                f"{s['name']} tabel, baris {best['count']}: game {[t for t, _ in vals]}, data {best['cells']}")
+    texts = " ".join(r["text"] for r in table["rows"] if "text" in r)
+    if long and texts:  # a text across the table (Titan 10, Starbelle 10) and the lines it wraps onto
+        span = " ".join(l["t"] for l in body if l["x"] >= 180 and l["y"] >= span_top)
+        rep.numbers_check("synergy", name, f"{s['name']} baris teks", span, texts, sure=word_cover(span, texts) >= 0.8)
+    return matched
+
+
 def check_synergies(d, shots, rep):
     syn = {s["name"]: s for s in d["synergies"]}
     counts = {t["count"] for s in syn.values() for t in s["tiers"]}
     seen = set()
+    unmatched, table_rows = defaultdict(list), 0
     for name, lines in shots:
         body = region(lines, 300, 700, 100, 1300)
         blocks, explain = [], []
@@ -296,7 +390,8 @@ def check_synergies(d, shots, rep):
                 blocks[-1] += " " + l["t"]
             else:
                 explain.append(l["t"])
-        title = [l["t"] for l in lines if 140 < l["y"] < 190 and 150 < l["x"] < 500]
+        # S8 titles can start further left and read with a leading mark ("+ Stargazer" at x 134)
+        title = [re.sub(r"^[^A-Za-z]+", "", l["t"]) for l in lines if 140 < l["y"] < 190 and 100 < l["x"] < 500]
         sname = next((close(t, syn, 0.7) for t in title if close(t, syn, 0.7)), None)
         if not sname and (blocks or explain):  # title missed: best text match
             text = " ".join(explain + blocks)
@@ -306,6 +401,9 @@ def check_synergies(d, shots, rep):
             continue
         seen.add(sname)
         s = syn[sname]
+        if s.get("table") and any(l["t"].strip() in ("Lite", "Penuh") and l["y"] > 550 for l in lines):
+            table_rows += check_synergy_table(s, name, lines, rep, unmatched)
+            continue
         if explain and s["explain"] and word_cover(" ".join(explain), s["explain"]) < 0.8:
             rep.add("synergy", "manual", name, f"{sname}: penjelasan beda\n    game: {' '.join(explain)}\n    data: {s['explain']}")
         for b in blocks:
@@ -313,6 +411,15 @@ def check_synergies(d, shots, rep):
             sure = word_cover(b, tier["effect"]) >= 0.8
             rep.numbers_check("synergy", name, f"{sname} [{tier['count']}]", b, tier["effect"].replace("\n", " "), sure)
     rep.notes["synergy"].append(f"{len(seen)} dari {len(syn)} sinergi punya screenshot Panduan Sinergi")
+    if table_rows:
+        rep.notes["synergy"].append(f"{table_rows} baris tabel tingkat cocok dengan data")
+    for sname, found in sorted(unmatched.items()):  # one item per synergy: the screens show a text the data lacks
+        s = syn[sname]
+        others = ", ".join(f"`{n}`" for n, _ in found[1:])
+        rep.add("synergy", "manual", found[0][0],
+                f"{sname}: penjelasan di {len(found)} layar tidak cocok dengan teks Lite, Penuh, maupun teks lama di data"
+                + (f" (juga {others})" if others else "") + f"\n    game: {found[0][1]}\n    data Lite: {s.get('explain_lite', '-')}"
+                f"\n    data Penuh: {s.get('explain_full', '-')}")
     if set(syn) - seen:
         rep.notes["synergy"].append("Tanpa screenshot: " + ", ".join(sorted(set(syn) - seen)))
 
@@ -349,7 +456,9 @@ def check_commanders(d, shots, list_shots, rep):
                 rep.add("commander", "selisih", name, f"{cname} / {sk['skill']['name']}: game {lab}, data {sk['type']}")
             end = titles[i + 1]["y"] if i + 1 < len(titles) else 700
             body = " ".join(l["t"] for l in tip if tl["y"] < l["y"] < end and l["x"] > 790 and l["t"] not in ("Aktif", "Pasif"))
-            desc = sk["skill"]["description"].replace("\n", " ")
+            # newer screens show the server text noted in server_patch.json (description_server), older ones the file text
+            desc = max(filter(None, (sk["skill"]["description"], sk["skill"].get("description_server"))),
+                       key=lambda t: (round(word_cover(body, t), 2), not sum(missing_numbers(body, t), []))).replace("\n", " ")
             cover = word_cover(body, desc)
             if cover < 0.8:
                 rep.add("commander", "selisih" if cover < 0.6 else "manual", name,
@@ -384,7 +493,11 @@ def equipment_by_body(body, levels):
 def check_equipment(d, shots, rep):
     levels = {lv["name"]: (e, lv) for e in d["equipment"] if e.get("active", True) for lv in e["levels"]}
     inactive = {lv["name"] for e in d["equipment"] if not e.get("active", True) for lv in e["levels"]} - set(levels)
-    seen = set()
+    seen, cut = set(), set()
+    # the panel drops the decimals of an attribute: data +22.5% Hybrid ATK shows as +22% (S8 Dawnbringer equipment)
+    truncated = lambda game, data: len(game) == len(data) and all(
+        g == d or (re.fullmatch(r"\d+\.\d+%?", d) and g.rstrip("%") == d.split(".")[0] and g.endswith("%") == d.endswith("%"))
+        for g, d in zip(game, data))
     for name, lines in shots:
         head = [l for l in region(lines, 175, 335, 1000, 1300) if l["t"] not in ("Dasar", "Ditingkatkan")]
         if head and head[0]["t"].endswith(" yang"):  # OCR often drops the wrapped "Diperkuat" line
@@ -423,6 +536,8 @@ def check_equipment(d, shots, rep):
             same = [x for x in lv["attributes"] if word_cover(a, x) >= 0.99]
             if not same:
                 rep.add("equipment", "selisih", name, f"{lname}: atribut game '{a}' tidak ada di data {lv['attributes']}")
+            elif any(truncated(numbers(a), numbers(x)) and numbers(a) != numbers(x) for x in same):
+                cut.add(f"{lname} {next(x for x in same if truncated(numbers(a), numbers(x)))}")
             elif not any(numbers(a) == numbers(x) for x in same):
                 rep.add("equipment", "selisih", name, f"{lname}: atribut game '{a}' vs data {same}")
         if attrs and len(attrs) != len(lv["attributes"]):
@@ -446,6 +561,8 @@ def check_equipment(d, shots, rep):
         if len(passives) != len(lv["passives"]) and not scrolled:
             rep.add("equipment", "manual", name, f"{lname}: jumlah pasif game {len(passives)} vs data {len(lv['passives'])}")
     rep.notes["equipment"].append(f"{len(seen)} dari {len(levels)} level equipment aktif punya screenshot panel detail")
+    if cut:
+        rep.notes["equipment"].append("Angka di belakang koma tidak tampil di panel (bukan selisih): " + "; ".join(sorted(cut)))
     if set(levels) - seen:
         rep.notes["equipment"].append("Tanpa screenshot panel detail: " + ", ".join(sorted(set(levels) - seen)))
 
@@ -610,21 +727,26 @@ def check_patch(d, shots, rep):
     change = re.compile(r"(\d[\d.,/% ]*)\s*(?:>>|»)\s*(\d[\d.,/% ]*)")
     done = set()
     for name, lines in shots:
-        entity = None
+        entity, sub = None, None
         for l in region(lines, 160, 800, 420, 1366):
             t = l["t"].strip()
             m = header.match(t)
             if m and len(m.group(1)) <= 40:
-                entity = m.group(1).strip()
+                entity, sub = m.group(1).strip(), None
                 if "Baru" in m.group(2) and (entity, "baru") not in done:
                     done.add((entity, "baru"))
                     rep.patch_rows.append((entity, "(baru)", "ada di data" if key(entity) in texts else "tidak ditemukan di data"))
                 continue
             if key(t) in texts and len(t) <= 40:  # header whose "(x)" marker OCR dropped
-                entity = t
+                entity, sub = t, None
                 continue
             ctx = t.split(":", 1)
-            target = key(ctx[0]) if len(ctx) > 1 and key(ctx[0]) in texts else key(entity or "")
+            if len(ctx) > 1 and key(ctx[0]) in texts:
+                sub = key(ctx[0])
+            # a wrapped line continues the item named on an earlier line when that item is not part of the header's own
+            # texts (Harley (↑) ... "Harley's Power: ... menampilkan" / "minimal 2 >> 4 Hero 4 Gold" = the card)
+            other = sub and texts[sub] not in texts.get(key(entity or ""), "")
+            target = key(ctx[0]) if len(ctx) > 1 and key(ctx[0]) in texts else sub if other else key(entity or "")
             if entity and "dihapus" in t.lower() and (entity, "dihapus") not in done:
                 done.add((entity, "dihapus"))
                 state = active.get(key(entity))

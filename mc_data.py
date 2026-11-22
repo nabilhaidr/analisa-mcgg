@@ -29,7 +29,9 @@ SERVER_PATCH = HERE / "server_patch.json"  # patch-note changes applied by the s
 GAMEPLAY_NOTES = HERE / "catatan_gameplay.json"  # game rules learned from playing (not in the game files)
 DEFAULT_GAME =Path(r"F:\Magic Chess\MagicChessGoGo\MagicChessGoGo")
 
-PLACEHOLDER = re.compile(r"^\[(\d+)\|(-?\d+)\|([^|\]]+)\|([^|\]]*)\|([^|\]]*)(?:\|[^\]]*)?\]$")
+# [type|row id|field|unit|scale-or-formula(|label(|effect level))]: the 7th field fixes the effect level (S8 FAIRY TAIL
+# Elemental Mark texts: one placeholder per mark count 1-6, e.g. Gray's Freeze 0.2/0.4/0.6/0.75/1.05/1.4 s)
+PLACEHOLDER = re.compile(r"^\[(\d+)\|(-?\d+)\|([^|\]]+)\|([^|\]]*)\|([^|\]]*)(?:\|[^|\]]*(?:\|([^|\]]*))?(?:\|[^\]]*)?)?\]$")
 NUM_TAG = re.compile(r"<(%?)Num(\d+)>|\[(%?)Num(\d+)\]")
 ATTR_SCALING = re.compile(r"^(?:\[C\d)?\s*<(\d+)\s*(\[[^\]]+\])>\]?$")
 # [kind|effect|field|unit|scale-or-formula|label]: scale "0.001" multiplies, "N*20" is applied to the value
@@ -55,6 +57,9 @@ STATS = [  # (label as shown in-game, MCHeroStarlevel column, scale)
 RELATION_TYPE = {1: "Faksi", 2: "Role"}
 OCCUPATION = {1: "Pertarungan", 2: "Daya Tahan", 3: "Suplai", 4: "Strategi"}  # MCHero.m_occupation
 CARD_TIER = {1: "Biru", 2: "Ungu", 3: "Oranye", 4: "Spesial"}                  # MCSuperCrystalKey.m_Level
+# MCSuperCrystalKey.m_CardTag (S8): names as the Wheel of Fate texts use them (MCRoulette.mDesc); 0 = ordinary card
+CARD_TAGS = {1: "Kartu finansial", 2: "Kartu Power", 3: "Kartu Badge Sinergi", 4: "Kartu peningkatan Sinergi",
+             5: "Kartu peningkatan Hero"}
 EQUIP_ORIGIN = {0: "Reguler", 1: "Magic Crystal", 2: "Reguler (Dasar)", 3: "Eksklusif Sinergi",
                 4: "Eksklusif Commander", 5: "Khusus"}                         # MCEquipBase.m_EquipOrigin
 # Ensiklopedia tabs in in-game order: HookBook_MC column -> tab name. Each column holds [title, body] CommonText ids,
@@ -97,6 +102,11 @@ def clean(text):
     for _ in range(3):  # colour codes are one digit: [C9<Num1>] -> [C935%] must keep "35%"
         text = re.sub(r"\[C\d([^\[\]]*)\]", r"\1", text)
     return re.sub(r"[ \t]+", " ", text).strip()
+
+
+def tidy(text):
+    """Drop the space a removed [img=N] icon leaves before punctuation ("300% [img=5]." -> "300%.")."""
+    return re.sub(r" +([.,;:!?])", r"\1", text or "").strip()
 
 
 def unquote(text):
@@ -180,8 +190,10 @@ class Season:
         m = PLACEHOLDER.match(spec)
         if not m:
             return clean(spec)
-        typ, rid, field, unit, formula = m.groups()
+        typ, rid, field, unit, formula, fixed = m.groups()
         table = {1: self.skills, 2: self.effects, 3: self.triggers}.get(int(typ))
+        if fixed and fixed.strip().isdigit() and int(fixed) > 0:
+            level = int(fixed)
         row = self._row(table, int(rid), level) if table is not None else None
         if row is None:
             return spec
@@ -189,6 +201,8 @@ class Season:
         v = row.get("m_" + field, 0)
         if idx:
             v = v[int(idx) - 1] if isinstance(v, list) and len(v) >= int(idx) else 0
+        if formula and "N" not in formula:  # a bare number scales the value, like [kind|...]: FAIRY TAIL "0.001", "-0.01"
+            formula = "N" if formula.strip() == "0" else f"N*({formula})"
         expr = (formula or "N").replace("N", repr(float(v)))
         if re.fullmatch(r"[\d.eE+\-*/() ]+", expr):
             v = eval(expr, {"__builtins__": {}})  # noqa: S307 - digits and operators only
@@ -292,9 +306,10 @@ class Season:
 
     def synergies(self):
         tip_t, rel_t = f"RelationSkillTip_MC{self.s}", f"RelationSkill_MC{self.s}"
-        tiers = {}
+        tiers, rows = {}, {}
         for r in self.t.parse(rel_t):
             rid, cnt, lv = r.get("m_relationId", 0), r.get("m_NeedCnt", 0), r.get("m_skillLv", 0)
+            rows.setdefault(rid, []).append(r)
             text = self.L.get(rel_t, "mSkillDescription", f"{rid}_{cnt}")
             if text:
                 tiers.setdefault(rid, []).append({
@@ -304,16 +319,62 @@ class Season:
         out = []
         for r in self.t.parse(tip_t):
             rid = r["m_RelationId"]
-            out.append({
+            specs = [(1, r.get("m_NumDescribe", []))]
+            full = self.L.get(tip_t, "mRelationExplainNew", rid)
+            entry = {
                 "id": rid,
                 "type": RELATION_TYPE.get(r.get("m_RelationType"), str(r.get("m_RelationType"))),
                 "name": self.L.get(tip_t, "mRelationAttach", rid) or f"#{rid}",
-                "explain": self.describe(self.L.get(tip_t, "mRelationExplain", rid), [(1, r.get("m_NumDescribe", []))]),
+                "explain": self.describe(self.L.get(tip_t, "mRelationExplain", rid), specs),
                 "tiers": sorted(tiers.get(rid, []), key=lambda x: x["count"]),
                 "heroes": [],
                 "icon": r.get("m_RelationIcon"),
-            })
+            }
+            # Panduan Sinergi of client 1.3.32.354.1 (S8): buttons Lite (tier rows' mSkillDescriptionNew, the same text in
+            # every tier; Deadeye screen 2113) and Penuh (mRelationExplainNew), then a table per tier
+            if full:
+                entry["explain_full"] = tidy(self.describe(full, specs))
+            lite = next((x for x in (self.L.get(rel_t, "mSkillDescriptionNew", f"{rid}_{y.get('m_NeedCnt', 0)}")
+                                     for y in sorted(rows.get(rid, []), key=lambda y: y.get("m_NeedCnt", 0))) if x), None)
+            if lite:
+                entry["explain_lite"] = tidy(self.describe(lite, specs))
+            table = self.synergy_table(r, rows.get(rid, []))
+            if table:
+                entry["table"] = table
+            texts = [full] + [self.L.get(rel_t, f, f"{rid}_{x.get('m_NeedCnt', 0)}") for x in rows.get(rid, [])
+                              for f in ("mSkillDescriptionNew", "mSpecialDescription")]
+            details = self.keyword_details(texts, [])
+            if details:
+                entry["details"] = details
+            out.append(entry)
         return out
+
+    def synergy_table(self, tip, rows):
+        """Table of the S8 Panduan Sinergi: one column per RelationSkillTip m_RelationEffectTag (title =
+        DescriptionIcon.mIconDescription), one row per tier with cells mNumDescribeTag1..n filled from m_NumDescribeTag.
+        mNumDescribeTag1 "##" = one text across the row (mSpecialDescription, e.g. Titan 10)."""
+        header = [tidy(clean(self.L.get("DescriptionIcon", "mIconDescription", int(t)) or ""))
+                  for t in tip.get("m_RelationEffectTag") or [] if str(t).strip().isdigit()]
+        rel_t, out = f"RelationSkill_MC{self.s}", []
+        for r in sorted(rows, key=lambda x: x.get("m_NeedCnt", 0)):
+            cnt = r.get("m_NeedCnt", 0)
+            key = f"{r.get('m_relationId', 0)}_{cnt}"
+            specs = [(r.get("m_skillLv", 0), r.get("m_NumDescribeTag") or r.get("m_NumDescribe") or [])]
+            first = self.L.get(rel_t, "mNumDescribeTag1", key)
+            if first is None:
+                continue
+            row = {"count": cnt}
+            if first.strip() != "##":  # the screen shows as many cells as titles (Shadeweaver has a 2nd tag but 1 column)
+                row["cells"] = [tidy(self.describe(self.L.get(rel_t, f"mNumDescribeTag{i}", key) or "", specs))
+                                for i in range(1, len(header) + 1)]
+            special = self.L.get(rel_t, "mSpecialDescription", key)
+            if special:  # below the cells, or alone across the row (Starbelle 10 has both, Titan 10 only the text)
+                # its own numbers: m_NumDescribeTag can lack some (FAIRY TAIL 10 has no freeze duration there)
+                own = r.get("m_SpecialNumDescribe") or r.get("m_NumDescribeNew") or r.get("m_NumDescribe") or []
+                row["text"] = tidy(self.describe(special, [(r.get("m_skillLv", 0), own)]))
+            if len(row) > 1:
+                out.append(row)
+        return {"header": header, "rows": out} if header and out else None
 
     def card_name(self, card_id):
         row = self.card_rows.get((card_id,))
@@ -383,6 +444,7 @@ class Season:
         # the same level in the season table and, like them, only appear in round 1 (the Power card round).
         power_levels = {r.get("m_Level") for (cid,), r in self.card_rows.items()
                         if cid in self.season_cards and r.get("m_CommanderId")}
+        tagged = any(2 in (r.get("m_CardTag") or []) for r in self.card_rows.values())  # S8: Power cards carry m_CardTag 2
         out = []
         for (cid,), r in sorted(self.card_rows.items()):
             name = clean(self.message(r.get("m_SkillName")))
@@ -392,13 +454,17 @@ class Season:
             weights = [r.get(f"m_Value{i}", 0) for i in (1, 2, 3)]
             generic_power = (cid in self.season_cards and r.get("m_Level") in power_levels
                              and weights[0] and not any(weights[1:]))
+            tags = [t for t in (r.get("m_CardTag") or []) if t]
+            power = bool(commander) or (2 in tags if tagged else generic_power)
             # m_SkillID / m_SkillID2 = [skill id, level]: tiered cards share effects and differ by level
             # (Solid Alliance II = level 2 of 82140 -> 3%, not the 2% of level 1)
             level = next((s[1] for s in (r.get("m_SkillID"), r.get("m_SkillID2")) if s and len(s) > 1 and s[1]), 1)
-            out.append({
+            card = {
                 "id": cid,
                 "name": name,
-                "tier": "Power" if commander or generic_power else CARD_TIER.get(r.get("m_Level"), f"Level {r.get('m_Level')}"),
+                # S7 Power cards are m_Level 4 with their own gallery tab "Kartu Power"; from S8 they are gold cards
+                # (m_Level 3, gallery tab Kartu Oranye, screenshots 2399/2408) and some can also show up in rounds 2-3
+                "tier": "Power" if power and r.get("m_Level") == 4 else CARD_TIER.get(r.get("m_Level"), f"Level {r.get('m_Level')}"),
                 "commander_id": commander or None,
                 "commander": self.L.get("MCHero", "mName", commander) if commander else None,
                 "season_only": cid in self.season_cards,
@@ -407,8 +473,63 @@ class Season:
                 "weights": weights,
                 "description": self.describe(self.message(r.get("m_SkillDescription")), [(level, r.get("m_NumDescribe", []))]),
                 "icon": r.get("m_MiniIcon"),  # card art as shown in the Go Go Card book (m_IconFile = big art, no atlas)
-            })
+            }
+            if power:
+                card["power"] = True
+            if tags:  # what the Wheel of Fate filters on (Tycoon = only Kartu finansial, ...)
+                card["tags"] = [CARD_TAGS.get(t, f"tag {t}") for t in tags]
+            out.append(card)
         return out
+
+    def wheel_of_fate(self):
+        """Wheel of Fate (MCRoulette): spun in the opening ceremony after the commander pick, before round I-1
+        (MCLogicOpenCeremonyComp_GoGoRoulette; only seasons whose battle config has AOpeningCeremonyInfo, i.e. S8).
+        One effect is drawn with m_Weight (new players: m_NewPlayerWeight) and changes the Go Go Card picks of the match:
+        m_CardTagFilter per pick = only cards with that m_CardTag, m_LevelOverride per pick = card quality,
+        m_TriggerRoundOverride = rounds of the picks, m_NeedSharedCards = everyone is offered the same cards,
+        m_ForesightGuarantee = qualities shown in advance, m_PostSelectSkillId = reward after each pick,
+        m_UnlockPlayerLevel = extra picks at those Commander levels. Display order on the wheel = m_Order."""
+        xml = battle_config(self.t, self.sid)
+        m = re.search(r"<AOpeningCeremonyInfo\s+([^>]*)>", xml)
+        if not m or "MCRoulette" not in self.t:
+            return None
+        attrs = dict(re.findall(r'(\w+)="([^"]*)"', m.group(1)))
+        phases = [int(attrs[k]) for k in ("sParam1", "sParam2", "sParam3", "sParam4") if attrs.get(k, "").isdigit()]
+        rows = self.t.parse("MCRoulette")
+        total = sum(r.get("m_Weight", 0) for r in rows)
+        new_total = sum(r.get("m_NewPlayerWeight", 0) for r in rows)
+        labels = round_labels(round_stages(xml), 40)
+        pct = lambda w, t: round(100 * w / t, 1) if t and w else 0
+        effects = []
+        for r in sorted(rows, key=lambda r: (r.get("m_Order", 0), r["m_ID"])):
+            tags, levels = r.get("m_CardTagFilter") or [], r.get("m_LevelOverride") or []
+            rules = []
+            for i in range(max(len(tags), len(levels))):
+                tag, lv = (tags[i] if i < len(tags) else 0), (levels[i] if i < len(levels) else 0)
+                if tag or lv:
+                    rules.append({"round": i + 1, **({"cards": CARD_TAGS.get(tag, f"tag {tag}")} if tag else {}),
+                                  **({"quality": CARD_TIER.get(lv, f"Level {lv}")} if lv else {})})
+            w, nw = r.get("m_Weight", 0), r.get("m_NewPlayerWeight", 0)
+            fx = {"id": r["m_ID"], "name": clean(self.L.get("MCRoulette", "mName", r["m_ID"]) or f"#{r['m_ID']}"),
+                  "description": clean(self.L.get("MCRoulette", "mDesc", r["m_ID"]) or ""),
+                  "active": w > 0, "weight": w, "chance": pct(w, total),
+                  "new_player_weight": nw, "new_player_chance": pct(nw, new_total), "icon": r.get("m_IconFile")}
+            if rules:
+                fx["rounds"] = rules
+            if r.get("m_TriggerRoundOverride"):
+                fx["trigger_rounds"] = [labels.get(x, str(x)) for x in r["m_TriggerRoundOverride"]]
+            if r.get("m_NeedSharedCards"):
+                fx["shared_cards"] = True
+            if r.get("m_ForesightGuarantee"):
+                fx["foresight"] = True
+            for key, col in (("post_select_skills", "m_PostSelectSkillId"), ("unlock_levels", "m_UnlockPlayerLevel"),
+                             ("special_rules", "m_SpecialRules")):
+                if r.get(col):
+                    fx[key] = r[col]
+            effects.append(fx)
+        return {"ceremony": {"open_type": int(attrs.get("iOpenType", 0) or 0), "map_id": int(attrs.get("iMapId", 0) or 0),
+                             "phases_ms": phases},
+                "total_weight": total, "new_player_total_weight": new_total, "effects": effects}
 
     def commanders(self, cards, syn):
         heroes = {r["m_ID"]: r for r in self.t.parse("MCHero")}
@@ -712,6 +833,7 @@ class Season:
             "equipment": equipment,
             "special_store": self.special_store(syn, equipment),
             "go_go_box": self.go_go_box(equipment),
+            "wheel_of_fate": self.wheel_of_fate(),
             "encyclopedia": self.encyclopedia(info),
         }
 
@@ -985,6 +1107,27 @@ def to_markdown(d, rank):
                 lines.append(f"- **{title}** ({', '.join(rounds)}; {len(pool)} item{', peluang sama' if same else ''}): {names}")
         lines += [f"- Kolom lain babak {r['label']}: " + ", ".join(f"`{k}` = {v}" for k, v in r["extra"].items())
                   for r in box["rounds"] if r.get("extra")]
+
+    wof = d.get("wheel_of_fate")
+    if wof:
+        phases = wof["ceremony"]["phases_ms"]
+        lines += ["", "## Wheel of Fate", "",
+                  "_Sumber: `MCRoulette` + `AOpeningCeremonyInfo` di `MCClassicsBattleConfig_S" f"{d['season']}`. Diputar di upacara pembuka "
+                  "setelah semua memilih commander, sebelum babak I-1; satu efek diundi dengan bobot (pemain baru: bobot pemain baru) dan "
+                  "mengubah putaran Go Go Card pertandingan itu. Durasi fase upacara: "
+                  + " + ".join(f"{fmt_num(p / 1000)} detik" for p in phases) + f" = {fmt_num(sum(phases) / 1000)} detik._", "",
+                  "| Efek | Peluang (bobot) | Pemain baru | Aturan data | Teks in-game |", "|---|---|---|---|---|"]
+        for e in wof["effects"]:
+            rules = [f"putaran {r['round']}: " + " ".join(x for x in (r.get("cards"), f"kualitas {r['quality']}" if r.get("quality") else "") if x)
+                     for r in e.get("rounds", [])]
+            rules += [f"babak {', '.join(e['trigger_rounds'])}"] if e.get("trigger_rounds") else []
+            rules += ["kartu sama untuk semua player"] if e.get("shared_cards") else []
+            rules += ["kualitas kartu tampil lebih awal"] if e.get("foresight") else []
+            rules += [f"hadiah setelah pilih: skill {', '.join(map(str, e['post_select_skills']))}"] if e.get("post_select_skills") else []
+            rules += [f"Level Commander {', '.join(map(str, e['unlock_levels']))}"] if e.get("unlock_levels") else []
+            chance = f"{fmt_num(e['chance'])}% ({e['weight']})" if e["active"] else "nonaktif (0)"
+            newp = f"{fmt_num(e['new_player_chance'])}% ({e['new_player_weight']})" if e["new_player_weight"] else "-"
+            lines.append(f"| {e['name']} | {chance} | {newp} | {'; '.join(rules) or '-'} | {e['description']} |")
         lines += [f"- _Catatan data: {n}_" for n in box.get("notes", [])]
         lines.append("")
 
@@ -1006,8 +1149,24 @@ def to_markdown(d, rank):
         lines += [f"## Sinergi: {kind}", ""]
         for s in (x for x in d["synergies"] if x["type"] == kind):
             lines += [f"### {s['name']}", "", f"Hero: {', '.join(map(tag, s['heroes'])) or '-'}", ""]
+            if s.get("explain_full"):
+                lines += [f"Panduan Sinergi (Penuh): {md(s['explain_full'])}", ""]
+            if s.get("explain_lite"):
+                lines += [f"Panduan Sinergi (Lite): {md(s['explain_lite'])}", ""]
             if s["explain"]:
                 lines += [md(s["explain"]), ""]
+            table = s.get("table")
+            if table:  # the in-game table of the S8 Panduan Sinergi
+                cols = len(table["header"])
+                lines += ["| Jumlah | " + " | ".join(table["header"]) + " |", "|---" * (cols + 1) + "|"]
+                for r in table["rows"]:
+                    if "cells" in r:
+                        lines.append(f"| {r['count']} | " + " | ".join(r["cells"]) + " |")
+                    if "text" in r:  # one text across the row, below its cells if any
+                        lines.append(f"| {'' if 'cells' in r else r['count']} | {r['text']} |" + " |" * (cols - 1))
+                lines.append("")
+            for k in s.get("details", []):
+                lines.append(f"- _Detail \"{k['keyword']}\"_: {k['text'].replace(chr(10), ' ')}")
             for t in s["tiers"]:
                 lines.append(f"- **{t['count']}**: {t['effect'].replace(chr(10), ' ')}")
             lines += [""] + ([f"{n}  " for n in server(s)] + [""] if s.get("server") else [])
@@ -1070,16 +1229,21 @@ def to_markdown(d, rank):
             if c.get("power_card"):
                 lines += [f"*Kartu Power — {c['power_card']['name']}:* {md(c['power_card']['description'])}", ""]
 
+    gold_power = any(c.get("power") and c["tier"] != "Power" for c in active_cards)
     lines += ["## Go Go Card", "",
-              "_Hanya kartu aktif (yang tampil di menu Go Go Card in-game). `Putaran` = putaran Go Go Card tempat kartu bisa muncul;"
-              " Kartu Power hanya muncul di putaran 1 (babak I-2)._", ""]
+              "_Hanya kartu aktif (yang tampil di menu Go Go Card in-game). `Putaran` = putaran Go Go Card tempat kartu bisa muncul; "
+              + ("Kartu Power commander kini Go Go Card emas (Oranye, ditandai **Power**), sebagian juga bisa muncul di putaran 2–3; "
+                 "`jenis` = tag kartu yang dipakai Wheel of Fate._" if gold_power else
+                 "Kartu Power hanya muncul di putaran 1 (babak I-2)._"), ""]
 
     def card_md(c):
         rounds = f" · putaran {', '.join(map(str, c['rounds']))}" if c.get("rounds") and c["tier"] != "Power" else ""
         removed = f" **[dihapus sementara, Patch {c['removed_server']} (server)]**" if c.get("removed_server") else ""
         desc = (c.get("description_server") or c["description"]).replace(chr(10), " ")
         notes = "".join(f" {n}" for n in server(c) if not c.get("removed_server"))
-        return f"- **{c['name']}**{' (season ini)' if c['season_only'] else ''}{rounds}{removed}: {desc}{notes}"
+        power = " **Power**" if c.get("power") and c["tier"] != "Power" else ""
+        kinds = f" · jenis: {', '.join(c['tags'])}" if c.get("tags") and gold_power else ""
+        return f"- **{c['name']}**{power}{' (season ini)' if c['season_only'] else ''}{rounds}{kinds}{removed}: {desc}{notes}"
 
     for tier in ("Power", "Spesial", "Oranye", "Ungu", "Biru"):
         group = [c for c in active_cards if c["tier"] == tier]
@@ -1170,7 +1334,9 @@ def main():
               f"{len(d['commanders'])} commander, {sum(c['active'] for c in d['cards'])} kartu aktif, "
               f"{sum(e['active'] for e in d['equipment'])} equipment aktif, "
               f"{len((d['special_store'] or {}).get('items', []))} item Toko Spirit Sand, "
-              f"{len((d['go_go_box'] or {}).get('rounds', []))} babak Go Go Box, {len(d['encyclopedia'])} tab Ensiklopedia"
+              f"{len((d['go_go_box'] or {}).get('rounds', []))} babak Go Go Box, "
+              + (f"{sum(e['active'] for e in d['wheel_of_fate']['effects'])} efek Wheel of Fate, " if d.get("wheel_of_fate") else "")
+              + f"{len(d['encyclopedia'])} tab Ensiklopedia"
               f" -> {out_dir / f'S{sid}.html'} (+ .md, .json)")
 
 

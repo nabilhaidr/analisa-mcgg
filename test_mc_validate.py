@@ -281,5 +281,132 @@ class BacaUlangRapid(unittest.TestCase):
         run.assert_not_called()
 
 
+VEXANA_SERVER = "31-03-47-03-924_com.mobilechess.mi.jpg"  # ponsel 31 Okt: teks Vexana 20/10 dari server
+
+
+def run_commanders(names, data=None):
+    rep = V.Report()
+    V.check_commanders(data or S7, [(n, store_shot(n)) for n in names], [], rep)
+    return rep
+
+
+class CommanderTeksServer(unittest.TestCase):
+    def test_layar_dengan_teks_server_bukan_selisih(self):  # description_server dari server_patch.json
+        self.assertEqual(run_commanders([VEXANA_SERVER]).items["commander"]["selisih"], [])
+
+    def test_angka_beda_dengan_teks_server_tetap_selisih(self):
+        data = copy.deepcopy(S7)
+        vexana = next(c for c in data["commanders"] if c["name"] == "Vexana")
+        skill = next(s["skill"] for s in vexana["skills"] if s["skill"]["name"] == "I Want All of Them!")
+        skill["description_server"] = skill["description_server"].replace("10 Gold", "12 Gold")
+        self.assertEqual(len(run_commanders([VEXANA_SERVER], data).items["commander"]["selisih"]), 1)
+
+
+S8 = json.loads((ROOT / "data" / "1.3.32.354.1" / "S8.json").read_text(encoding="utf-8"))
+SHOTS8 = V.load_ocr(ROOT / "screenshot" / "season 8")
+
+
+def shot8(name):
+    """Baris OCR asli satu layar Season 8 (screenshot/season 8/ocr.json, client 1.3.32.354.1)."""
+    return SHOTS8[next(k for k in SHOTS8 if k.endswith(name))]
+
+
+class LayarSeason8(unittest.TestCase):
+    def test_galeri_go_go_card_tanpa_tab_kartu_power_dikenali(self):  # S8: tab Semua/Oranye/Ungu/Biru saja
+        self.assertEqual(V.classify(shot8("Screenshot (2383).png")), "card")
+
+    def test_layar_commander_ponsel_dikenali(self):  # judul ponsel terbaca "+ Commander"
+        self.assertEqual(V.classify(shot8("2026-11-21-03-41-09-322_com.mobilechess.mi.jpg")), "commander")
+
+    def test_layar_commander_dengan_judul_tidak_terbaca_dikenali(self):  # Nana: judul terbaca "Cc uma de"
+        self.assertEqual(V.classify(shot8("Screenshot (1968).png")), "commander")
+
+    def test_daftar_ganti_commander_bukan_layar_detail(self):
+        for name in ("Screenshot (1960).png", "Screenshot (1961).png"):
+            self.assertNotEqual(V.classify(shot8(name)), "commander", name)
+
+
+class PatchNoteS8(unittest.TestCase):
+    def test_baris_lanjutan_milik_kartu_di_baris_sebelumnya(self):  # 2004: "Harley's Power: ..." lalu "minimal 2 >> 4 Hero"
+        rep = V.Report()
+        V.check_patch(S8, [("Screenshot (2004).png", shot8("Screenshot (2004).png"))], rep)
+        row = next(r for r in rep.patch_rows if r[1].startswith("minimal 2 >> 4"))
+        self.assertEqual(row[2], "sudah di data")
+
+
+class EquipmentS8(unittest.TestCase):
+    def test_pecahan_atribut_dipotong_di_layar_bukan_selisih(self):  # data +22.5% Hybrid ATK, layar 2336 "+22%"
+        rep = V.Report()
+        V.check_equipment(S8, [(n, shot8(n)) for n in ("Screenshot (2336).png", "Screenshot (2338).png")], rep)
+        self.assertEqual(rep.items["equipment"]["selisih"], [])
+        self.assertTrue(any("22.5%" in n for n in rep.notes["equipment"]), rep.notes["equipment"])
+
+
+def run_syn8(names, data=None):
+    rep = V.Report()
+    V.check_synergies(data or S8, [(n, shot8(n)) for n in names], rep)
+    return rep
+
+
+class TabelSinergiS8(unittest.TestCase):
+    """Panduan Sinergi S8: tabel angka per tingkat + teks Lite/Penuh. 2113 = Deadeye (Lite), 2024 = Titan Lite (dengan baris
+    teks 10), 2025 = Titan Penuh. Label tingkat (2/4/6) tidak terbaca OCR, jadi baris dicocokkan lewat isinya."""
+
+    def test_nilai_sel_dari_ocr(self):  # '%' sering terbaca '0/0', kadang terpotong
+        self.assertEqual(V.table_values("300/0X+"), {"30%"})
+        self.assertEqual(V.table_values("1200/0"), {"120%"})
+        self.assertEqual(V.table_values("15%"), {"15%"})
+        self.assertEqual(V.table_values("250/Ä"), {"25%", "250"})
+        self.assertEqual(V.table_values("Saat pertarungan"), set())
+
+    def test_ikon_di_belakang_angka_terbaca_satu_digit(self):  # FAIRY TAIL "8 [ikon]" -> "80", Stargazer "12 [ikon]" -> "128"
+        self.assertEqual(V.table_values("80"), {"80", "80%", "8", "8%"})
+        self.assertEqual(V.table_values("128"), {"128", "128%", "12", "12%"})
+        self.assertEqual(V.table_values("25.4"), {"25.4", "25.4%", "25", "25%"})  # Swiftblade "25 [ikon]"
+        self.assertEqual(V.table_values("7"), {"7", "7%"})
+
+    def test_tabel_cocok_tanpa_selisih_dan_cek_manual(self):  # Deadeye Lite = explain_lite, Titan Penuh = explain_full
+        rep = run_syn8(["Screenshot (2113).png", "Screenshot (2025).png"])
+        self.assertEqual(rep.items["synergy"]["selisih"], [])
+        self.assertEqual(rep.items["synergy"]["manual"], [])
+
+    def test_teks_yang_diganti_server_jadi_cek_manual(self):  # Titan Lite 2024: teksnya tidak ada di file game mana pun
+        rep = run_syn8(["Screenshot (2024).png", "Screenshot (2025).png"])
+        self.assertEqual(rep.items["synergy"]["selisih"], [])
+        self.assertEqual(len(rep.items["synergy"]["manual"]), 1)
+
+    def test_baris_dengan_sel_dan_teks_bukan_selisih(self):  # Starbelle 10: 300 | 100% lalu "... 12% HP."
+        self.assertEqual(run_syn8(["Screenshot (2069).png"]).items["synergy"]["selisih"], [])
+
+    def test_judul_bertanda_plus_dikenali(self):  # 2121: judul terbaca "+ Stargazer" di x 134
+        rep = run_syn8(["Screenshot (2121).png"])
+        self.assertEqual(rep.items["synergy"]["manual"] + rep.items["synergy"]["selisih"], [])
+
+    def test_salah_eja_ocr_bukan_cek_manual(self):  # Defender "Hvbrid", Bruiser "Penin katan" terpotong tooltip
+        rep = run_syn8(["Screenshot (2102).png", "Screenshot (2101).png"])
+        self.assertEqual(rep.items["synergy"]["manual"], [])
+
+    def test_sel_berisi_teks_bukan_baris_teks(self):  # SPECTRE: "Terima Hero 2 Gold atau 3 Gold" adalah sel
+        rep = run_syn8(["Screenshot (2049).png"])
+        self.assertEqual(rep.items["synergy"]["manual"] + rep.items["synergy"]["selisih"], [])
+
+    def test_layar_tabel_dengan_tombol_penuh_tidak_terbaca(self):  # 2094 Dawnbringer: "Penuh" terbaca "pe"
+        rep = run_syn8(["Screenshot (2094).png"])
+        self.assertFalse(any("penjelasan beda" in m for _, m in rep.items["synergy"]["manual"]))
+
+    def test_angka_tabel_beda_jadi_selisih(self):
+        data = copy.deepcopy(S8)
+        deadeye = next(s for s in data["synergies"] if s["name"] == "Deadeye")
+        deadeye["table"]["rows"][0]["cells"][1] = "16%"  # layar 2113: 15%
+        self.assertEqual(len(run_syn8(["Screenshot (2113).png"], data).items["synergy"]["selisih"]), 1)
+
+    def test_angka_baris_teks_beda_jadi_selisih(self):  # Titan 10 di layar 2024: "... dan 300%"
+        data = copy.deepcopy(S8)
+        row = next(s for s in data["synergies"] if s["name"] == "Titan")["table"]["rows"][-1]
+        row["text"] = row["text"].replace("300%", "350%")
+        self.assertEqual(len(run_syn8(["Screenshot (2024).png"], data).items["synergy"]["selisih"]), 1)
+
+
+
 if __name__ == "__main__":
     unittest.main()

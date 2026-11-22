@@ -2,7 +2,7 @@
 setelah mc_match.py tapi tidak pernah masuk git). Jalankan setelah laporan dibuat ulang atau diubah.
 
 Pemakaian (Python sistem + requirements.txt, sama dengan mc_match.py):
-  python check_match.py                          semua laporan MATCH di data versi terbaru
+  python check_match.py                          semua laporan MATCH (semua folder data/<versi> yang punya)
   python check_match.py 15_38 Kalea              hanya laporan yang namanya mengandung salah satu teks ini
   python check_match.py --version 1.3.24.344.1   data versi tertentu
 Keluar dengan kode 1 bila ada kesalahan; peringatan saja tidak menggagalkan. Tiap laporan satu baris ringkasan (seperti
@@ -35,7 +35,7 @@ import sys
 
 import mc_match
 import mc_vision
-from mc_common import DATA, latest_version, load_season, round_label
+from mc_common import DATA, load_season, round_label, version_key
 from mc_lineup import Game
 
 IMG_MD = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
@@ -356,14 +356,17 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description="Periksa konsistensi laporan MATCH_*.md/.html")
     ap.add_argument("names", nargs="*", help="hanya laporan yang namanya mengandung salah satu teks ini")
-    ap.add_argument("--version", help="folder data/<versi>; default versi terbaru")
+    ap.add_argument("--version", help="folder data/<versi>; default semua versi yang punya laporan MATCH")
     args = ap.parse_args()
-    folder = DATA / (args.version or latest_version())
-    reports = [p for p in sorted(folder.glob("MATCH_*.md")) if not args.names or any(n in p.stem for n in args.names)]
+    # reports stay in the folder of the client they were made with (S7 in 1.3.24.344.1 after the 1.3.32.354.1 update)
+    folders = [DATA / args.version] if args.version else sorted(
+        (p for p in DATA.iterdir() if p.is_dir() and any(p.glob("MATCH_*.md"))), key=lambda p: version_key(p.name))
+    reports = [p for folder in folders for p in sorted(folder.glob("MATCH_*.md"))
+               if not args.names or any(n in p.stem for n in args.names)]
     if not reports:
-        sys.exit(f"Tidak ada laporan MATCH di {folder}")
-    orphans = [p.name for p in sorted(folder.glob("MATCH_*.html")) if not p.with_suffix(".md").exists()]
-    orphans += [p.name + "/" for p in sorted(folder.glob("match_*")) if p.is_dir()
+        sys.exit(f"Tidak ada laporan MATCH di {', '.join(map(str, folders)) or DATA}")
+    orphans = [p.name for folder in folders for p in sorted(folder.glob("MATCH_*.html")) if not p.with_suffix(".md").exists()]
+    orphans += [p.name + "/" for folder in folders for p in sorted(folder.glob("match_*")) if p.is_dir()
                 and not (folder / f"MATCH_{p.name[len('match_'):]}.md").exists()]
     seasons, n_err, n_warn = {}, 0, len(orphans)
     width = max(len(p.stem) - len("MATCH_") for p in reports)
@@ -381,7 +384,8 @@ def main():
             print(f"      peringatan: {w}")
     for o in orphans:
         print(f"peringatan: tanpa laporan .md: {o}")
-    print(f"\n{len(reports)} laporan, {n_err} kesalahan, {n_warn} peringatan ({folder.relative_to(DATA.parent).as_posix()})")
+    where = ", ".join(f.relative_to(DATA.parent).as_posix() for f in folders)
+    print(f"\n{len(reports)} laporan, {n_err} kesalahan, {n_warn} peringatan ({where})")
     sys.exit(1 if n_err else 0)
 
 

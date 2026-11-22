@@ -72,6 +72,8 @@ h2 { font-size: 18px; margin: 22px 0 10px; }
 .ico.xs { width: 18px; height: 18px; border-radius: 50%; vertical-align: -4px; margin-right: 4px; }
 .kw { margin-top: 6px; padding: 4px 8px; border-left: 3px solid var(--accent); background: var(--chip); font-size: 13px; border-radius: 4px; }
 .kw .desc { font-size: 13px; }
+.syntab th, .syntab td { white-space: normal; text-align: center; vertical-align: top; }
+.syntab th:first-child, .syntab td:first-child { text-align: center; font-weight: 700; width: 2.5em; }
 .gpnote { margin-top: 8px; padding: 4px 8px; border-left: 3px solid var(--c2); background: var(--chip); font-size: 13px; border-radius: 4px; }
 .gpnote .desc, .gpnote .muted { font-size: 12.5px; }
 .unverified { margin: 0 0 10px; padding: 4px 8px; border-left: 3px solid var(--muted); background: var(--chip); font-size: 13px; border-radius: 4px; }
@@ -116,7 +118,7 @@ a { color: var(--accent); }
       <button class="chip" id="card-inactive" aria-pressed="false" title="Kartu di tabel dasar yang tidak muncul in-game season ini">Tampilkan nonaktif</button>
       <span class="muted" id="card-count"></span>
     </div>
-    <p class="muted">Hanya kartu aktif yang tampil in-game. "Putaran" = putaran Go Go Card tempat kartu bisa muncul; Kartu Power hanya di putaran 1 (babak I-2).</p>
+    <p class="muted" id="card-note">Hanya kartu aktif yang tampil in-game. "Putaran" = putaran Go Go Card tempat kartu bisa muncul.</p>
     <div class="grid" id="card-grid"></div>
   </section>
   <section id="equipment" class="hidden">
@@ -257,6 +259,15 @@ function renderHeroes() {
 renderHeroes();
 
 // synergies
+function synTable(t) {  // in-game table: one column per header, a "text" row spans the whole table (Titan 10)
+  const tb = el("table", { class: "stats syntab" });
+  tb.append(el("tr", {}, el("th", {}, ""), ...t.header.map(h => el("th", {}, h))));
+  t.rows.forEach(r => {  // cells, then the row's text across the table (Starbelle 10 has both, Titan 10 only the text)
+    if (r.cells) tb.append(el("tr", {}, el("td", {}, r.count), ...r.cells.map(c => el("td", {}, c))));
+    if (r.text) tb.append(el("tr", {}, el("td", {}, r.cells ? "" : r.count), el("td", { colspan: t.header.length }, r.text)));
+  });
+  return el("div", { class: "stats-wrap" }, tb);
+}
 const heroCost = Object.fromEntries(D.heroes.map(h => [h.name, h.cost]));
 const summoned = new Set(D.heroes.filter(h => h.summoned).map(h => h.name));
 const synBox = document.getElementById("synergies");
@@ -271,7 +282,11 @@ for (const type of ["Faksi", "Role"]) {
       if (summoned.has(n)) { p.style.borderStyle = "dashed"; p.title = "Hero panggilan (tidak dijual di Toko)"; }
       return p;
     })),
-    s.explain ? el("div", { class: "desc muted" }, s.explain) : "",
+    // S8 Panduan Sinergi: "Penuh" text and a table per tier (the "Lite" text is in no game table); older exports: explain only
+    s.explain_full ? el("div", { class: "desc" }, s.explain_full) : s.explain ? el("div", { class: "desc muted" }, s.explain) : "",
+    s.explain_lite ? el("div", { class: "desc muted" }, "Lite: " + s.explain_lite) : "",
+    s.table ? synTable(s.table) : "",
+    ...(s.details || []).map(k => el("div", { class: "kw" }, el("b", {}, `Detail "${k.keyword}"`), el("div", { class: "desc" }, k.text))),
     el("ul", { class: "tiers" }, ...s.tiers.map(t => el("li", {}, el("span", { class: "n" }, t.count), el("span", { class: "desc" }, t.effect)))),
     ...serverNotes(s.server),
     STORE && STORE.synergy === s.name ? el("div", { class: "skill" }, el("a", { href: "#special-store" }, `Isi ${STORE.title} ↓`)) : ""))));
@@ -309,18 +324,25 @@ function renderCommanders(cat) {
 chipFilter("cmd-cats", [...new Set(D.commanders.map(c => c.category))].sort(), renderCommanders);
 renderCommanders(null);
 
-// go go cards
+// go go cards; S7 Power cards have their own tier, from S8 they are gold (Oranye) cards marked power
 const cardState = { q: "", tier: null, inactive: false };
+const GOLD_POWER = CARDS.some(c => c.power && c.tier !== "Power");
+document.getElementById("card-note").append(GOLD_POWER
+  ? " Kartu Power commander kini Go Go Card emas (Oranye, chip \"Power\"); sebagian juga bisa muncul di putaran 2–3. \"Jenis\" = tag kartu yang dipakai Wheel of Fate (tab Info Season)."
+  : " Kartu Power hanya di putaran 1 (babak I-2).");
 const isActive = c => c.active !== false;  // older exports have no "active" field
 function renderCards() {
   const list = CARDS.filter(c => (cardState.inactive ? !isActive(c) : isActive(c)) &&
-    (!cardState.tier || c.tier === cardState.tier) &&
+    (!cardState.tier || c.tier === cardState.tier || (cardState.tier === "Kartu Power" && c.power)) &&
     (!cardState.q || (c.name + " " + c.description).toLowerCase().includes(cardState.q)));
   document.getElementById("card-grid").replaceChildren(...list.map(c => el("article", { class: "card" },
-    el("h3", {}, img(c.icon, "art"), c.name, el("span", { class: "chip" }, c.tier), c.season_only ? el("span", { class: "chip" }, "season ini") : "",
+    el("h3", {}, img(c.icon, "art"), c.name, el("span", { class: "chip" }, c.tier),
+       c.power && c.tier !== "Power" ? el("span", { class: "chip" }, "Power") : "",
+       c.season_only ? el("span", { class: "chip" }, "season ini") : "",
        !isActive(c) ? el("span", { class: "chip" }, "nonaktif") : "",
        c.removed_server ? el("span", { class: "chip srvchip" }, `dihapus (Patch ${c.removed_server}, server)`) : ""),
-    c.rounds && c.rounds.length && c.tier !== "Power" ? el("div", { class: "muted" }, "Putaran " + c.rounds.join(", ")) : "",
+    c.rounds && c.rounds.length && c.tier !== "Power" ? el("div", { class: "muted" }, "Putaran " + c.rounds.join(", ")
+      + (c.tags && GOLD_POWER ? " · jenis: " + c.tags.join(", ") : "")) : "",
     el("div", { class: "desc" }, c.description_server || c.description), ...serverNotes(c.server))));
   document.getElementById("card-count").textContent = `${list.length} kartu ${cardState.inactive ? "nonaktif" : "aktif"}`;
 }
@@ -332,8 +354,8 @@ inactiveBtn.onclick = () => {
   inactiveBtn.setAttribute("aria-pressed", cardState.inactive);
   renderCards();
 };
-chipFilter("card-tiers", ["Power", "Spesial", "Oranye", "Ungu", "Biru"].filter(t => CARDS.some(c => c.tier === t)),
-  t => { cardState.tier = t; renderCards(); });
+chipFilter("card-tiers", ["Power", "Spesial", "Oranye", "Ungu", "Biru"].filter(t => CARDS.some(c => c.tier === t))
+  .concat(GOLD_POWER ? ["Kartu Power"] : []), t => { cardState.tier = t; renderCards(); });
 renderCards();
 
 // equipment
@@ -420,6 +442,33 @@ if (BOX && BOX.rounds.length) {
       `Kapasitas +1 (jumlah ${BOX.orbs} orb dari pengamatan in-game). Harga tiap hero diundi dengan bobot di tabel; bobot harga yang ` +
       `sama dijumlahkan. Teks abu-abu = tulisan di orb in-game. Sumber: MCRoundRandomEquip_S${D.season}.`),
     el("div", { class: "card stats-wrap" }, t, ...extra), el("div", { class: "card" }, ...pools));
+}
+
+// Wheel of Fate (MCRoulette): one effect drawn in the opening ceremony before round I-1, changes the Go Go Card picks
+const WOF = D.wheel_of_fate;
+if (WOF && WOF.effects.length) {
+  const t = el("table", { class: "list" });
+  t.append(el("tr", {}, ...["Efek", "Peluang (bobot)", "Pemain baru", "Aturan data", "Teks in-game"].map(h => el("th", {}, h))));
+  WOF.effects.forEach(e => {
+    const rules = (e.rounds || []).map(r => `putaran ${r.round}: ` + [r.cards, r.quality && `kualitas ${r.quality}`].filter(Boolean).join(" "))
+      .concat(e.trigger_rounds ? [`babak ${e.trigger_rounds.join(", ")}`] : [], e.shared_cards ? ["kartu sama untuk semua player"] : [],
+        e.foresight ? ["kualitas kartu tampil lebih awal"] : [], e.post_select_skills ? ["hadiah hero setelah tiap pilihan"] : [],
+        e.unlock_levels ? [`Level Commander ${e.unlock_levels.join(", ")}`] : []);
+    const row = el("tr", {},
+      el("td", {}, el("div", { class: "pills" }, img(e.icon, "xs"), el("b", {}, e.name))),
+      el("td", { class: "num" }, e.active ? `${e.chance}% (${e.weight})` : "nonaktif (0)"),
+      el("td", { class: "num" }, e.new_player_weight ? `${e.new_player_chance}% (${e.new_player_weight})` : "-"),
+      el("td", {}, rules.join("; ") || "-"), el("td", {}, el("div", { class: "desc" }, e.description)));
+    if (!e.active) row.classList.add("muted");
+    t.append(row);
+  });
+  const secs = WOF.ceremony.phases_ms.map(p => p / 1000);
+  infoBox.append(el("h2", {}, "Wheel of Fate"),
+    el("p", { class: "muted" }, "Diputar di upacara pembuka setelah semua memilih commander, sebelum babak I-1. Satu efek diundi dengan " +
+      `bobot (total ${WOF.total_weight}; pemain baru memakai bobot pemain baru, total ${WOF.new_player_total_weight}) dan mengubah ` +
+      `putaran Go Go Card pertandingan itu. Durasi fase upacara ${secs.join(" + ")} = ${secs.reduce((a, b) => a + b, 0)} detik. ` +
+      `Sumber: MCRoulette + AOpeningCeremonyInfo di MCClassicsBattleConfig_S${D.season}.`),
+    el("div", { class: "card stats-wrap" }, t));
 }
 
 // server patch summary (server_patch.json)

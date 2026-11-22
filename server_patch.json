@@ -106,5 +106,52 @@
         "Deskripsi efek Sinergi in-game kini menampilkan atribut pertarungan dan efek khusus sebagai ikon (tampilan saja, angka tidak berubah)."
       ]
     }
+  ],
+  "8": [
+    {
+      "patch": "20/11",
+      "source": "Patch Note Penyesuaian Keseimbangan (20/11) (screenshot/season 8/update patch, ponsel 20 Nov 21:20; layar Commander Vexana ponsel 20 Nov 21:20 dan 21 Nov 03:41)",
+      "heroes": [
+        {"name": "Yu Zhong", "stat": "HP", "stars": [1, 2, 3], "old": [3545, 6380, 15770], "new": [3760, 6765, 16715]}
+      ],
+      "hero_skills": [
+        {"name": "Barbiel", "skill": "Quaking Stomp", "replace": [["stun ke lawan di sekitar selama 1 detik", "stun ke lawan di sekitar selama 0.5 detik"]],
+         "text": "Durasi stun: 1 → 0,5 detik (baris Frostrider di patch note)"},
+        {"name": "Gray", "skill": "Ice-Make: Sword", "text": "Gray ★3: jangkauan penargetan skill diperluas (angka tidak disebut)"},
+        {"name": "Valentina", "skill": "Arcane Shade", "text": "Pengali DMG Skill ★2: 165% → 190%",
+         "note": "file game dan layar Detail Hero 18 Nov menulis 140% di ★2; nilai lama patch note tidak cocok"},
+        {"name": "Kimmy", "skill": "Traction Pulse",
+         "replace": [["/1750% Total Magic ATK Magic DMG", "/1925% Total Magic ATK Magic DMG"], ["/750% Total Magic ATK Magic DMG", "/825% Total Magic ATK Magic DMG"]],
+         "text": "Pengali DMG Skill ★3: fase pertama 1.750% → 1.925%, fase kedua 750% → 825%"},
+        {"name": "Popol", "skill": "Icefield Strike", "replace": [["menyebabkan freeze ke target selama 1 detik", "menyebabkan freeze ke target selama 0.3 detik"]],
+         "text": "Durasi Freeze: 1,0 → 0,3 detik"},
+        {"name": "Balmond", "skill": "Lethal Counter",
+         "replace": [["380% Total Physical ATK/410% Total Physical ATK", "370% Total Physical ATK/370% Total Physical ATK"], ["Shield sebesar 5%/6%/9%", "Shield sebesar 5%/5%/9%"]],
+         "attributes": [["Bonus Physical", 1, "370%"], ["Bonus Physical", 2, "370%"], ["Shield per Serangan", 2, "5%"]],
+         "text": "Pengali DMG Skill ★1/★2: 380%/410% → 370%; Shield Skill ★2: 6% → 5%"}
+      ],
+      "commanders": [
+        {"name": "Brody", "skill": "Abyssal Surge", "text": "Kini bisa digunakan mulai Babak I-1"},
+        {"name": "Lukas", "skill": "Sacred Gift", "replace": [["3 hingga 4 kali lipat", "2 hingga 3 kali lipat"]],
+         "text": "Kelipatan acak Gold saat Hero masuk altar: 3X–4X → 2X–3X"},
+        {"name": "Vexana", "skill": "I Want All of Them!",
+         "replace": [["Setelah semua Commander selesai memilih di setiap Fase Go Go Box, Vexana bisa memilih satu hadiah tambahan (semua pilihan tersedia).",
+                      "Pada masing-masing dari 3 Fase Go Go Box pertama, setelah semua Commander selesai memilih, Vexana bisa memilih satu hadiah tambahan (semua opsi tersedia)."]],
+         "text": "Kini hanya berlaku pada 3 Fase Go Go Box pertama",
+         "note": "teks baru dari layar Commander ponsel 20 Nov 21:20 dan 21 Nov 03:41"},
+        {"name": "Vexana", "skill": "Unrestricted", "replace": [["Vexana mendapatkan 6 Gold", "Vexana mendapatkan 2 Gold"]],
+         "text": "Gold per Fase Go Go Box: 4 → 2",
+         "note": "patch note menulis nilai lama 4; file game 6. Layar Commander: PC 18 Nov (1980) 6, ponsel 20 Nov 21:20 4, ponsel 21 Nov 03:41 2"}
+      ],
+      "synergies": [
+        {"name": "Frostrider", "text": "Rasio pewarisan HP Tunggangan: 100% → 80%; rasio pewarisan Hybrid ATK Tunggangan 2/4/6 Frostrider: 35%/50%/65% → 20%/30%/80%"},
+        {"name": "Dawnbringer", "text": "10 Dawnbringer: Supreme Crown memberikan 350% → 500% Max HP"}
+      ],
+      "notes": [
+        "Memperbaiki bonus Hybrid ATK dasar Lightstick yang hilang.",
+        "Memperbaiki Balmond Bintang 3 yang memulihkan Mana lebih cepat dari seharusnya.",
+        "Memperbaiki jangkauan skill Nana yang terlalu pendek."
+      ]
+    }
   ]
 }

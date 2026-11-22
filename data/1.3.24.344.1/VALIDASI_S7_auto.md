@@ -1,13 +1,13 @@
 # Validasi otomatis Season 7 (data 1.3.24.344.1)
 
-- Dibuat 2026-11-01T19:45:58 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
+- Dibuat 2026-11-22T17:53:12 oleh `mc_validate.py` dari `screenshot\season 7\ocr.json`.
 - **Selisih** = terbaca jelas tapi beda dengan data. **Cek manual** = kemungkinan salah baca OCR / panel di-scroll; lihat screenshot-nya.
 
 | Bagian | Layar | Selisih | Cek manual | Cakupan |
 |---|---|---|---|---|
 | Hero | 103 | 0 | 1 | 52 dari 52 hero toko punya screenshot Detail Hero |
 | Sinergi | 22 | 0 | 1 | 20 dari 22 sinergi punya screenshot Panduan Sinergi |
-| Commander | 45 | 0 | 4 | 40 dari 40 commander punya screenshot detail; 35 nama terbaca di daftar commander |
+| Commander | 52 | 0 | 4 | 40 dari 40 commander punya screenshot detail; 35 nama terbaca di daftar commander |
 | Equipment | 134 | 0 | 6 | 110 dari 110 level equipment aktif punya screenshot panel detail |
 | Go Go Card | 58 | 0 | 4 | 199 dari 199 kartu aktif terlihat di screenshot Go Go Card |
 | Ensiklopedia | 15 | 0 | 2 | 15 screenshot dicocokkan dengan 8 tab Ensiklopedia |

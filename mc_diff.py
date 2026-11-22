@@ -166,11 +166,24 @@ def diff_texts(old_items, new_items):
     return sorted(new_items.keys() - old_items.keys()), sorted(old_items.keys() - new_items.keys()), changed
 
 
+def card_key(c):
+    """Power cards keep one key across exports: S7 gives them tier "Power", S8 makes them gold cards (tier Oranye, power
+    True); the commander-exclusive and the generic version of one Power card share a name."""
+    if c.get("power") or c["tier"] == "Power":
+        return f"{c['name']} (Power{' · ' + c['commander'] if c.get('commander') else ''})"
+    return f"{c['name']} ({c['tier']})"
+
+
 def diff_cards(a, b):
     # a card switching between active and inactive shows up as a text change ending in "[nonaktif]"
-    texts = lambda d: {f"{c['name']} ({c['tier']})": c["description"] + ("" if c.get("active", True) else " [nonaktif]")
-                       for c in d.get("cards", [])}
-    return diff_texts(texts(a), texts(b))
+    texts = lambda d: {card_key(c): c["description"] + ("" if c.get("active", True) else " [nonaktif]") for c in d.get("cards", [])}
+    added, removed, changed = diff_texts(texts(a), texts(b))
+    old = {card_key(c): c for c in a.get("cards", [])}
+    for c in b.get("cards", []):  # Kartu Power: Power (S7, own tab) -> Oranye (S8, gold card)
+        o = old.get(card_key(c))
+        if o and o["tier"] != c["tier"]:
+            changed.setdefault(card_key(c), []).append(f"Tier: {o['tier']} → {c['tier']}")
+    return added, removed, dict(sorted(changed.items()))
 
 
 def diff_encyclopedia(a, b):
