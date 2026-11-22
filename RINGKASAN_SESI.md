@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-11-01)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-11-22)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (1 Nov): riwayat 49. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (1–2 Nov, ditutup dengan ringkasan 22 Nov): riwayat 49–57. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -17,6 +17,10 @@ equipment, Ensiklopedia), menyajikannya sebagai laporan per season (HTML/MD/JSON
 memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Status sekarang
+- **Per 22 Nov ada dua bahan baru yang belum diproses** (paling mendesak, lihat Ide lanjutan): client game sudah **1.3.32.354.1** (`manifest.json`
+  18 Nov 04:07; dibanding snapshot 1 Nov: manifest +2000/−107/~2918 file, ResCheckConf +311/−233/~427, mini_patch +51/−23, LuaRepair berubah),
+  dan `screenshot/season 8/` berisi 562 gambar (434 MB, 18–21 Nov) + 15 rekaman, belum di-OCR. S8 sudah mulai 15 Nov. Semua angka di bawah
+  masih tentang versi 1.3.24.344.1 dan S7.
 - Versi game **1.3.24.344.1** = klien Patch 7.2 (file game sudah memuat revamp Lukas dan Equipment Reforger; listing toko
   dari hasil pencarian: ±9–14 Okt 2026; cek terakhir: belum ada update). Season aktif **S7 "Chrono Echoes"** (Rank Season 9,
   2026-08-11 s/d 2026-11-15 17:59:59 waktu server global); **S8 "Arena Para Penyihir"** sudah ada di file (mulai 2026-11-15,
@@ -742,6 +746,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
     - **Statistik papan** dihitung ulang: baseline 38 laporan sama persis dengan catatan, lalu 13 papan baru masuk (220 papan). Laporan Custom tetap tidak dihitung.
     - 200 tes (+24 subtes) lolos, `check_match.py` 42 laporan, 0 kesalahan, 0 peringatan.
 56. (2026-11-01) Tier list dicari lagi atas permintaan pengguna: belum ada yang tertulis setelah Patch 7.2 (rincian di Analisis gameplay). Riwayat 55 di-push (`f772c79`). Tugas tier list S7 ditutup dan dialihkan ke S8.
+57. (2026-11-22) Ringkasan untuk chat baru, atas permintaan pengguna. Riwayat 56 di-push (`c87b107`); repo sama dengan GitHub, tanpa perubahan lain. Pemeriksaan
+    2 Nov: tidak ada tugas yang bisa dikerjakan. Pemeriksaan 22 Nov menemukan dua bahan baru yang belum diproses: client 1.3.32.354.1 (18 Nov) dan 562 screenshot +
+    15 rekaman di `screenshot/season 8/` (lihat Status dan Ide lanjutan). Hasil terakhir untuk S7: 200 tes (+24 subtes), `check_match.py` 42 laporan 0/0,
+    `mc_validate.py` 0 selisih pada 843 gambar.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -809,10 +817,16 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\6e09ebcd-f03a-4c3c-8081-d95fad105539\scratchpad\`, bersama `regen_batch.py`.
 
 ## Ide lanjutan (belum dikerjakan)
-- **Tenggat S7: 2026-11-15 17:59:59 (waktu server global).** Tidak ada lagi screenshot S7 yang wajib diambil. Screenshot S8 diambil setelah S8 mulai.
-- Jalankan diff sungguhan (`patch_tracker.py` + `mc_diff.py`) setelah update game berikutnya.
-- S8: Kartu Power ada di level 3 (beda dengan S7); pengelompokan tab galeri S8 baru bisa dicek setelah ada screenshot S8.
-- Isi `server_patch.json` untuk S8 begitu Patch Note S8 keluar (gunakan status dari `mc_validate.py`).
-- Cari tier list S8 setelah S8 mulai. Tier list S7 setelah Patch 7.2 tidak ditemukan sampai 2026-11-01 (dicari tiga kali, lihat Analisis gameplay), dan S7 berakhir 15 Nov, jadi tidak perlu dicari lagi.
+- **Update client 1.3.32.354.1 (18 Nov) belum diproses.** Ikuti Alur setelah game update: `python patch_tracker.py snapshot` lalu `diff`,
+  `.venv\Scripts\python mc_data.py` (ekstraksi ulang ±3 menit pertama kali; cek season aktif dari MCSystemConfig), lalu `python mc_diff.py`.
+  Periksa juga apakah aturan yang terbukti di 1.3.24.344.1 (label rasio `FORMULA_KINDS`, `server_patch.json`) masih berlaku di versi baru.
+- **562 screenshot S8 belum diproses** (`screenshot/season 8/`: hero and synergies 217, equipment 131, go go card 54, update patch 50 = Patch
+  Note S8, commander 47, match 47 + 15 rekaman, ensiklopedia 16). Cek memori dulu, lalu `ocr_screens.ps1 -Season 8` (bisa diulang bila ada
+  yang gagal) dan `python mc_validate.py --season 8`. Kenali isi dari OCR, bukan nama folder; sebagian gambar `match/` bertanggal 1 Nov.
+  S8 belum masuk `STORE_VERIFIED`, jadi toko Spirit Sand S8 ikut dicek.
+- Isi `server_patch.json` untuk S8 dari Patch Note S8 (`update patch/`, gunakan status dari `mc_validate.py`). Cek juga Kartu Power level 3,
+  pengelompokan tab galeri S8, dan label Alpha S8 (`Physical DMG` di file 1.3.24.344.1).
+- Laporan MATCH S8 dari `screenshot/season 8/match/` bila diminta, setelah data versi baru ada.
+- Cari tier list S8. Tier list S7 setelah Patch 7.2 tidak pernah ditemukan (dicari tiga kali sampai 1 Nov, lihat Analisis gameplay).
 - Nama pemain baru dalam huruf hias tampil sebagai gambar sampai ditambahkan ke `catatan_nama.json` (dibaca mata). Nama Jepang kini dibaca otomatis, tapi kana kecil bisa
   terbaca besar (ュ jadi ユ): nama dari model tercantum di Catatan metode laporan, koreksi lewat `catatan_nama.json` bila beda dengan layar.
