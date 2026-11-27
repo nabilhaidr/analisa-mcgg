@@ -1,4 +1,4 @@
-# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-11-22)
+# Ringkasan proyek patch-tracker — Magic Chess: Go Go (per 2026-11-28)
 
 ## Cara melanjutkan di chat baru
 Tulis: **"Baca `F:\Magic Chess\patch-tracker\RINGKASAN_SESI.md` lalu lanjutkan."**
@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (22 Nov): riwayat 58–59 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate). Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (22–28 Nov): riwayat 58–64 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate, tier list S8, lalu 170 screenshot + 3 rekaman baru: Toko Spirit Sand S8 11/11, semua babak Go Go Box, hero panggilan S8 termasuk Alpha ★3, commander Odette, segmen roda dan arti `m_SpecialRules`, Patch Note 26/11 dan koreksi tier list-nya; lalu commit, push, dan cek tugas 28 Nov). Semua sudah di-push: riwayat 58–59 = `cdd6083`; riwayat 61–62 = `ccc1ab7` (pemeriksaan match S8 + patch 26/11); riwayat 60 + 63 = `f251fe1` (tier list S8); riwayat 64 = commit dokumen sesudahnya (ringkasan ini, `VALIDASI_S8.md`, snapshot client 28 Nov). Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -17,6 +17,19 @@ equipment, Ensiklopedia), menyajikannya sebagai laporan per season (HTML/MD/JSON
 memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Status sekarang
+- **28 Nov: semua perubahan sudah di-commit dan di-push; tidak ada bahan baru** (riwayat 64). 843 gambar S7 dan 732 gambar S8 semuanya
+  sudah di-OCR; rekaman terbaru (Odette Classic 27 Nov) sudah dipakai. Snapshot client 28 Nov 02:01: manifest, ResCheckConf, dan LuaRepair
+  sama dengan 22 Nov; hanya hotfix `mini_patch` `fix_hot_resource_20261117_wenqy` (diunduh 18 Nov; menurut nama filenya UI event MPL Draw)
+  yang aktif 27 Nov 19:12, bukan data pertandingan. Sumber tier list (loadoutgg comps + commander, mcggdb) dicek 28 Nov: masih sama.
+- **27 Nov sore: Patch Note Penyesuaian Keseimbangan (26/11) tercatat** di `server_patch.json` (21 perubahan: Kagura, Ling, Kalea, Guinevere,
+  Dawnbringer, Swiftblade, Titan, Melissa, Eudora, Kimmy, Argus, Lolita, Yu Zhong, Sora, Karina, Erza, Balmond, Popol, Bane; client PC tetap
+  1.3.32.354.1). Go Go Box S8 I-4 s/d V-6 semua terbukti (19 layar), Alpha ★3 cocok, commander Odette cocok kecuali tooltip "melebihi 6" tingkat
+  8–9 (nilai server tanpa patch note: 25/35% dan 45/60%, file 30/40% dan 50/65%), ATK Rekan +1% = +1 stack (toko S8 11/11). Riwayat 62.
+- **27 Nov: bahan S8 yang belum ada sudah dicek** (riwayat 61, dari 119 gambar baru di `screenshot/season 8/match/` + rekaman 22 Nov 16-26
+  dan 23 Nov 03-34): Toko Spirit Sand S8 terverifikasi (`STORE_VERIFIED = {7, 8}`), Go Go Box IV-6 ×2 dan V-6 cocok aturan S8, hero
+  panggilan Alpha ★1–★2 dan Bane/Gatotkaca/Moskov ★1–★3 cocok, label Alpha S8 = "Physical DMG", Chrono Wanderer dan Fan yang Bersorak
+  cocok lewat tooltip, roda Wheel of Fate 12 segmen, `m_SpecialRules` [1,1,1] = slot 1 putaran 1 Kartu Power Commander sendiri,
+  21 hasil roda terkumpul. Rincian di `VALIDASI_S8.md` dan bagian "Hasil validasi S8".
 - **22 Nov: client 1.3.32.354.1 sudah diproses dan S8 divalidasi ke 562 screenshot** (riwayat 58, hasil di bagian "Hasil validasi S8").
   Client `manifest.json` 18 Nov 04:07 (dibanding snapshot 1 Nov: manifest +2000/−107/~2918 file, ResCheckConf +311/−233/~427, mini_patch
   +51/−23, LuaRepair berubah; snapshot `snapshots/1.3.32.354.1_20261122-133450.json`). `MCSystemConfig`: aktif S8, berikutnya S8, jadi
@@ -47,16 +60,17 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 |---|---|---|
 | `patch_tracker.py` | Snapshot & diff hash file game (manifest, ResCheckConf, mini_patch, LuaRepair) → `snapshots/`, `reports/` | `python patch_tracker.py snapshot` / `diff` / `list` |
 | `mc_tables.py` | Library: skema tabel dari PDB, ekstrak TextAsset (cache `cache/<versi>/`), parser tabel, teks bahasa | di-import `mc_data.py` |
-| `mc_data.py` | Ekspor data season → `data/<versi>/S<n>.json/.md/.html` (bahasa Indonesia, opsi `--season 7 8`, `--lang EN`); juga menerapkan `server_patch.json`. `summons` = unit panggilan di luar daftar hero (Johnny, Turret, Makhluk Suci) untuk deteksi layar hasil. Sinergi (sejak client 1.3.32.354.1) juga punya `explain_lite`, `explain_full`, `table` {header, rows [{count, cells, text}]}, `details` = Panduan Sinergi S8 (lihat Temuan teknis). Kartu: `power` (kartu Power commander; S7 tier "Power", sejak S8 tier "Oranye" = Go Go Card emas) dan `tags` (jenis dari `m_CardTag`: finansial/Power/Badge Sinergi/peningkatan Sinergi). `wheel_of_fate` = efek `MCRoulette` + durasi upacara pembuka (hanya season dengan `AOpeningCeremonyInfo`, yaitu S8). Tes: `test_mc_data.py` | `.venv\Scripts\python mc_data.py` |
+| `mc_data.py` | Ekspor data season → `data/<versi>/S<n>.json/.md/.html` (bahasa Indonesia, opsi `--season 7 8`, `--lang EN`); juga menerapkan `server_patch.json`. `summons` = unit panggilan di luar daftar hero (Johnny, Turret, Makhluk Suci) untuk deteksi layar hasil. Sinergi (sejak client 1.3.32.354.1) juga punya `explain_lite`, `explain_full`, `table` {header, rows [{count, cells, text}]}, `details` = Panduan Sinergi S8 (lihat Temuan teknis). Kartu: `power` (kartu Power commander; S7 tier "Power", sejak S8 tier "Oranye" = Go Go Card emas) dan `tags` (jenis dari `m_CardTag`: finansial/Power/Badge Sinergi/peningkatan Sinergi). `wheel_of_fate` = efek `MCRoulette` + durasi upacara pembuka (hanya season dengan `AOpeningCeremonyInfo`, yaitu S8); `special_rules` = aturan per slot dari `m_SpecialRules` (`SPECIAL_RULE_TYPES`), `notes` = pengamatan roda (`WHEEL_NOTES`, 12 segmen). `STORE_VERIFIED` = season yang toko Spirit Sand-nya sudah dicek in-game (7, 8). Tes: `test_mc_data.py` | `.venv\Scripts\python mc_data.py` |
 | `mc_images.py` | Ekstrak ikon dari atlas UI NGUI (`StreamingAssets/UI/windows/<Atlas>.unity3d`: Texture2D + MonoBehaviour `mSprites` = nama, x, y, lebar, tinggi; asal kiri atas) → `data/<versi>/img/<Atlas>/<sprite>.png`; field `icon` di JSON jadi path relatif. File yang sudah ada tidak diekstrak ulang | dipanggil `mc_data.py` |
 | `report_template.html` | Template S<n>.html: tab Hero, Sinergi (+ tabel Toko Spirit Sand di bawahnya, tautan dari kartu Mistbender), Commander, Go Go Card, Equipment, Info Season, Ensiklopedia, Patch Server; cari/filter, tombol "Tampilkan nonaktif", mode gelap | dipakai `mc_data.py` |
 | `mc_diff.py` | Bandingkan `S<n>.json` dua versi terakhir: buff/nerf stat, skill, sinergi, commander (+tipe Aktif/Pasif, +detail tooltip), kartu (+aktif), equipment (+aktif), Ensiklopedia/DMG, Toko Spirit Sand (harga/batas beli = buff/nerf, peluang, efek, pilihan), Go Go Box (jumlah orb per jenis, harga hero, isi pool; babak dengan perubahan sama digabung) → `data/diff/`. Field yang belum ada di ekspor lama ditandai "tidak dibandingkan". Kartu Power dicocokkan dengan kunci tetap "nama (Power · commander)", jadi perpindahan tier Power → Oranye (S8) tercatat sebagai perubahan "Tier", bukan kartu dihapus + baru | `python mc_diff.py` |
 | `ocr_screens.ps1` | OCR bawaan Windows (en-US, gambar ×2) semua screenshot satu season → `screenshot/season <n>/ocr.json`, cache per gambar. Gambar yang gagal (mis. memori habis) tidak disimpan, dilaporkan di stderr, kode keluar 1; jalankan ulang untuk mengulanginya. Tes: `test_mc_ocr.py` | `powershell -ExecutionPolicy Bypass -File ocr_screens.ps1 -Season 7` |
-| `mc_validate.py` | Cocokkan `S<n>.json` dengan OCR screenshot (jenis layar dikenali otomatis; subfolder bebas) → `data/<versi>/VALIDASI_S<n>_auto.md`: **Selisih** (kemungkinan data salah) vs **Cek manual** (kemungkinan salah baca OCR) + status tiap baris patch note ("tercatat" = nilai baru baris itu ada di entri `server_patch.json`, bukan sekadar namanya). Layar Toko Spirit Sand: nama + harga per kolom, dan kenaikan baris "ATK/HP rekan" dibanding stack item yang dibeli (dua layar berurutan satu pertandingan). Layar Pilih Hadiah dan hitung mundur "Segera Dimulai" (Go Go Box): label orb per jenis dicocokkan dengan `go_go_box`; layarnya tanpa label babak, jadi babak dikenali dari susunan 8 orb (`check_go_go_box`). Layar ini dibaca ulang dengan RapidOCR bila ada gambar dan paketnya (`reread_box_screens`, cache `ocr_rapid.json` tidak ikut git; OCR Windows hanya 5–7 dari 8 label, jadi di sesi cloud layar tetap sebagian). S8: galeri Go Go Card tanpa tab Kartu Power, layar Commander ponsel ("+ Commander") dan judul rusak (dikenali dari label Aktif/Pasif + Level), tabel Panduan Sinergi (`check_synergy_table`: baris dicocokkan lewat isi angkanya karena label tingkat tidak terbaca; `table_values` membaca "0/0" sebagai "%" dan ikon di belakang angka sebagai satu digit tambahan; penjelasan dibandingkan dengan Lite/Penuh secara toleran salah eja, `fuzzy_cover`), teks commander yang sudah diganti server (`description_server`), pecahan atribut equipment yang dipotong panel (dicatat di Cakupan), baris lanjutan patch note milik item di baris sebelumnya. Tes: `test_mc_validate.py` (S7 + fixture S8: `screenshot/season 8/ocr.json` dan `data/1.3.32.354.1/S8.json`) | `python mc_validate.py --season 7` (`--dump "(1510)"` = teks OCR 1 screenshot) · `python -m pytest test_mc_validate.py` |
+| `mc_validate.py` | Cocokkan `S<n>.json` dengan OCR screenshot (jenis layar dikenali otomatis; subfolder bebas) → `data/<versi>/VALIDASI_S<n>_auto.md`: **Selisih** (kemungkinan data salah) vs **Cek manual** (kemungkinan salah baca OCR) + status tiap baris patch note ("tercatat" = nilai baru baris itu ada di entri `server_patch.json`, bukan sekadar namanya). Layar Toko Spirit Sand: nama + harga per kolom, dan kenaikan baris "ATK/HP rekan" dibanding stack item yang dibeli (dua layar berurutan satu pertandingan). Layar Pilih Hadiah dan hitung mundur "Segera Dimulai" (Go Go Box): label orb per jenis dicocokkan dengan `go_go_box`; layarnya tanpa label babak, jadi babak dikenali dari susunan 8 orb (`check_go_go_box`). Layar ini dibaca ulang dengan RapidOCR bila ada gambar dan paketnya (`reread_box_screens`, cache `ocr_rapid.json` tidak ikut git; OCR Windows hanya 5–7 dari 8 label, jadi di sesi cloud layar tetap sebagian). S8: galeri Go Go Card tanpa tab Kartu Power, layar Commander ponsel ("+ Commander") dan judul rusak (dikenali dari label Aktif/Pasif + Level), tabel Panduan Sinergi (`check_synergy_table`: baris dicocokkan lewat isi angkanya karena label tingkat tidak terbaca; `table_values` membaca "0/0" sebagai "%" dan ikon di belakang angka sebagai satu digit tambahan; penjelasan dibandingkan dengan Lite/Penuh secara toleran salah eja, `fuzzy_cover`), teks commander yang sudah diganti server (`description_server`), pecahan atribut equipment yang dipotong panel (dicatat di Cakupan), baris lanjutan patch note milik item di baris sebelumnya. Layar toko: persen ATK/HP yang turun = pertandingan baru (tidak dibandingkan). Tes: `test_mc_validate.py` (S7 + fixture S8: `screenshot/season 8/ocr.json` dan `data/1.3.32.354.1/S8.json`) | `python mc_validate.py --season 7` (`--dump "(1510)"` = teks OCR 1 screenshot) · `python -m pytest test_mc_validate.py` |
 | `catatan_gameplay.json` | Catatan MANUAL aturan permainan dari pengalaman bermain (tidak ada di tabel data): per equipment `id`, `text`, `source`, opsional `seasons`. `mc_data.py` (`apply_gameplay_notes`) menempelkannya sebagai `gameplay_notes` → kotak hijau "Aturan dari pengalaman bermain" di tab Equipment S<n>.html dan baris di S<n>.md. Isi sekarang: Go Go Magic Crystal (1101) dan Choice Magic Crystal (10001) | edit manual → jalankan `mc_data.py` |
 | `catatan_nama.json` | Catatan MANUAL nama pemain yang tidak terbaca atau keliru dibaca model OCR (huruf hias, kana kecil Jepang), dibaca mata dari layar hasil dan mendahului bacaan model: `{ID battle: {baris: nama}}`. `mc_match.hand_names` memakainya mengganti potongan gambar; nama di luar daftar tetap gambar. Isi: 5 nama | edit manual → buat ulang laporannya |
-| `server_patch.json` | Catatan MANUAL perubahan Patch Note yang diterapkan server (tidak ada di file game): hero `stat/stars/old/new`, commander/`hero_skills`/kartu `replace` [teks lama, teks baru] (+ `attributes` [[label, bintang, nilai]] untuk tabel Atribut Skill hero), kartu `removed`, `synergies`; cukup `text` tanpa `replace` = catatan saja bila angkanya tidak ada di teks file game (stat Johnny, Turret, ambang Echo Energy). Patch berikutnya pada skill yang sama melanjutkan teks patch sebelumnya (`replace` memakai `description_server` bila sudah ada). Tes: `test_mc_data.py` | edit manual → jalankan `mc_data.py` (`--season 7` bila S8 tidak berubah) |
+| `server_patch.json` | Catatan MANUAL perubahan Patch Note yang diterapkan server (tidak ada di file game): hero `stat/stars/old/new`, commander/`hero_skills`/kartu `replace` [teks lama, teks baru] (+ `attributes` [[label, bintang, nilai]] untuk tabel Atribut Skill hero), kartu `removed`, `synergies`; cukup `text` tanpa `replace` = catatan saja bila angkanya tidak ada di teks file game (stat Johnny, Turret, ambang Echo Energy). Patch berikutnya pada skill yang sama melanjutkan teks patch sebelumnya (`replace` memakai `description_server` bila sudah ada), dan sejak 27 Nov juga tabel atributnya (`attributes_server`); `attributes` boleh `[label, bintang, nilai, urutan]` untuk baris berlabel kembar (Eudora/Kimmy "Magic Bonus" ke-2). S8: "20/11", "26/11", "27/11 tanpa patch note" (Odette). Tes: `test_mc_data.py` | edit manual → jalankan `mc_data.py` (`--season 7` bila S8 tidak berubah) |
 | `analisis_lineup.py` | Halaman analisis 5 lineup pengguna (peringkat tanpa ultra, papan, sinergi, kartu, build Odette/Lancelot, aturan crystal, pelajaran pertandingan 20 Okt) → `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` + `.md` dengan ikon dari `img/`. Angka dibaca dari S7.json; teks analisis ditulis tangan di skrip | `python analisis_lineup.py` (setelah `mc_data.py`) |
+| `tier_list.py` | Tier list Season 8: 18 comp + 41 commander (gabungan loadoutgg, mcggdb, kitakuji, Rekomendasi Lineup in-game, dikoreksi Penyesuaian 20/11 dan 26/11), bagian Untukmu, cara membaca season (Wheel of Fate), sumber → `data/1.3.32.354.1/TIER_LIST_S8.html` + `.md` dengan ikon dari `img/`. Efek patch = `(panah, teks, patch)`, panah `None` = catatan; commander ±0,5 per buff/nerf (bisa beberapa patch, `prev` = tier sebelum 26/11); comp: `before` = tier sumber bila turun karena nerf, `was` = tier sebelum 26/11. Penilaian ditulis tangan di skrip; `test_tier_list.py` (25 tes) menguji aturan gabungan, label efek, aturan comp, dan bahwa semua nama ada di S8.json | `python tier_list.py` (setelah `mc_data.py`) |
 | `video_frames.ps1` | Ambil frame dari rekaman pertandingan MP4 (API `Windows.Media.Editing`, tanpa ffmpeg) → `f_<detik>.jpg`; lalu bisa `ocr_screens.ps1 -Folder <folder frame>`. **Tidak bisa HEVC** (rekaman layar ponsel; error `0xC00D5212`): sekarang berhenti dengan pesan, tidak lagi meninggalkan JPG 0 byte | `powershell -ExecutionPolicy Bypass -File video_frames.ps1 -Video <mp4> -Out <folder> -Step 5` |
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa. Rekaman berkanvas potret (ponsel tegak saat mulai merekam, 31 Okt 03-23: 1080x2400) otomatis dipotong ke pita game di tengahnya (`game_area`) | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
@@ -68,7 +82,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `requirements.txt` | Paket Python sistem untuk alat analisa (numpy, pillow, opencv-python, av, rapidocr_onnxruntime) | `pip install -r requirements.txt` |
 | `data/1.3.24.344.1/VALIDASI_S7.md` | Laporan validasi manual (perbaikan yang dibuat + daftar beda karena server) | — |
 | `data/1.3.32.354.1/VALIDASI_S8.md` | Laporan validasi manual S8 (isi folder per jenis layar, hasil per bagian, perbaikan `mc_data.py`, Patch 20/11, teks yang diganti server) | — |
-| `screenshot/season 8/` | 562 gambar + `ocr.json` (OCR 22 Nov, 6 menit 52 detik): hero and synergies 217 (102 Detail Hero, 113 Panduan Sinergi; + 6 rekaman PC video pratinjau sinergi dan 5 video YouTube), equipment 131, go go card 54, update patch 50 (18 Patch Note Season 8.0 PC, 5 ponsel 20 Nov = Penyesuaian 20/11, 27 Panduan Season: Ringkasan Sinergi + Lineup Kuat; + 4 video YouTube), commander 47 (41 detail termasuk Vexana ponsel 20–21 Nov, 3 Ganti Commander), ensiklopedia 16, match 47 (33 layar hasil 1–7 Nov = S7, 14 layar hasil 16–21 Nov = S8) + 5 rekaman ponsel 20 Nov (11 GB, MP4 di-`.gitignore`) | — |
+| `screenshot/season 8/` | 732 gambar + `ocr.json` (OCR 22 Nov, 6 menit 52 detik; 119 gambar baru 27 Nov, 1 menit 38 detik; 51 lagi 27 Nov sore: 4 layar Odette di `commander/`, 7 Patch Note 26/11 di `update patch/` (+ `update patch/ocr.json` dari `mc_patch.py`), 16 frame VLC Go Go Box I-4/II-6/III-6 + 12 layar ponsel di `match/`, 12 layar toko di `spirit sand/`, rekaman "uji coba commander odette classic.mp4"): hero and synergies 217 (102 Detail Hero, 113 Panduan Sinergi; + 6 rekaman PC video pratinjau sinergi dan 5 video YouTube), equipment 131, go go card 54, update patch 50 (18 Patch Note Season 8.0 PC, 5 ponsel 20 Nov = Penyesuaian 20/11, 27 Panduan Season: Ringkasan Sinergi + Lineup Kuat; + 4 video YouTube), commander 47 (41 detail termasuk Vexana ponsel 20–21 Nov, 3 Ganti Commander), ensiklopedia 16, match 166: 33 layar hasil 1–7 Nov = S7, 38 layar hasil 16–27 Nov = S8 (efek Wheel of Fate di pojok kanan atas), 27 Nov: 10 layar roda, 57 panel unit dalam pertandingan (Alpha, Gatotkaca, Moskov, Bane, Terizla, Thamuz), 3 tooltip sinergi, 2 Achievement; 3 frame VLC PC 2480–2482 (Go Go Box IV-6/V-6); `match/spirit sand/` 20 layar toko 23 Nov. Rekaman (MP4 di-`.gitignore`): 5 ponsel 20 Nov (11 GB), 22 Nov 16-26 (Commander's Power), `spirit sand/` 23 Nov 03-34 (toko) | — |
 | `screenshot/season 7/` | 843 gambar + `ocr.json` (semua gambar season ini; 405 gambar, 565 MB, sengaja tidak di git atas pilihan pengguna): hero & sinergi 154 (termasuk 16 tooltip editor lineup 1 Nov), commander 66 (termasuk layar Lukas, Dyrroth, Lunox ponsel 31 Okt dan PC 1935–1937), equipment 134, go go card 58, ensiklopedia 18, update patch 27 (Penyesuaian 28/10: PC 1893–1895, ponsel 29 Okt); subfolder `match/` = 20 rekaman pertandingan 21–26 Okt (MP4, di-`.gitignore`) + 286 gambar: layar hasil, 7 Rekomendasi Lineup 20/10, daftar Riwayat, 1 Toko Spirit Sand, 19 layar hasil 8 pertandingan 27–30 Okt, dan 138 gambar 31 Okt (panel unit hero panggilan, Chrono Wanderer, 3 Pilih Hadiah, Riwayat, layar hasil; **pengguna menaruh Detail Hero panggilan di sini, bukan di `hero and synergies`**, jadi kenali isi folder dari OCR, bukan dari nama folder), 43 gambar 31 Okt 22:54 – 1 Nov 02:37 (tooltip hero panggilan, layar hasil 3 pertandingan), 13 `Go Go Box …` hitung mundur (8 frame rekaman 21 Okt yang dijeda di VLC, 5 layar 1 Nov), 32 gambar 1 Nov 17:03–18:57 (panel skill 13 hero dalam pertandingan, layar hasil 3 pertandingan); `match/practice bot/` = 21 gambar mode Custom lawan komputer 1 Nov (3 Go Go Box, tooltip Gatotkaca, layar hasil, tooltip X.Borg di editor lineup); `match/spirit sand/` = 59 gambar (Toko Spirit Sand PC 1896–1926, ponsel 31 Okt, 2 layar Riwayat) + 2 rekaman 2 pertandingan; `match/commander vexana/` = 20 gambar (daftar Riwayat, layar Riwayat, panel Fan yang Bersorak, tooltip Alpha) + 2 rekaman 1 pertandingan (Vexana ★★) | — |
 
 `.venv` berisi UnityPy, capstone, pycryptodome, pillow. Skrip lain cukup Python sistem (3.13) + `requirements.txt`.
@@ -101,7 +115,10 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   ikut: layar ponsel Lukas, Dyrroth, Lunox 31 Okt memuat angka 28/10, dan client PC 1 Nov juga (1935–1937), padahal file client tidak berubah sejak 20 Okt. Jadi PC dan ponsel
   sama-sama menerima teks ini dari server. **S8 (22 Nov):** server juga mengganti teks sinergi tanpa patch note (Titan dan Frostrider mode Lite,
   semua teks Dawnbringer termasuk judul kolom; teksnya tidak ada di tabel mana pun di client), dan nilai bisa berubah tanpa patch note: Vexana
-  Unrestricted file 6 Gold, layar ponsel 20 Nov 21:20 4 Gold (nilai lama yang ditulis patch note 20/11), 21 Nov 03:41 2 Gold.
+  Unrestricted file 6 Gold, layar ponsel 20 Nov 21:20 4 Gold (nilai lama yang ditulis patch note 20/11), 21 Nov 03:41 2 Gold. **27 Nov:** tooltip
+  "melebihi 6" Odette di layar ponsel 25%/35% (8 sinergi) dan 45%/60% (9), file 30%/40% dan 50%/65% (efek 45060600/45060601), tanpa patch note.
+  Patch Note 26/11 (dilihat 27 Nov 16:21) belum berlaku di pertandingan 27 Nov 05:43 (panel Bane ★2 masih freeze 1,8 detik). Nilai lama di
+  patch note bisa beda dari file: Eudora ★3 "700%" (file 635%), Lolita ★3 "1.700%" (file 1455%), seperti Valentina 20/11.
 - **Panduan Sinergi S8 (client 1.3.32.354.1)**: tombol Lite/Penuh + tabel angka per tingkat; teks lama `mRelationExplain` tidak tampil lagi.
   Lite = `RelationSkill_MC_S8.mSkillDescriptionNew` (sama di tiap tingkat; Deadeye 2113 sama persis), Penuh = `RelationSkillTip_MC_S8.mRelationExplainNew`
   (`${TagN}$` = `SkillKeyWords_MC(_S8).mSkillKeyWordsContent`, tooltip = `mSkillKeyWordsDesc`), judul kolom = `DescriptionIcon.mIconDescription` dari
@@ -119,7 +136,13 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   (`MCLogicOpenCeremonyComp_GoGoRoulette`; `AOpeningCeremonyInfo` di battle config S8: 2 + 6,5 + 4 + 3 = 15,5 detik). Satu efek diundi
   dengan `m_Weight` (pemain baru `m_NewPlayerWeight`); kolom `m_CardTagFilter`/`m_LevelOverride` per putaran Go Go Card,
   `m_TriggerRoundOverride` (babak), `m_NeedSharedCards`, `m_ForesightGuarantee`, `m_PostSelectSkillId`, `m_UnlockPlayerLevel`. 9 efek aktif
-  (total bobot 15) = 9 efek di video resmi; Ensiklopedia hanya menyebut 4. Jumlah segmen roda dan arti `m_SpecialRules` belum diketahui.
+  (total bobot 15) = 9 efek di video resmi; Ensiklopedia hanya menyebut 4. **27 Nov:** roda di layar = 12 segmen (7 terlihat = setengah
+  lingkaran); isinya berbeda tiap pertandingan dan satu efek bisa tampil 2 kali (Gold Galore berbobot 1 juga), jadi segmen tidak menunjukkan
+  bobot. `m_SpecialRules` = [jenis, putaran, slot] (`MCLogicGoGoCardRouletteSpecialRules`: `TryGetRules`, `IsRoundMatch`, `IsSlotMatch`,
+  `TryPickSelfCommander`); [1,1,1] Commander's Power = slot 1 putaran 1 selalu Kartu Power Commander sendiri (rekaman 22 Nov 16-26: Lukas's
+  Power tetap di slot kiri setelah 2 kali refresh, slot kanan berganti; putaran 2–3 tanpa kartu itu). Urutan field belum teruji (semua 1).
+  Pilihan Go Go Card S8 menawarkan 2 kartu per putaran (Refresh ×2). Hasil roda tertulis di pojok kanan atas layar hasil S8: 21 pertandingan,
+  Fate Sync dan Tycoon masing-masing 6, masih wajar terhadap bobot (χ² 11,5, p ≈ 0,18).
 - Atribut pecahan equipment tampil terpotong di panel (tabel 22.5% → layar 22%, 3 equipment Dawnbringer yang Diperkuat). Tidak ada tabel data
   di `mini_patch` 354.1 (hanya audio, atlas, satu Lua UI).
 - Toko Spirit Sand (S7 dan S8 sama, 11 item, total bobot 980): HP Rekan +1/2/3% (8/16/24), ATK Rekan +1/2/3% (8/16/24),
@@ -132,7 +155,8 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   tidak ada di tabel maupun simbol PDB (hanya kelas tabel `CData_SpecialStore`). **Dari 2 pertandingan 31 Okt:** selalu 3 slot;
   isi tidak berganti sendiri antarbabak (Nana, ATK +1%, Hero 4 Gold bertahan I-3 s/d II-4; Magic Crystal bertahan II-6 s/d IV-2);
   hanya slot yang dibeli langsung diganti item acak; item yang sama bisa tampil di 2 slot; Nana dan Mirror Device tidak muncul
-  lagi setelah dibeli (sesuai maks 1).
+  lagi setelah dibeli (sesuai maks 1). **S8 sama** (terbukti 23 dan 27 Nov dari 32 layar + rekaman: 11 dari 11 item dengan harga, 12 pembelian
+  sesuai stack termasuk ATK +1% = +1, ATK +2% = +3, ATK +3% = +5).
 - **Magic Crystal Pilihan** (dapat 1 di awal Fase Ⅱ, Ⅲ, Ⅳ): hanya **1 yang bisa aktif**; memakai yang baru menggantikan yang
   lama (dari pengalaman bermain pengguna; tidak ada di tabel data, tidak ada tabel VersatileCrystal). 2 dari 3 pilihannya =
   Faction & Role hero itu sendiri, dan crystal sinergi milik hero sendiri tetap +1 (terlihat: Astro 6/10 dengan 5 hero Astro).
@@ -150,7 +174,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   5 Gold; IV-6 dst.: 3–4 + 3–4 crystal + 1 Kapasitas, hero 5 Gold. Urutan memilih = sisa HP terendah dulu (terverifikasi di II-6).
   Sebelum Pilih Hadiah ada hitung mundur "Segera Dimulai" 3, 2, 1: belum ada yang memilih, jadi 8 orb utuh; label baru memudar masuk di hitungan 2.
   Isi tetap 8+3 walau tinggal 2 pemain. `AChooseHero.iSpecialHeroId 451700` = fase pilih tambahan Vexana (6 detik).
-  **S8 beda:** mulai IV-6 equipment biasa 4–6 + crystal 1–3 (S7: 3–4 + 3–4), jadi crystal Go Go Box akhir lebih sedikit; daftar
+  **S8 beda:** mulai IV-6 equipment biasa 4–6 + crystal 1–3 (S7: 3–4 + 3–4; terbukti 27 Nov di IV-6 ×2 dan V-6: 5 + 2 + 1; I-4 ×6, II-6 ×6, III-6 ×4 juga cocok data), jadi crystal Go Go Box akhir lebih sedikit; daftar
   crystal S8 masih memuat ID 1054 (= Dragoncaller di S7) yang tidak ada di `MCEquipBase_S8`; faksi baru Frostrider (maks 6) tidak
   punya Magic Crystal sama sekali. Diekspor ke S<n>.json/.md/.html sejak 2026-10-21.
 - **HP Commander bisa naik**: kartu **Healing Fountain** memulihkan 3 HP tiap babak (tertulis di kartunya, terbukti dari bar: 22 Okt 06-16
@@ -173,13 +197,13 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | Ikon (gambar) | Rujukan `"<Atlas>/<sprite>"` di tabel: hero `MCHero_S<n>.m_Head` (`Atlas_HeroHeadIcon_S<n>`), commander `MCHero.m_Head` (`Atlas_HeroHeadIcon_New*_MC`), sinergi `RelationSkillTip_MC_S<n>.m_RelationIcon` (`Atlas_RelationIcon_S<n>`), equipment `MCEquipBase.m_Icon[0]` (per level), Go Go Card `MCSuperCrystalKey.m_MiniIcon` (`Atlas_GoGoCard_0X_MC`; `m_IconFile` = gambar besar tanpa atlas), skill `MCSkill.m_IconFile`. S7/S8: semua hero, sinergi, commander, kartu aktif, equipment aktif, dan skill punya ikon; hanya 2 kartu nonaktif yang tidak ada spritenya. 751 PNG, ±14 MB untuk S7+S8 |
 | Detail tooltip skill commander | Kata bergaris bawah `${TagN}$` di teks skill → `SkillKeyWords_MC.mSkillKeyWordsDesc` + `m_NumDescribe` (field `details` per skill). Layar Commander memakai baris **tabel dasar dulu**, `SkillKeyWords_MC_S<n>` hanya untuk id yang tidak ada di dasar (Lylia = dasar "Harga di Little Witch's Shop", Freya "Efek Sinergi" = `_S7`). `[SkillName/SkillDes<id>]` = teks skill lain (Luo Yi 481601–481625); `${JohnsonBondList}$` = `JohnsonSeasonBondList.m_BondList` (baris season, kalau tidak ada baris default -1; S7 = 15 sinergi). S7: Alucard, Diggie (2), Franco, Freya (2), Johnson, Kalea, Luo Yi, Lylia, semuanya cocok dengan screenshot |
 | Go Go Card | `MCSuperCrystalKey` + `_S<n>`. Aktif bila `m_Value1/2/3` ≠ 0 (bobot putaran Go Go Card 1/2/3; dibaca dari kode galeri `MCUIHandBookSuperCrystal.RefreshCardList`). Deskripsi memakai level skill kartu (`m_SkillID/m_SkillID2` = [id, level]). Kartu Power: punya `m_CommanderId` atau `m_CardTag` 2 (S8); di S7 (tanpa tag 2) versi umum = level sama dan hanya putaran 1. Tier "Power" hanya untuk `m_Level` 4 (S7); S8 = Oranye + `power` |
-| Wheel of Fate (S8, field `wheel_of_fate`) | `MCRoulette` (nama/teks `mName`/`mDesc` = teks layar hasil roda), bobot → peluang, aturan per putaran dari `m_CardTagFilter` + `m_LevelOverride`, babak dari `m_TriggerRoundOverride` (label `AMCRoundStage`); diekspor hanya bila battle config season punya `AOpeningCeremonyInfo`. Terverifikasi ke video resmi (9 efek) dan 3 hasil roda di rekaman 20 Nov |
+| Wheel of Fate (S8, field `wheel_of_fate`) | `MCRoulette` (nama/teks `mName`/`mDesc` = teks layar hasil roda), bobot → peluang, aturan per putaran dari `m_CardTagFilter` + `m_LevelOverride`, babak dari `m_TriggerRoundOverride` (label `AMCRoundStage`); diekspor hanya bila battle config season punya `AOpeningCeremonyInfo`. `m_SpecialRules` → `special_rules` (jenis 1 = Kartu Power Commander sendiri). Terverifikasi ke video resmi (9 efek), 3 hasil roda di rekaman 20 Nov, 21 hasil di layar hasil 16–27 Nov, dan pilihan I-2 Commander's Power di rekaman 22 Nov |
 | Equipment | `MCEquipBase` + `_S<n>`. Aktif = `m_DropState == 1` (empiris, cocok 67/67). Pasif memakai level dari `m_SkillList` = [id, level]. Physical+Magic bernilai sama ditampilkan "Hybrid ATK/DEF" |
 | Ensiklopedia | `BattleSeason.m_SeasonHandbookID` → `HookBook_MC` (S7 = 11, S8 = 12), teks `CommonText_MC`; Panduan Sinergi = `m_RelationDes` + `GiftPackage_MC` (`m_GiftType` = `m_RelationDesNum`) |
 | DMG Commander | XML `MCClassicsBattleConfig_S<n>` → `SRoundExtraDamage` + `AMCRoundStage` (fase terakhir dipecah per 6 babak → IV, V) |
 | Info season | `PlayerLevel_MC_S<n>` (biaya EXP = Gold, peluang toko), `HeroQuality_MC` (pool per hero) |
 | Go Go Box (tab Info Season, field `go_go_box`) | `MCRoundRandomEquip_S<n>` (baris `m_RoundConfigId` 0): babak `m_Round` (label dari `AMCRoundStage`), equipment biasa `m_NormalEquipMin–Max` dari `m_NormalEquip`, crystal = `m_EquipTotal` − equipment biasa dari `m_CrystallEquip`, Kapasitas +1 = 8 − `m_EquipTotal` (8 orb = pengamatan, `GO_GO_BOX_ORBS`), hero `m_HeroListNumber` dengan harga diundi bobot `m_HeroList`/`m_HeroListRate` (harga sama dijumlahkan). Teks orb in-game = `summary` item. ID yang tidak ada di tabel equipment → `notes`. S7 cocok dengan rekaman 21 Okt (I-4, II-6, III-6, IV-6) |
-| Toko Spirit Sand (Mistbender) | `SpecialStore` (tanpa varian `_S<n>`; harga `m_ChipNum`, bobot acak `m_Probability`, batas beli `m_MaximumPurchase`, 999 = tanpa batas) + `MCSpecialCardPool` (nama `mName`, teks `mSpecialDes`, `m_SkillID`). Efek dari `MCSkill`/`MCEffect` skill item: `OperEnum 20` ke efek `4590200` = bayar Spirit Sand, `OperEnum 1` + `OperEnum 20` = stack buff permanen, bonus per stack dari efek `m_Calculate 10021` (stack × `FPara3`), `OperEnum 50/20009` = equipment tetap/acak. Ditautkan ke sinergi lewat keluarga ID (skill 45900/45901 ↔ buff 4590200). Nama mata uang = `DescriptionIconShow` 27. S7 terverifikasi ke screenshot 31 Okt (`STORE_VERIFIED`: 11 item, harga, stack); S8 belum (belum ada screenshot S8) |
+| Toko Spirit Sand (Mistbender) | `SpecialStore` (tanpa varian `_S<n>`; harga `m_ChipNum`, bobot acak `m_Probability`, batas beli `m_MaximumPurchase`, 999 = tanpa batas) + `MCSpecialCardPool` (nama `mName`, teks `mSpecialDes`, `m_SkillID`). Efek dari `MCSkill`/`MCEffect` skill item: `OperEnum 20` ke efek `4590200` = bayar Spirit Sand, `OperEnum 1` + `OperEnum 20` = stack buff permanen, bonus per stack dari efek `m_Calculate 10021` (stack × `FPara3`), `OperEnum 50/20009` = equipment tetap/acak. Ditautkan ke sinergi lewat keluarga ID (skill 45900/45901 ↔ buff 4590200). Nama mata uang = `DescriptionIconShow` 27. S7 terverifikasi ke screenshot 31 Okt (`STORE_VERIFIED`: 11 item, harga, stack); S8 terverifikasi 23 dan 27 Nov (32 layar + rekaman: 11 dari 11 item, 12 pembelian) |
 
 ## Hasil validasi S7 (843 screenshot)
 - `VALIDASI_S7_auto.md`: **0 selisih**, 21 cek manual (semua sudah dicek: salah baca OCR, 3 kolom toko yang namanya tidak
@@ -207,9 +231,12 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   Patch Note 0 / 0 (semua perubahan server tercatat). Semua sisa dicek mata dan dicatat di `VALIDASI_S8.md`: 2 selisih Commander = Lylia
   "Shop" terbaca "S.b22" dan layar Vexana ponsel 20 Nov 21:20 (Unrestricted 4 Gold, nilai server antara); cek manual = salah baca OCR, Zhuxin
   ("Zhuxm"), 4 salah baca ikon Swiftblade, 3 teks sinergi dari server (Titan Lite, Frostrider Lite, Dawnbringer).
-- Cakupan: 52/52 hero toko, 20/22 sinergi (318 baris tabel tingkat cocok), 40/41 commander (Odette tanpa screenshot), 113/113 level equipment aktif,
+- Cakupan: 52/52 hero toko, 22/22 sinergi (20 lewat Panduan Sinergi, 318 baris tabel tingkat cocok; Chrono Wanderer dan Fan yang Bersorak lewat
+  tooltip dalam pertandingan 27 Nov), 40/41 commander (Odette tanpa screenshot), 113/113 level equipment aktif,
   195/200 kartu aktif (tidak terlihat: Journey's Windfall, Fury's Edge (Bisa Berubah Sewaktu-waktu), Victory's Blessing, Odette's Power ×2), 8 tab
-  Ensiklopedia. Belum ada screenshot Toko Spirit Sand S8 dan Go Go Box S8 (S8 belum masuk `STORE_VERIFIED`).
+  Ensiklopedia. **27 Nov:** hero panggilan 4/4 (Alpha ★1–★2, Bane/Gatotkaca/Moskov ★1–★3, panel dalam pertandingan, dihitung balik), label
+  Alpha S8 "Physical DMG", Toko Spirit Sand S8 (`STORE_VERIFIED = {7, 8}`), Go Go Box IV-6 ×2 + V-6. `VALIDASI_S8_auto.md` (681 gambar):
+  Toko 1 selisih + 1 cek manual (dua pembelian di antara dua screenshot, terlihat di rekaman), Go Go Box 3/3 layar 8 orb utuh, 0 selisih.
 - Kesalahan ekstraksi yang ditemukan & diperbaiki: 7 teks Elemental Mark FAIRY TAIL (Gray "Freeze 0/0/0…" → 0.2/0.4/0.6/0.75/1.05/1.4 detik, Wendy,
   Juvia, Erza, Lucy, Natsu, crystal Mystic 40%), baris FAIRY TAIL 10 (freeze 0.5 detik), plus Panduan Sinergi S8 diekspor (Lite/Penuh/tabel/tooltip).
 - Kartu Power S8 kini diekspor sebagai Go Go Card emas (Oranye + `power`), dan Wheel of Fate diekspor (`wheel_of_fate`, tab Info Season).
@@ -221,6 +248,16 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   Frostrider pewarisan HP 100 → 80%, Hybrid ATK 35/50/65 → 20/30/80%; Barbiel stun 1 → 0,5 detik; Dawnbringer 10 Supreme Crown 350 → 500% Max HP;
   Gray ★3 jangkauan; Valentina ★2 165 → 190% (file dan layar 140%); Kimmy ★3 1.750 → 1.925% dan 750 → 825%; Yu Zhong HP 3.545/6.380/15.770 →
   3.760/6.765/16.715; Popol Freeze 1,0 → 0,3 detik; Balmond ★1/★2 380/410 → 370%, Shield ★2 6 → 5%; perbaikan Lightstick, Balmond ★3, Nana.
+- **Penyesuaian Keseimbangan 26/11** (ponsel 27 Nov 16:21, server, `server_patch.json` "26/11", laporan `PATCH_Penyesuaian_26_11.html|md`):
+  Kagura Shield ★2 125 → 135% Max HP; Ling Hybrid ATK per duel 6 → 8%; Kalea hadiah Brankas 5–8 poin −1–2 Gold; Guinevere Hero gratis ★2
+  24 → 23%; Dawnbringer 4/6 stack 7/14 → 9/15; Swiftblade 2/4/6 Penetration 25/50/100 → 35/65/130; Titan (Balmond) eksekusi HP 18 → 15%,
+  DMG Area 200 → 180%; ★3: Melissa 205 → 320% + ATK Speed 100 → 200%, Eudora 700 (file 635) → 800% + 345 → 400%, Kimmy 1.925 → 2.150% +
+  825 → 925%, Argus 600 → 700%, Lolita 1.700 (file 1455) → 1.950% + HP 12 → 15%, Yu Zhong 900 → 1.050% + 1.120 → 1.300%, Sora 1.000 →
+  1.200%; Karina ★2/★3 450/500 → 500/600%; Erza Shield ★2/★3 750/1.800 → 1.050/2.400, Physical ATK 15/40 → 20/50%; Balmond Shield ★3 9 → 7%,
+  Batas Mana ★3 120 → 170; Popol ★1/★2 tombak 27 → 18, DMG 30/35 → 50%; Bane Freeze ★2 1,8 → 1,2 detik.
+- **27 Nov sore:** Go Go Box I-4 ×6, II-6 ×6, III-6 ×4 dari 6 rekaman cocok data (label nama file tertukar di rekaman 07-39, 08-02, 08-22; isi
+  orb dan waktu yang menentukan). Alpha ★3: HP 100.000, 1620% True DMG dan Force Wave 735% terbukti. Odette: teks dan tooltip cocok kecuali
+  "melebihi 6" tingkat 8–9 (server). ATK Rekan +1% = 8 Spirit Sand, +1 stack. Odette's Power ×2 tidak muncul di rekaman Odette (roda Gold Galore).
 
 ## Perubahan dari server: Patch 7.2 + Penyesuaian 20/10 + 28/10 (`server_patch.json`, tampil di S7.html)
 - Hero: Alpha HP ★1/★2 5000/9500 → 5400/10260; X.Borg Hybrid ATK ★1/★2 240/365 → 260/395; Gatotkaca 230/345 → 250/375;
@@ -256,6 +293,25 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Analisis gameplay (kesimpulan dari chat 20–21 Okt; teoretis dari data game, bukan win rate)
 Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, dibuat `analisis_lineup.py`).
+- **Tier list S8 (27 Nov)**: `data/1.3.32.354.1/TIER_LIST_S8.html` (+ `.md`, dibuat `tier_list.py`). Bukan win rate. Sumber, semuanya
+  sebelum Penyesuaian 20/11: loadoutgg comps (25 comp) dan commander (41; label "tiers updated 27 Sep" padahal isi S8), mcggdb
+  commander ("our take", tanpa Odette), kitakuji 18 Nov, Rekomendasi Lineup in-game (rekaman 20 Nov 09:33; semua bernilai S, angka =
+  popularitas). Comp S: 6 SPECTRE + Mage + Stargazer (Valentina; Brody), 6 SPECTRE + Starbelle (Alice), 6 Titan + 4 Mage (carry Pharsa ★3,
+  1.573.314 = terpopuler in-game), 6 FAIRY TAIL + 4 Swiftblade/Mage/Weapons Master (carry Gray/Lucy/Erza), Dawnbringer 6 Stargazer +
+  6 Dawnbringer / ultra 10. Turun karena 20/11: 6 Frostrider + 4 WM, Titan + Swiftblade (Balmond), ultra 10 Starbelle (S → A); Popol
+  Frostrider + Phasewarper, reroll Irithel (S → B); 6 Bruiser, 6 Defender low-roll (A → B). Commander = rata-rata dua sumber (S 4, A 3,
+  B 2, C 1) ±0,5 untuk buff/nerf 20/11; S butuh ≥ 3,5, ada sumber S, tak ada sumber di bawah A. Hasil S: Alice, Fanny, Freya, Harley,
+  Kalea, Lukas (↓, tetap S), Nana, Zilong; Vexana ↓ dan Brody ↑ di A. Commander baru S8 = Odette (40 → 41; kitakuji keliru menulis
+  tidak ada). 27 layar Panduan Season hanya berisi tab Panduan Sinergi, tidak ada isi Lineup Kuat. Lineup Saya pengguna (20 Nov) antara
+  lain 6 Titan & 6 Dauntless, 6 Echomancer & 6 Weapon Master, Defender 4 + Frostrider 4 + Phasewarper 3 + Shadeweaver (kena nerf
+  Popol, Barbiel, Frostrider), 6 SPECTRE & 4 Mage.
+- **Tier list S8 diperbarui untuk Penyesuaian 26/11 (27 Nov sore, riwayat 63)**: sumber web dicek lagi 27 Nov dan belum berubah (loadoutgg
+  comps/commander, mcggdb). Aturan comp kini tertulis di halaman: carry/inti yang dinerf turun satu tingkat dari tier sumber, buff hanya
+  memulihkan sampai tier sumber. Berubah karena 26/11: Titan + Swiftblade (Balmond) A → B (Balmond ★3 Batas Mana 120 → 170 + atribut
+  Titan), Popol & Kupa Frostrider + Phasewarper B → C (Popol dinerf lagi; lineup tersimpan pengguna), 6 Defender low-roll (Melissa) B → A
+  (Melissa ★3 dibuff besar). Commander: Kalea S → A (nerf Brankas Harta), Kagura dan Ling B → A (buff); Guinevere tetap C; Odette tetap A
+  (nilai server tanpa patch note dicatat, tidak dihitung). Hasil: comp S 5, A 5, B 6, C 2; commander S 7 (Alice, Fanny, Freya, Harley,
+  Lukas, Nana, Zilong), A 15, B 16, C 3. Comp S tetap sama; Dawnbringer, FAIRY TAIL, dan 6 Titan + 4 Mage malah mendapat buff 26/11.
 - **Aturan penting** (lihat Temuan teknis): hanya 1 crystal Pilihan aktif; Kapasitas +1 sekali per pertandingan, langsung
   aktif (ikonnya di tas BUKAN item belum terpakai); hero ★3 butuh 9 salinan (stok: 1 Gold 25, 2 Gold 21, 3 Gold 18,
   4 Gold 14, 5 Gold 9); level 9 = 9 slot (+1 bila ambil Kapasitas +1); peluang toko L9: 13/22/25/26/14%; DMG Commander =
@@ -816,6 +872,57 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       5 rekaman 20 Nov + video resmi (`python` + PyAV, 360 frame di-OCR). Diekspor `wheel_of_fate` ke S8.json/md/html. Ekspor S7 tetap identik.
     - Hasil: 242 tes (+24 subtes) lolos, `check_match.py` 0/0, `mc_validate.py` S7 dan S8 tidak berubah. Riwayat 58 + 59 di-commit dan di-push
       (gambar screenshot S8 tidak ikut, sesuai kebiasaan sejak impor pertama; `screenshot/season 8/ocr.json` ikut).
+60. (2026-11-27) **Tier list S8** atas permintaan pengguna ("Tier list S8"). Sumber web dibuka 25 Nov (loadoutgg comps + commander,
+    mcggdb, kitakuji). Rekomendasi Lineup in-game diambil dari rekaman 20 Nov 09:33: hero dikenali dengan `mc_vision.py`, sedangkan nama
+    lineup, angka popularitas, dan tanda carry/tank dibaca dari frame. `tier_list.py` (baru) menulis `TIER_LIST_S8.html` + `.md`:
+    18 comp (S 5, A 5, B 7, C 1), 41 commander (S 8, A 12, B 18, C 3), Untukmu, Wheel of Fate, sumber (lihat Analisis gameplay).
+    `test_tier_list.py` berisi 15 tes. Dicek di browser: 6 bagian, tanpa geser horizontal di lebar 375 px, 113 ikon ada di disk.
+    Hasil: 257 tes (+24 subtes) lolos. Belum di-commit.
+61. (2026-11-27) Dari catatan pengguna di ringkasan chat (Toko Spirit Sand, Go Go Box IV-6 dst., hero panggilan, label Alpha, Wheel of Fate:
+    "periksa `F:\Magic Chess\patch-tracker\screenshot\season 8\match`").
+    - Bahan: 119 gambar baru (OCR 1 menit 38 detik, 0 gagal) + rekaman 22 Nov 16-26 dan 23 Nov 03-34. Memori commit PC sempat 0,13–0,5 GB
+      (5 sesi Claude, Codex, ChatGPT, Chrome, WSL): RapidOCR gagal `bad allocation`, jadi `mc_validate.py` sempat dijalankan tanpa RapidOCR
+      lalu diulang setelah memori lega (6,6 GB).
+    - Toko Spirit Sand S8: rekaman dipindai per 0,25 detik dengan skrip sekali pakai di scratchpad (judul toko dicocokkan dengan templat;
+      potongan toko disimpan tiap isinya berubah, 72 potongan) → 12 pembelian, termasuk 2 yang jatuh di antara screenshot. `STORE_VERIFIED = {7, 8}`.
+    - Go Go Box: frame VLC PC 2480–2482 = IV-6 ×2 dan V-6 (babak dibaca dari HUD rekaman, karena susunan 5 + 2 + 1 juga cocok II-6).
+    - Hero panggilan: 55 panel dalam pertandingan disusun jadi lembar kontak per hero; semua cocok (tabel di `VALIDASI_S8.md`).
+    - Wheel of Fate: 12 segmen dari 4 layar roda; `m_SpecialRules` dari nama fungsi PDB (pindai string `GameAssembly.pdb`) + rekaman 22 Nov
+      (pilihan I-2, II-3, III-3 dicari dengan templat judul "Silakan pilih 1 Go Go Card."); 21 hasil roda + 5 roda latihan.
+    - `mc_data.py` (TDD, 5 tes baru di `test_mc_data.py`): `special_rules` didekode, `wheel_of_fate.notes`, `STORE_VERIFIED`, dan catatan Go Go Box
+      di S8.md kembali ke bagian Go Go Box (bug riwayat 59: tercetak di bawah tabel Wheel of Fate). `report_template.html`: aturan khusus
+      dan catatan roda. S8 diekspor ulang: selain `generated_at` hanya bagian itu yang berubah. S7 tidak diekspor ulang (tidak terpengaruh).
+    - `tier_list.py`: tip Kartu Power ditambah "slot pertama Commander's Power selalu Kartu Power commander sendiri"; TIER_LIST_S8.html/md
+      dibuat ulang (hanya tip dan tanggal yang berubah).
+    - Hasil: 262 tes (+24 subtes) lolos, `check_match.py` 42 laporan 0 kesalahan 0 peringatan; `mc_validate.py` S8 lihat "Hasil validasi S8".
+      Belum di-commit.
+62. (2026-11-27 sore) Dari catatan pengguna: Go Go Box S8 I-4/II-6/III-6 dan Alpha ★3 (`match/`), commander Odette (`commander/`), ATK Rekan +1%
+    (`match/spirit sand/`), update patch (`update patch/`). 51 gambar baru (OCR 1 menit 3 detik, 0 gagal) + rekaman Odette Classic.
+    - Go Go Box: 16 frame VLC dari 6 rekaman; babak dari isi orb + posisi rekaman (label nama file tertukar di 3 rekaman). Semua cocok data S8.
+    - Alpha ★3 dan ATK Rekan +1% cocok (lembar kontak). Odette: tooltip "melebihi 6" 8–9 beda dari file → dicek ke `MCEffect` (efek 45060600/
+      45060601 level 8–9) dengan skrip scratchpad; client PC tidak berubah (`patch_tracker.py snapshot`), jadi nilai server tanpa patch note.
+    - Patch 26/11: `mc_patch.py` → `PATCH_Penyesuaian_26_11.html|md`; entri `server_patch.json` "26/11" ditulis tangan dari teks S8.json (draf
+      otomatis salah di Lolita, Balmond, Kimmy, Popol, angka ribuan). Entri "27/11 tanpa patch note" untuk Odette.
+    - Kode (TDD, 4 tes baru): `server_attributes` melanjutkan `attributes_server` patch sebelumnya (dulu perubahan atribut 20/11 Balmond akan hilang)
+      dan menerima urutan baris berlabel kembar; `mc_validate.check_store`: persen turun = pertandingan baru. Kimmy 20/11 kini punya atribut.
+    - Hasil: 266 tes (+24 subtes) lolos, `check_match.py` 42 laporan 0/0, `mc_validate.py` S8: patch note tanpa "belum dicatat", Go Go Box 19/19,
+      toko 1 selisih + 2 cek manual (dijelaskan di `VALIDASI_S8.md`). Belum di-commit.
+63. (2026-11-27 sore) **Tier list S8 diperbarui untuk patch 26/11** atas persetujuan pengguna ("Ya, perbarui"). Sumber web (loadoutgg comps,
+    loadoutgg commander, mcggdb) dibuka lagi di browser: belum berubah sejak 25 Nov. `tier_list.py` (TDD, 10 tes baru, total 25): efek patch
+    berlabel (20/11, 26/11, server), `combined()` menerima beberapa panah, `prev`/`was` = tier sebelum 26/11, aturan comp tertulis di halaman.
+    Perubahan tier: lihat Analisis gameplay. Dicek di browser: 6 bagian, tanpa error konsol, tanpa geser horizontal di 375 px, 113 ikon ada di
+    disk. Hasil: 276 tes (+24 subtes) lolos. Belum di-commit.
+64. (2026-11-28) Atas permintaan pengguna: (1) commit dan push semua perubahan, (2) periksa tugas yang perlu dikerjakan.
+    - Sebelum commit: 276 tes (+24 subtes) lolos. `PATCH_Penyesuaian_26_11.html|md` dibuat ulang dengan `--no-ocr`: laporan lama dibuat
+      sebelum entri 26/11 ditulis, jadi belum berstatus "tercatat" dan masih memuat draf otomatis yang salah; kini 25 baris server "tercatat",
+      tanpa draf. `VALIDASI_S8.md`: isi folder `match` 194 → 206 gambar (12 layar toko `spirit sand/` 27 Nov sore belum terhitung), catatan
+      snapshot 28 Nov, dan laporan patch yang dibuat ulang.
+    - Commit langsung di `main`: `ccc1ab7` (riwayat 61–62: kode, tes, `server_patch.json`, ekspor S8, laporan patch 26/11, validasi,
+      `ocr.json`), `f251fe1` (riwayat 60 + 63: tier list), lalu commit dokumen (ringkasan ini, `VALIDASI_S8.md`, snapshot
+      `snapshots/1.3.32.354.1_20261128-020156.json` + diff di `reports/`). Gambar screenshot tidak ikut; pesan commit ASCII tanpa BOM.
+    - Cek tugas: tidak ada gambar atau rekaman baru (`ocr.json` S7 843/843, S8 732/732); client sama (hanya hotfix UI event, lihat Status
+      sekarang); sumber tier list sama. Daftar semua commander di mcggdb memuat Akai (Anger) dan Suyou (Divine Inheritance), yang tidak
+      ada di daftar commander ekspor S7/S8 (lihat Ide lanjutan).
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -883,14 +990,20 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\6e09ebcd-f03a-4c3c-8081-d95fad105539\scratchpad\`, bersama `regen_batch.py`.
 
 ## Ide lanjutan (belum dikerjakan)
-- Laporan MATCH S8 bila diminta: 5 rekaman ponsel 20 Nov (07-39, 08-02, 08-22, 09-33, 18-30; 11 GB) + layar hasil 20–21 Nov di
-  `screenshot/season 8/match/`. Cek memori dulu (satu per satu). 33 layar hasil 1–7 Nov di folder itu masih pertandingan S7.
-- Screenshot S8 yang belum ada: commander Odette, 5 kartu (Journey's Windfall, Fury's Edge, Victory's Blessing, Odette's Power ×2), Toko Spirit
-  Sand S8 (belum `STORE_VERIFIED`), Go Go Box S8 (IV-6 dst. berbeda dari S7), hero panggilan S8 (Alpha, Bane, Gatotkaca, Moskov).
-- Cek label Alpha S8 (`Physical DMG`; Alpha tidak punya screenshot Detail Hero S8).
-- Wheel of Fate: hitung segmen roda dari layar yang memperlihatkan seluruh lingkaran (dugaan: tiap efek tampil sebanyak bobotnya, belum terbukti),
-  cari arti `m_SpecialRules` [1,1,1] Commander's Power, dan kumpulkan hasil roda dari pertandingan berikutnya (peluang 6,7–13,3% per efek).
-- Cari tier list S8. Bahan in-game: 27 layar Panduan Season (`update patch/` 2437–2463: Ringkasan Sinergi + tab Lineup Kuat). Tier list S7 setelah
-  Patch 7.2 tidak pernah ditemukan (dicari tiga kali sampai 1 Nov, lihat Analisis gameplay).
+- Laporan MATCH S8 bila diminta: 7 rekaman (20 Nov 07-39, 08-02, 08-22, 09-33, 18-30; 22 Nov 16-26; 23 Nov 03-34 di `spirit sand/`) + 19
+  pertandingan S8 dengan layar hasil 16–27 Nov di `screenshot/season 8/match/`. Cek memori dulu (satu per satu). 33 layar hasil 1–7 Nov di
+  folder itu masih pertandingan S7.
+- Screenshot S8 yang belum ada: 5 kartu (Journey's Windfall, Fury's Edge, Victory's Blessing, Odette's Power ×2), Alpha ★4, angka baru Kalea
+  26/11, hero di dalam Go Go Box. Panel dalam pertandingan setelah 26/11 berlaku (mis. Bane ★2 freeze 1,2 detik) untuk memastikan waktu berlakunya.
+- 16 frame "Go Go Box setelah …" berlabel tertukar di rekaman 07-39, 08-02, 08-22 (lihat `VALIDASI_S8.md`); ganti nama bila pengguna mau.
+- Wheel of Fate: kumpulkan terus hasil roda dari layar hasil (pojok kanan atas; per 27 Nov 21 pertandingan) untuk menguji peluang. Urutan field
+  `m_SpecialRules` [jenis, putaran, slot] baru bisa diuji bila ada nilai selain [1,1,1], atau dengan membongkar `TryGetRules`.
+- Opsional: jadikan pemindai toko dari rekaman sebagai alat (`mc_validate.py` kini menulis pembelian ganda di antara dua screenshot sebagai
+  Selisih/Cek manual); panel unit dalam pertandingan (hero panggilan) belum dikenali `mc_validate.py`.
+- Tier list S8 (`tier_list.py`, riwayat 60 dan 63; 20/11 dan 26/11 sudah dikoreksi): perbarui bila ada patch keseimbangan baru atau tier list
+  sumber yang sudah memuat 20/11/26/11 (loadoutgg, mcggdb; dicek 28 Nov: belum), dan bandingkan dengan statistik papan setelah laporan MATCH S8 dibuat.
+- Commander Akai (skill Anger) dan Suyou (Divine Inheritance) ada di daftar semua commander mcggdb (28 Nov), tetapi tidak di 41 commander S8
+  maupun 40 commander S7 ekspor kita. Dugaan: commander yang akan datang. Cek di tabel client saat update berikutnya (cari nama skillnya),
+  atau cari di tabel cache `1.3.32.354.1` bila diminta.
 - Nama pemain baru dalam huruf hias tampil sebagai gambar sampai ditambahkan ke `catatan_nama.json` (dibaca mata). Nama Jepang kini dibaca otomatis, tapi kana kecil bisa
   terbaca besar (ュ jadi ユ): nama dari model tercantum di Catatan metode laporan, koreksi lewat `catatan_nama.json` bila beda dengan layar.

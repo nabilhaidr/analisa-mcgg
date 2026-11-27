@@ -22,7 +22,7 @@
 | go go card | 54 | galeri; S8 tidak punya tab "Kartu Power" lagi (Semua / Oranye / Ungu / Biru) |
 | ensiklopedia | 16 | 8 tab |
 | update patch | 57 + 4 MP4 | 18 Patch Note Season 8.0 (PC 18 Nov), 5 layar ponsel 20 Nov (Penyesuaian Keseimbangan 20/11 + pengumuman skor leaderboard), 27 layar Panduan Season (Ringkasan Sinergi sinergi baru, tab Lineup Kuat), 7 layar ponsel 27 Nov 16:21–16:22 (Penyesuaian Keseimbangan 26/11). MP4 = video YouTube |
-| match | 194 + 8 MP4 | layar hasil: 33 bertanggal 1–7 Nov (masih S7), 14 bertanggal 16–21 Nov dan 24 bertanggal 22–27 Nov (S8, efek Wheel of Fate di pojok kanan atas). 27 Nov: 10 layar Wheel of Fate (4 roda berputar, 6 teks hasil), 57 panel unit dalam pertandingan (Alpha, Gatotkaca, Moskov, Bane, Terizla, Thamuz; sebagian mode Custom lawan Computer), 3 tooltip sinergi (Chrono Wanderer, Fan yang Bersorak), 2 layar Achievement. 3 frame VLC PC (2480–2482) = hitung mundur Go Go Box rekaman 20 Nov. `spirit sand/`: 20 layar Toko Spirit Sand 23 Nov + rekamannya. MP4: 5 rekaman ponsel 20 Nov, 22 Nov 16-26 (Commander's Power), 23 Nov 03-34 (toko). **27 Nov sore (+28 gambar, +1 MP4):** 16 frame VLC PC "Go Go Box setelah I-4/II-6/III-6 (n)" dari 6 rekaman, 4 panel Alpha ★3 (IV-6, 16:55), 4 layar skill Odette dalam pertandingan, 2 tooltip SPECTRE, 1 layar hasil (Gold Galore), papan; `spirit sand/` +12 layar toko 17:24–17:41; rekaman "uji coba commander odette classic.mp4" (23:40, Classic, roda Gold Galore) |
+| match | 206 + 8 MP4 | layar hasil: 33 bertanggal 1–7 Nov (masih S7), 14 bertanggal 16–21 Nov dan 24 bertanggal 22–27 Nov (S8, efek Wheel of Fate di pojok kanan atas). 27 Nov: 10 layar Wheel of Fate (4 roda berputar, 6 teks hasil), 57 panel unit dalam pertandingan (Alpha, Gatotkaca, Moskov, Bane, Terizla, Thamuz; sebagian mode Custom lawan Computer), 3 tooltip sinergi (Chrono Wanderer, Fan yang Bersorak), 2 layar Achievement. 3 frame VLC PC (2480–2482) = hitung mundur Go Go Box rekaman 20 Nov. `spirit sand/`: 20 layar Toko Spirit Sand 23 Nov + rekamannya. MP4: 5 rekaman ponsel 20 Nov, 22 Nov 16-26 (Commander's Power), 23 Nov 03-34 (toko). **27 Nov sore (+28 gambar, +1 MP4):** 16 frame VLC PC "Go Go Box setelah I-4/II-6/III-6 (n)" dari 6 rekaman, 4 panel Alpha ★3 (IV-6, 16:55), 4 layar skill Odette dalam pertandingan, 2 tooltip SPECTRE, 1 layar hasil (Gold Galore), papan; `spirit sand/` +12 layar toko 17:24–17:41; rekaman "uji coba commander odette classic.mp4" (23:40, Classic, roda Gold Galore) |
 
 ## Hasil per bagian
 
@@ -289,9 +289,12 @@ kali toko terbuka dan isinya berubah, bagian toko disimpan (72 potongan), jadi p
 ### Penyesuaian Keseimbangan 26/11 (diterapkan server, tercatat di `server_patch.json` kunci "8")
 
 7 layar ponsel 27 Nov 16:21–16:22, dibaca mata (OCR melewatkan Kalea, Karina, dan Bane). Client PC tidak berubah sejak 22 Nov
-(`patch_tracker.py snapshot`). Panel Bane ★2 dalam pertandingan 27 Nov 05:43–05:53 masih freeze 1,8 detik, jadi patch ini belum berlaku pagi
+(`patch_tracker.py snapshot`; snapshot 28 Nov 02:01: manifest, ResCheckConf, dan LuaRepair sama, hanya hotfix `mini_patch`
+`fix_hot_resource_20261117_wenqy` yang diunduh 18 Nov menjadi aktif 27 Nov 19:12; menurut nama filenya isinya UI event MPL Draw, tab Squad
+Effects, bukan data pertandingan). Panel Bane ★2 dalam pertandingan 27 Nov 05:43–05:53 masih freeze 1,8 detik, jadi patch ini belum berlaku pagi
 itu (20/11 juga baru berlaku beberapa jam setelah catatannya tampil). `PATCH_Penyesuaian_26_11.html|md` = analisa otomatis `mc_patch.py`;
 drafnya tidak dipakai mentah (Lolita "12% → 15%" terbaca sebagai stat HP, Balmond/Kimmy perlu teks hasil 20/11, angka ribuan bertitik).
+Laporan itu dibuat ulang 28 Nov (`--no-ocr`) setelah entri ditulis: ke-25 baris server berstatus "tercatat", draf tidak ada lagi.
 
 | Bagian | Item | Perubahan | Catatan |
 |---|---|---|---|
