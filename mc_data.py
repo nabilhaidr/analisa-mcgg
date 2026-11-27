@@ -75,7 +75,17 @@ ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 # is the [img=27] icon used in the Mistbender text (DescriptionIconShow 27). m_MaximumPurchase 999 = no limit.
 STORE_CURRENCY_ICON, STORE_UNLIMITED = 27, 999
 STACK_FORMULA = 10021  # m_Calculate: attribute = stacks of effect FPara1 x FPara3 (Echomancer 0.03% per Echo Energy)
-STORE_VERIFIED = {7}  # seasons whose Toko Spirit Sand was checked against in-game screenshots
+# Seasons whose Toko Spirit Sand was checked in-game: S7 = screenshots 31 Okt; S8 = 20 screens + recording 23 Nov 03-34
+# (10 of 11 items with price, ATK Rekan +1% not offered; 9 purchases matched their stacks).
+STORE_VERIFIED = {7, 8}
+# MCRoulette.m_SpecialRules = [type, Go Go Card pick, slot] triples (MCLogicGoGoCardRouletteSpecialRules: TryGetRules,
+# IsRoundMatch, IsSlotMatch). Type 1 = TryPickSelfCommander: recording 22 Nov 16-26 (Commander's Power, Lukas) kept
+# Lukas's Power in the left slot of pick 1 through 2 refreshes. S8 only has [1, 1, 1], so the field order is unproven.
+SPECIAL_RULE_TYPES = {1: "Kartu Power Commander sendiri"}
+# Not in a table: the wheel as screenshots of 27 Nov show it (7 segments in view = half the circle).
+WHEEL_NOTES = ["Roda di layar punya 12 segmen (7 terlihat sekaligus = setengah lingkaran). Isinya berbeda tiap pertandingan "
+               "dan satu efek bisa tampil 2 kali, juga efek berbobot 1 (Gold Galore), jadi jumlah segmen tidak menunjukkan "
+               "bobot; peluang efek mengikuti bobot di tabel (pengamatan screenshot 27 Nov)."]
 # Orbs per Go Go Box (heroes not counted). Not in a table: seen in every box of the 2026-10-21 match, also with 2 players left.
 GO_GO_BOX_ORBS = 8
 
@@ -488,7 +498,8 @@ class Season:
         m_CardTagFilter per pick = only cards with that m_CardTag, m_LevelOverride per pick = card quality,
         m_TriggerRoundOverride = rounds of the picks, m_NeedSharedCards = everyone is offered the same cards,
         m_ForesightGuarantee = qualities shown in advance, m_PostSelectSkillId = reward after each pick,
-        m_UnlockPlayerLevel = extra picks at those Commander levels. Display order on the wheel = m_Order."""
+        m_UnlockPlayerLevel = extra picks at those Commander levels, m_SpecialRules = per-slot rules (SPECIAL_RULE_TYPES).
+        Effects are listed in m_Order; the in-game wheel does not follow it (WHEEL_NOTES)."""
         xml = battle_config(self.t, self.sid)
         m = re.search(r"<AOpeningCeremonyInfo\s+([^>]*)>", xml)
         if not m or "MCRoulette" not in self.t:
@@ -522,14 +533,19 @@ class Season:
                 fx["shared_cards"] = True
             if r.get("m_ForesightGuarantee"):
                 fx["foresight"] = True
-            for key, col in (("post_select_skills", "m_PostSelectSkillId"), ("unlock_levels", "m_UnlockPlayerLevel"),
-                             ("special_rules", "m_SpecialRules")):
+            for key, col in (("post_select_skills", "m_PostSelectSkillId"), ("unlock_levels", "m_UnlockPlayerLevel")):
                 if r.get(col):
                     fx[key] = r[col]
+            special = r.get("m_SpecialRules") or []
+            if special:
+                fx["special_rules"] = [{"type": t, "round": rd, "slot": slot, "text": SPECIAL_RULE_TYPES.get(t, f"jenis {t}")}
+                                       for t, rd, slot in zip(special[0::3], special[1::3], special[2::3])]
+                if len(special) % 3:
+                    fx["special_rules_raw"] = special  # not whole triples: keep the table value as it is
             effects.append(fx)
         return {"ceremony": {"open_type": int(attrs.get("iOpenType", 0) or 0), "map_id": int(attrs.get("iMapId", 0) or 0),
                              "phases_ms": phases},
-                "total_weight": total, "new_player_total_weight": new_total, "effects": effects}
+                "total_weight": total, "new_player_total_weight": new_total, "effects": effects, "notes": WHEEL_NOTES}
 
     def commanders(self, cards, syn):
         heroes = {r["m_ID"]: r for r in self.t.parse("MCHero")}
@@ -913,13 +929,14 @@ def replace_text(text, pairs):
 
 
 def server_attributes(attrs, changes):
-    """[[label, star, new value]] -> copy of a skill's attribute table with the server values; None if a cell is missing."""
+    """[[label, star, new value(, n)]] -> copy of a skill's attribute table with the server values; n picks the n-th row
+    when rows share a label (Eudora's two "Magic Bonus": 1 = first, the default). None if a cell is missing."""
     out = [dict(a, values=list(a["values"])) for a in attrs]
-    for label, star, value in changes:
-        row = next((a for a in out if a["label"] == label), None)
-        if row is None or not 1 <= star <= len(row["values"]):
+    for label, star, value, *nth in changes:
+        rows, n = [a for a in out if a["label"] == label], nth[0] if nth else 1
+        if not 1 <= n <= len(rows) or not 1 <= star <= len(rows[n - 1]["values"]):
             return None
-        row["values"][star - 1] = value
+        rows[n - 1]["values"][star - 1] = value
     return out
 
 
@@ -985,7 +1002,8 @@ def apply_server_patches(d, sid, path=SERVER_PATCH):
                 text = ch.get("text") or "; ".join(f"{a} → {b}" for a, b in pairs)
                 # a later patch continues an earlier one on the same skill (Abyssal Favor 7.2 then 28/10)
                 updated = replace_text(base.get("description_server") or base.get("description", ""), pairs) if base else None
-                attrs = server_attributes(base.get("attributes") or [], ch["attributes"]) if base and ch.get("attributes") else None
+                attrs = (server_attributes(base.get("attributes_server") or base.get("attributes") or [], ch["attributes"])
+                         if base and ch.get("attributes") else None)  # attributes chain like the text (Balmond 20/11, 26/11)
                 if not base:
                     status = f"{kind.lower()} tidak ada di data"
                 elif not pairs:
@@ -1107,6 +1125,7 @@ def to_markdown(d, rank):
                 lines.append(f"- **{title}** ({', '.join(rounds)}; {len(pool)} item{', peluang sama' if same else ''}): {names}")
         lines += [f"- Kolom lain babak {r['label']}: " + ", ".join(f"`{k}` = {v}" for k, v in r["extra"].items())
                   for r in box["rounds"] if r.get("extra")]
+        lines += [f"- _Catatan data: {n}_" for n in box.get("notes", [])]
 
     wof = d.get("wheel_of_fate")
     if wof:
@@ -1125,10 +1144,11 @@ def to_markdown(d, rank):
             rules += ["kualitas kartu tampil lebih awal"] if e.get("foresight") else []
             rules += [f"hadiah setelah pilih: skill {', '.join(map(str, e['post_select_skills']))}"] if e.get("post_select_skills") else []
             rules += [f"Level Commander {', '.join(map(str, e['unlock_levels']))}"] if e.get("unlock_levels") else []
+            rules += [f"putaran {x['round']} slot {x['slot']}: {x['text']}" for x in e.get("special_rules", [])]
             chance = f"{fmt_num(e['chance'])}% ({e['weight']})" if e["active"] else "nonaktif (0)"
             newp = f"{fmt_num(e['new_player_chance'])}% ({e['new_player_weight']})" if e["new_player_weight"] else "-"
             lines.append(f"| {e['name']} | {chance} | {newp} | {'; '.join(rules) or '-'} | {e['description']} |")
-        lines += [f"- _Catatan data: {n}_" for n in box.get("notes", [])]
+        lines += [f"- _{n}_" for n in wof.get("notes", [])]
         lines.append("")
 
     for p in d.get("server_patches", []):

@@ -113,6 +113,56 @@ class DuaPatchPadaSkillYangSama(unittest.TestCase):
         self.assertIn("3 EXP Commander", favor_entry(d)["skill"]["description_server"])
 
 
+def hero_data(name, skill, text, attributes):
+    return {"heroes": [{"name": name, "stats": {}, "skills": [{"name": skill, "description": text, "attributes": attributes}]}],
+            "synergies": [], "cards": [], "commanders": []}
+
+
+def hero_patch(patch, name, skill, replace, attributes):
+    return {"patch": patch, "hero_skills": [{"name": name, "skill": skill, "replace": replace, "attributes": attributes}]}
+
+
+class AtributSkillDariPatchServer(unittest.TestCase):
+    """Tabel Atribut Skill ikut patch server. Data uji = potongan teks asli Balmond dan Eudora (S8)."""
+
+    BALMOND = "Untuk setiap target yang terkena, dia mendapatkan Shield sebesar 5%/6%/9% dari Max HP-nya selama 4 detik."
+
+    def balmond(self):
+        return hero_data("Balmond", "Lethal Counter", self.BALMOND,
+                         [{"label": "Bonus Physical", "values": ["380%", "410%", "1200%"]},
+                          {"label": "Shield per Serangan", "values": ["5%", "6%", "9%"]}])
+
+    def test_patch_kedua_melanjutkan_atribut_patch_pertama(self):  # 20/11 lalu 26/11 pada Lethal Counter
+        d = self.balmond()
+        failed = apply_patches(d, [
+            hero_patch("20/11", "Balmond", "Lethal Counter", [["Shield sebesar 5%/6%/9%", "Shield sebesar 5%/5%/9%"]],
+                       [["Bonus Physical", 1, "370%"], ["Bonus Physical", 2, "370%"], ["Shield per Serangan", 2, "5%"]]),
+            hero_patch("26/11", "Balmond", "Lethal Counter", [["Shield sebesar 5%/5%/9%", "Shield sebesar 5%/5%/7%"]],
+                       [["Shield per Serangan", 3, "7%"]])])
+        self.assertEqual(failed, [])
+        skill = d["heroes"][0]["skills"][0]
+        self.assertEqual(skill["attributes_server"], [{"label": "Bonus Physical", "values": ["370%", "370%", "1200%"]},
+                                                      {"label": "Shield per Serangan", "values": ["5%", "5%", "7%"]}])
+        self.assertEqual(skill["attributes"][1]["values"], ["5%", "6%", "9%"])  # nilai file game tetap
+
+    def test_label_kembar_dipilih_dengan_urutan(self):  # Eudora: dua baris "Magic Bonus" (ledakan, DMG tertunda)
+        d = hero_data("Eudora", "Thunder's Wrath", "130% Total Magic ATK/345% Total Magic ATK",
+                      [{"label": "Magic Bonus", "values": ["245%", "245%", "635%"]},
+                       {"label": "Magic Bonus", "values": ["130%", "130%", "345%"]}])
+        failed = apply_patches(d, [hero_patch("26/11", "Eudora", "Thunder's Wrath",
+                                              [["130% Total Magic ATK/345%", "130% Total Magic ATK/400%"]],
+                                              [["Magic Bonus", 3, "800%"], ["Magic Bonus", 3, "400%", 2]])])
+        self.assertEqual(failed, [])
+        self.assertEqual([a["values"] for a in d["heroes"][0]["skills"][0]["attributes_server"]],
+                         [["245%", "245%", "800%"], ["130%", "130%", "400%"]])
+
+    def test_urutan_label_yang_tidak_ada_dilaporkan(self):
+        d = self.balmond()
+        failed = apply_patches(d, [hero_patch("26/11", "Balmond", "Lethal Counter", [["5%/6%/9%", "5%/6%/7%"]],
+                                              [["Shield per Serangan", 3, "7%", 2]])])
+        self.assertEqual([c["status"] for c in failed], ["atribut skill tidak ditemukan di file game (perbarui server_patch.json)"])
+
+
 class SkalaPlaceholder(unittest.TestCase):
     """Kolom ke-5 placeholder [jenis|efek|kolom|unit|skala]: angka tanpa N berarti dikali, sama dengan [kind|...]. Hanya dipakai
     tabel S8 (Elemental Mark FAIRY TAIL); dulu terbaca sebagai konstanta: "0 detik", "-0.01%"."""
@@ -258,6 +308,43 @@ class WheelOfFateS8(unittest.TestCase):
     def test_efek_nonaktif_tetap_tercatat(self):
         self.assertEqual(sorted(n for n, e in self.fx.items() if not e["active"]),
                          ["Hero Awakening (nonaktif)", "Promotion Rewards (nonaktif)", "Tycoon (nonaktif)"])
+
+    def test_aturan_khusus_commanders_power(self):
+        # m_SpecialRules [1,1,1] = jenis 1 (MCLogicGoGoCardRouletteSpecialRules.TryPickSelfCommander), putaran 1, slot 1.
+        # Rekaman 22 Nov 16-26 (Lukas): slot kiri I-2 tetap Lukas's Power setelah 2 kali refresh, slot kanan berganti
+        # Aurora's -> Guinevere's -> Franco's Power; putaran 2 (II-3) dan 3 (III-3) tanpa kartu Power Lukas.
+        self.assertEqual(self.fx["Commander's Power"]["special_rules"],
+                         [{"type": 1, "round": 1, "slot": 1, "text": "Kartu Power Commander sendiri"}])
+
+    def test_catatan_roda_dua_belas_segmen(self):  # screenshot 27 Nov: 7 segmen terlihat = setengah lingkaran
+        self.assertTrue(any("12 segmen" in n for n in self.wof["notes"]))
+
+
+class TokoSpiritSandS8(unittest.TestCase):
+    """Toko S8 dicek ke 20 layar + rekaman 23 Nov 03-34: 10 dari 11 item dengan harga (ATK Rekan +1% tidak muncul),
+    9 pembelian sesuai stack (ATK +2% = +3 stack, ATK +3% = +5 stack, seperti S7)."""
+
+    def test_toko_s8_terverifikasi(self):
+        store = s8_data()["special_store"]
+        self.assertTrue(store["verified"])
+        atk3 = next(i for i in store["items"] if i["name"] == "ATK Rekan +3%")
+        self.assertIn("Cocok dengan kenaikan baris ATK rekan", " ".join(atk3["notes"]))
+
+
+def s8_md():
+    return (Path(__file__).resolve().parent / "data" / "1.3.32.354.1" / "S8.md").read_text(encoding="utf-8")
+
+
+class MarkdownS8(unittest.TestCase):
+    def test_catatan_go_go_box_di_bagian_go_go_box(self):  # dulu tercetak di bawah tabel Wheel of Fate
+        md = s8_md()
+        box, wheel = md.index("## Go Go Box"), md.index("## Wheel of Fate")
+        self.assertIn("ID 1054", md[box:wheel])
+        self.assertNotIn("ID 1054", md[wheel:md.index("## ", wheel + 3)])
+
+    def test_aturan_khusus_di_tabel_wheel_of_fate(self):
+        row = next(l for l in s8_md().splitlines() if l.startswith("| Commander's Power |"))
+        self.assertIn("putaran 1 slot 1: Kartu Power Commander sendiri", row)
 
 
 if __name__ == "__main__":

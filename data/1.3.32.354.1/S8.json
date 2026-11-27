@@ -1,7 +1,7 @@
 {
  "game_version": "1.3.32.354.1",
  "season": 8,
- "generated_at": "2026-11-22T17:52:01",
+ "generated_at": "2026-11-27T19:21:03",
  "info": {
   "name": "Arena Para Penyihir",
   "levels": [
@@ -629,6 +629,12 @@
      "keyword": "Hybrid Penetration",
      "text": "Physical & Magic Penetration"
     }
+   ],
+   "server": [
+    {
+     "patch": "26/11",
+     "text": "2/4/6 Swiftblade: Hero Swiftblade mendapatkan 25/50/100 → 35/65/130 Hybrid Penetration tambahan"
+    }
    ]
   },
   {
@@ -1250,6 +1256,12 @@
      "keyword": "Pengurangan DMG",
      "text": "Pengurangan DMG Akhir pada Hero"
     }
+   ],
+   "server": [
+    {
+     "patch": "26/11",
+     "text": "Atribut Balmond: batas HP untuk eksekusi 18% → 15%; DMG Area setelah eksekusi 200% → 180% (teks skill Balmond ikut diganti)"
+    }
    ]
   },
   {
@@ -1538,6 +1550,10 @@
     {
      "patch": "20/11",
      "text": "10 Dawnbringer: Supreme Crown memberikan 350% → 500% Max HP"
+    },
+    {
+     "patch": "26/11",
+     "text": "4/6 Dawnbringer: Equipment Dawnbringer yang baru didapatkan mendapatkan 7/14 → 9/15 stack peningkatan tambahan"
     }
    ]
   },
@@ -3358,7 +3374,48 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S2230.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S2230.png",
+     "description_server": "Erza menjadi tidak bisa ditargetkan secara singkat dan berganti ke Heaven's Wheel Armor, mendapatkan 15%/20%/50% Physical ATK, 30%/30%/50% ATK Speed, dan 375/1050/2400 Shield. Saat menggunakan Heaven's Wheel Armor, ATK-nya memberikan 35%/35%/50% DMG Splash (DMG berkurang seiring dengan jumlah lawan yang terkena), yang dihitung sebagai Basic ATK yang Diperkuat.\nEfek Elemental - Blade: Ketika Sinergi FAIRY TAIL aktif, serangan DMG Splash mengurangi Hybrid DEF target sebesar 10 / 20 / 25 / 30 / 45 / 55 berdasarkan jumlah Elemental Mark pada target.",
+     "attributes_server": [
+      {
+       "label": "Bonus ATK",
+       "values": [
+        "15%",
+        "20%",
+        "50%"
+       ]
+      },
+      {
+       "label": "Shield",
+       "values": [
+        "375",
+        "1050",
+        "2400"
+       ]
+      },
+      {
+       "label": "DMG Splash",
+       "values": [
+        "35%",
+        "35%",
+        "50%"
+       ]
+      },
+      {
+       "label": "Bonus ATK Speed",
+       "values": [
+        "30%",
+        "30%",
+        "50%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Shield ★2/★3: 750/1.800 → 1.050/2.400; Bonus Physical ATK ★2/★3: 15%/40% → 20%/50%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -3623,7 +3680,24 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S810.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S810.png",
+     "description_server": "Karina menggunakan Dance of Death untuk memberikan 440% Total Magic ATK/500% Total Magic ATK/600% Total Magic ATK Magic DMG ke lawan di sekitar. Lawan yang terkena akan menerima 10% DMG tambahan selama 10 detik berikutnya. Pada penggunaan pertama, dia berlari ke arah lawan terjauh dalam jarak 3 petak. (DMG berkurang seiring jumlah lawan yang terkena.)",
+     "attributes_server": [
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "440%",
+        "500%",
+        "600%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Pengali DMG Skill ★2/★3: 450%/500% → 500%/600%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -3911,7 +3985,40 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S4540_Skin01.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S4540_Skin01.png",
+     "description_server": "Argus memperkuat Basic ATK berikutnya dan mengeluarkan Demonic Slash, memberikan 135% Total Physical ATK/200% Total Physical ATK/700% Total Physical ATK Physical DMG dua kali (DMG berkurang seiring dengan jumlah lawan yang terkena).\nPasif: Saat menerima DMG mematikan untuk pertama kali, Argus memasuki mode Fallen Angel dan mendapatkan 40%/60%/140% ATK Speed selama 3 detik, menjadi kebal eliminasi selama 1/1.2/1.5 detik.\nEfek Atribut Titan: Argus tidak tereliminasi saat menerima DMG mematikan untuk pertama kali dan tetap kebal eliminasi selama 1 detik.",
+     "attributes_server": [
+      {
+       "label": "Peningkatan ATK Speed",
+       "values": [
+        "40%",
+        "60%",
+        "140%"
+       ]
+      },
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "135%",
+        "200%",
+        "700%"
+       ]
+      },
+      {
+       "label": "Durasi Kebal Eliminasi",
+       "values": [
+        "1",
+        "1.2",
+        "1.5"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG Basic ATK yang Diperkuat 600% → 700%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -4043,7 +4150,32 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S1580.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S1580.png",
+     "description_server": "Eudora memanggil ledakan petir ke area target, memberikan 245% Total Magic ATK/245% Total Magic ATK/800% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan memberikan efek Superconductor ke lawan yang terkena. Ketika Thunder's Wrath mengenai target dengan efek Superconductor, memberikan 130% Total Magic ATK/130% Total Magic ATK/400% Total Magic ATK Magic DMG ke target setelah jeda singkat.",
+     "attributes_server": [
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "245%",
+        "245%",
+        "800%"
+       ]
+      },
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "130%",
+        "130%",
+        "400%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG 700% → 800%; Pengali DMG Tertunda 345% → 400% (patch note menulis nilai lama 700%; file game dan layar Detail Hero 18 Nov 635%)"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -4182,11 +4314,33 @@
      ],
      "cooldown_ms": null,
      "icon": "img/Atlas_HeroSkillIcon_S8/S7130.png",
-     "description_server": "Kimmy mengumpulkan kekuatan dan menembakkan Traction Pulse yang meledak saat mengenai lawan atau mencapai jangkauan maksimumnya, memberikan 575% Total Magic ATK/575% Total Magic ATK/1925% Total Magic ATK Magic DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena) dan meninggalkan medan gaya. Setelah 1 detik, medan gaya tersebut menyusut, memberikan 245% Total Magic ATK/245% Total Magic ATK/825% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nPasif: Basic ATK Kimmy menembakkan Chemical Bolt, masing-masing memberikan 25% Total Magic ATK Magic DMG. ATK Speed Kimmy tetap konstan dan setiap 1% ATK Speed dikonversi menjadi 1 Magic ATK.",
+     "description_server": "Kimmy mengumpulkan kekuatan dan menembakkan Traction Pulse yang meledak saat mengenai lawan atau mencapai jangkauan maksimumnya, memberikan 575% Total Magic ATK/575% Total Magic ATK/2150% Total Magic ATK Magic DMG ke lawan di sekitar (DMG berkurang seiring dengan jumlah lawan yang terkena) dan meninggalkan medan gaya. Setelah 1 detik, medan gaya tersebut menyusut, memberikan 245% Total Magic ATK/245% Total Magic ATK/925% Total Magic ATK Magic DMG (DMG berkurang seiring dengan jumlah lawan yang terkena).\nPasif: Basic ATK Kimmy menembakkan Chemical Bolt, masing-masing memberikan 25% Total Magic ATK Magic DMG. ATK Speed Kimmy tetap konstan dan setiap 1% ATK Speed dikonversi menjadi 1 Magic ATK.",
+     "attributes_server": [
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "575%",
+        "575%",
+        "2150%"
+       ]
+      },
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "245%",
+        "245%",
+        "925%"
+       ]
+      }
+     ],
      "server": [
       {
        "patch": "20/11",
        "text": "Pengali DMG Skill ★3: fase pertama 1.750% → 1.925%, fase kedua 750% → 825%"
+      },
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG fase pertama 1.925% → 2.150%, fase kedua 825% → 925%"
       }
      ]
     }
@@ -4414,7 +4568,56 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S2030.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S2030.png",
+     "description_server": "Lolita mulai mengumpulkan kekuatan. Setelah selesai, dia menghantam tanah, memberikan Physical DMG sebesar 435% Total Physical ATK/435% Total Physical ATK/1950% Total Physical ATK Physical ATK dan 5% Total HP/5% Total HP/15% Total HP HP-nya ke lawan dalam jangkauan (DMG berkurang seiring jumlah lawan yang terkena) dan menyebabkan stun ke mereka selama 1/1/2 detik. Pada awal pengumpulan kekuatan, dia mendapatkan Shield sebesar 15%/15%/25% Max HP-nya selama 4 detik dan 40% Pengurangan DMG selama 1 detik.",
+     "attributes_server": [
+      {
+       "label": "Durasi Efek Stun",
+       "values": [
+        "1",
+        "1",
+        "2"
+       ]
+      },
+      {
+       "label": "Shield",
+       "values": [
+        "15%",
+        "15%",
+        "25%"
+       ]
+      },
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "435%",
+        "435%",
+        "1950%"
+       ]
+      },
+      {
+       "label": "DMG Berdasarkan HP",
+       "values": [
+        "5%",
+        "5%",
+        "15%"
+       ]
+      },
+      {
+       "label": "DMG Berdasarkan HP",
+       "values": [
+        "5%",
+        "5%",
+        "15%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali Physical DMG 1.700% → 1.950%; Pengali DMG Berbasis HP 12% → 15% (patch note menulis nilai lama 1.700%; file game 1455%)"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -4616,7 +4819,24 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S2013130.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S2013130.png",
+     "description_server": "Sora melompat ke udara dan menyerang area target sebanyak 3 kali, memberikan 200% Total Physical ATK/200% Total Physical ATK/1200% Total Physical ATK Physical DMG (DMG berkurang seiring dengan jumlah lawan yang terkena) dan menyebabkan stun singkat ke lawan pada setiap serangan.",
+     "attributes_server": [
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "200%",
+        "200%",
+        "1200%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG 1.000% → 1.200%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -4686,7 +4906,32 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S9520.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S9520.png",
+     "description_server": "Yu Zhong melepaskan 3 ATK Dragon Soul. 2 ATK pertama memberikan 240% Total Physical ATK/300% Total Physical ATK/1050% Total Physical ATK Physical DMG ke lawan di depan. ATK ke-3 memiliki jangkauan yang diperluas dan memberikan 320% Total Physical ATK/420% Total Physical ATK/1300% Total Physical ATK Physical DMG. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: ATK Dragon Soul dihitung sebagai Basic ATK dan berpeluang memicu efek Bruiser untuk melakukan serangan tambahan 1 kali.",
+     "attributes_server": [
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "240%",
+        "300%",
+        "1050%"
+       ]
+      },
+      {
+       "label": "DMG yang Ditingkatkan",
+       "values": [
+        "320%",
+        "420%",
+        "1300%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG dua fase pertama 900% → 1.050%; fase ketiga 1.120% → 1.300%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -4782,7 +5027,7 @@
      ],
      "cooldown_ms": null,
      "icon": "img/Atlas_HeroSkillIcon_S8/S230.png",
-     "description_server": "Balmond menghantam ke depan, memberikan 370% Total Physical ATK/370% Total Physical ATK/1200% Total Physical ATK Physical DMG ke lawan di area yang luas. Untuk setiap target yang terkena, dia mendapatkan Shield sebesar 5%/5%/9% dari Max HP-nya selama 4 detik. Saat mencapai Bintang 3, Balmond meninggalkan chessboard dan melancarkan hantaman kuat yang memberikan DMG ke semua lawan. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Ketika tidak ada lawan di sekitar, Balmond langsung menerjang ke arah targetnya saat ini, memberikan DMG Basic ATK satu kali ke lawan di sepanjang jalurnya. Jika ada 2 lawan atau lebih di sekitar, Balmond menggunakan Cyclone Sweep sebagai gantinya, memberikan 90% Total Physical ATK/90% Total Physical ATK/165% Total Physical ATK Physical DMG setiap detik ke lawan di sekitar. DMG yang diberikan selama Cyclone Sweep dihitung sebagai DMG Skill dan memulihkan Mana.\nEfek Atribut Titan: Ketika Balmond memberikan DMG ke lawan dengan HP di bawah 18%, dia akan mengeliminasi target tersebut dan memberikan 200% Adaptive DMG ke lawan di sekitar. DMG ini dihitung berdasarkan nilai Hybrid ATK yang lebih tinggi.",
+     "description_server": "Balmond menghantam ke depan, memberikan 370% Total Physical ATK/370% Total Physical ATK/1200% Total Physical ATK Physical DMG ke lawan di area yang luas. Untuk setiap target yang terkena, dia mendapatkan Shield sebesar 5%/5%/7% dari Max HP-nya selama 4 detik. Saat mencapai Bintang 3, Balmond meninggalkan chessboard dan melancarkan hantaman kuat yang memberikan DMG ke semua lawan. (DMG berkurang seiring dengan jumlah lawan yang terkena.)\nPasif: Ketika tidak ada lawan di sekitar, Balmond langsung menerjang ke arah targetnya saat ini, memberikan DMG Basic ATK satu kali ke lawan di sepanjang jalurnya. Jika ada 2 lawan atau lebih di sekitar, Balmond menggunakan Cyclone Sweep sebagai gantinya, memberikan 90% Total Physical ATK/90% Total Physical ATK/165% Total Physical ATK Physical DMG setiap detik ke lawan di sekitar. DMG yang diberikan selama Cyclone Sweep dihitung sebagai DMG Skill dan memulihkan Mana.\nEfek Atribut Titan: Ketika Balmond memberikan DMG ke lawan dengan HP di bawah 15%, dia akan mengeliminasi target tersebut dan memberikan 180% Adaptive DMG ke lawan di sekitar. DMG ini dihitung berdasarkan nilai Hybrid ATK yang lebih tinggi.",
      "attributes_server": [
       {
        "label": "Bonus Physical",
@@ -4797,7 +5042,7 @@
        "values": [
         "5%",
         "5%",
-        "9%"
+        "7%"
        ]
       },
       {
@@ -4813,12 +5058,27 @@
       {
        "patch": "20/11",
        "text": "Pengali DMG Skill ★1/★2: 380%/410% → 370%; Shield Skill ★2: 6% → 5%"
+      },
+      {
+       "patch": "26/11",
+       "text": "Shield per target ★3: 9% → 7%; Atribut Titan: batas HP eksekusi 18% → 15%, DMG Area setelah eksekusi 200% → 180% (Batas Mana ★3 120 → 170 di tabel stat)"
       }
      ]
     }
    ],
    "summoned": false,
-   "icon": "img/Atlas_HeroHeadIcon_S8/SkinHead002_10.png"
+   "icon": "img/Atlas_HeroHeadIcon_S8/SkinHead002_10.png",
+   "stats_server": {
+    "3": {
+     "Batas Mana": "170"
+    }
+   },
+   "server": [
+    {
+     "patch": "26/11",
+     "text": "Batas Mana ★3: 120 → 170"
+    }
+   ]
   },
   {
    "id": 11,
@@ -4884,7 +5144,32 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S1130.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S1130.png",
+     "description_server": "Bane memanggil sekawanan hiu yang menyerang ke depan, memberikan 240% Total Magic ATK/260% Total Magic ATK/1100% Total Magic ATK Magic DMG ke lawan yang terkena, menyebabkan airborne dan freeze selama 1.2/1.2/2.5 detik.\nPasif: Saat mencapai Bintang 3, jumlah hiu panggilan bertambah drastis.",
+     "attributes_server": [
+      {
+       "label": "Durasi Efek Crowd Control",
+       "values": [
+        "1.2",
+        "1.2",
+        "2.5"
+       ]
+      },
+      {
+       "label": "Magic Bonus",
+       "values": [
+        "240%",
+        "260%",
+        "1100%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Durasi Freeze ★2: 1,8 → 1,2 detik (panel dalam pertandingan 27 Nov 05:43–05:53 masih 1,8 detik)"
+      }
+     ]
     }
    ],
    "summoned": true,
@@ -5126,7 +5411,48 @@
       }
      ],
      "cooldown_ms": null,
-     "icon": "img/Atlas_HeroSkillIcon_S8/S11420.png"
+     "icon": "img/Atlas_HeroSkillIcon_S8/S11420.png",
+     "description_server": "\"Ini rencananya: Saat aku menggunakan skill-ku, aku akan memanggil 1/2/3 Muddles! Aku hanya membawa 1/2/5, jadi hanya itu yang aku punya! Selama 5 detik berikutnya, aku akan melempar boneka dengan Basic ATK-ku. Lihat ini!\"\n(Melempar boneka memberikan 160% Total Physical ATK/160% Total Physical ATK/320% Total Physical ATK Basic ATK Physical DMG Area saat mengenai target. DMG berkurang seiring dengan jumlah lawan yang terkena.\nPasif: Melissa mendapatkan 20%/20%/200% ATK Speed saat pertarungan dimulai. Muddles bertahan selama 6 detik. Ketika Melissa mengenai lawan dengan Basic ATK, mereka meluncurkan Basic ATK terkoordinasi ke target yang sama, memberikan 30% Total Physical ATK/30% Total Physical ATK/125% Total Physical ATK Physical DMG (bisa memicu Critical). Saat mencapai Bintang 3, memanggil 1 Muddles tambahan setiap detik saat skill aktif hingga semuanya terpanggil.)",
+     "attributes_server": [
+      {
+       "label": "Unit Panggilan setiap Penggunaan",
+       "values": [
+        "1",
+        "2",
+        "3"
+       ]
+      },
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "160%",
+        "160%",
+        "320%"
+       ]
+      },
+      {
+       "label": "Bonus ATK Speed",
+       "values": [
+        "20%",
+        "20%",
+        "200%"
+       ]
+      },
+      {
+       "label": "DMG ATK Terkoordinasi",
+       "values": [
+        "30%",
+        "30%",
+        "125%"
+       ]
+      }
+     ],
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "★3: Pengali DMG Area 205% → 320%; Bonus ATK Speed 100% → 200%"
+      }
+     ]
     }
    ],
    "summoned": false,
@@ -5439,11 +5765,41 @@
      ],
      "cooldown_ms": null,
      "icon": "img/Atlas_HeroSkillIcon_S8/S9420.png",
-     "description_server": "Popol melempar tombak 27 kali ke target di sekitar (melempar 1 kali lagi untuk setiap 100% ATK Speed yang didapatkan; bisa memicu Efek Basic ATK), memberikan 30% Total Physical ATK/35% Total Physical ATK Physical DMG dan menyebabkan freeze ke target selama 0.3 detik. Lawan yang terkena freeze lalu menerima DMG akan langsung kehilangan efek Freeze serta menerima 30% Total Physical ATK/35% Total Physical ATK Physical DMG.\nSkill Bintang 3: Popol memanggil kawanan serigala untuk terus menerjang melintasi chessboard selama 5 detik, memberikan 800% Total Physical ATK Physical DMG ke lawan yang terkena (dia mendapatkan Kekebalan CC dan 40% Pengurangan DMG selama durasi skill).",
+     "description_server": "Popol melempar tombak 18 kali ke target di sekitar (melempar 1 kali lagi untuk setiap 100% ATK Speed yang didapatkan; bisa memicu Efek Basic ATK), memberikan 50% Total Physical ATK/50% Total Physical ATK Physical DMG dan menyebabkan freeze ke target selama 0.3 detik. Lawan yang terkena freeze lalu menerima DMG akan langsung kehilangan efek Freeze serta menerima 50% Total Physical ATK/50% Total Physical ATK Physical DMG.\nSkill Bintang 3: Popol memanggil kawanan serigala untuk terus menerjang melintasi chessboard selama 5 detik, memberikan 800% Total Physical ATK Physical DMG ke lawan yang terkena (dia mendapatkan Kekebalan CC dan 40% Pengurangan DMG selama durasi skill).",
      "server": [
       {
        "patch": "20/11",
        "text": "Durasi Freeze: 1,0 → 0,3 detik"
+      },
+      {
+       "patch": "26/11",
+       "text": "★1/★2: lemparan tombak 27 → 18; Pengali DMG per serangan 30%/35% → 50%; Pengali DMG saat Freeze berakhir 30%/35% → 50%"
+      }
+     ],
+     "attributes_server": [
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "50%",
+        "50%",
+        "400%"
+       ]
+      },
+      {
+       "label": "Peningkatan DMG",
+       "values": [
+        "50%",
+        "50%",
+        "240%"
+       ]
+      },
+      {
+       "label": "Bonus Physical",
+       "values": [
+        "800%",
+        "800%",
+        "800%"
+       ]
       }
      ]
     }
@@ -6351,8 +6707,15 @@
       "description": "Peluang memunculkan Hero gratis meningkat menjadi 24%.",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill1_MC_New/S471210.png"
-     }
+      "icon": "img/Atlas_Commander_Skill1_MC_New/S471210.png",
+      "description_server": "Peluang memunculkan Hero gratis meningkat menjadi 23%."
+     },
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Peluang Hero gratis saat refresh Toko (Bintang 2): 24% → 23%"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -6501,8 +6864,15 @@
       "description": "Nilai Shield meningkat menjadi 125% Max HP.",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill2_MC/S452010.png"
-     }
+      "icon": "img/Atlas_Commander_Skill2_MC/S452010.png",
+      "description_server": "Nilai Shield meningkat menjadi 135% Max HP."
+     },
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Shield Bintang 2: 125% → 135% Max HP"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -6532,7 +6902,13 @@
         "text": "1–2 Poin: 6 Gold atau 2 Hero 2 Gold\n3–4 Poin: 8 Gold, 3 Hero 2 Gold, atau 10 EXP\n5 Poin: 10 Gold atau 6 Gold + 1 Hero 3 Gold\n6 Poin: 13 Gold atau 7 Gold + 1 Hero 4 Gold\n7 Poin: 16 Gold, atau 10 Gold + 1 Hero 4 Gold\n8 Poin: 19 Gold, atau 9 Gold + 1 Hero 5 Gold"
        }
       ]
-     }
+     },
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Hadiah bonus Brankas Harta untuk 5–8 poin dikurangi 1–2 Gold (angka baru tidak disebut patch note)"
+      }
+     ]
     },
     {
      "from_level": 2,
@@ -6687,8 +7063,15 @@
       "description": "Setelah memenangkan duel, mendapatkan 6% Hybrid ATK tambahan secara permanen (maksimal 11 stack).",
       "attributes": [],
       "cooldown_ms": null,
-      "icon": "img/Atlas_Commander_Skill1_MC_New/S470410.png"
-     }
+      "icon": "img/Atlas_Commander_Skill1_MC_New/S470410.png",
+      "description_server": "Setelah memenangkan duel, mendapatkan 8% Hybrid ATK tambahan secara permanen (maksimal 11 stack)."
+     },
+     "server": [
+      {
+       "patch": "26/11",
+       "text": "Hybrid ATK permanen per duel yang dimenangkan: 6% → 8%"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -7047,7 +7430,13 @@
         "text": "Sinergi berjumlah 7: 15% HP; 20% Hybrid ATK\nSinergi berjumlah 8: 30% HP; 40% Hybrid ATK\nSinergi berjumlah 9: 50% HP; 65% Hybrid ATK"
        }
       ]
-     }
+     },
+     "server": [
+      {
+       "patch": "27/11 tanpa patch note",
+       "text": "Tooltip 'melebihi 6': Sinergi berjumlah 8: 30% HP; 40% Hybrid ATK → 25% HP; 35% Hybrid ATK. Sinergi berjumlah 9: 50% HP; 65% Hybrid ATK → 45% HP; 60% Hybrid ATK (file game: efek 45060600/45060601 level 8–9 = 3000/4000 dan 5000/6500; level 7 (15%/20%) dan tooltip 'Jumlah Sinergi' 2–6 sama dengan layar)"
+      }
+     ]
     }
    ],
    "power_card": {
@@ -15831,7 +16220,7 @@
   "currency_text": "Aktifkan Sinergi Mistbender untuk mengumpulkannya. Gunakan untuk menukarkannya dengan hadiah di Toko Spirit Sand.",
   "max_storage": 99,
   "total_weight": 980,
-  "verified": false,
+  "verified": true,
   "items": [
    {
     "id": 1,
@@ -15897,7 +16286,7 @@
     "effect": "+3% Hybrid ATK untuk Hero rekan, permanen sampai akhir pertandingan (+3 stack; bisa dibeli lagi dan menumpuk)",
     "pool": [],
     "notes": [
-     "Nama item menyebut +2%, tapi data efek memberi 3 stack (+3%)."
+     "Nama item menyebut +2%, tapi data efek memberi 3 stack (+3%). Cocok dengan kenaikan baris ATK rekan di layar toko."
     ]
    },
    {
@@ -15912,7 +16301,7 @@
     "effect": "+5% Hybrid ATK untuk Hero rekan, permanen sampai akhir pertandingan (+5 stack; bisa dibeli lagi dan menumpuk)",
     "pool": [],
     "notes": [
-     "Nama item menyebut +3%, tapi data efek memberi 5 stack (+5%)."
+     "Nama item menyebut +3%, tapi data efek memberi 5 stack (+5%). Cocok dengan kenaikan baris ATK rekan di layar toko."
     ]
    },
    {
@@ -18112,9 +18501,12 @@
      }
     ],
     "special_rules": [
-     1,
-     1,
-     1
+     {
+      "type": 1,
+      "round": 1,
+      "slot": 1,
+      "text": "Kartu Power Commander sendiri"
+     }
     ]
    },
    {
@@ -18306,6 +18698,9 @@
      7
     ]
    }
+  ],
+  "notes": [
+   "Roda di layar punya 12 segmen (7 terlihat sekaligus = setengah lingkaran). Isinya berbeda tiap pertandingan dan satu efek bisa tampil 2 kali, juga efek berbobot 1 (Gold Galore), jadi jumlah segmen tidak menunjukkan bobot; peluang efek mengikuti bobot di tabel (pengamatan screenshot 27 Nov)."
   ]
  },
  "encyclopedia": [
@@ -18692,6 +19087,148 @@
     "Memperbaiki Balmond Bintang 3 yang memulihkan Mana lebih cepat dari seharusnya.",
     "Memperbaiki jangkauan skill Nana yang terlalu pendek."
    ]
+  },
+  {
+   "patch": "26/11",
+   "source": "Patch Note Penyesuaian Keseimbangan (26/11) (screenshot/season 8/update patch, ponsel 27 Nov 16:21–16:22). Panel Bane ★2 dalam pertandingan 27 Nov 05:43–05:53 masih 1,8 detik: patch belum berlaku saat itu",
+   "changes": [
+    {
+     "kind": "Hero",
+     "target": "Balmond",
+     "text": "Batas Mana ★3: 120 → 170",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Kagura / Yin Yang Gathering",
+     "text": "Shield Bintang 2: 125% → 135% Max HP",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Ling / Transcendent Stance",
+     "text": "Hybrid ATK permanen per duel yang dimenangkan: 6% → 8%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Commander",
+     "target": "Kalea / Serpent's Favor",
+     "text": "Hadiah bonus Brankas Harta untuk 5–8 poin dikurangi 1–2 Gold (angka baru tidak disebut patch note)",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    },
+    {
+     "kind": "Commander",
+     "target": "Guinevere / Mystic Evolution",
+     "text": "Peluang Hero gratis saat refresh Toko (Bintang 2): 24% → 23%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Melissa / Eyes on You!",
+     "text": "★3: Pengali DMG Area 205% → 320%; Bonus ATK Speed 100% → 200%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Eudora / Thunder's Wrath",
+     "text": "★3: Pengali DMG 700% → 800%; Pengali DMG Tertunda 345% → 400%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Kimmy / Traction Pulse",
+     "text": "★3: Pengali DMG fase pertama 1.925% → 2.150%, fase kedua 825% → 925%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Argus / Warmonger",
+     "text": "★3: Pengali DMG Basic ATK yang Diperkuat 600% → 700%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Lolita / Noumenon Blast",
+     "text": "★3: Pengali Physical DMG 1.700% → 1.950%; Pengali DMG Berbasis HP 12% → 15%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Yu Zhong / Soul Grip",
+     "text": "★3: Pengali DMG dua fase pertama 900% → 1.050%; fase ketiga 1.120% → 1.300%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Sora / Sundering Strike",
+     "text": "★3: Pengali DMG 1.000% → 1.200%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Karina / Dance of Death",
+     "text": "Pengali DMG Skill ★2/★3: 450%/500% → 500%/600%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Erza / Heaven's Wheel Armor",
+     "text": "Shield ★2/★3: 750/1.800 → 1.050/2.400; Bonus Physical ATK ★2/★3: 15%/40% → 20%/50%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Balmond / Lethal Counter",
+     "text": "Shield per target ★3: 9% → 7%; Atribut Titan: batas HP eksekusi 18% → 15%, DMG Area setelah eksekusi 200% → 180% (Batas Mana ★3 120 → 170 di tabel stat)",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Popol / Icefield Strike",
+     "text": "★1/★2: lemparan tombak 27 → 18; Pengali DMG per serangan 30%/35% → 50%; Pengali DMG saat Freeze berakhir 30%/35% → 50%",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Skill hero",
+     "target": "Bane / Deadly Catch",
+     "text": "Durasi Freeze ★2: 1,8 → 1,2 detik",
+     "status": "diterapkan server"
+    },
+    {
+     "kind": "Sinergi",
+     "target": "Dawnbringer",
+     "text": "4/6 Dawnbringer: Equipment Dawnbringer yang baru didapatkan mendapatkan 7/14 → 9/15 stack peningkatan tambahan",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    },
+    {
+     "kind": "Sinergi",
+     "target": "Swiftblade",
+     "text": "2/4/6 Swiftblade: Hero Swiftblade mendapatkan 25/50/100 → 35/65/130 Hybrid Penetration tambahan",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    },
+    {
+     "kind": "Sinergi",
+     "target": "Titan",
+     "text": "Atribut Balmond: batas HP untuk eksekusi 18% → 15%; DMG Area setelah eksekusi 200% → 180% (teks skill Balmond ikut diganti)",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    }
+   ],
+   "notes": [
+    "Dari Para Desainer: beberapa Hero 5 Gold dinilai terlalu kuat, Hero 4 Gold Bintang 3 kurang sepadan, dan beberapa Sinergi kurang efektif."
+   ]
+  },
+  {
+   "patch": "27/11 tanpa patch note",
+   "source": "Layar Commander Odette ponsel 27 Nov 16:57 (screenshot/season 8/commander); tidak disebut Patch Note mana pun, client PC tidak berubah sejak 22 Nov",
+   "changes": [
+    {
+     "kind": "Commander",
+     "target": "Odette / Supplication",
+     "text": "Tooltip 'melebihi 6': Sinergi berjumlah 8: 30% HP; 40% Hybrid ATK → 25% HP; 35% Hybrid ATK. Sinergi berjumlah 9: 50% HP; 65% Hybrid ATK → 45% HP; 60% Hybrid ATK",
+     "status": "diterapkan server (catatan; angkanya tidak ada di teks file game)"
+    }
+   ],
+   "notes": []
   }
  ]
 }

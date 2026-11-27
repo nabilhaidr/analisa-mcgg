@@ -1,19 +1,19 @@
 # Validasi otomatis Season 8 (data 1.3.32.354.1)
 
-- Dibuat 2026-11-22T17:53:19 oleh `mc_validate.py` dari `screenshot\season 8\ocr.json`.
+- Dibuat 2026-11-27T19:21:37 oleh `mc_validate.py` dari `screenshot\season 8\ocr.json`.
 - **Selisih** = terbaca jelas tapi beda dengan data. **Cek manual** = kemungkinan salah baca OCR / panel di-scroll; lihat screenshot-nya.
 
 | Bagian | Layar | Selisih | Cek manual | Cakupan |
 |---|---|---|---|---|
 | Hero | 102 | 0 | 1 | 51 dari 52 hero toko punya screenshot Detail Hero |
 | Sinergi | 113 | 0 | 7 | 20 dari 22 sinergi punya screenshot Panduan Sinergi; 318 baris tabel tingkat cocok dengan data |
-| Commander | 44 | 2 | 6 | 40 dari 41 commander punya screenshot detail; 0 nama terbaca di daftar commander |
+| Commander | 48 | 2 | 6 | 41 dari 41 commander punya screenshot detail; 0 nama terbaca di daftar commander |
 | Equipment | 131 | 0 | 8 | 113 dari 113 level equipment aktif punya screenshot panel detail; Angka di belakang koma tidak tampil di panel (bukan selisih): Direwolf's Devastator yang Diperkuat +22.5% Hybrid ATK; Horn of Prosperity yang Diperkuat +22.5% ATK Speed; Skywrath Spear yang Diperkuat +22.5% Hybrid ATK |
 | Go Go Card | 54 | 0 | 0 | 195 dari 200 kartu aktif terlihat di screenshot Go Go Card |
 | Ensiklopedia | 16 | 0 | 2 | 16 screenshot dicocokkan dengan 8 tab Ensiklopedia |
-| Toko Spirit Sand | 0 | 0 | 0 | 0 dari 11 item terlihat dengan harga; 0 pembelian sesuai stack data |
-| Go Go Box | 0 | 0 | 0 | 0 dari 0 layar menampilkan 8 orb utuh |
-| Patch Note | 23 | 0 | 0 | 21 perubahan terbaca dari 23 screenshot patch note |
+| Toko Spirit Sand | 29 | 1 | 2 | 10 dari 11 item terlihat dengan harga; 5 pembelian sesuai stack data |
+| Go Go Box | 19 | 0 | 0 | 19 dari 19 layar menampilkan 8 orb utuh, cocok babak I-4, II-6, III-6, IV-6, V-6, VI-6, VII-6, VIII-6 |
+| Patch Note | 30 | 0 | 0 | 46 perubahan terbaca dari 30 screenshot patch note |
 
 ## Selisih
 
@@ -25,6 +25,10 @@
 - `commander\Screenshot_2026-11-20-21-20-50-864_com.mobilechess.mi.jpg`: Vexana / Unrestricted: angka game ['117'] tidak ada di data
   - game: Vexana mendapatkan 4 Gold pada setiap Fase Go Go Box. Slaug 117
   - data: Vexana mendapatkan 6 Gold pada setiap Fase Go Go Box.
+
+### Toko Spirit Sand (1)
+
+- `match\spirit sand\Screenshot_2026-11-23-03-56-04-899_com.mobilechess.mi.jpg`: ATK rekan naik 8%, item yang dibeli ['ATK Rekan +2%'] memberi [3] stack
 
 ## Cek manual
 
@@ -100,6 +104,11 @@
 - `ensiklopedia\Screenshot (2250).png`: Ensiklopedia: angka game ['3.2'] tidak ada di data
   - game: 'Magic Crystal Pilihan 1. Mendapatkan 1 Magic Crystal Pilihan saat memasuki Fase II, III, dan IV. 2. Saat pertama kali kamu menggunakannya ke rekan, 3 pilihan Sinergi berdasarkan Sinergi Hero target akan tersedia untuk dipilih. 3.2 pilihan pertama dipilih dari Sinergi Faction dan Role Hero. Pilihan ke-3 bersifat acak. Sinergi Minor (Sinergi berjumlah maksimal <4) tidak muncul. 4. Setelah dikonfirmasi, Magic Crystal Pilihan menempati slot Magic Crystal dan menjadi terkunci. 5. Jika kamu tidak menginginkan satu pun dari 3 Sinergi tersebut, kamu bisa membatalkan pilihan untuk mempertahankan efek Magic Crystal awal Hero. 6. Jika Hero dengan Magic Crystal tersebut dijual, kamu bisa mengembalikan efek Magic Crystal dengan membeli lagi Hero yang sama. 'Wheel of Fate Pada awal pertandingan, Wheel of Fate akan memilih efek secara acak yang membawa perubahan baru bagi sistem Go Go Card dalam pertandingan. 1. Crystal Legend: Babak pemilihan Go Go Card pertama hanya menawarkan Kartu Badge Sinergi. 2. Commander's Power: Babak pemilihan Go Go Card pertama hanya menawarkan Kartu Power. 3. Gold Galore: Semua Go Go Card dalam pertandingan ini memiliki Kualitas Emas. 4. Tycoon: Semua Go Go Card dalam pertandingan ini adalah Kartu finansial.
 
+### Toko Spirit Sand (2)
+
+- `match\spirit sand\Screenshot_2026-11-23-03-49-23-202_com.mobilechess.mi.jpg`: HP rekan naik 3%, item yang dibeli ? memberi ? stack
+- `match\spirit sand\Screenshot_2026-11-27-17-37-35-837_com.mobilechess.mi.jpg`: ATK rekan naik 3%, item yang dibeli ? memberi ? stack
+
 ## Patch note vs data
 
 | Item | Patch note | Status di data |
@@ -125,11 +134,35 @@
 | Kimmy | Pengali DMG Skill Fase Kedua pada Bintang 3: 750% >> 825% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 | Yu Zhong | HP Dasar: 3.545/6.380/15.770 >> 3.760/6.765/16.715 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 | Balmond | Nilai Shield Skill pada Bintang 2: 6% >> 5% | tidak bisa dipastikan |
+| Kagura | Shield pada Bintang 2: 125% >> 135% dari Max HP | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Ling | Peningkatan Hybrid ATK Permanen saat Memenangkan Duel: 6% >> 8% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Guinevere | Peluang Mendapatkan Hero Gratis saat Refresh Toko pada Bintang 2: 24% >> 23% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Dawnbringer | 4/6 Dawnbringer: Equipment Dawnbringer yang baru didapatkan mendapatkan 7/14 >> 9/15 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Swiftblade | 2/4/6 Swiftblade: Hero Swiftblade mendapatkan 25/50/100 >> 35/65/130 Hybrid Penetration | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Titan | Batas HP untuk Eksekusi (Atribut Balmond): 18% >> 15% | sudah di data |
+| Titan | DMG Area setelah Eksekusi (Atribut Balmond): 200% >> 180% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Melissa | Pengali DMG Area pada Bintang 3: 205% >> 320% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Melissa | Bonus ATK speed pada Bintang 3: 100% >> 200% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Eudora | Pengali DMG pada Bintang 3: 700% >> 800% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Eudora | Pengali DMG Tertunda pada Bintang 3: 345% >> 400% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Kimmy | Pengali DMG Fase Pertama pada Bintang 3:1.925% >> 2.150% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Kimmy | Pengali DMG Fase Kedua pada Bintang 3: 825% >> 925% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Argus | Pengali DMG Basic ATK yang Diperkuat pada Bintang 3: 600% >> 700% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Lolita | Pengali Physical DMG pada Bintang 3:1.700% >> 1.950% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Lolita | Pengali DMG Berbasis HP pada Bintang 3: 12% >> 15% | tidak bisa dipastikan |
+| Yu Zhong | Pengali DMG untuk Dua Fase Pertama pada Bintang 3: 900% >> 1.050% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Yu Zhong | Pengali DMG untuk Fase Ketiga pada Bintang 3:1.120% >> 1.300% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Sora | Pengali DMG pada Bintang 3:1.000% >> 1.200% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Erza | Shield pada Bintang 2/3:750/1.800 >> 1.050/2.400 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Balmond | Perolehan Shield untuk Setiap Target yang Terkena pada Bintang 3: 9% >> 7% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Balmond | Batas Mana pada Bintang 3: 120 >> 170 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Popol | Jumlah Lemparan Tombak pada Bintang 1/2: 27 >> 18 | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Popol | Pengali DMG per Serangan pada Bintang 1/2: 30%/35% >> 50% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
+| Popol | Pengali DMG saat Durasi Freeze Berakhir pada Bintang 1/2: 30%/35% >> 50% | belum: angka baru tidak ada di data (diterapkan server) · tercatat di server_patch.json |
 
 ## Belum ada screenshot
 
 - Hero: Tanpa screenshot: Alpha (panggilan), Bane (panggilan), Gatotkaca (panggilan), Moskov (panggilan), Zhuxin
 - Sinergi: Tanpa screenshot: Chrono Wanderer, Fan yang Bersorak
-- Commander: Tanpa screenshot detail: Odette
 - Go Go Card: Tidak terlihat: Journey's Windfall (Oranye), Fury's Edge (Bisa Berubah Sewaktu-waktu) (Ungu), Victory's Blessing (Biru), Odette's Power (Oranye), Odette's Power (Oranye)
-- Toko Spirit Sand: Tanpa screenshot: 1 Equipment Acak yang Diperkuat, ATK Rekan +1%, ATK Rekan +2%, ATK Rekan +3%, HP Rekan +1%, HP Rekan +2%, HP Rekan +3%, Hero 4 Gold Bintang 1 Acak, Magic Crystal Acak, Mirror Device, Nana
+- Toko Spirit Sand: Tanpa screenshot: HP Rekan +3%

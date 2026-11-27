@@ -4,7 +4,7 @@
     "mc_data.py menampilkannya di laporan sebagai catatan 'Patch <x> (server)': nilai hero diperbarui di tabel, deskripsi kartu/skill commander diganti lewat pasangan 'replace' [teks lama, teks baru] (harus persis ada di deskripsi file game, atau di teks hasil patch sebelumnya bila skill yang sama sudah diubah patch lain).",
     "Kunci per season (\"7\"). heroes.stat: 'HP', 'Physical ATK', 'Magic ATK', 'Hybrid ATK' (= Physical + Magic), 'ATK Speed', 'Batas Mana Awal', 'Batas Mana'.",
     "Jika update game berikutnya sudah memuat nilai baru, mc_data.py memberi tanda 'sudah masuk file game' dan catatan itu boleh dihapus.",
-    "hero_skills: seperti commanders (name = hero, skill = nama skill) + opsional attributes [[label, bintang, nilai baru]] untuk tabel Atribut Skill.",
+    "hero_skills: seperti commanders (name = hero, skill = nama skill) + opsional attributes [[label, bintang, nilai baru]] untuk tabel Atribut Skill; elemen ke-4 opsional = urutan baris bila beberapa baris berlabel sama (Eudora/Kimmy 'Magic Bonus' ke-2 = 2; bawaan 1). Atribut patch berikutnya melanjutkan atribut patch sebelumnya, seperti teksnya.",
     "commanders / hero_skills / cards / synergies boleh hanya berisi 'text' tanpa 'replace' = catatan saja, bila angka yang berubah tidak ada di teks file game (mis. stat Johnny atau Turret). 'text' juga mengganti teks ringkasan perubahan."
   ],
   "7": [
@@ -122,6 +122,7 @@
          "note": "file game dan layar Detail Hero 18 Nov menulis 140% di ★2; nilai lama patch note tidak cocok"},
         {"name": "Kimmy", "skill": "Traction Pulse",
          "replace": [["/1750% Total Magic ATK Magic DMG", "/1925% Total Magic ATK Magic DMG"], ["/750% Total Magic ATK Magic DMG", "/825% Total Magic ATK Magic DMG"]],
+         "attributes": [["Magic Bonus", 3, "1925%"], ["Magic Bonus", 3, "825%", 2]],
          "text": "Pengali DMG Skill ★3: fase pertama 1.750% → 1.925%, fase kedua 750% → 825%"},
         {"name": "Popol", "skill": "Icefield Strike", "replace": [["menyebabkan freeze ke target selama 1 detik", "menyebabkan freeze ke target selama 0.3 detik"]],
          "text": "Durasi Freeze: 1,0 → 0,3 detik"},
@@ -151,6 +152,97 @@
         "Memperbaiki bonus Hybrid ATK dasar Lightstick yang hilang.",
         "Memperbaiki Balmond Bintang 3 yang memulihkan Mana lebih cepat dari seharusnya.",
         "Memperbaiki jangkauan skill Nana yang terlalu pendek."
+      ]
+    },
+    {
+      "patch": "26/11",
+      "source": "Patch Note Penyesuaian Keseimbangan (26/11) (screenshot/season 8/update patch, ponsel 27 Nov 16:21–16:22). Panel Bane ★2 dalam pertandingan 27 Nov 05:43–05:53 masih 1,8 detik: patch belum berlaku saat itu",
+      "heroes": [
+        {"name": "Balmond", "stat": "Batas Mana", "stars": [3], "old": [120], "new": [170]}
+      ],
+      "hero_skills": [
+        {"name": "Melissa", "skill": "Eyes on You!",
+         "replace": [["160% Total Physical ATK/205% Total Physical ATK Basic ATK", "160% Total Physical ATK/320% Total Physical ATK Basic ATK"],
+                     ["mendapatkan 20%/20%/100% ATK Speed", "mendapatkan 20%/20%/200% ATK Speed"]],
+         "attributes": [["Bonus Physical", 3, "320%"], ["Bonus ATK Speed", 3, "200%"]],
+         "text": "★3: Pengali DMG Area 205% → 320%; Bonus ATK Speed 100% → 200%"},
+        {"name": "Eudora", "skill": "Thunder's Wrath",
+         "replace": [["245% Total Magic ATK/635% Total Magic ATK", "245% Total Magic ATK/800% Total Magic ATK"],
+                     ["130% Total Magic ATK/345% Total Magic ATK", "130% Total Magic ATK/400% Total Magic ATK"]],
+         "attributes": [["Magic Bonus", 3, "800%"], ["Magic Bonus", 3, "400%", 2]],
+         "text": "★3: Pengali DMG 700% → 800%; Pengali DMG Tertunda 345% → 400%",
+         "note": "patch note menulis nilai lama 700%; file game dan layar Detail Hero 18 Nov 635%"},
+        {"name": "Kimmy", "skill": "Traction Pulse",
+         "replace": [["/1925% Total Magic ATK Magic DMG", "/2150% Total Magic ATK Magic DMG"], ["/825% Total Magic ATK Magic DMG", "/925% Total Magic ATK Magic DMG"]],
+         "attributes": [["Magic Bonus", 3, "2150%"], ["Magic Bonus", 3, "925%", 2]],
+         "text": "★3: Pengali DMG fase pertama 1.925% → 2.150%, fase kedua 825% → 925%"},
+        {"name": "Argus", "skill": "Warmonger",
+         "replace": [["200% Total Physical ATK/600% Total Physical ATK", "200% Total Physical ATK/700% Total Physical ATK"]],
+         "attributes": [["Bonus Physical", 3, "700%"]],
+         "text": "★3: Pengali DMG Basic ATK yang Diperkuat 600% → 700%"},
+        {"name": "Lolita", "skill": "Noumenon Blast",
+         "replace": [["435% Total Physical ATK/1455% Total Physical ATK", "435% Total Physical ATK/1950% Total Physical ATK"], ["5% Total HP/12% Total HP", "5% Total HP/15% Total HP"]],
+         "attributes": [["Bonus Physical", 3, "1950%"], ["DMG Berdasarkan HP", 3, "15%"], ["DMG Berdasarkan HP", 3, "15%", 2]],
+         "text": "★3: Pengali Physical DMG 1.700% → 1.950%; Pengali DMG Berbasis HP 12% → 15%",
+         "note": "patch note menulis nilai lama 1.700%; file game 1455%"},
+        {"name": "Yu Zhong", "skill": "Soul Grip",
+         "replace": [["300% Total Physical ATK/900% Total Physical ATK", "300% Total Physical ATK/1050% Total Physical ATK"], ["420% Total Physical ATK/1120% Total Physical ATK", "420% Total Physical ATK/1300% Total Physical ATK"]],
+         "attributes": [["Bonus Physical", 3, "1050%"], ["DMG yang Ditingkatkan", 3, "1300%"]],
+         "text": "★3: Pengali DMG dua fase pertama 900% → 1.050%; fase ketiga 1.120% → 1.300%"},
+        {"name": "Sora", "skill": "Sundering Strike",
+         "replace": [["200% Total Physical ATK/1000% Total Physical ATK", "200% Total Physical ATK/1200% Total Physical ATK"]],
+         "attributes": [["Bonus Physical", 3, "1200%"]],
+         "text": "★3: Pengali DMG 1.000% → 1.200%"},
+        {"name": "Karina", "skill": "Dance of Death",
+         "replace": [["440% Total Magic ATK/450% Total Magic ATK/500% Total Magic ATK", "440% Total Magic ATK/500% Total Magic ATK/600% Total Magic ATK"]],
+         "attributes": [["Magic Bonus", 2, "500%"], ["Magic Bonus", 3, "600%"]],
+         "text": "Pengali DMG Skill ★2/★3: 450%/500% → 500%/600%"},
+        {"name": "Erza", "skill": "Heaven's Wheel Armor",
+         "replace": [["mendapatkan 15%/15%/40% Physical ATK", "mendapatkan 15%/20%/50% Physical ATK"], ["375/750/1800 Shield", "375/1050/2400 Shield"]],
+         "attributes": [["Bonus ATK", 2, "20%"], ["Bonus ATK", 3, "50%"], ["Shield", 2, "1050"], ["Shield", 3, "2400"]],
+         "text": "Shield ★2/★3: 750/1.800 → 1.050/2.400; Bonus Physical ATK ★2/★3: 15%/40% → 20%/50%"},
+        {"name": "Balmond", "skill": "Lethal Counter",
+         "replace": [["Shield sebesar 5%/5%/9%", "Shield sebesar 5%/5%/7%"], ["HP di bawah 18%", "HP di bawah 15%"], ["memberikan 200% Adaptive DMG", "memberikan 180% Adaptive DMG"]],
+         "attributes": [["Shield per Serangan", 3, "7%"]],
+         "text": "Shield per target ★3: 9% → 7%; Atribut Titan: batas HP eksekusi 18% → 15%, DMG Area setelah eksekusi 200% → 180% (Batas Mana ★3 120 → 170 di tabel stat)"},
+        {"name": "Popol", "skill": "Icefield Strike",
+         "replace": [["melempar tombak 27 kali", "melempar tombak 18 kali"],
+                     ["memberikan 30% Total Physical ATK/35% Total Physical ATK Physical DMG dan menyebabkan freeze", "memberikan 50% Total Physical ATK/50% Total Physical ATK Physical DMG dan menyebabkan freeze"],
+                     ["menerima 30% Total Physical ATK/35% Total Physical ATK Physical DMG", "menerima 50% Total Physical ATK/50% Total Physical ATK Physical DMG"]],
+         "attributes": [["Bonus Physical", 1, "50%"], ["Bonus Physical", 2, "50%"], ["Peningkatan DMG", 1, "50%"], ["Peningkatan DMG", 2, "50%"]],
+         "text": "★1/★2: lemparan tombak 27 → 18; Pengali DMG per serangan 30%/35% → 50%; Pengali DMG saat Freeze berakhir 30%/35% → 50%"},
+        {"name": "Bane", "skill": "Deadly Catch",
+         "replace": [["freeze selama 1.2/1.8/2.5 detik", "freeze selama 1.2/1.2/2.5 detik"]],
+         "attributes": [["Durasi Efek Crowd Control", 2, "1.2"]],
+         "text": "Durasi Freeze ★2: 1,8 → 1,2 detik",
+         "note": "panel dalam pertandingan 27 Nov 05:43–05:53 masih 1,8 detik"}
+      ],
+      "commanders": [
+        {"name": "Kagura", "skill": "Yin Yang Gathering", "replace": [["menjadi 125% Max HP", "menjadi 135% Max HP"]],
+         "text": "Shield Bintang 2: 125% → 135% Max HP"},
+        {"name": "Ling", "skill": "Transcendent Stance", "replace": [["mendapatkan 6% Hybrid ATK tambahan", "mendapatkan 8% Hybrid ATK tambahan"]],
+         "text": "Hybrid ATK permanen per duel yang dimenangkan: 6% → 8%"},
+        {"name": "Kalea", "skill": "Serpent's Favor",
+         "text": "Hadiah bonus Brankas Harta untuk 5–8 poin dikurangi 1–2 Gold (angka baru tidak disebut patch note)"},
+        {"name": "Guinevere", "skill": "Mystic Evolution", "replace": [["meningkat menjadi 24%", "meningkat menjadi 23%"]],
+         "text": "Peluang Hero gratis saat refresh Toko (Bintang 2): 24% → 23%"}
+      ],
+      "synergies": [
+        {"name": "Dawnbringer", "text": "4/6 Dawnbringer: Equipment Dawnbringer yang baru didapatkan mendapatkan 7/14 → 9/15 stack peningkatan tambahan"},
+        {"name": "Swiftblade", "text": "2/4/6 Swiftblade: Hero Swiftblade mendapatkan 25/50/100 → 35/65/130 Hybrid Penetration tambahan"},
+        {"name": "Titan", "text": "Atribut Balmond: batas HP untuk eksekusi 18% → 15%; DMG Area setelah eksekusi 200% → 180% (teks skill Balmond ikut diganti)"}
+      ],
+      "notes": [
+        "Dari Para Desainer: beberapa Hero 5 Gold dinilai terlalu kuat, Hero 4 Gold Bintang 3 kurang sepadan, dan beberapa Sinergi kurang efektif."
+      ]
+    },
+    {
+      "patch": "27/11 tanpa patch note",
+      "source": "Layar Commander Odette ponsel 27 Nov 16:57 (screenshot/season 8/commander); tidak disebut Patch Note mana pun, client PC tidak berubah sejak 22 Nov",
+      "commanders": [
+        {"name": "Odette", "skill": "Supplication",
+         "text": "Tooltip 'melebihi 6': Sinergi berjumlah 8: 30% HP; 40% Hybrid ATK → 25% HP; 35% Hybrid ATK. Sinergi berjumlah 9: 50% HP; 65% Hybrid ATK → 45% HP; 60% Hybrid ATK",
+         "note": "file game: efek 45060600/45060601 level 8–9 = 3000/4000 dan 5000/6500; level 7 (15%/20%) dan tooltip 'Jumlah Sinergi' 2–6 sama dengan layar"}
       ]
     }
   ]

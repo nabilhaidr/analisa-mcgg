@@ -453,7 +453,8 @@ if (WOF && WOF.effects.length) {
     const rules = (e.rounds || []).map(r => `putaran ${r.round}: ` + [r.cards, r.quality && `kualitas ${r.quality}`].filter(Boolean).join(" "))
       .concat(e.trigger_rounds ? [`babak ${e.trigger_rounds.join(", ")}`] : [], e.shared_cards ? ["kartu sama untuk semua player"] : [],
         e.foresight ? ["kualitas kartu tampil lebih awal"] : [], e.post_select_skills ? ["hadiah hero setelah tiap pilihan"] : [],
-        e.unlock_levels ? [`Level Commander ${e.unlock_levels.join(", ")}`] : []);
+        e.unlock_levels ? [`Level Commander ${e.unlock_levels.join(", ")}`] : [],
+        (e.special_rules || []).map(x => `putaran ${x.round} slot ${x.slot}: ${x.text}`));
     const row = el("tr", {},
       el("td", {}, el("div", { class: "pills" }, img(e.icon, "xs"), el("b", {}, e.name))),
       el("td", { class: "num" }, e.active ? `${e.chance}% (${e.weight})` : "nonaktif (0)"),
@@ -468,7 +469,8 @@ if (WOF && WOF.effects.length) {
       `bobot (total ${WOF.total_weight}; pemain baru memakai bobot pemain baru, total ${WOF.new_player_total_weight}) dan mengubah ` +
       `putaran Go Go Card pertandingan itu. Durasi fase upacara ${secs.join(" + ")} = ${secs.reduce((a, b) => a + b, 0)} detik. ` +
       `Sumber: MCRoulette + AOpeningCeremonyInfo di MCClassicsBattleConfig_S${D.season}.`),
-    el("div", { class: "card stats-wrap" }, t));
+    el("div", { class: "card stats-wrap" }, t),
+    ...(WOF.notes || []).map(n => el("p", { class: "muted" }, n)));
 }
 
 // server patch summary (server_patch.json)

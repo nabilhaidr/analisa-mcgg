@@ -873,6 +873,8 @@ def check_store(d, shots, rep):
                 seen.add(shown)
         match = name[:name.rfind("Screenshot") + 11]  # "Screenshot (n)" = PC, "Screenshot_<waktu>" = ponsel
         before_slots, before = previous.get(match, ([], {}))
+        if any(percent[s] < before[s] for s in set(percent) & set(before)):
+            before_slots, before = [], {}  # stacks never go down within a match: this screen starts another match
         for stat in set(percent) & set(before):
             gain = percent[stat] - before[stat]
             if gain:

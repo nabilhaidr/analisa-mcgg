@@ -326,6 +326,16 @@ class LayarSeason8(unittest.TestCase):
             self.assertNotEqual(V.classify(shot8(name)), "commander", name)
 
 
+class TokoS8(unittest.TestCase):
+    def test_persen_turun_berarti_pertandingan_baru(self):  # 23 Nov berakhir ATK 11%, 27 Nov mulai ATK 0%
+        names = [next(k for k in SHOTS8 if k.endswith(n)) for n in ("23-03-59-05-182_com.mobilechess.mi.jpg",
+                                                                    "27-17-24-50-756_com.mobilechess.mi.jpg")]
+        rep = V.Report()
+        V.check_store(S8, [(n, SHOTS8[n]) for n in names], rep)
+        self.assertEqual(rep.items["store"]["manual"], [])
+        self.assertEqual(rep.items["store"]["selisih"], [])
+
+
 class PatchNoteS8(unittest.TestCase):
     def test_baris_lanjutan_milik_kartu_di_baris_sebelumnya(self):  # 2004: "Harley's Power: ..." lalu "minimal 2 >> 4 Hero"
         rep = V.Report()
