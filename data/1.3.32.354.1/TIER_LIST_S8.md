@@ -1,8 +1,8 @@
 # Tier List Season 8 — Arena Para Penyihir
 
-_Data game 1.3.32.354.1, Season 8 "Arena Para Penyihir" · dibuat 2026-11-27 19:47_
+_Data game 1.3.32.354.1, Season 8 "Arena Para Penyihir" · dibuat 2026-11-28 04:30_
 
-Bukan win rate. Gabungan sumber web (dibuka 25 Nov 2026, dicek lagi 27 Nov) dan daftar **Rekomendasi Lineup** in-game (rekaman 20 Nov), lalu dikoreksi dengan **Penyesuaian Keseimbangan 20/11 dan 26/11** yang belum diperhitungkan sumber-sumber itu.
+Bukan win rate. Gabungan sumber web (dibuka 25 Nov 2026, dicek lagi 28 Nov) dan daftar **Rekomendasi Lineup** in-game (rekaman 20 Nov), lalu dikoreksi dengan **Penyesuaian Keseimbangan 20/11 dan 26/11** yang belum diperhitungkan sumber-sumber itu.
 
 ↑ buff, ↓ nerf, · catatan; label di belakang efek = asal perubahan (20/11, 26/11, server). Hero tebal = carry.
 
@@ -100,12 +100,12 @@ _Gabungan = rata-rata dua sumber (S 4, A 3, B 2, C 1; satu sumber bila hanya sat
 - **Tycoon** (semua kartu finansial emas) dan **Gold Galore** (semua kartu emas) mempercepat ekonomi; **Early Reinforcement** memajukan Go Go Card ke Babak I-2, I-3, I-4. **Fate Sync** memberi semua pemain kartu yang sama: hindari berebut Magic Crystal yang sama (saran kitakuji).
 - Patch 20/11 menaikkan Valentina ★2, Gray ★3, Kimmy ★3, Yu Zhong, 10 Dawnbringer, serangan 6 Frostrider, dan Brody, serta memperbaiki Nana dan Lightstick; yang turun Balmond, Popol, Barbiel, 2/4 Frostrider, HP warisan Frostrider, Lukas, dan Vexana.
 - Patch 26/11 menaikkan ★3 hero 4 Gold (Melissa, Eudora, Kimmy, Argus, Lolita, Yu Zhong, Sora), Karina, Erza, 4/6 Dawnbringer, Swiftblade, Kagura, dan Ling; yang turun Balmond (★3 dan atribut Titan), Popol, Bane, Kalea, dan Guinevere. Panel Bane di pertandingan 27 Nov pagi masih memakai nilai lama, jadi waktu berlakunya belum pasti.
-- Data pertandinganmu di S8 belum dihitung: layar hasil 19 pertandingan dan 7 rekaman belum dibuat laporan MATCH, jadi statistik papan seperti di S7 belum ada.
+- Data pertandinganmu di S8 (23 laporan MATCH 16–27 Nov, hampir semuanya sebelum patch 26/11 berlaku): dari 20 pertandingan dengan layar hasil kamu juara 13 kali, peringkat 2 lima kali, lalu peringkat 4 dan 7 sekali. Papan Dawnbringer 5–6 juara 4 dari 4; papan SPECTRE 5–7 juara 4 kali dan peringkat 2 tiga kali. Di 132 papan berperingkat pemain lain, Titan >= 4 hero ada di 28% papan peringkat 1–4 vs 12% papan 5–8 (Balmond belum kena nerf 26/11), sedangkan SPECTRE hanya 6% vs 17%. Sampel kecil, bukan win rate.
 
 ## Sumber
 
-- **loadoutgg: Best Comps & Lineups (November 2026)** — https://loadoutgg.com/magic-chess-gogo/teams/: 25 comp bertanda RANKED S8 atau LOW-ROLL, S sampai C. Dibuka 25 Nov 2026 dan dicek lagi 27 Nov: belum berubah, belum memuat Penyesuaian 20/11 dan 26/11.
-- **loadoutgg: Commander Tier List (November 2026)** — https://loadoutgg.com/magic-chess-gogo/commanders/: 41 commander S8. Halamannya menulis "tiers updated 27 Sep 2026" padahal isinya sudah S8 (Odette baru, perubahan 15 Nov). Vexana diletakkan pertama karena hadiah Go Go Box tambahan di setiap tahap, yang dibatasi patch 20/11. Dicek lagi 27 Nov: belum berubah.
-- **mcggdb: Commander tier list S8** — https://mcggdb.com/commanders/: "Our take" untuk ranked Legend ke atas, dari angka commander dan pilihan pro; bukan win rate. Odette tidak dinilai. Dicek lagi 27 Nov: belum berubah.
+- **loadoutgg: Best Comps & Lineups (November 2026)** — https://loadoutgg.com/magic-chess-gogo/teams/: 25 comp bertanda RANKED S8 atau LOW-ROLL, S sampai C. Dibuka 25 Nov 2026 dan dicek lagi 28 Nov: belum berubah,belum memuat Penyesuaian 20/11 dan 26/11.
+- **loadoutgg: Commander Tier List (November 2026)** — https://loadoutgg.com/magic-chess-gogo/commanders/: 41 commander S8. Halamannya menulis "tiers updated 27 Sep 2026" padahal isinya sudah S8 (Odette baru, perubahan 15 Nov). Vexana diletakkan pertama karena hadiah Go Go Box tambahan di setiap tahap, yang dibatasi patch 20/11. Dicek lagi 28 Nov: belum berubah.
+- **mcggdb: Commander tier list S8** — https://mcggdb.com/commanders/: "Our take" untuk ranked Legend ke atas, dari angka commander dan pilihan pro; bukan win rate. Odette tidak dinilai. Dicek lagi 28 Nov: belum berubah.
 - **kitakuji: Sinergi Magic Chess Terkuat (Update Season 8)** — https://kitakuji.id/blog/sinergi-magic-chess-terkuat-dan-update-terbaru/: 18 Nov 2026, lima combo meta awal ranked Mythic, sebelum patch 20/11. Ada klaim yang tidak cocok dengan data game: "tidak ada commander baru", padahal Odette baru di S8 (40 → 41 commander).
 - **In-game: Rekomendasi Lineup**: Rekaman ponsel 20 Nov 09:33, sebelum patch 20/11. Semua lineup bernilai S; angka = popularitas (ikon api), bukan win rate. Hero dikenali dari ikon (mc_vision.py); tanda C/T di layar = carry/tank.

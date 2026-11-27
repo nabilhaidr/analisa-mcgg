@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (22–28 Nov): riwayat 58–64 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate, tier list S8, lalu 170 screenshot + 3 rekaman baru: Toko Spirit Sand S8 11/11, semua babak Go Go Box, hero panggilan S8 termasuk Alpha ★3, commander Odette, segmen roda dan arti `m_SpecialRules`, Patch Note 26/11 dan koreksi tier list-nya; lalu commit, push, dan cek tugas 28 Nov). Semua sudah di-push: riwayat 58–59 = `cdd6083`; riwayat 61–62 = `ccc1ab7` (pemeriksaan match S8 + patch 26/11); riwayat 60 + 63 = `f251fe1` (tier list S8); riwayat 64 = commit dokumen sesudahnya (ringkasan ini, `VALIDASI_S8.md`, snapshot client 28 Nov). Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (22–28 Nov): riwayat 58–64 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate, tier list S8, lalu 170 screenshot + 3 rekaman baru: Toko Spirit Sand S8 11/11, semua babak Go Go Box, hero panggilan S8 termasuk Alpha ★3, commander Odette, segmen roda dan arti `m_SpecialRules`, Patch Note 26/11 dan koreksi tier list-nya; lalu commit, push, dan cek tugas 28 Nov; lalu commander Akai/Suyou/Hayabusa di tabel client dan 23 laporan MATCH S8). Sudah di-push: riwayat 58–59 = `cdd6083`; riwayat 61–62 = `ccc1ab7` (pemeriksaan match S8 + patch 26/11); riwayat 60 + 63 = `f251fe1` (tier list S8); riwayat 64 = `2dadf92` (ringkasan, `VALIDASI_S8.md`, snapshot client 28 Nov); riwayat 65 = `800e3d4` (pembaca Wheel of Fate di `mc_match.py`), `c3bf315` (23 laporan MATCH S8 + folder `match_*`), lalu commit dokumen sesudahnya (`tier_list.py`, `TIER_LIST_S8.html|md`, ringkasan ini dengan catatan Akai/Suyou/Hayabusa). Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -17,6 +17,10 @@ equipment, Ensiklopedia), menyajikannya sebagai laporan per season (HTML/MD/JSON
 memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 
 ## Status sekarang
+- **28 Nov: 23 laporan MATCH S8** (riwayat 65): 15 dari layar hasil saja, 8 dari rekaman (3 berhenti sebelum layar hasil; Odette Classic
+  dari frame akhir rekaman karena screenshot-nya tertutup popup "Like"). Laporan S8 kini mencatat efek **Wheel of Fate** (`wheel_effect`).
+  `check_match.py` 65 laporan 0 kesalahan 0 peringatan; 284 tes (+24 subtes). Statistik papan S8 di Analisis gameplay; tip tier list
+  diperbarui. Di-commit dan di-push 28 Nov (`800e3d4`, `c3bf315`, lalu commit dokumen).
 - **28 Nov: semua perubahan sudah di-commit dan di-push; tidak ada bahan baru** (riwayat 64). 843 gambar S7 dan 732 gambar S8 semuanya
   sudah di-OCR; rekaman terbaru (Odette Classic 27 Nov) sudah dipakai. Snapshot client 28 Nov 02:01: manifest, ResCheckConf, dan LuaRepair
   sama dengan 22 Nov; hanya hotfix `mini_patch` `fix_hot_resource_20261117_wenqy` (diunduh 18 Nov; menurut nama filenya UI event MPL Draw)
@@ -75,7 +79,7 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 | `video_frames.py` | Sama, dengan PyAV (Python sistem punya `av`): bisa HEVC & H.264, hanya decode keyframe (rekaman ponsel 28 menit ±8 menit), file 0 byte ditimpa. Rekaman berkanvas potret (ponsel tegak saat mulai merekam, 31 Okt 03-23: 1080x2400) otomatis dipotong ke pita game di tengahnya (`game_area`) | `python video_frames.py <mp4> <folder> --step 5 --width 1600` |
 | `mc_lineup.py` | **Analisa lineup** → `data/<versi>/LINEUP_<nama>.html/.md`: sinergi aktif + efek, tingkat berikutnya (hero/crystal), jalur ultra, slot level, stok & peluang toko, peluang crystal di Go Go Box, kartu/equipment terkait, skill commander, catatan Patch server. Input: daftar hero, target sinergi (dicarikan susunan hero), atau screenshot (ikon hero; layar hasil `--all-rows`; layar Rekomendasi Lineup `--board` = seluruh papan satu lineup + jalur Go Go Card, crystal dari lencana di potret diisi lewat `--crystals`) | `python mc_lineup.py --heroes "Odette, Gord, ..." --crystals "Astro Power" --commander Minotaur --level 9` · `--synergies "Astro Power 6, Mage 4"` · `--screenshot hasil.jpg --all-rows` · `--screenshot rekomendasi.jpg --board --commander Kalea --crystals "Dragon Altar, Defender"` |
 | `mc_patch.py` | **Analisa Patch Note** dari screenshot Update Patch (OCR, cache per folder) → `PATCH_<nama>.html/.md`: perubahan per bagian dengan panah ↑/↓/~, lama → baru (+%), status (sudah di file game / diterapkan server / tercatat di `server_patch.json`), dampak ke sinergi, **draf entri `server_patch.json`** (teks pengganti dicari di deskripsi file game, di kartu/skill yang paling cocok; kartu "dihapus" → `removed`). Ikon baris mengikuti jenis barisnya: 21 nama ada di daftar hero dan commander, jadi baris Commander memakai ikon commander. Screenshot tumpang tindih digabung. Tes: `test_mc_patch.py` | `python mc_patch.py "screenshot\season 7\update patch" --files 1881-1885 --name "Penyesuaian 20-10"` (`--ocr rapid`, `--no-ocr`) |
-| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; HP per babak mendahulukan angka di layar daripada perkiraan dari bar, dan seri HP dibuat menurun kecuali pemulihan Healing Fountain, `heal_of`; nama tanpa bar, sekitar 4 HP ke bawah atau di bawah shield, tetap jadi baris bila angkanya terbaca, `frame_rows`; pemain yang namanya tak pernah terbaca di HUD ditautkan lewat `unnamed_rows`: bar yang tidak cocok dengan siapa pun milik baris layar hasil yang belum punya pasangan; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan, juga di frame yang HUD-nya tertutup overlay seperti layar pilih Go Go Card; Gold hanya saat penghitung Gold tampil, bukan harga jual unit atau dialog; angka yang terlewat OCR Windows dibaca ulang dari kotak Gold dengan RapidOCR, ambang skor 0,1 agar angka satu digit terbaca; Gold awal = tertinggi dalam 10 detik sejak bacaan pertama babak), grafik HP semua pemain, kejadian (Go Go Card — pemilihan yang ditunda lalu dibuka lagi ditandai "dibuka lagi" —, Go Go Box di babak jadwal I-4/II-6/III-6/…, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR tampil sebagai potongan gambar `nama_<baris>.png`, kecuali yang dicatat di `catatan_nama.json`), catatan otomatis (menang/kalah beruntun dari HP; babak creep tidak memutus kekalahan beruntun; teks Win/Lose Streak tidak dipakai). Baris berikon pedang (`rank_swords.png`, `sword_ys`, skala dari jarak baris) = pemain itu masih bertanding saat layar dibuka: tanpa peringkat, papannya bukan papan akhir (`interim_ranks`). Poin tidak menentukan: layar berpedang bisa berpoin, dan Riwayat mode Classic tanpa poin tapi final. Rekaman tanpa layar hasil menyebut babak terakhirnya di catatan otomatis. `--classic` = mode Classic, memang tanpa poin; `--custom` = mode Custom lawan komputer, juga tanpa poin; `--cut` = rekaman berhenti sebelum pertandingan selesai dan layar hasil dari Riwayat, jadi babak terakhir rekaman tidak dianggap babak tersingkir. Nama yang tidak terbaca OCR halaman: model Korea, lalu model Jepang pada potongan rapat (`read_unread_names`, `text_strip`, `japanese_name`), selain itu gambar. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/`. Tes: `test_mc_match.py` (+ `test_data/gold/`) | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja · `python -m pytest test_mc_match.py` |
+| `mc_match.py` | **Analisa pertandingan** dari rekaman (MP4, HEVC ponsel/PC) dan/atau layar hasil → `MATCH_<nama>.html/.md` + frame kunci di `match_<nama>/`: timeline HP/Gold/Level per babak (HP dari panjang bar hijau, dikalibrasi angka OCR; HP per babak mendahulukan angka di layar daripada perkiraan dari bar, dan seri HP dibuat menurun kecuali pemulihan Healing Fountain, `heal_of`; nama tanpa bar, sekitar 4 HP ke bawah atau di bawah shield, tetap jadi baris bila angkanya terbaca, `frame_rows`; pemain yang namanya tak pernah terbaca di HUD ditautkan lewat `unnamed_rows`: bar yang tidak cocok dengan siapa pun milik baris layar hasil yang belum punya pasangan; label babak dari OCR HUD, potongan label + RapidOCR, lalu kemiripan tampilan, juga di frame yang HUD-nya tertutup overlay seperti layar pilih Go Go Card; Gold hanya saat penghitung Gold tampil, bukan harga jual unit atau dialog; angka yang terlewat OCR Windows dibaca ulang dari kotak Gold dengan RapidOCR, ambang skor 0,1 agar angka satu digit terbaca; Gold awal = tertinggi dalam 10 detik sejak bacaan pertama babak), grafik HP semua pemain, kejadian (Go Go Card — pemilihan yang ditunda lalu dibuka lagi ditandai "dibuka lagi" —, Go Go Box di babak jadwal I-4/II-6/III-6/…, crystal Pilihan, VICTORY/DEFEAT, panel DMG), papan akhir semua pemain (ikon; nama/level dengan RapidOCR bila terpasang; nama yang tidak dikenal OCR tampil sebagai potongan gambar `nama_<baris>.png`, kecuali yang dicatat di `catatan_nama.json`), efek Wheel of Fate dari pojok kanan atas layar hasil (S8, `wheel_effect`: kotak Ringkasan "Wheel of Fate"; kata yang dipisah RapidOCR digabung), catatan otomatis (menang/kalah beruntun dari HP; babak creep tidak memutus kekalahan beruntun; teks Win/Lose Streak tidak dipakai). Baris berikon pedang (`rank_swords.png`, `sword_ys`, skala dari jarak baris) = pemain itu masih bertanding saat layar dibuka: tanpa peringkat, papannya bukan papan akhir (`interim_ranks`). Poin tidak menentukan: layar berpedang bisa berpoin, dan Riwayat mode Classic tanpa poin tapi final. Rekaman tanpa layar hasil menyebut babak terakhirnya di catatan otomatis. `--classic` = mode Classic, memang tanpa poin; `--custom` = mode Custom lawan komputer, juga tanpa poin; `--cut` = rekaman berhenti sebelum pertandingan selesai dan layar hasil dari Riwayat, jadi babak terakhir rekaman tidak dianggap babak tersingkir. Nama yang tidak terbaca OCR halaman: model Korea, lalu model Jepang pada potongan rapat (`read_unread_names`, `text_strip`, `japanese_name`), selain itu gambar. Bisa juga hanya layar hasil. Cache kerja `cache/match/<nama>/`. Tes: `test_mc_match.py` (+ `test_data/gold/`) | `python mc_match.py --video rekaman.mp4 --result hasil.jpg --player CinCoeg --name "..."` · `--frames cache\match\<nama>\frames` · `--result hasil.jpg` saja · `python -m pytest test_mc_match.py` |
 | `check_match.py` | **Pemeriksaan konsistensi laporan MATCH** (pengganti `check.py` yang tidak pernah masuk git): md = html, timeline sendiri (perubahan, tereliminasi, kotak ringkasan), tabel HP vs layar hasil, catatan otomatis = `mc_match.insights()` dari tabel laporan, kejadian, papan akhir (nama ikon, sinergi dihitung ulang), gambar ada. Peringatan: babak terlewat, HP sendiri kosong (selain setelah tereliminasi), tanpa papan akhir, ID/poin tidak terbaca, level kosong, urutan bertahan vs peringkat, gambar tidak dirujuk. Laporan yang menulis "tanpa layar hasil" di catatan otomatis tidak diperingatkan soal papan akhir, ID/poin, dan HP kosong di babak terakhir rekaman; "sebelum pertandingan selesai" (`--cut`) = babak terakhir rekaman bukan babak tersingkir; "Mode Classic" dan "Mode Custom" tidak diperingatkan soal poin; baris papan tanpa peringkat hanya sah di atas baris sendiri. Tiap laporan satu baris ringkasan: peringkat, HP akhir, babak pertama–terakhir, jumlah babak, babak kalah, nama terbaca/baris papan. Kode keluar 1 bila ada kesalahan. Jalankan setelah laporan dibuat ulang/diubah. Tanpa `--version` diperiksa semua folder `data/<versi>` yang punya laporan MATCH (laporan S7 tetap di `1.3.24.344.1` setelah update client). Tes: `test_check_match.py` | `python check_match.py` · `python check_match.py 15_38 Kalea` · `python -m pytest test_check_match.py` |
 | `mc_common.py`, `mc_vision.py` | Modul bersama: data season terbaru, pencocokan nama, halaman HTML/MD, path relatif · deteksi ikon hero/sinergi/kartu/equipment di screenshot (OpenCV, ukuran ikon dicari otomatis; korelasi + selisih warna; ikon dicocokkan paralel di semua inti CPU; `icon_labels()` = nama yang bisa dihasilkan deteksi, kartu bergambar sama = satu nama). Debug: `python mc_vision.py shot.jpg --kind hero --out anotasi.png` | — |
 | `mc_ocr.py` | OCR bersama untuk `mc_patch.py`/`mc_match.py`, format sama dengan `ocr_screens.ps1`: mesin `windows` (`ocr_screens.ps1` → `ocr.json`) atau `rapid` (RapidOCR, Windows/Linux, `pip install rapidocr_onnxruntime` → `ocr_rapid.json`). `auto`: Windows bila ada PowerShell; di luar Windows `ocr.json` yang ada bila mencakup semua gambar (ukuran file sama), lalu RapidOCR. `run_rapid`/`ocr_folder` menerima `text_score` (ambang skor RapidOCR, bawaan 0,5, ikut di stamp cache). `read_korean` dan `read_japanese` membaca gambar satu baris dengan model bahasa di `cache/models/` (`read_lines`). Tes: `test_mc_ocr.py` | opsi `--ocr auto\|windows\|rapid` di `mc_patch.py`/`mc_match.py` · `python -m pytest test_mc_ocr.py` |
@@ -186,6 +190,18 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
   HP di 72 dari 74 babak itu (2 sisanya masing-masing 1 pemain), sedangkan setiap babak lain Fase I–III ada yang kalah (±separuh
   pemain). Jadi di babak creep praktis tidak ada yang kehilangan HP (belum terlihat apakah kalah dari creep mengurangi HP), dan
   babak itu bukan menang/kalah PvP (dipakai `mc_match.py`).
+- **Commander yang ada di file tapi tidak bisa dipakai** (dicek 28 Nov, client 1.3.32.354.1, skrip sekali pakai): `MCHero` punya 47 baris
+  `m_CommanderType = 1`; 41 punya kartu Power di `MCSuperCrystalKey_S8` (= daftar commander S8). Sisanya:
+  - Akai 4507: Anger (+2 DMG Commander setelah menang) dan Attack & Defend (1 Shield per 6 DMG Commander).
+  - Suyou 4721: Divine Inheritance (Divine Nuo Mask; Hero yang diseret ke Altar memberi 1 stack Sinergi Role-nya, efek Role pada 2/4/6
+    stack) dan Power of the Immortal (Gold kembali sesuai harga Hero; +5% DMG per poin jumlah Sinergi).
+  - Hayabusa 4726: ID skill ada di `IndividualCommanderLevel`, tetapi baris `MCSkill`-nya belum ada.
+  - 2 baris uji (测试1号, 测试2号) dan Layla 4800 tanpa skill (Layla yang dipakai = 4705).
+  Ketiga commander itu tidak punya kartu Power di tabel season mana pun (S1–S9, termasuk `MCSuperCrystalKey_S9` yang sudah ada di client;
+  kartu Odette pun hanya ada di S8) dan tidak muncul di `MCHero_S*`/`MCSkill_S*`. Aset di `manifest.json`: Suyou paling lengkap
+  (`qishou_suyou_skin` + 3 skin, peta besar `Hero47211_add`), Akai sebagian (skin resolusi tinggi + `Hero45071_add`, tanpa bundle
+  `qishou_akai`), Hayabusa hanya `qishou_ninja_skin_high_add`. Daftar semua commander mcggdb memuat Akai dan Suyou tanpa tier, kemungkinan
+  dari file yang sama. Kapan dirilis tidak tertulis di file.
 
 ## Sumber data per bagian laporan (aturan yang sudah terverifikasi ke screenshot)
 | Bagian | Sumber / aturan |
@@ -312,6 +328,21 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   (Melissa ★3 dibuff besar). Commander: Kalea S → A (nerf Brankas Harta), Kagura dan Ling B → A (buff); Guinevere tetap C; Odette tetap A
   (nilai server tanpa patch note dicatat, tidak dihitung). Hasil: comp S 5, A 5, B 6, C 2; commander S 7 (Alice, Fanny, Freya, Harley,
   Lukas, Nana, Zilong), A 15, B 16, C 3. Comp S tetap sama; Dawnbringer, FAIRY TAIL, dan 6 Titan + 4 Mage malah mendapat buff 26/11.
+- **Data sendiri S8** (23 laporan MATCH 16–27 Nov, riwayat 65; hampir semuanya sebelum patch 26/11 berlaku; 22 Rank + 1 Classic uji Odette;
+  3 rekaman berhenti sebelum layar hasil: 20 Nov 08-02, 08-22, 23 Nov 03-34). **Papan pemain lain**: 132 papan berperingkat (54 di
+  peringkat 1–4, 78 di 5–8; 8 baris berpedang tidak dihitung; sinergi dari hero >= 4, crystal tidak terlihat). Titan 28% vs 12% (juara 3,
+  Fisher p=0,022; 16 sinergi diuji, jadi ambang setelah koreksi ±0,003: belum terbukti), Dauntless 19% vs 12%, Stargazer 15% vs 10%,
+  Frostrider 11% vs 4%; terbalik: SPECTRE 6% vs 17% (p=0,06), Mage 0% vs 8%, Dawnbringer 6% vs 13%, Bruiser dan Starbelle 4% vs 12%. Hero
+  paling sering di papan 1–4: Balmond 24 (13 di papan 5–8), Argus 20, Bruno 17, Pharsa 16. Go Go Card paling sering di papan 1–4: Shield of
+  Fortune 9, Vault Upgrade 7, Full Throttle 7.
+  **Papan sendiri** (20 pertandingan dengan layar hasil): juara 13, peringkat 2 ×5, 4 ×1, 7 ×1 (rata-rata 1,70). Dawnbringer 5–6 juara 4 dari 4
+  (16 Nov, 22 Nov 15-56, 26 Nov 05-23 dan 11-16); SPECTRE 5–7 (dengan Mage, Starbelle, atau Dragonslayer) juara 4, peringkat 2 ×3; Titan 6
+  juara 1 + peringkat 2; FAIRY TAIL 6 juara 1; Defender 4 + Frostrider 4 + Phasewarper/Shadeweaver juara 17 Nov tapi peringkat 4 di 20 Nov
+  07-39. Satu-satunya hasil buruk: Mage 4 + Bruiser 3 + Stargazer 3 dengan Lukas's Power (22 Nov 16-26, peringkat 7, −21). Poin naik-turun
+  antar laporan (mis. 2481 → 1652 di 24 Nov) karena poin dihitung per commander (seperti S7: poin Fanny, poin Dyrroth).
+  **Wheel of Fate** (20 layar hasil): Tycoon 5, Fate Sync 5, Hero Reinforcement 2, Commander's Power 2, Gold Galore 2, Early Reinforcement,
+  Oracle Vision, Crystal Legend, Synergy Awakening masing-masing 1 (bobot tabel: Gold Galore, Early Reinforcement, Oracle Vision 1, sisanya 2).
+  Peringkat sendiri per efek: Tycoon 1, 1, 1, 2, 1; Fate Sync 1, 1, 2, 1, 2; Commander's Power 7, 1. Sampel terlalu kecil untuk menguji peluang.
 - **Aturan penting** (lihat Temuan teknis): hanya 1 crystal Pilihan aktif; Kapasitas +1 sekali per pertandingan, langsung
   aktif (ikonnya di tas BUKAN item belum terpakai); hero ★3 butuh 9 salinan (stok: 1 Gold 25, 2 Gold 21, 3 Gold 18,
   4 Gold 14, 5 Gold 9); level 9 = 9 slot (+1 bila ambil Kapasitas +1); peluang toko L9: 13/22/25/26/14%; DMG Commander =
@@ -922,7 +953,24 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       `snapshots/1.3.32.354.1_20261128-020156.json` + diff di `reports/`). Gambar screenshot tidak ikut; pesan commit ASCII tanpa BOM.
     - Cek tugas: tidak ada gambar atau rekaman baru (`ocr.json` S7 843/843, S8 732/732); client sama (hanya hotfix UI event, lihat Status
       sekarang); sumber tier list sama. Daftar semua commander di mcggdb memuat Akai (Anger) dan Suyou (Divine Inheritance), yang tidak
-      ada di daftar commander ekspor S7/S8 (lihat Ide lanjutan).
+      ada di daftar commander ekspor S7/S8. Atas permintaan pengguna dicek di tabel client: keduanya, juga Hayabusa, ada sebagai
+      commander, tetapi tanpa kartu Power di season mana pun (lihat Temuan teknis).
+65. (2026-11-28) **Laporan MATCH S8** atas permintaan pengguna (kartu sesi "Laporan MATCH Season 8", dikerjakan di sesi ini).
+    - Inventaris: layar hasil di `screenshot/season 8/match/` dikelompokkan per ID pertandingan (35 ID: 16 masih S7 tanggal 1–7 Nov, 19 S8
+      tanggal 16–27 Nov) + 8 rekaman. 3 rekaman punya screenshot hasil (20 Nov 07-39, 09-33; 22 Nov 16-26), 4 tidak (20 Nov 08-02, 08-22,
+      18-30; 23 Nov 03-34), dan Odette Classic memakai screenshot 27 Nov 17:22 → 23 pertandingan S8.
+    - `mc_match.py` (TDD, 8 tes `WheelOfFate` di `test_mc_match.py`): `wheel_effect` membaca efek roda di pojok kanan atas layar hasil (nama
+      dari `wheel_of_fate`; toleran ikon "@", kata yang dipisah RapidOCR "Fate" + "Sync", satu huruf salah; skala frame rekaman 1600 px),
+      `read_result` menyimpannya di `meta["wheel"]`, dan Ringkasan laporan mendapat kotak "Wheel of Fate".
+    - Dibuat satu per satu dengan skrip scratchpad `run_s8.py` (menunggu memori commit >= 1,5 GB): 15 laporan layar hasil 50–181 detik,
+      8 rekaman 4–13,5 menit. 5 laporan Fate Sync dibuat ulang setelah perbaikan kata terpisah. Odette Classic dibuat ulang dari frame
+      rekaman (`--frames`, tanpa `--result`), karena screenshot-nya tertutup popup "Keiko Mengirimkanmu Like!" di baris sendiri (hanya 2 hero
+      terbaca); frame 1405–1415 bersih. Rekaman 18-30 ternyata mulai di akhir I-1, jadi hanya awal pertandingan yang terlewat.
+    - Hasil: `check_match.py` 65 laporan (42 S7 + 23 S8) 0 kesalahan 0 peringatan; 284 tes (+24 subtes) lolos. Statistik papan (skrip
+      scratchpad `s8_stats.py`, cara hitung sama dengan S7) di Analisis gameplay; `tier_list.py`: tip data S8 dan tanggal cek sumber 28 Nov
+      (tier tidak berubah). 2 nama huruf hias (22 Nov 15-56 baris 2, 24 Nov 03-14 baris 8) tetap berupa gambar.
+    - Di-commit dan di-push atas permintaan pengguna ("Ya, commit & push"): `800e3d4` (pembaca roda + tes), `c3bf315` (23 laporan + 54
+      gambar `match_*`), lalu commit dokumen (tier list, ringkasan). Gambar screenshot tetap tidak ikut.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -983,6 +1031,19 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\b8d2060a-3172-46b4-a0d6-e3d603e3fc1c\scratchpad\` — `regen.py`
   (daftar di atas; `--lowmem` = satu per satu dengan `OPENBLAS_NUM_THREADS=1` dan menunggu memori; `--check` = cek input)
   dan `compare.py` (bandingkan per bagian dengan git HEAD; `--restore` mengembalikan laporan yang hanya beda waktu dibuat).
+- **Buat ulang 23 laporan MATCH S8** (riwayat 65), satu per satu, `--player CinCoeg --name "<nama>"`. Layar hasil =
+  `screenshot/season 8/match/Screenshot_2026-11-<cap>_com.mobilechess.mi.jpg`, nama = jam layar hasil: 16 Nov 23-44 `16-23-44-20-115`,
+  `16-23-44-25-470`; 17 Nov 22-32 `17-22-32-52-028`, `17-22-32-57-088`; 20 Nov 04-57 `20-04-57-57-184`, `20-04-58-03-571`; 21 Nov 20-15
+  `21-20-15-28-780`, `21-20-15-32-444`; 22 Nov 15-56 `22-15-56-59-439`, `22-15-57-03-055`; 24 Nov 03-14 `24-03-14-09-331`, `24-03-14-16-821`;
+  24 Nov 04-52 `24-04-52-40-018`; 24 Nov 11-10 `24-11-10-28-665`, `24-11-10-33-238`; 24 Nov 16-35 `24-16-35-10-196`, `24-16-35-14-503`;
+  25 Nov 01-12 `25-01-12-24-349`, `25-01-12-28-963`; 25 Nov 19-05 `25-19-05-48-965`, `25-19-05-53-445`; 26 Nov 05-23 `26-05-23-43-473`,
+  `26-05-23-48-845`; 26 Nov 11-16 `26-11-16-12-648`, `26-11-16-16-860`; 26 Nov 18-40 `26-18-40-11-407`, `26-18-40-15-940`; 27 Nov 04-06
+  `27-04-06-35-701`, `27-04-06-39-848`. Rekaman `Screenrecorder-2026-11-<cap>.mp4` (nama = jam mulai rekaman; frame tersimpan di
+  `cache\match\<nama>\frames`, jadi `--frames` cukup): 20 Nov 07-39 `20-07-39-24-42` + layar hasil `20-08-00-45-088`, `20-08-00-48-695`;
+  20 Nov 08-02 `20-08-02-07-365`; 20 Nov 08-22 `20-08-22-52-375`; 20 Nov 09-33 `20-09-33-46-324` + `20-09-57-44-942`, `20-09-57-50-351`;
+  20 Nov 18-30 `20-18-30-48-986` (layar hasil dari frame akhir); 22 Nov 16-26 `22-16-26-55-590` + `22-16-48-56-009`, `22-16-48-59-983`;
+  23 Nov 03-34 `spirit sand/…23-03-34-54-845`; 27 Nov 16-58 Odette = `uji coba commander odette classic.mp4` dengan `--classic` dan tanpa
+  `--result` (layar hasil dari frame 1405–1420; screenshot `27-17-22-26-773` tertutup popup "Like" di baris sendiri).
 - RapidOCR pada layar hasil penuh (gambar ×2 = 4800×2160) gagal `bad allocation` saat commit bebas ±1,7 GB (31 Okt), juga di proses kecil
   tanpa ikon. Jalan keluarnya: OCR 45% kiri layar saja, karena ID, nama, level, dan poin ada di situ. Uji pada layar lama: 21 dari 21 baris
   terbaca, beda spasi dan satu huruf ("LordFathir"). 11 layar 31 Okt dibuat begitu, tersimpan di `cache/match/_result/ocr_rapid.json`
@@ -990,9 +1051,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\6e09ebcd-f03a-4c3c-8081-d95fad105539\scratchpad\`, bersama `regen_batch.py`.
 
 ## Ide lanjutan (belum dikerjakan)
-- Laporan MATCH S8 bila diminta: 7 rekaman (20 Nov 07-39, 08-02, 08-22, 09-33, 18-30; 22 Nov 16-26; 23 Nov 03-34 di `spirit sand/`) + 19
-  pertandingan S8 dengan layar hasil 16–27 Nov di `screenshot/season 8/match/`. Cek memori dulu (satu per satu). 33 layar hasil 1–7 Nov di
-  folder itu masih pertandingan S7.
+- Laporan MATCH untuk 16 pertandingan S7 tanggal 1–7 Nov yang layar hasilnya ada di `screenshot/season 8/match/` (32 layar; statistik papan
+  S7 berhenti di 1 Nov). Buat dengan data S7 (`mc_match.py --version 1.3.24.344.1 --season 7 --result …`) bila diminta, satu per satu.
+- 2 nama pemain huruf hias di laporan S8 (22 Nov 15-56 baris 2, 24 Nov 03-14 baris 8) tampil sebagai gambar; tambahkan ke `catatan_nama.json`
+  (dibaca mata) bila pengguna mau.
 - Screenshot S8 yang belum ada: 5 kartu (Journey's Windfall, Fury's Edge, Victory's Blessing, Odette's Power ×2), Alpha ★4, angka baru Kalea
   26/11, hero di dalam Go Go Box. Panel dalam pertandingan setelah 26/11 berlaku (mis. Bane ★2 freeze 1,2 detik) untuk memastikan waktu berlakunya.
 - 16 frame "Go Go Box setelah …" berlabel tertukar di rekaman 07-39, 08-02, 08-22 (lihat `VALIDASI_S8.md`); ganti nama bila pengguna mau.
@@ -1001,9 +1063,10 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
 - Opsional: jadikan pemindai toko dari rekaman sebagai alat (`mc_validate.py` kini menulis pembelian ganda di antara dua screenshot sebagai
   Selisih/Cek manual); panel unit dalam pertandingan (hero panggilan) belum dikenali `mc_validate.py`.
 - Tier list S8 (`tier_list.py`, riwayat 60 dan 63; 20/11 dan 26/11 sudah dikoreksi): perbarui bila ada patch keseimbangan baru atau tier list
-  sumber yang sudah memuat 20/11/26/11 (loadoutgg, mcggdb; dicek 28 Nov: belum), dan bandingkan dengan statistik papan setelah laporan MATCH S8 dibuat.
-- Commander Akai (skill Anger) dan Suyou (Divine Inheritance) ada di daftar semua commander mcggdb (28 Nov), tetapi tidak di 41 commander S8
-  maupun 40 commander S7 ekspor kita. Dugaan: commander yang akan datang. Cek di tabel client saat update berikutnya (cari nama skillnya),
-  atau cari di tabel cache `1.3.32.354.1` bila diminta.
+  sumber yang sudah memuat 20/11/26/11 (loadoutgg, mcggdb; dicek 28 Nov: belum). Statistik papan S8 sudah ada (riwayat 65, sebelum 26/11):
+  bandingkan lagi setelah ada laporan MATCH sesudah patch 26/11 berlaku.
+- Commander Akai, Suyou, dan Hayabusa ada di file client tetapi belum bisa dipakai (lihat Temuan teknis). Pantau di update client
+  berikutnya: begitu salah satunya punya kartu Power di `MCSuperCrystalKey_S<n>`, `mc_data.py` otomatis mengekspornya, karena daftar
+  commander = pemilik kartu Power season itu.
 - Nama pemain baru dalam huruf hias tampil sebagai gambar sampai ditambahkan ke `catatan_nama.json` (dibaca mata). Nama Jepang kini dibaca otomatis, tapi kana kecil bisa
   terbaca besar (ュ jadi ユ): nama dari model tercantum di Catatan metode laporan, koreksi lewat `catatan_nama.json` bila beda dengan layar.

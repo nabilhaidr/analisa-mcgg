@@ -1,6 +1,6 @@
 """Tier list Season 8 (comp + commander) -> data/<versi>/TIER_LIST_S8.html + .md, dengan ikon dari img/.
 
-Bukan win rate. Penilaian ditulis tangan di skrip ini dari sumber web yang dibuka 25 Nov 2026 dan dicek lagi 27 Nov (belum
+Bukan win rate. Penilaian ditulis tangan di skrip ini dari sumber web yang dibuka 25 Nov 2026 dan dicek lagi 28 Nov (belum
 berubah): loadoutgg comps dan commander, mcggdb commander, kitakuji 18 Nov, ditambah daftar Rekomendasi Lineup in-game
 (rekaman ponsel 20 Nov 09:33). Sumber itu belum memperhitungkan Penyesuaian Keseimbangan 20/11 dan 26/11
 (server_patch.json "8"), jadi efeknya dinilai di sini: comp yang carry atau intinya dinerf turun satu tingkat dari tier
@@ -189,7 +189,7 @@ COMPS = [
          ["loadoutgg C \"3 Phasewarper Thamuz Kadita\" (Cyclops)"], [POPOL, POPOL_2]),
 ]
 
-# Tier commander sumber, nama seperti di data (sumber menulis "Popol and Kupa"). Dicek lagi 27 Nov: belum berubah.
+# Tier commander sumber, nama seperti di data (sumber menulis "Popol and Kupa"). Dicek lagi 28 Nov: belum berubah.
 MCGGDB = {
     "S": ["Alice", "Fanny", "Harley", "Lukas"],
     "A": ["Aamon", "Brody", "Chou", "Dyrroth", "Franco", "Freya", "Kalea", "Lancelot", "Ling", "Lunox", "Luo Yi", "Minotaur",
@@ -238,21 +238,24 @@ TIPS = [
     "Patch 26/11 menaikkan ★3 hero 4 Gold (Melissa, Eudora, Kimmy, Argus, Lolita, Yu Zhong, Sora), Karina, Erza, "
     "4/6 Dawnbringer, Swiftblade, Kagura, dan Ling; yang turun Balmond (★3 dan atribut Titan), Popol, Bane, Kalea, dan "
     "Guinevere. Panel Bane di pertandingan 27 Nov pagi masih memakai nilai lama, jadi waktu berlakunya belum pasti.",
-    "Data pertandinganmu di S8 belum dihitung: layar hasil 19 pertandingan dan 7 rekaman belum dibuat laporan MATCH, jadi "
-    "statistik papan seperti di S7 belum ada.",
+    "Data pertandinganmu di S8 (23 laporan MATCH 16–27 Nov, hampir semuanya sebelum patch 26/11 berlaku): dari 20 "
+    "pertandingan dengan layar hasil kamu juara 13 kali, peringkat 2 lima kali, lalu peringkat 4 dan 7 sekali. Papan "
+    "Dawnbringer 5–6 juara 4 dari 4; papan SPECTRE 5–7 juara 4 kali dan peringkat 2 tiga kali. Di 132 papan berperingkat "
+    "pemain lain, Titan >= 4 hero ada di 28% papan peringkat 1–4 vs 12% papan 5–8 (Balmond belum kena nerf 26/11), "
+    "sedangkan SPECTRE hanya 6% vs 17%. Sampel kecil, bukan win rate.",
 ]
 
 SOURCES = [
     ("loadoutgg: Best Comps & Lineups (November 2026)", "https://loadoutgg.com/magic-chess-gogo/teams/",
-     "25 comp bertanda RANKED S8 atau LOW-ROLL, S sampai C. Dibuka 25 Nov 2026 dan dicek lagi 27 Nov: belum berubah, "
+     "25 comp bertanda RANKED S8 atau LOW-ROLL, S sampai C. Dibuka 25 Nov 2026 dan dicek lagi 28 Nov: belum berubah,"
      "belum memuat Penyesuaian 20/11 dan 26/11."),
     ("loadoutgg: Commander Tier List (November 2026)", "https://loadoutgg.com/magic-chess-gogo/commanders/",
      "41 commander S8. Halamannya menulis \"tiers updated 27 Sep 2026\" padahal isinya sudah S8 (Odette baru, perubahan "
      "15 Nov). Vexana diletakkan pertama karena hadiah Go Go Box tambahan di setiap tahap, yang dibatasi patch 20/11. "
-     "Dicek lagi 27 Nov: belum berubah."),
+     "Dicek lagi 28 Nov: belum berubah."),
     ("mcggdb: Commander tier list S8", "https://mcggdb.com/commanders/",
      "\"Our take\" untuk ranked Legend ke atas, dari angka commander dan pilihan pro; bukan win rate. Odette tidak dinilai. "
-     "Dicek lagi 27 Nov: belum berubah."),
+     "Dicek lagi 28 Nov: belum berubah."),
     ("kitakuji: Sinergi Magic Chess Terkuat (Update Season 8)",
      "https://kitakuji.id/blog/sinergi-magic-chess-terkuat-dan-update-terbaru/",
      "18 Nov 2026, lima combo meta awal ranked Mythic, sebelum patch 20/11. Ada klaim yang tidak cocok dengan data game: "
@@ -356,7 +359,7 @@ def render(d):
     moved_cmds = [g for g in grades if g["prev"] != g["tier"]]
     cmd_moves = "; ".join(f"{g['name']} {''.join(a for a, _, _ in g['patch'] if a)} ({g['tier']})"
                           for g in grades if any(a for a, _, _ in g["patch"]))
-    intro = ("Bukan win rate. Gabungan sumber web (dibuka 25 Nov 2026, dicek lagi 27 Nov) dan daftar <b>Rekomendasi "
+    intro = ("Bukan win rate. Gabungan sumber web (dibuka 25 Nov 2026, dicek lagi 28 Nov) dan daftar <b>Rekomendasi "
              "Lineup</b> in-game (rekaman 20 Nov), lalu dikoreksi dengan <b>Penyesuaian Keseimbangan 20/11 dan 26/11</b> "
              "yang belum diperhitungkan sumber-sumber itu.")
     rule = ("Gabungan = rata-rata dua sumber (S 4, A 3, B 2, C 1; satu sumber bila hanya satu yang menilai), ±0,5 untuk "
