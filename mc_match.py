@@ -774,6 +774,23 @@ def reopened_picks(events):
 
 # ------------------------------------------------------------------ result screen
 
+def wheel_effect(lines, size, d):
+    """Wheel of Fate effect of the match (S8 on): the result screen names it top right, beside its icon and above the column
+    titles ("Tycoon" at x 2025, y 12 of 2400x1080, 16 Nov 23:44). The icon can read as a sign ("@ Early Reinforcement",
+    20 Nov 08:00), RapidOCR can split the name into words ("Fate", "Sync"; joined left to right), and one wrong letter still
+    names the effect. None for a season without the wheel or a screen without the name (S7)."""
+    names = {norm(e["name"]): e["name"] for e in (d.get("wheel_of_fate") or {}).get("effects", []) if e.get("name")}
+    w, h = size
+    band = sorted((l for l in lines if norm(l["t"]) and l["x"] >= 0.6 * w and (l["y"] + l["b"]) / 2 <= 0.05 * h),
+                  key=lambda l: l["x"])
+    for key in [norm(l["t"]) for l in band] + ([norm("".join(l["t"] for l in band))] if len(band) > 1 else []):
+        hit = names.get(key) or next((v for k, v in names.items() if k in key), None) or next(
+            (v for k, v in names.items() if difflib.SequenceMatcher(None, k, key).ratio() >= 0.8), None)
+        if hit:
+            return hit
+    return None
+
+
 def read_result(paths, d, folder, engine=None):
     """Rows of the result screen(s): rank order, name, level, heroes, cards. Several screenshots of the same screen
     (scrolled hero list) are merged per row; the icon size found on the first one is reused."""
@@ -801,6 +818,10 @@ def read_result(paths, d, folder, engine=None):
         lines = ocr.get(p.name, {}).get("lines", [])
         text = " ".join(l["t"] for l in lines)
         meta.setdefault("id", next(iter(re.findall(r"\b\d{15,20}\b", text)), None))
+        if not meta.get("wheel"):
+            entry = ocr.get(p.name, {})
+            size = (int(entry["w"]), int(entry["h"])) if entry.get("w") else Image.open(p).size
+            meta["wheel"] = wheel_effect(lines, size, d)
         pts = re.search(r"(\d{3,5})\s*([+-]\d{1,3})\b", text)
         if pts:
             meta.setdefault("points", f"{pts.group(1)} ({pts.group(2)})")
@@ -1252,7 +1273,8 @@ def main():
              ("HP akhir", str(me_hp[-1]) if me_hp else "-"),
              ("Babak terbaca", f"{rounds[0]['label']} – {rounds[-1]['label']} ({len(rounds)} babak), kehilangan HP di {losses} babak"
               if rounds else "-"),
-             ("Pertandingan", f"ID {meta.get('id') or '-'} · poin {meta.get('points') or '-'}")]
+             ("Pertandingan", f"ID {meta.get('id') or '-'} · poin {meta.get('points') or '-'}")] + \
+        ([("Wheel of Fate", meta["wheel"])] if meta.get("wheel") else [])
     if not rounds:  # result screen only: no HP timeline
         boxes = [x for x in boxes if x[0] not in ("HP akhir", "Babak terbaca")]
     body.append('<section><h2>Ringkasan</h2><div class="grid3">' +

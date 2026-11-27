@@ -165,6 +165,52 @@ class GridPitch(unittest.TestCase):
         self.assertIsNone(mc_match.grid_pitch([(1, [], 150.0)]))
 
 
+def line(t, x, y, w=100, h=38):
+    return {"t": t, "x": x, "y": y, "r": x + w, "b": y + h}
+
+
+WHEEL = {"wheel_of_fate": {"effects": [{"name": n} for n in (
+    "Crystal Legend", "Commander's Power", "Gold Galore", "Tycoon", "Fate Sync", "Early Reinforcement")]}}
+
+
+def result_top(corner):
+    """Top band of a phone result screen (2400x1080, 16 Nov 23:44): match ID, feedback box, wheel effect, column titles."""
+    return ([line("382620264325389883", 267, 19, 270), line("Kirimkan masukan mengenai pertandingan ini di Sini.", 602, 14, 700)]
+            + ([line(corner, 2025, 12, 120)] if corner else [])
+            + [line("Go Go Card", 714, 62, 150), line("Hero yang Ditempatkan", 993, 62, 300),
+               line("Sinergi yang Diaktifkan", 1778, 62, 300)])
+
+
+class WheelOfFate(unittest.TestCase):
+    """S8 result screens name the match's Wheel of Fate effect top right, above the column titles."""
+
+    def test_effect_top_right(self):  # 16 Nov 23:44
+        self.assertEqual(mc_match.wheel_effect(result_top("Tycoon"), (2400, 1080), WHEEL), "Tycoon")
+
+    def test_icon_read_as_a_sign(self):  # 20 Nov 08:00: "@ Early Reinforcement"
+        self.assertEqual(mc_match.wheel_effect(result_top("@ Early Reinforcement"), (2400, 1080), WHEEL), "Early Reinforcement")
+
+    def test_apostrophe(self):  # 22 Nov 16:48
+        self.assertEqual(mc_match.wheel_effect(result_top("Commander's Power"), (2400, 1080), WHEEL), "Commander's Power")
+
+    def test_one_wrong_letter(self):
+        self.assertEqual(mc_match.wheel_effect(result_top("Fate Svnc"), (2400, 1080), WHEEL), "Fate Sync")
+
+    def test_words_read_apart(self):  # RapidOCR, 22 Nov 15:56: "Fate" at x 1989 and "Sync" at x 2042
+        lines = result_top(None) + [line("Sync", 2042, 12, 50, 27), line("Fate", 1989, 11, 45, 27)]
+        self.assertEqual(mc_match.wheel_effect(lines, (2400, 1080), WHEEL), "Fate Sync")
+
+    def test_s7_screen_has_none(self):  # 1-7 Nov: only the column title in that corner
+        self.assertIsNone(mc_match.wheel_effect(result_top(None), (2400, 1080), WHEEL))
+
+    def test_season_without_wheel(self):
+        self.assertIsNone(mc_match.wheel_effect(result_top("Tycoon"), (2400, 1080), {}))
+
+    def test_video_frame_scale(self):  # recording frames are 1600 wide
+        lines = [line("Gold Galore", 1350, 8, 90, 25), line("Sinergi yang Diaktifkan", 1185, 41, 200, 25)]
+        self.assertEqual(mc_match.wheel_effect(lines, (1600, 720), WHEEL), "Gold Galore")
+
+
 def round_row(label, hp=100):
     return {"label": label, "start": {"CinCoeg": hp}, "delta": {}, "level": 9, "gold": 10}
 
