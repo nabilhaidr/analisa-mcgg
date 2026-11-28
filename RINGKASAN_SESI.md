@@ -6,7 +6,7 @@ Bahasa kerja: Indonesia. Folder kerja: `F:\Magic Chess\patch-tracker\`. Client g
 Repo GitHub: `nabilhaidr/analisa-mcgg`, kerja langsung di branch **`main`** (branch lain digabung ke `main`). Di sesi cloud
 (Linux) ada repo ini tanpa client game, tanpa rekaman MP4 (di-`.gitignore`), dan tanpa OCR Windows: pasang
 `pip install -r requirements.txt`; OCR memakai RapidOCR atau `ocr.json` yang ikut di repo (lihat `mc_ocr.py`).
-Chat terakhir (22–28 Nov): riwayat 58–64 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate, tier list S8, lalu 170 screenshot + 3 rekaman baru: Toko Spirit Sand S8 11/11, semua babak Go Go Box, hero panggilan S8 termasuk Alpha ★3, commander Odette, segmen roda dan arti `m_SpecialRules`, Patch Note 26/11 dan koreksi tier list-nya; lalu commit, push, dan cek tugas 28 Nov; lalu commander Akai/Suyou/Hayabusa di tabel client dan 23 laporan MATCH S8). Sudah di-push: riwayat 58–59 = `cdd6083`; riwayat 61–62 = `ccc1ab7` (pemeriksaan match S8 + patch 26/11); riwayat 60 + 63 = `f251fe1` (tier list S8); riwayat 64 = `2dadf92` (ringkasan, `VALIDASI_S8.md`, snapshot client 28 Nov); riwayat 65 = `800e3d4` (pembaca Wheel of Fate di `mc_match.py`), `c3bf315` (23 laporan MATCH S8 + folder `match_*`), lalu commit dokumen sesudahnya (`tier_list.py`, `TIER_LIST_S8.html|md`, ringkasan ini dengan catatan Akai/Suyou/Hayabusa). Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
+Chat terakhir (22–28 Nov): riwayat 58–64 (client 1.3.32.354.1 diekstrak, 562 screenshot S8 divalidasi, kartu Power emas, Wheel of Fate, tier list S8, lalu 170 screenshot + 3 rekaman baru: Toko Spirit Sand S8 11/11, semua babak Go Go Box, hero panggilan S8 termasuk Alpha ★3, commander Odette, segmen roda dan arti `m_SpecialRules`, Patch Note 26/11 dan koreksi tier list-nya; lalu commit, push, dan cek tugas 28 Nov; lalu commander Akai/Suyou/Hayabusa di tabel client dan 23 laporan MATCH S8; lalu 16 laporan MATCH S7 tanggal 1–7 Nov). Sudah di-push: riwayat 58–59 = `cdd6083`; riwayat 61–62 = `ccc1ab7` (pemeriksaan match S8 + patch 26/11); riwayat 60 + 63 = `f251fe1` (tier list S8); riwayat 64 = `2dadf92` (ringkasan, `VALIDASI_S8.md`, snapshot client 28 Nov); riwayat 65 = `800e3d4` (pembaca Wheel of Fate di `mc_match.py`), `c3bf315` (23 laporan MATCH S8 + folder `match_*`), lalu commit dokumen sesudahnya (`tier_list.py`, `TIER_LIST_S8.html|md`, ringkasan ini dengan catatan Akai/Suyou/Hayabusa; `90f837f`); riwayat 66 = `30420e8` (16 laporan MATCH S7 tanggal 1–7 Nov + `match_1_Nov_21_12/`), lalu commit ringkasan ini. Tugas terbuka ada di **Ide lanjutan** (paling atas = paling mendesak). Kebiasaan
 kerja: commit dan push hanya bila diminta ("Ya, commit & push"), pesan commit bahasa Inggris (`feat:`/`fix:`/`docs:`);
 perubahan `mc_match.py` lewat TDD dengan fixture asli (`test_data/`), lalu laporan dibuat ulang (lihat Lingkungan) dan
 `python check_match.py` harus 0 kesalahan, 0 peringatan.
@@ -56,7 +56,8 @@ memastikan isinya sama dengan layar in-game (430 screenshot Season 7).
 - Laporan pertandingan: 42 laporan MATCH 21 Okt – 1 Nov (`data/1.3.24.344.1/MATCH_*`): 20 dari rekaman 21–26 Okt, 8 dari layar hasil
   27–30 Okt, 3 dari rekaman 31 Okt + layar Riwayat (2 rekamannya berhenti lebih awal, `--cut`), 11 dari layar hasil 31 Okt – 1 Nov (1 di
   antaranya mode Custom lawan komputer, `--custom`, tidak ikut statistik). Per 1 Nov: 200 tes (+24 subtes) lolos, `check_match.py`
-  0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih.
+  0 kesalahan, 0 peringatan, `mc_validate.py` 0 selisih. **28 Nov: +16 laporan dari layar hasil 1–7 Nov** (riwayat 66; 13 langsung setelah
+  main, 3 dari Riwayat) → 58 laporan S7; statistik papan S7 dihitung ulang (Analisis gameplay).
 - **Hero panggilan terbukti penuh** (1 Nov): tooltip Novaria ★1–★3, Gatotkaca ★1–★2, X.Borg ★1–★2 cocok, X.Borg ★3 "2000%" terbukti lewat tooltip dan editor lineup.
 
 ## Tool dan file (`F:\Magic Chess\patch-tracker\`)
@@ -389,6 +390,17 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   **31 Okt malam – 1 Nov**: Fanny + Kishin 5–6 + Echomancer 5 juara (23-32, +114), lalu peringkat 5 dua kali (02-13 −14, 02-36 −15). Susunan serupa juara di Custom 03-08
   lawan 7 komputer, tapi itu tidak ikut statistik. Fanny + Starbelle 6 + Echomancer 5 peringkat 3 (17-03, +61), Fanny + Echomancer 5 + Kishin 4 peringkat 7 (18-57, −43). Dyrroth + Starbelle 5 + SPECTRE 4
   peringkat 8 (dari Riwayat, poin Dyrroth 1140, −59; jam mainnya tidak diketahui).
+- **Data sendiri S7 lengkap** (diperbarui 28 Nov, riwayat 66: + 16 pertandingan 1–7 Nov dari layar hasil di `screenshot/season 8/match/`;
+  57 laporan berperingkat 21 Okt – 7 Nov, Custom tidak dihitung; skrip hitung lebih dulu mereproduksi angka lama: 220 papan, Starbelle 23% vs
+  12%, juara 13 dari 41). **Papan pemain lain**: 306 papan berperingkat (117 di peringkat 1–4, 189 di 5–8; 93 baris berpedang). Starbelle
+  21% vs 13% (juara 3, p=0,054), Astro Power 9% vs 4% (p=0,047), Stargazer 12% vs 8%, Dauntless 15% vs 11%; Kishin tetap paling populer tapi
+  tertinggal (15% vs 23%, p=0,10), SPECTRE 11% vs 14%. Dengan 16 sinergi yang diuji belum ada yang terbukti (ambang ±0,003). Di 16
+  pertandingan baru saja: Stargazer 20% vs 6%, Swiftblade 11% vs 0%.
+  **Papan sendiri** (57 pertandingan): juara 19, peringkat 2 ×4, 3 ×3, 4 ×9, 5 ×7, 6 ×2, 7 ×7, 8 ×6 (rata-rata 3,79). **Minggu terakhir S7
+  (1–7 Nov) berbalik**: Fanny (Kishin 6 atau Starbelle 6 + Echomancer 4–5; poin 4717–4960) 9 pertandingan tanpa juara (peringkat 2, 3, 8, 7,
+  6, 4, 2, 5, 8; rata-rata 5,0), sedangkan **Stargazer + Dragon Altar** menang: Kalea (poin 6779 → 6848) juara 3 dari 4 + peringkat 2, Lukas
+  (poin 2833 → 3535) juara 3 dari 3 (satu dengan Marksman 5 + Shadeweaver 3). Commander = Kartu Power di papan sendiri (S7), cocok dengan
+  rantai poinnya.
 - **5 lineup favorit pengguna** (screenshot Rekomendasi Lineup), peringkat tanpa ultra:
   1. Aamon: Dauntless 6 + Stargazer 4 + Mistbender 3 (Nana ★3 lewat Mirror Device/Spirit Sand; butuh level 10).
   2. Luo Yi: Starbelle 6 + Astro 4. Build pengguna: **Odette ★2 Fan** dengan Winter Crown + Lightstick + Essence Core dari
@@ -971,6 +983,18 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
       (tier tidak berubah). 2 nama huruf hias (22 Nov 15-56 baris 2, 24 Nov 03-14 baris 8) tetap berupa gambar.
     - Di-commit dan di-push atas permintaan pengguna ("Ya, commit & push"): `800e3d4` (pembaca roda + tes), `c3bf315` (23 laporan + 54
       gambar `match_*`), lalu commit dokumen (tier list, ringkasan). Gambar screenshot tetap tidak ikut.
+66. (2026-11-28) **Laporan MATCH 16 pertandingan S7 tanggal 1–7 Nov** atas permintaan pengguna ("Ya, buat sekarang").
+    - 32 layar hasil di `screenshot/season 8/match/` (16 ID). Layar langsung setelah main punya Simpan/Laporkan/Main Lagi dan "Peringkat
+      Berikutnya"; layar dari Riwayat hanya tombol Kembali (1 Nov 21:12:55 = pertandingan yang sama dibuka lagi 25 detik kemudian). 3
+      pertandingan hanya dari Riwayat → dinamai menurut poin (Riwayat 2 Nov poin 4960, 4903, 4831), sisanya menurut jam layar hasil. Rantai
+      poin Fanny nyambung: 4836 (1 Nov 18:57) → 4905 → 4960 → 4903 → 4860 → 4831 → 4854 → 4923 (2 Nov 12:41) → 4910 (21:20). Layar Riwayat
+      tetap menampilkan ikon pedang (2 Nov 10:27, peringkat 8).
+    - Dibuat dengan data S7 (`--version 1.3.24.344.1 --season 7`, skrip scratchpad `run_s8.py s7`), 52–167 detik per laporan. RapidOCR
+      membaca poin yang terlewat OCR Windows (2 Nov 10:27, 10:49, 21:20; 4 Nov 20:47), jadi semuanya berperingkat (tidak ada Classic). Baris
+      7 di 1 Nov 21-12 memang kosong di layar (tanpa nama, 1 hero, tanpa sinergi; pemain keluar atau AFK).
+    - Hasil: `check_match.py` 81 laporan (58 S7 + 23 S8) 0 kesalahan 0 peringatan; 284 tes (+24 subtes). Statistik papan S7 dihitung ulang
+      (lihat Analisis gameplay, "Data sendiri S7 lengkap"). Di-commit dan di-push atas permintaan pengguna ("Ya, commit & push"):
+      `30420e8` (laporan), lalu commit ringkasan ini.
 
 ## Lingkungan & catatan teknis
 - Ghidra 12.1.4 di `C:\tools\ghidra_12.1.4_PUBLIC` (dipakai REA MCP). Untuk membongkar satu fungsi tanpa Ghidra dipakai
@@ -1044,6 +1068,14 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   20 Nov 18-30 `20-18-30-48-986` (layar hasil dari frame akhir); 22 Nov 16-26 `22-16-26-55-590` + `22-16-48-56-009`, `22-16-48-59-983`;
   23 Nov 03-34 `spirit sand/…23-03-34-54-845`; 27 Nov 16-58 Odette = `uji coba commander odette classic.mp4` dengan `--classic` dan tanpa
   `--result` (layar hasil dari frame 1405–1420; screenshot `27-17-22-26-773` tertutup popup "Like" di baris sendiri).
+- **16 laporan MATCH S7 tanggal 1–7 Nov** (riwayat 66): `--version 1.3.24.344.1 --season 7 --player CinCoeg --name "<nama>"`, layar hasil
+  `screenshot/season 8/match/Screenshot_2026-11-<cap>_com.mobilechess.mi.jpg`: 1 Nov 21-12 `01-21-12-30-474`, `01-21-12-37-214`,
+  `01-21-12-55-184`; Riwayat 2 Nov poin 4960 `02-07-56-06-403`, `02-07-56-16-399`; Riwayat 2 Nov poin 4903 `02-10-27-32-566`,
+  `02-10-27-36-884`; 2 Nov 10-49 `02-10-49-39-091`, `02-10-49-42-548`; 2 Nov 12-14 `02-12-14-56-466`, `02-12-15-00-959`; Riwayat 2 Nov poin
+  4831 `02-12-15-25-924`, `02-12-15-31-803`; 2 Nov 12-41 `02-12-41-59-860`, `02-12-42-05-906`; 2 Nov 21-20 `02-21-20-38-104`,
+  `02-21-20-43-439`; 3 Nov 14-01 `03-14-01-11-343`, `03-14-01-16-197`; 3 Nov 16-27 `03-16-27-04-517`, `03-16-27-08-215`; 4 Nov 05-28
+  `04-05-28-59-088`; 4 Nov 20-47 `04-20-47-50-993`, `04-20-47-54-817`; 5 Nov 23-57 `05-23-57-36-721`, `05-23-57-44-060`; 6 Nov 10-04
+  `06-10-04-43-630`, `06-10-04-49-219`; 6 Nov 12-58 `06-12-58-40-561`, `06-12-58-45-829`; 7 Nov 17-45 `07-17-45-50-953`, `07-17-45-55-390`.
 - RapidOCR pada layar hasil penuh (gambar ×2 = 4800×2160) gagal `bad allocation` saat commit bebas ±1,7 GB (31 Okt), juga di proses kecil
   tanpa ikon. Jalan keluarnya: OCR 45% kiri layar saja, karena ID, nama, level, dan poin ada di situ. Uji pada layar lama: 21 dari 21 baris
   terbaca, beda spasi dan satu huruf ("LordFathir"). 11 layar 31 Okt dibuat begitu, tersimpan di `cache/match/_result/ocr_rapid.json`
@@ -1051,8 +1083,6 @@ Halaman lengkap 5 lineup: `data/1.3.24.344.1/ANALISIS_LINEUP_S7.html` (+ `.md`, 
   `C:\Users\nabil\AppData\Local\Temp\claude\F--Magic-Chess\6e09ebcd-f03a-4c3c-8081-d95fad105539\scratchpad\`, bersama `regen_batch.py`.
 
 ## Ide lanjutan (belum dikerjakan)
-- Laporan MATCH untuk 16 pertandingan S7 tanggal 1–7 Nov yang layar hasilnya ada di `screenshot/season 8/match/` (32 layar; statistik papan
-  S7 berhenti di 1 Nov). Buat dengan data S7 (`mc_match.py --version 1.3.24.344.1 --season 7 --result …`) bila diminta, satu per satu.
 - 2 nama pemain huruf hias di laporan S8 (22 Nov 15-56 baris 2, 24 Nov 03-14 baris 8) tampil sebagai gambar; tambahkan ke `catatan_nama.json`
   (dibaca mata) bila pengguna mau.
 - Screenshot S8 yang belum ada: 5 kartu (Journey's Windfall, Fury's Edge, Victory's Blessing, Odette's Power ×2), Alpha ★4, angka baru Kalea
